@@ -10,7 +10,6 @@ Rest api for market place
 - Make sure you've installed NodeJS version. You can see the version in the `nvmrc` file
 - You can also install [nvm](https://github.com/nvm-sh/nvm) in order to switch between different node versions
 - Set npm to install internal packages. See guide [here](https://coachhub.atlassian.net/wiki/spaces/ENG/pages/21692438/github)
-- Kafka (see [here](https://docs.confluent.io/platform/current/quickstart/ce-docker-quickstart.html) how to install it)
 
 ### Install dependencies
 
