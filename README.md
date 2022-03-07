@@ -79,5 +79,4 @@ npm build
   - common        # Cross-cutting functionality, like guards, middleware or interceptors
   - shared        # Modules and services that are used shared between services (Elasticsearch service is include here for example)
 - config          # Configuration per profile
-- scripts         # Scripts for generate DB schema and TS typings
 ```
