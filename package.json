@@ -10,13 +10,6 @@
     "database:init": "npm run migration:run && npm run seeds",
     "lint": "tslint -p tsconfig.json",
     "lint:fix": "npm run lint -- --fix",
-    "migration:create": "./node_modules/.bin/ts-node ./node_modules/typeorm/cli.js migration:create -n",
-    "migration:generate": "./node_modules/.bin/ts-node ./node_modules/typeorm/cli.js migration:generate",
-    "premigration:run": "npm run schema:generate",
-    "migration:run": "ts-node -r dotenv/config -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run",
-    "schema:generate": "ts-node -r dotenv/config -r tsconfig-paths/register scripts/generate-schema",
-    "preseeds": "npm run migration:run && rm -rf ./generated",
-    "seeds": "./node_modules/.bin/ts-node ./node_modules/typeorm-seeding/dist/cli.js seed",
     "setup:dev": "cp ./config/local.js.sample ./config/local.js",
     "prestart": "npm run build",
     "start": "node -r dotenv/config dist/main.js",
@@ -28,8 +21,7 @@
     "test:watch": "jest --watch",
     "typings:generate": "./node_modules/.bin/ts-node scripts/generate-typings",
     "upgrade-interactive": "npx npm-check --update",
-    "postupgrade-interactive": "npm test",
-    "heroku-postbuild": "npm run build && npm run migration:run"
+    "postupgrade-interactive": "npm test"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^7.17.0",
