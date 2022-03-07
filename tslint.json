@@ -1,0 +1,43 @@
+{
+    "extends": ["tslint:recommended", "tslint-config-prettier"],
+    "rules": {
+      "max-line-length": [true, 120],
+      "interface-name": false,
+      "trailing-comma": [
+        true,
+        {
+          "multiline": {
+            "objects": "always",
+            "arrays": "always",
+            "functions": "never",
+            "typeLiterals": "ignore"
+          },
+          "singleline": "never",
+          "esSpecCompliant": true
+        }
+      ],
+      "array-type": [true, "array"],
+      "align": false,
+      "object-literal-sort-keys": false,
+      "semicolon": [true, "always", "strict-bound-class-methods"],
+      "import-name": false,
+      "member-access": false,
+      "jsx-wrap-multiline": false,
+      "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case"],
+      "jsx-no-multiline-js": [false],
+      "no-unused-expression": [true, "allow-fast-null-checks"],
+      "no-use-before-declare": [true],
+      "no-console": true,
+      "ordered-imports": false
+    },
+    "linterOptions": {
+      "exclude": [
+        "dist/**/*.js",
+        "config/**/*.js",
+        "node_modules/**/*.ts",
+        "coverage/lcov-report/*.js",
+        "**/*.json",
+        "src/shared/organization-api/generated/*.ts"
+      ]
+    }
+}

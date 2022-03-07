@@ -1,0 +1,17 @@
+// this need to set on process.env
+process.env.NODE_ENV = 'development';
+
+module.exports = {
+  NODE_ENV: process.env.NODE_ENV,
+  JWT_SECRET_KEY: 'secret',
+  server: {
+    port: 3000,
+  },
+  src: {
+    root: 'src',
+    fileExtension: 'ts',
+  },
+  security: {
+    enableHttpsRedirect: false,
+  }
+};
