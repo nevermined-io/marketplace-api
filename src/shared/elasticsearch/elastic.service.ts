@@ -1,4 +1,4 @@
-import { QueryDslQueryContainer, SearchHit, SearchResponse } from '@elastic/elasticsearch/lib/api/types';
+import { SearchHit, QueryDslQueryContainer } from '@elastic/elasticsearch/api/types';
 import { Injectable } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 
@@ -11,14 +11,16 @@ export class ElasticService {
   async addDocumentToIndex(index, document: unknown) {
     await this.elasticsearchService.index({
       index: index,
-      document: document
+      body: document
     });
   }
 
   async searchByIndex(index: string, query: QueryDslQueryContainer): Promise<SearchHit<unknown>[]> {
     return (await this.elasticsearchService.search({
       index,
-      query,
-    })).hits.hits;
+      body: {
+        query,
+      },
+    })).body.hits.hits;
   }
 }
