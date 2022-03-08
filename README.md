@@ -59,7 +59,7 @@ There are few options while it comes to database setup.
 
    ELASTIC_USERNAME=[YOUR USERNAME]
    ```
-   - Make sure you installed 
+   - Make sure you installed docker
    - From project root in terminal run
 
    ```javascript
