@@ -6,11 +6,11 @@ ARG NODE_ENV="production"
 RUN apk add --no-cache autoconf automake alpine-sdk
 
 WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm install
 
 COPY . .
-
-RUN npm install && \
-    npm run build
+RUN npm run build
 
 CMD ["npm", "run", "start:prod"]
 
