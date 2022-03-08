@@ -1,15 +1,19 @@
 FROM node:14-alpine
 LABEL maintainer="Nevermined <root@nevermined.io>"
 
-ARG NODE_ENV="production"
-
 RUN apk add --no-cache autoconf automake alpine-sdk
 
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 
-COPY . .
+COPY src ./src
+COPY scripts ./scripts
+COPY config ./config
+COPY package*.json ./
+COPY tsconfig* ./
+COPY ormconfig.js ./
+
 RUN npm run build
 
 CMD ["npm", "run", "start:prod"]
