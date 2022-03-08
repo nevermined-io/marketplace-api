@@ -12,6 +12,6 @@ describe('RolesGuard', () => {
   });
 
   it('should be defined', () => {
-    expect(new RolesGuard(new Reflector(), new ConfigService())).toBeDefined();
+    expect(new RolesGuard(new ConfigService())).toBeDefined();
   });
 });
