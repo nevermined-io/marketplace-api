@@ -36,6 +36,7 @@ jobs:
         ELASTIC_USERNAME: "elastic"
         ELASTIC_PASSWORD: "password"
       run: |
+        npm run setup:dev
         npm run test:cov
 
 
