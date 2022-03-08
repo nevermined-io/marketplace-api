@@ -18,10 +18,6 @@ jobs:
     - name: Compile and lint
       run: |
         npm run build
-        npm run lint
-    - name: Compile and lint
-      run: |
-        npm run build
         npm run lint     
     - name: Running elasticsearch
       run: |

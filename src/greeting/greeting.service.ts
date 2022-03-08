@@ -1,6 +1,6 @@
 import { SearchHit } from '@elastic/elasticsearch/api/types';
 import { Injectable } from '@nestjs/common';
-import { ElasticService} from '../shared/elasticsearch/elastic.service'
+import { ElasticService} from '../shared/elasticsearch/elastic.service';
 import { GreetingDTO } from './dto/greeting.dto';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class GreetingService {
   async addGreeting(greeting: GreetingDTO) {
     await this.elasticService.addDocumentToIndex('greeting', {
         name: greeting.name,
-        message: greeting.message
+        message: greeting.message,
     });
   }
 
@@ -22,7 +22,7 @@ export class GreetingService {
       {
         match: {
           name,
-        }
+        },
       }
     ) as Promise<SearchHit<GreetingDTO>[]>;
   }

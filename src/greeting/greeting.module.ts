@@ -7,6 +7,6 @@ import {ElasticModule} from '../shared/elasticsearch/elastic.module';
     imports: [ElasticModule],
     providers: [GreetingService],
     controllers: [GreetingController],
-    exports: [GreetingService]
+    exports: [GreetingService],
 })
 export class GreetingModule {}
