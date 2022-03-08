@@ -17,9 +17,9 @@ COPY config ./config
 COPY package*.json ./
 COPY tsconfig* ./
 COPY ormconfig.js ./
-COPY .npmrc ./
+# COPY .npmrc ./
 RUN npm install tslib
 RUN npm ci --only=production
-RUN rm .npmrc
+# RUN rm .npmrc
 COPY --from=builder /usr/src/app/dist/ ./dist/
 CMD ["npm", "run", "start:prod"]
