@@ -1,7 +1,7 @@
 {
   "name": "marketplace_api",
-  "version": "1.0.0",
-  "description": "api for all the marketplace",
+  "version": "0.1.0",
+  "description": "The API allowing to manage Nevermined Marketplace common functionalities",
   "main": "main.ts",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
