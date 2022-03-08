@@ -5,10 +5,8 @@
 > The API allowing to manage Marketplace common functionalities
 
 [![Tests](https://github.com/nevermined-io/marketplace-api/actions/workflows/test.yml/badge.svg)](https://github.com/nevermined-io/marketplace-api/actions/workflows/test.yml)
-[![Docker Build Status](https://img.shields.io/docker/cloud/build/neverminedio/marketplace-api.svg)](https://hub.docker.com/repository/docker/neverminedio/metadata-api)
-[![GitHub contributors](https://img.shields.io/github/contributors/nevermined-io/marketplace-api.svg)](https://github.com/nevermined-io/metadata-api/graphs/contributors)
-
-q
+[![Docker Build Status](https://img.shields.io/docker/cloud/build/neverminedio/marketplace-api.svg)](https://hub.docker.com/repository/docker/neverminedio/marketplace-api)
+[![GitHub contributors](https://img.shields.io/github/contributors/nevermined-io/marketplace-api.svg)](https://github.com/nevermined-io/marketplace-api/graphs/contributors)
 
 ## First-time setup
 
