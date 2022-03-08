@@ -11,6 +11,13 @@ module.exports = {
     root: 'src',
     fileExtension: 'ts',
   },
+  elasticsearch: {
+    node: 'http://localhost:9200',
+    auth: {
+      username: 'elastic',
+      password: 'password',
+    },
+  },
   security: {
     enableHttpsRedirect: false,
   }

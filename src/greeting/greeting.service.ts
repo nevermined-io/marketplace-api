@@ -1,4 +1,4 @@
-import { SearchHit, SearchResponse } from '@elastic/elasticsearch/lib/api/types';
+import { SearchHit } from '@elastic/elasticsearch/api/types';
 import { Injectable } from '@nestjs/common';
 import { ElasticService} from '../shared/elasticsearch/elastic.service'
 import { GreetingDTO } from './dto/greeting.dto';

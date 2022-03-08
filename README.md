@@ -60,7 +60,14 @@ There are few options while it comes to database setup.
 
 2. <u>**Run from Docker**</u>:
 
-   - Make sure you installed 
+   - Create .env file:
+   ```
+   # Password for the 'elastic' user (at least 6 characters)
+   ELASTIC_PASSWORD=[YOUR PASSWORD]
+
+   ELASTIC_USERNAME=[YOUR USERNAME]
+   ```
+   - Make sure you installed docker
    - From project root in terminal run
 
    ```javascript
