@@ -2,11 +2,11 @@ FROM node:14 AS builder
 ARG NODE_ENV="production"
 WORKDIR /usr/src/app
 COPY ./package*.json ./
-COPY .npmrc ./
+# COPY .npmrc ./
 RUN npm ci
 COPY . .
 RUN npm run build
-RUN rm .npmrc
+# RUN rm .npmrc
 
 # Smaller image for production
 FROM node:14-alpine
