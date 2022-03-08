@@ -1,0 +1,42 @@
+name: Tests
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '14.x'
+    - name: Install dependencies
+      run: |
+        npm i
+    - name: Compile and lint
+      run: |
+        npm run build
+        npm run lint     
+    - name: Running elasticsearch
+      run: |
+        docker run \
+          -p 9200:9200 \
+          -p 9300:9300 \
+          -e "discovery.type=single-node" \
+          -d docker.elastic.co/elasticsearch/elasticsearch:7.13.2
+    - name: Elasticsearch Node is reachable
+      run: |
+        wget -q --waitretry=1 --retry-connrefused -T 180 -O - http://127.0.0.1:9200
+    - name: Run tests
+      env:
+        ELASTIC_URL: "http://localhost:9200"
+        ELASTIC_INDEX: "marketplace"
+        ELASTIC_USERNAME: "elastic"
+        ELASTIC_PASSWORD: "password"
+      run: |
+        npm run setup:dev
+        npm run test:cov
+
+

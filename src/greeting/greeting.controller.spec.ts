@@ -1,4 +1,5 @@
 import { Test } from '@nestjs/testing';
+import { Logger } from '../shared/logger/logger.service';
 import { GreetingController } from './greeting.controller';
 import { GreetingService } from './greeting.service';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
@@ -15,12 +16,12 @@ describe('OnboardingStepsController', () => {
           provide: ElasticService,
           useValue: {
             async addDocumentToIndex() {
-              console.log('add document to index');
+              Logger.log('add document to index');
             },
             async searchByIndex() {
-              console.log('Searching');
-            }
-          }
+              Logger.log('Searching');
+            },
+          },
         },
         GreetingService],
     }).compile();
@@ -30,13 +31,13 @@ describe('OnboardingStepsController', () => {
   });
 
   it('should create a greeting', async () => {
-    let greetingServiceSpy = jest.spyOn(greetingService, 'addGreeting');
+    const greetingServiceSpy = jest.spyOn(greetingService, 'addGreeting');
 
-    greetingServiceSpy.mockResolvedValue(undefined)
+    greetingServiceSpy.mockResolvedValue(undefined);
 
     await greetingController.createGreeting({
       name: 'Pepe',
-      message: 'Hello Pepe'
+      message: 'Hello Pepe',
     });
 
     expect(greetingServiceSpy).toBeCalled();

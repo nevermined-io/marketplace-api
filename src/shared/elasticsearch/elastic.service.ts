@@ -10,8 +10,8 @@ export class ElasticService {
   
   async addDocumentToIndex(index, document: unknown) {
     await this.elasticsearchService.index({
-      index: index,
-      body: document
+      index,
+      body: document,
     });
   }
 

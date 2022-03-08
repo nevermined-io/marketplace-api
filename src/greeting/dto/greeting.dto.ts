@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class GreetingDTO {
   static fromObject(user: {name: string, message: string}): GreetingDTO {

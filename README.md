@@ -1,6 +1,14 @@
-# Marketplace API
+[![banner](https://raw.githubusercontent.com/nevermined-io/assets/main/images/logo/banner_logo.png)](https://nevermined.io)
 
-Rest api for market place
+# Nevermined Marketplace API
+
+> The API allowing to manage Marketplace common functionalities
+
+[![Tests](https://github.com/nevermined-io/marketplace-api/actions/workflows/test.yml/badge.svg)](https://github.com/nevermined-io/marketplace-api/actions/workflows/test.yml)
+[![Docker Build Status](https://img.shields.io/docker/cloud/build/neverminedio/marketplace-api.svg)](https://hub.docker.com/repository/docker/neverminedio/metadata-api)
+[![GitHub contributors](https://img.shields.io/github/contributors/nevermined-io/marketplace-api.svg)](https://github.com/nevermined-io/metadata-api/graphs/contributors)
+
+q
 
 ## First-time setup
 

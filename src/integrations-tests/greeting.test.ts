@@ -1,22 +1,23 @@
 import request from 'supertest';
 import { Test } from '@nestjs/testing';
+import { Logger } from '../shared/logger/logger.service';
 import { INestApplication } from '@nestjs/common';
 import { GreetingModule } from '../greeting/greeting.module';
 import { GreetingService } from '../greeting/greeting.service';
 
 describe('Greeting', () => {
     let app: INestApplication;
-    let greetingService = {
+    const greetingService = {
         addGreeting: (body) => {
-            console.log(body);
+            Logger.log(body);
         },
         getGreeting: (name) => {
             return {
                 name,
-                message: `Hello ${name}`
-            }
-        }
-    }
+                message: `Hello ${name}`,
+            };
+        },
+    };
 
     beforeAll(async () => {
         const moduleRef = await Test.createTestingModule({
@@ -35,9 +36,9 @@ describe('Greeting', () => {
         .post('/greeting')
         .send({
             name: 'Pepe',
-            message: 'Hello Pepe'
+            message: 'Hello Pepe',
         })
-        .expect(201)
+        .expect(201);
     });
 
     it(`/Get`, async () => {
@@ -47,11 +48,11 @@ describe('Greeting', () => {
         expect(response.statusCode).toEqual(200);
         expect(response.body).toStrictEqual({
             name: 'Pepe',
-            message: 'Hello Peppe'
+            message: 'Hello Peppe',
         });
     });
 
     afterAll(async () => {
         await app.close();
     });
-})
+});
