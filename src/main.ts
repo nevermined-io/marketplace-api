@@ -5,6 +5,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ApplicationModule } from './app.module';
 import { ConfigService } from './shared/config/config.service';
 import { Logger } from './shared/logger/logger.service';
+import info from '../package.json';
 
 async function bootstrap() {
   const logger = new Logger(bootstrap.name);
@@ -16,7 +17,7 @@ async function bootstrap() {
 
   const options = new DocumentBuilder()
     .setTitle('Marketplace API')
-    .setVersion('1.0')
+    .setVersion(info.version)
     .build();
   const document = SwaggerModule.createDocument(app, options);
 

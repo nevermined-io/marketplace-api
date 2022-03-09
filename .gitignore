@@ -394,3 +394,4 @@ dist
 development.env
 /config/local.js
 yarn.lock
+.vscode

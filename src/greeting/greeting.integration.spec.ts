@@ -2,8 +2,8 @@ import request from 'supertest';
 import { Test } from '@nestjs/testing';
 import { Logger } from '../shared/logger/logger.service';
 import { INestApplication } from '@nestjs/common';
-import { GreetingModule } from '../greeting/greeting.module';
-import { GreetingService } from '../greeting/greeting.service';
+import { GreetingModule } from './greeting.module';
+import { GreetingService } from './greeting.service';
 
 describe('Greeting', () => {
     let app: INestApplication;
@@ -12,10 +12,13 @@ describe('Greeting', () => {
             Logger.log(body);
         },
         getGreeting: (name) => {
-            return {
-                name,
-                message: `Hello ${name}`,
-            };
+
+            return [{
+                _source: {
+                    name,
+                    message: `Hello ${name}`,
+                },
+            }];
         },
     };
 
@@ -48,7 +51,7 @@ describe('Greeting', () => {
         expect(response.statusCode).toEqual(200);
         expect(response.body).toStrictEqual({
             name: 'Pepe',
-            message: 'Hello Peppe',
+            message: 'Hello Pepe',
         });
     });
 
