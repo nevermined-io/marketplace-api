@@ -17,7 +17,7 @@ describe('Greeting', () => {
                 _source: {
                     name,
                     message: `Hello ${name}`,
-                }
+                },
             }];
         },
     };
