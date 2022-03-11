@@ -1,6 +1,6 @@
 ---
 name: Feature ticket
-about: The importance to create a feature ticket following the specifications described bellow is that each developer who will work on the feature can have all the information needed to start although is not familiar with the project or wasn’t in refinements meetings.
+about: Create a feature ticket with all that is needed to start to work in it
 title: ''
 labels: ''
 assignees: ''
