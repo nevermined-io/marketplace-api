@@ -61,5 +61,5 @@ describe('OnboardingStepsController', () => {
     jest.spyOn(greetingService, 'getGreeting').mockImplementation(() => ([] as any));
 
     expect(greetingController.findGreeting('Paco')).rejects.toEqual(new NotFoundException('Greeting from name Paco not found'));
-  })
+  });
 });
