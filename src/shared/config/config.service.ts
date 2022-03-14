@@ -1,4 +1,4 @@
-import * as Joi from '@hapi/joi';
+import * as Joi from 'joi';
 import { get as loGet } from 'lodash';
 import { Logger } from '../logger/logger.service';
 

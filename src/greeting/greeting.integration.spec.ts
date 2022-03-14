@@ -1,3 +1,5 @@
+/* eslint @typescript-eslint/no-unsafe-return: 0 */
+/* eslint @typescript-eslint/no-floating-promises: 0 */
 import request from 'supertest';
 import { Test } from '@nestjs/testing';
 import { Logger } from '../shared/logger/logger.service';
@@ -11,7 +13,7 @@ describe('Greeting', () => {
         addGreeting: (body) => {
             Logger.log(body);
         },
-        getGreeting: (name) => {
+        getGreeting: (name: string) => {
             if(name !== 'Pepe') {
                 return [];
             }

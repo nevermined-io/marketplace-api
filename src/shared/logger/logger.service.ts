@@ -16,24 +16,24 @@ class LoggerSplunk implements LoggerService {
     this.instance = isObject(logger) ? (logger as LoggerService) : undefined;
   }
 
-  static log(message: any, context = '', isTimeDiffEnabled = true) {
+  static log<T>(message: T, context = '', isTimeDiffEnabled = true) {
     this.printMessage(message, 'log', context, isTimeDiffEnabled);
   }
 
-  static error(message: any, trace = '', context = '', isTimeDiffEnabled = true) {
+  static error<T>(message: T, trace = '', context = '', isTimeDiffEnabled = true) {
     this.printMessage(message, 'error', context, isTimeDiffEnabled);
     this.printStackTrace(trace);
   }
 
-  static warn(message: any, context = '', isTimeDiffEnabled = true) {
+  static warn<T>(message: T, context = '', isTimeDiffEnabled = true) {
     this.printMessage(message, 'warn', context, isTimeDiffEnabled);
   }
 
-  static debug(message: any, context = '', isTimeDiffEnabled = true) {
+  static debug<T>(message: T, context = '', isTimeDiffEnabled = true) {
     this.printMessage(message, 'debug', context, isTimeDiffEnabled);
   }
 
-  static verbose(message: any, context = '', isTimeDiffEnabled = true) {
+  static verbose<T>(message: T, context = '', isTimeDiffEnabled = true) {
     this.printMessage(message, 'verbose', context, isTimeDiffEnabled);
   }
 
@@ -92,23 +92,23 @@ class LoggerSplunk implements LoggerService {
     instance && instance.error.call(instance, message, trace, context || this.context);
   }
 
-  log(message: any, context?: string) {
+  log<T>(message: T, context?: string) {
     this.callFunction('log', message, context);
   }
 
-  warn(message: any, context?: string) {
+  warn<T>(message: T, context?: string) {
     this.callFunction('warn', message, context);
   }
 
-  debug(message: any, context?: string) {
+  debug<T>(message: T, context?: string) {
     this.callFunction('debug', message, context);
   }
 
-  verbose(message: any, context?: string) {
+  verbose<T>(message: T, context?: string) {
     this.callFunction('verbose', message, context);
   }
 
-  private callFunction(name: 'log' | 'warn' | 'debug' | 'verbose', message: any, context?: string) {
+  private callFunction<T>(name: 'log' | 'warn' | 'debug' | 'verbose', message: T, context?: string) {
     if (!this.isLogLevelEnabled(name)) {
       return;
     }
@@ -127,4 +127,4 @@ class LoggerSplunk implements LoggerService {
   }
 }
 
-export const Logger = (process.env.NODE_ENV === 'development' ? LoggerBase : LoggerSplunk) as any;
+export const Logger = (process.env.NODE_ENV === 'development' ? LoggerBase : LoggerSplunk);
