@@ -1,4 +1,5 @@
 import { Test } from '@nestjs/testing';
+import { NotFoundException } from '@nestjs/common';
 import { Logger } from '../shared/logger/logger.service';
 import { GreetingController } from './greeting.controller';
 import { GreetingService } from './greeting.service';
@@ -42,4 +43,23 @@ describe('OnboardingStepsController', () => {
 
     expect(greetingServiceSpy).toBeCalled();
   });
+
+  it('should get greeting', async () => {
+    jest.spyOn(greetingService, 'getGreeting').mockImplementation((name) => ([{
+      _source: {
+        name,
+        message: `Hello ${name}`,
+    }}] as any));
+
+    expect(await greetingController.findGreeting('Pepe')).toStrictEqual({
+      name: 'Pepe',
+      message: 'Hello Pepe',
+    });
+  });
+
+  it('should throw error if greeting is not found', async () => {
+    jest.spyOn(greetingService, 'getGreeting').mockImplementation(() => ([] as any));
+
+    expect(greetingController.findGreeting('Paco')).rejects.toEqual(new NotFoundException('Greeting from name Paco not found'));
+  })
 });

@@ -12,6 +12,9 @@ describe('Greeting', () => {
             Logger.log(body);
         },
         getGreeting: (name) => {
+            if(name !== 'Pepe') {
+                return [];
+            }
 
             return [{
                 _source: {
@@ -34,7 +37,7 @@ describe('Greeting', () => {
           await app.init();
     });
 
-    it(`/Post`, () => {
+    it('/Post', () => {
         return request(app.getHttpServer())
         .post('/greeting')
         .send({
@@ -44,9 +47,9 @@ describe('Greeting', () => {
         .expect(201);
     });
 
-    it(`/Get`, async () => {
+    it('/Get', async () => {
         const response = await request(app.getHttpServer())
-        .get('/greeting/Pepe');
+            .get('/greeting/Pepe');
 
         expect(response.statusCode).toEqual(200);
         expect(response.body).toStrictEqual({
@@ -54,6 +57,13 @@ describe('Greeting', () => {
             message: 'Hello Pepe',
         });
     });
+
+    it('/GET Not found', async () => {
+        const response = await request(app.getHttpServer())
+            .get('/greeting/paco');
+
+        expect(response.statusCode).toEqual(404);
+    })
 
     afterAll(async () => {
         await app.close();
