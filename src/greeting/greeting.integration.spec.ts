@@ -63,7 +63,7 @@ describe('Greeting', () => {
             .get('/greeting/paco');
 
         expect(response.statusCode).toEqual(404);
-    })
+    });
 
     afterAll(async () => {
         await app.close();
