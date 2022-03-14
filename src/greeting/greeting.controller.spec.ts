@@ -1,3 +1,5 @@
+/* eslint @typescript-eslint/no-unsafe-return: 0 */
+/* eslint @typescript-eslint/no-floating-promises: 0 */
 import { Test } from '@nestjs/testing';
 import { NotFoundException } from '@nestjs/common';
 import { Logger } from '../shared/logger/logger.service';
@@ -16,11 +18,11 @@ describe('OnboardingStepsController', () => {
         {
           provide: ElasticService,
           useValue: {
-            async addDocumentToIndex() {
-              Logger.log('add document to index');
+            addDocumentToIndex: (): void => {
+              Logger.log<string>('add document to index');
             },
-            async searchByIndex() {
-              Logger.log('Searching');
+            searchByIndex: (): void => {
+              Logger.log<string>('Searching');
             },
           },
         },
@@ -57,9 +59,11 @@ describe('OnboardingStepsController', () => {
     });
   });
 
-  it('should throw error if greeting is not found', async () => {
+  it('should throw error if greeting is not found', () => {
     jest.spyOn(greetingService, 'getGreeting').mockImplementation(() => ([] as any));
 
-    expect(greetingController.findGreeting('Paco')).rejects.toEqual(new NotFoundException('Greeting from name Paco not found'));
+    expect(greetingController.findGreeting('Paco'))
+      .rejects
+      .toEqual(new NotFoundException('Greeting from name Paco not found'));
   });
 });
