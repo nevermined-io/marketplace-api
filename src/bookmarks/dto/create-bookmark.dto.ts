@@ -17,7 +17,7 @@ export class CreateBookmarkDto {
     userId: string;
 
     @ApiProperty({
-        example: 'u-12345',
+        example: 'I am interesting in this asset',
         description: 'Description given by the user'
     })
     @IsString()

@@ -1,5 +1,5 @@
 import { Routes } from 'nest-router';
-import { BookmarkModule } from './bookmark/bookmark.module';
+import { BookmarkModule } from './bookmarks/bookmark.module';
 import { GreetingModule } from './greeting/greeting.module';
 
 export const routes: Routes = [

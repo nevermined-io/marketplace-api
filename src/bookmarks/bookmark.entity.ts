@@ -9,6 +9,6 @@ export class Bookmark {
 
     constructor() {
         this.createdAt = new Date();
-        this.id = `b-${uuidv4()}`;
+        this.id = `bo-${uuidv4()}`;
     }
 }

@@ -4,7 +4,7 @@ import { routes } from './routes';
 import { ConfigModule } from './shared/config/config.module';
 import { LoggerModule } from './shared/logger/logger.module';
 import { GreetingModule } from './greeting/greeting.module';
-import { BookmarkModule } from './bookmark/bookmark.module';
+import { BookmarkModule } from './bookmarks/bookmark.module';
 import { HttpsRedirectMiddleware } from './common/middlewares/https-redirection/https-redirection.middleware';
 
 @Module({
