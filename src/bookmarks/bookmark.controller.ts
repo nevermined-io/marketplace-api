@@ -2,7 +2,9 @@ import {
 Post,
 Controller,
 Body,
-InternalServerErrorException,
+NotFoundException,
+Get,
+Param,
 } from '@nestjs/common';
 import { BookmarkService } from './bookmark.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -18,7 +20,7 @@ constructor(
 
     @Post()
     @ApiOperation({
-      description: 'allows users to bookmark marketplace contents',
+      description: 'Create a bookmark entry',
     })
     @ApiResponse({
       status: 201,
@@ -30,10 +32,29 @@ constructor(
       description: 'Bad Request',
     })
     async createBookmark(@Body() createBookmark: CreateBookmarkDto): Promise<GetBookmarkDto> {
-        try {
-          return this.bookmarkService.createOne(createBookmark);
-        } catch (error) {
-            throw new InternalServerErrorException(error);
-        }
+      return this.bookmarkService.createOne(createBookmark);
+    }
+
+    @Get(':id')
+    @ApiOperation({
+      description: 'Get a bookmark entry',
+    })
+    @ApiResponse({
+      status: 200,
+      description: 'Return a bookmark user',
+      type: [GetBookmarkDto],
+    })
+    @ApiResponse({
+      status: 404,
+      description: 'Not found',
+    })
+    async getBookmarks(@Param('id') bookmarkId: string): Promise<GetBookmarkDto>{
+      const bookmark = await this.bookmarkService.findOne(bookmarkId);
+
+      if(!bookmark) {
+        throw new NotFoundException(`Bookmark with ${bookmarkId} not found`);
+      }
+
+      return bookmark;
     }
 }
