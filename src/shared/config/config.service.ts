@@ -1,3 +1,6 @@
+/* eslint @typescript-eslint/no-var-requires: 0 */
+/* eslint @typescript-eslint/no-unsafe-assignment: 0 */
+/* eslint @typescript-eslint/no-unsafe-argument: 0 */
 import * as Joi from 'joi';
 import { get as loGet } from 'lodash';
 import { Logger } from '../logger/logger.service';
@@ -6,7 +9,6 @@ export interface EnvConfig {
   [key: string]: string;
 }
 
-// tslint:disable-next-line:no-var-requires
 const configProfile = require('../../../config');
 
 const DOTENV_SCHEMA = Joi.object({
@@ -47,7 +49,7 @@ export class ConfigService {
     this.envConfig = this.validateInput(configProfile);
   }
 
-  get<T extends any>(path: DotenvSchemaKeys): T | undefined {
+  get<T>(path: DotenvSchemaKeys): T | undefined {
     return (loGet(this.envConfig, path) as unknown) as T | undefined;
   }
 
@@ -61,6 +63,6 @@ export class ConfigService {
       Logger.error(error.message, 'ConfigService');
       process.exit(2);
     }
-    return validatedEnvConfig;
+    return validatedEnvConfig as EnvConfig;
   }
 }

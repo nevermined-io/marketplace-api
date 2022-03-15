@@ -8,14 +8,15 @@ export class ElasticService {
     private readonly elasticsearchService: ElasticsearchService
   ) {}
   
-  async addDocumentToIndex(index, document: unknown) {
-    await this.elasticsearchService.index({
+  async addDocumentToIndex(index: string, document: unknown) {
+    return await this.elasticsearchService.index({
       index,
       body: document,
     });
   }
 
   async searchByIndex(index: string, query: QueryDslQueryContainer): Promise<SearchHit<unknown>[]> {
+    /* eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access */
     return (await this.elasticsearchService.search({
       index,
       body: {

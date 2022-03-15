@@ -41,7 +41,7 @@ describe('Greeting', () => {
 
     it('/Post', () => {
         return request(app.getHttpServer())
-        .post('/greeting')
+        .post('/')
         .send({
             name: 'Pepe',
             message: 'Hello Pepe',
@@ -51,7 +51,7 @@ describe('Greeting', () => {
 
     it('/Get', async () => {
         const response = await request(app.getHttpServer())
-            .get('/greeting/Pepe');
+            .get('/Pepe');
 
         expect(response.statusCode).toEqual(200);
         expect(response.body).toStrictEqual({
@@ -62,7 +62,7 @@ describe('Greeting', () => {
 
     it('/GET Not found', async () => {
         const response = await request(app.getHttpServer())
-            .get('/greeting/paco');
+            .get('/paco');
 
         expect(response.statusCode).toEqual(404);
     });

@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 
 export class GreetingDTO {
-  static fromObject(user: {name: string, message: string}): GreetingDTO {
+  static fromObject(user: {name: string; message: string}): GreetingDTO {
     return new GreetingDTO(user.name, user.message);
   }
 
