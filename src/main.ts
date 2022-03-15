@@ -7,7 +7,7 @@ import { ConfigService } from './shared/config/config.service';
 import { Logger } from './shared/logger/logger.service';
 import info from '../package.json';
 
-async function bootstrap() {
+const bootstrap = async () => {
   const logger = new Logger(bootstrap.name);
 
   const app = await NestFactory.create<NestExpressApplication>(ApplicationModule, { cors: true, logger });
@@ -26,7 +26,6 @@ async function bootstrap() {
   const PORT = app.get<ConfigService>(ConfigService).get<number>('server.port');
   await app.listen(PORT);
   logger.log({ message: 'server started 🚀', port: PORT, url: `http://localhost:${PORT}/api` });
-}
+};
 
-// tslint:disable-next-line:no-console
-bootstrap().catch(reason => console.error(reason));
+bootstrap().catch(reason => Logger.error(reason));

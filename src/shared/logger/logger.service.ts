@@ -114,6 +114,7 @@ class LoggerSplunk implements LoggerService {
     }
     const instance = this.getInstance();
     const func = instance && (instance as typeof LoggerSplunk)[name];
+    /* eslint-disable-next-line no-unused-expressions*/ 
     func && func.call(instance, message, context || this.context, this.isTimestampEnabled);
   }
 

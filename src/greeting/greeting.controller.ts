@@ -11,7 +11,7 @@ import {
   import { GreetingService } from './greeting.service';
   
   @ApiTags('Greeting')
-  @Controller('greeting')
+  @Controller()
   export class GreetingController {
     constructor(
       private readonly greetingService: GreetingService

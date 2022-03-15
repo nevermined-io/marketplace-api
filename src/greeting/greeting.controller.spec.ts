@@ -7,7 +7,7 @@ import { GreetingController } from './greeting.controller';
 import { GreetingService } from './greeting.service';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
 
-describe('OnboardingStepsController', () => {
+describe('GreetingController', () => {
   let greetingController: GreetingController;
   let greetingService: GreetingService;
 
