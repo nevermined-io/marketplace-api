@@ -1,15 +1,17 @@
 import {
 Post,
+Get,
+Put,
 Controller,
 Body,
 NotFoundException,
-Get,
 Param,
 } from '@nestjs/common';
 import { BookmarkService } from './bookmark.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateBookmarkDto } from './dto/create-bookmark.dto';
 import { GetBookmarkDto } from './dto/get-bookmark.dto';
+import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
 
 @ApiTags('Bookmark')
 @Controller()
@@ -49,13 +51,13 @@ constructor(
       description: 'Not found',
     })
     async getBookmarkById(@Param('id') bookmarkId: string): Promise<GetBookmarkDto>{
-      const bookmark = await this.bookmarkService.findOneById(bookmarkId);
+      const bookmarkSources = await this.bookmarkService.findManyById(bookmarkId);
 
-      if(!bookmark) {
+      if(!bookmarkSources?.length) {
         throw new NotFoundException(`Bookmark with ${bookmarkId} not found`);
       }
 
-      return bookmark;
+      return GetBookmarkDto.fromSource(bookmarkSources[0]);
     }
 
     @Get('user/:userId')
@@ -71,5 +73,35 @@ constructor(
       const bookmarksSources = await this.bookmarkService.findManyByUserId(userId);
 
       return bookmarksSources.map(GetBookmarkDto.fromSource);
+    }
+
+    @Put(':id')
+    @ApiOperation({
+      description: 'Update an existing bookmark'
+    })
+    @ApiResponse({
+      status: 200,
+      description: 'Return a updated bookmark',
+      type: GetBookmarkDto,
+    })
+    @ApiResponse({
+      status: 404,
+      description: 'Not found',
+    })
+    async updateBookmarkById(
+      @Param('id') id: string,
+      @Body() updateBookmarkDto: UpdateBookmarkDto
+    ): Promise<GetBookmarkDto> {
+      const bookmarkSources = await this.bookmarkService.findManyById(id);
+
+      if(!bookmarkSources?.length) {
+        throw new NotFoundException(`Bookmark with ${id} not found`);
+      }
+
+      
+
+      const bookmark = await this.bookmarkService.updateOneByEntryId(String(bookmarkSources[0]._id), updateBookmarkDto);
+
+      return GetBookmarkDto.fromSource(bookmark);
     }
 }

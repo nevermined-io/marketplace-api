@@ -52,17 +52,25 @@ describe('BookmarkController', () => {
   });
 
   it('should get a bookmark by passing id', async () => {
-    jest.spyOn(bookmarkService, 'findOneById').mockImplementation((id) => {
+    jest.spyOn(bookmarkService, 'findManyById').mockImplementation((id) => {
       if(id === bookmark.id) {
-        return bookmark as any;
+        return [{
+          _source: bookmark,
+          _index: MarketplaceIndex.Bookmark,
+          _id: faker.datatype.uuid(),
+        }] as any;
       }
     });
 
-    expect(await bookmarkController.getBookmarkById(bookmark.id)).toStrictEqual(bookmark);
+    expect(await bookmarkController.getBookmarkById(bookmark.id)).toStrictEqual(GetBookmarkDto.fromSource({
+      _source: bookmark,
+      _index: MarketplaceIndex.Bookmark,
+      _id: faker.datatype.uuid(),
+    }));
   });
 
   it('should throw error if cannot find the bookmark', () => {
-    jest.spyOn(bookmarkService, 'findOneById').mockResolvedValue(undefined);
+    jest.spyOn(bookmarkService, 'findManyById').mockResolvedValue([]);
 
     expect(bookmarkController.getBookmarkById(bookmark.id))
       .rejects.toEqual(new NotFoundException(`Bookmark with ${bookmark.id} not found`));
@@ -71,12 +79,47 @@ describe('BookmarkController', () => {
   it('should get all bookmarks of a user', async () => {
     jest.spyOn(bookmarkService, 'findManyByUserId').mockResolvedValue([{
       _source: bookmark,
-    } as any]);
+      _index: MarketplaceIndex.Bookmark,
+      _id: faker.datatype.uuid(),
+    }]);
 
     expect(await bookmarkController.getBookmarksByUserId(bookmark.userId)).toStrictEqual([GetBookmarkDto.fromSource({
       _source: bookmark,
       _index: MarketplaceIndex.Bookmark,
       _id: faker.datatype.uuid(),
     })]);
+  });
+
+  it('should update bookmark by passing id', async() => {
+    const newBookmark = {...bookmark, description: faker.lorem.sentence()};
+
+    jest.spyOn(bookmarkService, 'findManyById').mockResolvedValue([{
+      _source: bookmark,
+      _index: MarketplaceIndex.Bookmark,
+      _id: faker.datatype.uuid(),
+    }]);
+
+    jest.spyOn(bookmarkService, 'updateOneByEntryId').mockResolvedValue({
+      _source: newBookmark,
+      _index: MarketplaceIndex.Bookmark,
+      _id: faker.datatype.uuid(),
+    });
+
+    expect(await bookmarkController.updateBookmarkById(bookmark.id, {
+      description: newBookmark.description
+    })).toStrictEqual(GetBookmarkDto.fromSource({
+      _source: newBookmark,
+      _index: MarketplaceIndex.Bookmark,
+      _id: faker.datatype.uuid(),
+    }));
+  });
+
+  it('should update throw error if bookmark with id passed does not exist', () => {
+    const newBookmark = {...bookmark, description: faker.lorem.sentence()};
+    
+    jest.spyOn(bookmarkService, 'findManyById').mockResolvedValue([]);
+
+    expect(bookmarkController.updateBookmarkById(bookmark.id, { description: newBookmark.description}))
+      .rejects.toEqual(new NotFoundException(`Bookmark with ${bookmark.id} not found`));
   });
 });
