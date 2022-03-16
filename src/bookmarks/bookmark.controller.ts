@@ -42,7 +42,7 @@ constructor(
     @ApiResponse({
       status: 200,
       description: 'Return a bookmark user',
-      type: [GetBookmarkDto],
+      type: GetBookmarkDto,
     })
     @ApiResponse({
       status: 404,
@@ -64,7 +64,8 @@ constructor(
     })
     @ApiResponse({
       status: 200,
-      description: 'Return all bookmark from a user'
+      description: 'Return all bookmark from a user',
+      type: [GetBookmarkDto],
     })
     async getBookmarksByUserId(@Param('userId') userId: string): Promise<GetBookmarkDto[]> {
       const bookmarksSources = await this.bookmarkService.findManyByUserId(userId);
