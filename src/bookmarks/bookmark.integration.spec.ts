@@ -7,6 +7,7 @@ import { INestApplication } from '@nestjs/common';
 import { BookmarkModule } from './bookmark.module';
 import { BookmarkService } from './bookmark.service';
 import { Bookmark } from './bookmark.entity';
+import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
 
 describe('Bookmark', () => {
     let app: INestApplication;
@@ -15,17 +16,24 @@ describe('Bookmark', () => {
     bookmark.did = `did:${faker.datatype.uuid()}`;
     bookmark.description = faker.lorem.sentence();
 
+    const newBookmark = {...bookmark, description: faker.lorem.sentence()};
+
     const bookmarkService = {
         createOne: () => bookmark,
-        findOneById: (id: string) => {
-            if(id !== bookmark.id) {
-                return;
-            }
-
-            return bookmark;
+        findManyById: (id: string) => {
+            return [{
+                _source: bookmark,
+                _id: faker.datatype.uuid(),
+            }].filter(b => b._source.id === id);
         },
         findManyByUserId: (userId: string) => {
             return [{_source: bookmark}].filter(b => b._source.userId === userId);
+        },
+        updateOneByEntryId: (id: string, description: UpdateBookmarkDto) => {
+            return {
+                id,
+                _source: {...bookmark, ...description},
+            };
         }
     };
 
@@ -74,5 +82,16 @@ describe('Bookmark', () => {
 
         expect(response.statusCode).toBe(200);
         expect(response.body).toStrictEqual([{...bookmark, createdAt: bookmark.createdAt.toISOString()}]);
+    });
+
+    it('/PUT by id', async() => {
+        const response = await request(app.getHttpServer())
+            .put(`/${bookmark.id}`)
+            .send({
+                description: newBookmark.description
+            });
+
+            expect(response.statusCode).toBe(200);
+            expect(response.body).toStrictEqual({...newBookmark, createdAt: bookmark.createdAt.toISOString()});
     });
 });

@@ -9,7 +9,7 @@ export class ElasticService {
   ) {}
   
   async addDocumentToIndex(index: string, document: unknown) {
-    return await this.elasticsearchService.index({
+    return this.elasticsearchService.index({
       index,
       body: document,
     });
@@ -23,5 +23,20 @@ export class ElasticService {
         query,
       },
     })).body.hits.hits;
+  }
+
+  async updateDocumentByIndexAndId(index: string, id: string, document: unknown) {
+    return this.elasticsearchService.update({
+      index,
+      id,
+      body: document,
+    });
+  }
+
+  async getDocumentByIndexAndId(index: string, id: string): Promise<unknown> {
+    return (await this.elasticsearchService.get({
+      index,
+      id,
+    })).body;
   }
 }

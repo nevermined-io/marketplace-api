@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { SearchHit } from '@elastic/elasticsearch/api/types';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
 import { CreateBookmarkDto } from './dto/create-bookmark.dto';
+import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
 import { Bookmark } from './bookmark.entity';
 import { MarketplaceIndex } from '../common/type';
 
@@ -19,14 +20,14 @@ export class BookmarkService {
         return bookmark;
     }
 
-    async findOneById(id: string): Promise<Bookmark> {
-        return (await this.elasticService.searchByIndex(MarketplaceIndex.Bookmark, {
+    async findManyById(id: string): Promise<SearchHit<Bookmark>[]> {
+        return this.elasticService.searchByIndex(MarketplaceIndex.Bookmark, {
             term: {
                 'id.keyword': {
                     value: id
                 },
             }
-        }))?.[0]?._source as Bookmark;
+        }) as Promise<SearchHit<Bookmark>[]>;
     }
 
     async findManyByUserId(userId: string): Promise<SearchHit<Bookmark>[]> {
@@ -37,5 +38,14 @@ export class BookmarkService {
                 },
             }
         }) as Promise<SearchHit<Bookmark>[]>;
+    }
+
+    async updateOneByEntryId(entryId: string, updateBookmarkDto: UpdateBookmarkDto): Promise<SearchHit<Bookmark>> {
+        await this.elasticService.updateDocumentByIndexAndId(MarketplaceIndex.Bookmark, entryId, {
+            doc: updateBookmarkDto
+        });
+
+        return this.elasticService
+            .getDocumentByIndexAndId(MarketplaceIndex.Bookmark, entryId) as Promise<SearchHit<Bookmark>>;
     }
 }
