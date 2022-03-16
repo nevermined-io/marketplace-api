@@ -104,6 +104,12 @@ module.exports = {
         allowShortCircuit: true,
       },
     ],
+    '@typescript-eslint/unbound-method': [
+      'error',
+      {
+        ignoreStatic: true,
+      },
+    ],
     '@typescript-eslint/no-use-before-define': 'error',
     '@typescript-eslint/no-var-requires': 'error',
     '@typescript-eslint/prefer-for-of': 'error',

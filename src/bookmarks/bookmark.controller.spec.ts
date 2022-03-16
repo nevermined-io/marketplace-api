@@ -8,6 +8,8 @@ import { BookmarkController } from './bookmark.controller';
 import { BookmarkService } from './bookmark.service';
 import { Bookmark } from './bookmark.entity';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
+import { GetBookmarkDto } from './dto/get-bookmark.dto';
+import { MarketplaceIndex } from '../common/type';
 
 describe('BookmarkController', () => {
   let bookmarkController: BookmarkController;
@@ -50,19 +52,31 @@ describe('BookmarkController', () => {
   });
 
   it('should get a bookmark by passing id', async () => {
-    jest.spyOn(bookmarkService, 'findOne').mockImplementation((id) => {
+    jest.spyOn(bookmarkService, 'findOneById').mockImplementation((id) => {
       if(id === bookmark.id) {
         return bookmark as any;
       }
     });
 
-    expect(await bookmarkController.getBookmarks(bookmark.id)).toStrictEqual(bookmark);
+    expect(await bookmarkController.getBookmarkById(bookmark.id)).toStrictEqual(bookmark);
   });
 
   it('should throw error if cannot find the bookmark', () => {
-    jest.spyOn(bookmarkService, 'findOne').mockResolvedValue(undefined);
+    jest.spyOn(bookmarkService, 'findOneById').mockResolvedValue(undefined);
 
-    expect(bookmarkController.getBookmarks(bookmark.id))
+    expect(bookmarkController.getBookmarkById(bookmark.id))
       .rejects.toEqual(new NotFoundException(`Bookmark with ${bookmark.id} not found`));
+  });
+
+  it('should get all bookmarks of a user', async () => {
+    jest.spyOn(bookmarkService, 'findManyByUserId').mockResolvedValue([{
+      _source: bookmark,
+    } as any]);
+
+    expect(await bookmarkController.getBookmarksByUserId(bookmark.userId)).toStrictEqual([GetBookmarkDto.fromSource({
+      _source: bookmark,
+      _index: MarketplaceIndex.Bookmark,
+      _id: faker.datatype.uuid(),
+    })]);
   });
 });

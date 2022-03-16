@@ -48,13 +48,27 @@ constructor(
       status: 404,
       description: 'Not found',
     })
-    async getBookmarks(@Param('id') bookmarkId: string): Promise<GetBookmarkDto>{
-      const bookmark = await this.bookmarkService.findOne(bookmarkId);
+    async getBookmarkById(@Param('id') bookmarkId: string): Promise<GetBookmarkDto>{
+      const bookmark = await this.bookmarkService.findOneById(bookmarkId);
 
       if(!bookmark) {
         throw new NotFoundException(`Bookmark with ${bookmarkId} not found`);
       }
 
       return bookmark;
+    }
+
+    @Get('user/:userId')
+    @ApiOperation({
+      description: 'Get all the user bookmarks',
+    })
+    @ApiResponse({
+      status: 200,
+      description: 'Return all bookmark from a user'
+    })
+    async getBookmarksByUserId(@Param('userId') userId: string): Promise<GetBookmarkDto[]> {
+      const bookmarksSources = await this.bookmarkService.findManyByUserId(userId);
+
+      return bookmarksSources.map(GetBookmarkDto.fromSource);
     }
 }

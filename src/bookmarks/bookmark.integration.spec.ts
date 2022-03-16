@@ -17,6 +17,16 @@ describe('Bookmark', () => {
 
     const bookmarkService = {
         createOne: () => bookmark,
+        findOneById: (id: string) => {
+            if(id !== bookmark.id) {
+                return;
+            }
+
+            return bookmark;
+        },
+        findManyByUserId: (userId: string) => {
+            return [{_source: bookmark}].filter(b => b._source.userId === userId);
+        }
     };
 
     beforeAll(async () => {
@@ -42,5 +52,27 @@ describe('Bookmark', () => {
 
         expect(response.statusCode).toBe(201);
         expect(response.body).toStrictEqual({...bookmark, createdAt: bookmark.createdAt.toISOString()});
+    });
+
+    it('/Get by id', async() => {
+        const response = await request(app.getHttpServer())
+            .get(`/${bookmark.id}`);
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toStrictEqual({...bookmark, createdAt: bookmark.createdAt.toISOString()});
+    });
+
+    it('/GET by id not found error', async() => {
+        await request(app.getHttpServer())
+            .get(`/${faker.datatype.uuid()}`)
+            .expect(404);
+    });
+
+    it('/GET by userId', async() => {
+        const response = await request(app.getHttpServer())
+            .get(`/user/${bookmark.userId}`);
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toStrictEqual([{...bookmark, createdAt: bookmark.createdAt.toISOString()}]);
     });
 });

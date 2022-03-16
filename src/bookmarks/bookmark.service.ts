@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { SearchHit } from '@elastic/elasticsearch/api/types';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
 import { CreateBookmarkDto } from './dto/create-bookmark.dto';
 import { Bookmark } from './bookmark.entity';
@@ -18,7 +19,7 @@ export class BookmarkService {
         return bookmark;
     }
 
-    async findOne(id: string): Promise<Bookmark> {
+    async findOneById(id: string): Promise<Bookmark> {
         return (await this.elasticService.searchByIndex(MarketplaceIndex.Bookmark, {
             term: {
                 'id.keyword': {
@@ -26,5 +27,15 @@ export class BookmarkService {
                 },
             }
         }))?.[0]?._source as Bookmark;
+    }
+
+    async findManyByUserId(userId: string): Promise<SearchHit<Bookmark>[]> {
+        return this.elasticService.searchByIndex(MarketplaceIndex.Bookmark, {
+            term: {
+                'userId.keyword': {
+                    value: userId
+                },
+            }
+        }) as Promise<SearchHit<Bookmark>[]>;
     }
 }
