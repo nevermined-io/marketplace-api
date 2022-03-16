@@ -25,7 +25,7 @@ constructor(
     @ApiResponse({
       status: 201,
       description: 'Bookmark is created',
-      type: [GetBookmarkDto],
+      type: GetBookmarkDto,
     })
     @ApiResponse({
       status: 403,
