@@ -3,7 +3,6 @@ import { RouterModule } from 'nest-router';
 import { routes } from './routes';
 import { ConfigModule } from './shared/config/config.module';
 import { LoggerModule } from './shared/logger/logger.module';
-import { GreetingModule } from './greeting/greeting.module';
 import { BookmarkModule } from './bookmarks/bookmark.module';
 import { HttpsRedirectMiddleware } from './common/middlewares/https-redirection/https-redirection.middleware';
 
@@ -12,7 +11,6 @@ import { HttpsRedirectMiddleware } from './common/middlewares/https-redirection/
     RouterModule.forRoutes(routes),
     LoggerModule,
     ConfigModule,
-    GreetingModule,
     BookmarkModule,
   ],
 })

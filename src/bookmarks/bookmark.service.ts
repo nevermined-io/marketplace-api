@@ -15,19 +15,16 @@ export class BookmarkService {
     async createOne(createBookmarkDto: CreateBookmarkDto): Promise<Bookmark> {
         const bookmark = {...new Bookmark(), ...createBookmarkDto};
         
-        await this.elasticService.addDocumentToIndex(MarketplaceIndex.Bookmark, bookmark);
+        await this.elasticService.addDocumentToIndex(MarketplaceIndex.Bookmark, bookmark.id, bookmark);
 
         return bookmark;
     }
 
-    async findManyById(id: string): Promise<SearchHit<Bookmark>[]> {
-        return this.elasticService.searchByIndex(MarketplaceIndex.Bookmark, {
-            term: {
-                'id.keyword': {
-                    value: id
-                },
-            }
-        }) as Promise<SearchHit<Bookmark>[]>;
+    async findOneById(id: string): Promise<SearchHit<Bookmark>> {
+        return this.elasticService.getDocumentByIndexAndId(
+            MarketplaceIndex.Bookmark,
+            id,
+        ) as Promise<SearchHit<Bookmark>>;
     }
 
     async findManyByUserId(userId: string): Promise<SearchHit<Bookmark>[]> {
