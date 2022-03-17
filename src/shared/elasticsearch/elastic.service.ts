@@ -8,9 +8,10 @@ export class ElasticService {
     private readonly elasticsearchService: ElasticsearchService
   ) {}
   
-  async addDocumentToIndex(index: string, document: unknown) {
+  async addDocumentToIndex(index: string, id: string, document: unknown) {
     return this.elasticsearchService.index({
       index,
+      id,
       body: document,
     });
   }

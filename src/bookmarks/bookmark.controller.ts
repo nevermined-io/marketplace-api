@@ -5,7 +5,6 @@ Put,
 Delete,
 Controller,
 Body,
-NotFoundException,
 Param,
 } from '@nestjs/common';
 import { BookmarkService } from './bookmark.service';
@@ -52,13 +51,9 @@ constructor(
       description: 'Not found',
     })
     async getBookmarkById(@Param('id') bookmarkId: string): Promise<GetBookmarkDto>{
-      const bookmarkSources = await this.bookmarkService.findManyById(bookmarkId);
+      const bookmarkSources = await this.bookmarkService.findOneById(bookmarkId);
 
-      if(!bookmarkSources?.length) {
-        throw new NotFoundException(`Bookmark with ${bookmarkId} not found`);
-      }
-
-      return GetBookmarkDto.fromSource(bookmarkSources[0]);
+      return GetBookmarkDto.fromSource(bookmarkSources);
     }
 
     @Get('user/:userId')
@@ -93,13 +88,7 @@ constructor(
       @Param('id') id: string,
       @Body() updateBookmarkDto: UpdateBookmarkDto
     ): Promise<GetBookmarkDto> {
-      const bookmarkSources = await this.bookmarkService.findManyById(id);
-
-      if(!bookmarkSources?.length) {
-        throw new NotFoundException(`Bookmark with ${id} not found`);
-      }
-
-      const bookmark = await this.bookmarkService.updateOneByEntryId(String(bookmarkSources[0]._id), updateBookmarkDto);
+      const bookmark = await this.bookmarkService.updateOneByEntryId(id, updateBookmarkDto);
 
       return GetBookmarkDto.fromSource(bookmark);
     }
@@ -110,23 +99,13 @@ constructor(
     })
     @ApiResponse({
       status: 200,
-      description: 'return all bookmark left of the use'
+      description: 'return bookmark deleted',
     })
     @ApiResponse({
       status: 404,
       description: 'Not found'
     })
-    async deleteBookmarkById(@Param('id') id: string): Promise<GetBookmarkDto[]> {
-      const bookmarkSources = await this.bookmarkService.findManyById(id);
-
-      if(!bookmarkSources?.length) {
-        throw new NotFoundException(`Bookmark with ${id} not found`);
-      }
-
-      await this.bookmarkService.deleteOneByEntryId(String(bookmarkSources[0]._id));
-
-      const bookmarkSourcesLeft = await this.bookmarkService.findManyByUserId(bookmarkSources[0]._source.userId);
-
-      return bookmarkSourcesLeft.map(GetBookmarkDto.fromSource);
+    async deleteBookmarkById(@Param('id') id: string): Promise<void> {
+      await this.bookmarkService.deleteOneByEntryId(id);
     }
 }

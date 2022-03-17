@@ -20,11 +20,11 @@ describe('Bookmark', () => {
 
     const bookmarkService = {
         createOne: () => bookmark,
-        findManyById: (id: string) => {
-            return [{
+        findOneById: () => {
+            return {
                 _source: bookmark,
                 _id: faker.datatype.uuid(),
-            }].filter(b => b._source.id === id);
+            };
         },
         findManyByUserId: (userId: string) => {
             return [{_source: bookmark}].filter(b => b._source.userId === userId);
@@ -71,12 +71,6 @@ describe('Bookmark', () => {
         expect(response.body).toStrictEqual({...bookmark, createdAt: bookmark.createdAt.toISOString()});
     });
 
-    it('/GET by id not found error', async() => {
-        await request(app.getHttpServer())
-            .get(`/${faker.datatype.uuid()}`)
-            .expect(404);
-    });
-
     it('/GET by userId', async() => {
         const response = await request(app.getHttpServer())
             .get(`/user/${bookmark.userId}`);
@@ -96,24 +90,9 @@ describe('Bookmark', () => {
             expect(response.body).toStrictEqual({...newBookmark, createdAt: bookmark.createdAt.toISOString()});
     });
 
-    it('/PUT by id not found error', async () => {
-        await request(app.getHttpServer())
-            .put(`/${faker.datatype.uuid()}`)
-            .send({
-                description: newBookmark.description
-            })
-            .expect(404);
-    });
-
     it('/DELETE by id', async() => {
         await request(app.getHttpServer())
             .del(`/${bookmark.id}`)
             .expect(200);
-    });
-
-    it('/DELETE by id not found error', async () => {
-        await request(app.getHttpServer())
-            .del(`/${faker.datatype.uuid()}`)
-            .expect(404);
     });
 });
