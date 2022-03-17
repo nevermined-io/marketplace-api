@@ -84,6 +84,10 @@ constructor(
       status: 404,
       description: 'Not found',
     })
+    @ApiResponse({
+      status: 403,
+      description: 'Bad Request',
+    })
     async updateBookmarkById(
       @Param('id') id: string,
       @Body() updateBookmarkDto: UpdateBookmarkDto
