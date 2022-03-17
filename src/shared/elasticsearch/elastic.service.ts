@@ -39,4 +39,11 @@ export class ElasticService {
       id,
     })).body;
   }
+
+  async deleteDocumentByIndexAndId(index: string, id: string): Promise<unknown> {
+    return this.elasticsearchService.delete({
+      index,
+      id,
+    });
+  }
 }

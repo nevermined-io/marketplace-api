@@ -48,4 +48,8 @@ export class BookmarkService {
         return this.elasticService
             .getDocumentByIndexAndId(MarketplaceIndex.Bookmark, entryId) as Promise<SearchHit<Bookmark>>;
     }
+
+    async deleteOneByEntryId(entryId: string): Promise<void> {
+        await this.elasticService.deleteDocumentByIndexAndId(MarketplaceIndex.Bookmark, entryId);
+    }
 }

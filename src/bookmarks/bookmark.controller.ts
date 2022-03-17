@@ -2,6 +2,7 @@ import {
 Post,
 Get,
 Put,
+Delete,
 Controller,
 Body,
 NotFoundException,
@@ -98,10 +99,34 @@ constructor(
         throw new NotFoundException(`Bookmark with ${id} not found`);
       }
 
-      
-
       const bookmark = await this.bookmarkService.updateOneByEntryId(String(bookmarkSources[0]._id), updateBookmarkDto);
 
       return GetBookmarkDto.fromSource(bookmark);
+    }
+
+    @Delete(':id')
+    @ApiOperation({
+      description: 'Delete a bookmark'
+    })
+    @ApiResponse({
+      status: 200,
+      description: 'return all bookmark left of the use'
+    })
+    @ApiResponse({
+      status: 404,
+      description: 'Not found'
+    })
+    async deleteBookmarkById(@Param('id') id: string): Promise<GetBookmarkDto[]> {
+      const bookmarkSources = await this.bookmarkService.findManyById(id);
+
+      if(!bookmarkSources?.length) {
+        throw new NotFoundException(`Bookmark with ${id} not found`);
+      }
+
+      await this.bookmarkService.deleteOneByEntryId(String(bookmarkSources[0]._id));
+
+      const bookmarkSourcesLeft = await this.bookmarkService.findManyByUserId(bookmarkSources[0]._source.userId);
+
+      return bookmarkSourcesLeft.map(GetBookmarkDto.fromSource);
     }
 }

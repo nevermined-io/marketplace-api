@@ -34,7 +34,8 @@ describe('Bookmark', () => {
                 id,
                 _source: {...bookmark, ...description},
             };
-        }
+        },
+        deleteOneByEntryId: () => undefined,
     };
 
     beforeAll(async () => {
@@ -93,5 +94,26 @@ describe('Bookmark', () => {
 
             expect(response.statusCode).toBe(200);
             expect(response.body).toStrictEqual({...newBookmark, createdAt: bookmark.createdAt.toISOString()});
+    });
+
+    it('/PUT by id not found error', async () => {
+        await request(app.getHttpServer())
+            .put(`/${faker.datatype.uuid()}`)
+            .send({
+                description: newBookmark.description
+            })
+            .expect(404);
+    });
+
+    it('/DELETE by id', async() => {
+        await request(app.getHttpServer())
+            .del(`/${bookmark.id}`)
+            .expect(200);
+    });
+
+    it('/DELETE by id not found error', async () => {
+        await request(app.getHttpServer())
+            .del(`/${faker.datatype.uuid()}`)
+            .expect(404);
     });
 });
