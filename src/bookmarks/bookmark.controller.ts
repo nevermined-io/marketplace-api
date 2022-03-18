@@ -6,12 +6,16 @@ Delete,
 Controller,
 Body,
 Param,
+Query,
+ValidationPipe,
+UsePipes,
 } from '@nestjs/common';
 import { BookmarkService } from './bookmark.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateBookmarkDto } from './dto/create-bookmark.dto';
 import { GetBookmarkDto } from './dto/get-bookmark.dto';
 import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
+import { SearchQueryDto } from '../common/helpers/search-query.dto';
 
 @ApiTags('Bookmark')
 @Controller()
@@ -65,8 +69,10 @@ constructor(
       description: 'Return all bookmark from a user',
       type: [GetBookmarkDto],
     })
-    async getBookmarksByUserId(@Param('userId') userId: string): Promise<GetBookmarkDto[]> {
-      const bookmarksSources = await this.bookmarkService.findManyByUserId(userId);
+    @UsePipes(new ValidationPipe({ transform: true }))
+    async getBookmarksByUserId(@Param('userId') userId: string,
+      @Query() searchQueryDto: SearchQueryDto): Promise<GetBookmarkDto[]> {
+      const bookmarksSources = await this.bookmarkService.findManyByUserId(userId, searchQueryDto);
 
       return bookmarksSources.map(GetBookmarkDto.fromSource);
     }
