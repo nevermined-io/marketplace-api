@@ -77,7 +77,8 @@ describe('BookmarkController', () => {
       _id: faker.datatype.uuid(),
     }]);
 
-    expect(await bookmarkController.getBookmarksByUserId(bookmark.userId)).toStrictEqual([GetBookmarkDto.fromSource({
+    expect(await bookmarkController.
+      getBookmarksByUserId(bookmark.userId, {page: 0, offset: 100})).toStrictEqual([GetBookmarkDto.fromSource({
       _source: bookmark,
       _index: MarketplaceIndex.Bookmark,
       _id: faker.datatype.uuid(),

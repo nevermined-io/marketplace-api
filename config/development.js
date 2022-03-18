@@ -1,5 +1,3 @@
-const { parseKafkaBrokers } = require('./config');
-
 module.exports = {
   NODE_ENV: 'production',
   JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
