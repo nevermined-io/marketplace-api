@@ -39,6 +39,7 @@ jobs:
         ELASTIC_USERNAME: "elastic"
         ELASTIC_PASSWORD: "password"
       run: | 
+        npm run setup:dev
         npm run dev &
         sleep 10
         npm run test:postman
