@@ -26,6 +26,7 @@
 											"    },",
 											"}, (error, response) => {",
 											"    pm.test(\"should get bookmark by passing id\", () => {",
+											"        console.log(response.json());",
 											"        pm.expect(response).to.have.property('code', 200);",
 											"        pm.expect(response.json()).to.have.property('userId', pm.environment.get('userId'));",
 											"    });",
