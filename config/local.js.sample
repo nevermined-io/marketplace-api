@@ -5,7 +5,7 @@ module.exports = {
   NODE_ENV: process.env.NODE_ENV,
   JWT_SECRET_KEY: 'secret',
   server: {
-    port: 3000,
+    port: 3100,
   },
   src: {
     root: 'src',

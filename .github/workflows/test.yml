@@ -49,7 +49,6 @@ jobs:
     - name: Run POSTMAN collection
       run: | 
         npm run dev &
-        sleep 60
         npm run test:postam
     - name: Output the run Details
       uses: actions/upload-artifact@v2
