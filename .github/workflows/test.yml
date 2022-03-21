@@ -44,8 +44,13 @@ jobs:
         npm install -g newman-reporter-htmlextra
     - name: Make Directory for results
       run: mkdir -p testResults
+    - name: Run project
+      run: npm run dev
     - name: Run POSTMAN collection
-      run: npm run test:postman
+      uses: BerniWittmann/background-server-action@latest
+      with: 
+        command: npm run test:postman
+        start: npm run dev
     - name: Output the run Details
       uses: actions/upload-artifact@v2
       with: 
