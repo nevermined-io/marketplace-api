@@ -6,6 +6,7 @@ import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
 import { Bookmark } from './bookmark.entity';
 import { MarketplaceIndex } from '../common/type';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
+import { Logger } from '../shared/logger/logger.service';
 
 @Injectable()
 export class BookmarkService {
@@ -29,13 +30,17 @@ export class BookmarkService {
     }
 
     async findManyByUserId(userId: string, searchQueryDto: SearchQueryDto ): Promise<SearchHit<Bookmark>[]> {
-        return this.elasticService.searchByIndex(MarketplaceIndex.Bookmark, {
+        const response = await this.elasticService.searchByIndex(MarketplaceIndex.Bookmark, {
             term: {
                 'userId.keyword': {
                     value: userId
                 },
             },
-        }, searchQueryDto) as Promise<SearchHit<Bookmark>[]>;
+        }, searchQueryDto) as SearchHit<Bookmark>[];
+
+        Logger.log(response);
+
+        return response;
     }
 
     async updateOneByEntryId(entryId: string, updateBookmarkDto: UpdateBookmarkDto): Promise<SearchHit<Bookmark>> {
