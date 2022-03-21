@@ -715,6 +715,7 @@
 									"            raw: JSON.stringify({\"did\": \"did:12345\",\"userId\": \"u-12345\",\"description\": \"I am interesting in this asset\"})",
 									"        }",
 									"}, (error, response) => {",
+									"    console.log(response.json());",
 									"    pm.environment.set(\"userId\", response.json().userId);",
 									"});"
 								],
