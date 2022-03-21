@@ -20,7 +20,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:watch": "jest --watch",
-    "test:postman": "newman run marketplace-collection.json -e marketplace-env.json htmlextra --reporter-htmlextra-export testResults/htmlreport.html --reporter-htmlextra-darkTheme  > testResults/runreport1.html",
+    "test:postman": "newman run marketplace-collection.json -e marketplace-env.json",
     "typings:generate": "./node_modules/.bin/ts-node scripts/generate-typings",
     "upgrade-interactive": "npx npm-check --update",
     "postupgrade-interactive": "npm test"
