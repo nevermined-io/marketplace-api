@@ -47,10 +47,10 @@ jobs:
     - name: Run project
       run: npm run dev
     - name: Run POSTMAN collection
-      uses: BerniWittmann/background-server-action@latest
-      with: 
-        command: npm run test:postman
-        start: npm run dev
+      run: | 
+        npm run dev &
+        sleep 60
+        npm run test:postam
     - name: Output the run Details
       uses: actions/upload-artifact@v2
       with: 
