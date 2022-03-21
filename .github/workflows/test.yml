@@ -20,19 +20,6 @@ jobs:
         npm run build
         npm run lint     
     - name: Run tests
-      env:
-        ELASTIC_URL: "http://localhost:9200"
-        ELASTIC_INDEX: "marketplace"
-        ELASTIC_USERNAME: "elastic"
-        ELASTIC_PASSWORD: "password"
       run: |
         npm run setup:dev
         npm run test:cov
-    - name: Install newman
-      run: |
-        npm install -g newman
-    - name: Run POSTMAN collection
-      run: | 
-        npm run dev &
-        sleep 10
-        npm run test:postman
