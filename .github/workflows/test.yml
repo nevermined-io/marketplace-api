@@ -38,5 +38,17 @@ jobs:
       run: |
         npm run setup:dev
         npm run test:cov
-
+    - name: Install newman
+      run: |
+        npm install -g newman
+        npm install -g newman-reporter-htmlextra
+    - name: Make Directory for results
+      run: mkdir -p testResults
+    - name: Run POSTMAN collection
+      run: npm run test:postman
+    - name: Output the run Details
+      uses: actions/upload-artifact@v2
+      with: 
+       name: RunReports
+       path: testResults
 
