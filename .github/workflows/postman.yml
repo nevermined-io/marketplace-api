@@ -32,6 +32,13 @@ jobs:
     - name: Install newman
       run: |
         npm install -g newman
+        npm install -g newman-reporter-htmlextra
+
+    - name: Make Directory for results
+      run: |
+        mkdir -p testResults
+        ls
+
     - name: Run POSTMAN collection
       env:
         ELASTIC_URL: "http://localhost:9200"
@@ -43,3 +50,8 @@ jobs:
         npm run dev &
         sleep 10
         npm run test:postman
+    - name: Output the run Details
+      uses: actions/upload-artifact@v2
+      with: 
+       name: RunReports
+       path: testResults
