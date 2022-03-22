@@ -67,8 +67,6 @@ volumes:
     driver: local
  
 networks:
-  postgres:
-    driver: bridge
   elastic:
     driver: bridge
 
