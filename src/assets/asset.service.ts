@@ -10,7 +10,7 @@ export class AssetService {
   indexDB: string;
 
   constructor(private readonly elasticService: ElasticService, private readonly configService: ConfigService) {
-    this.indexDB = configService.get<string>('assetIndex') || MarketplaceIndex.asset;
+    this.indexDB = this.configService.get<string>('assetIndex') || MarketplaceIndex.asset;
   }
 
   async createOne(createAssetDto: CreateAssetDto): Promise<Asset> {
