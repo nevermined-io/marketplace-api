@@ -26,7 +26,7 @@ export class AditionalInformationDto {
     inLanguage: string;
 
     @ApiProperty({
-        example: [LinkDto],
+        type: [LinkDto],
         description: 'Links of the asset',
     })
     @ValidateNested({ each: true })

@@ -26,7 +26,7 @@ export class MainDto {
     encryptedFiles: string;
 
     @ApiProperty({
-        example: [FileDto],
+        type: [FileDto],
         description: 'Files that contains the metadata',
     })
     @ValidateNested({ each: true })
