@@ -18,4 +18,5 @@ module.exports = {
       password: process.env.ELASTIC_PASSWORD,
     },
   },
+  assetIndex: process.env.ASSET_INDEX,
 };

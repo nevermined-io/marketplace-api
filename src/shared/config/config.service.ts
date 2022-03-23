@@ -30,6 +30,7 @@ const DOTENV_SCHEMA = Joi.object({
       password: Joi.string().required().error(new Error('ELASTIC_PASSWORD is required!')),
     }).error(new Error('auth of elasticsearch need to be set')),
   }).required().error(new Error('The config of elasticsearch need to be set')),
+  assetIndex: Joi.string(),
 });
 
 type DotenvSchemaKeys =
@@ -40,7 +41,8 @@ type DotenvSchemaKeys =
   | 'security.enableHttpsRedirect'
   | 'elasticsearch.node'
   | 'elasticsearch.auth.username'
-  | 'elasticsearch.auth.password';
+  | 'elasticsearch.auth.password'
+  | 'assetIndex';
 
 export class ConfigService {
   private readonly envConfig: EnvConfig;
