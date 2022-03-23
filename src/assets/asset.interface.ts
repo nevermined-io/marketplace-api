@@ -79,6 +79,7 @@ export interface Metadata {
   attributes: Attributes;
   index: number;
   serviceEndpoint: string;
+  type: string;
 }
 
 export interface Proof {
