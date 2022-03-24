@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, ValidateNested, IsDate } from 'class-validator';
+import { IsString, ValidateNested, IsDate, IsUrl } from 'class-validator';
 import { Type } from 'class-transformer';
 import { AuthenticationDto } from './authentication.dto';
 import { ProofDto } from './proof.dto';
@@ -13,7 +13,9 @@ export class GetAssetDto {
     description: 'Context of the asset',
     name: '@context',
   })
-  @IsString()
+  @IsUrl({
+    require_tld: false,
+  })
   ['@context']: string;
 
   @ApiProperty({

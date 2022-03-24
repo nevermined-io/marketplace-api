@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ValidateNested } from 'class-validator';
+import { ValidateNested, IsOptional } from 'class-validator';
+import { Type } from 'class-transformer';
 import { AditionalInformationDto } from './aditionalInformation.dto';
 import { CurationDto } from './curation.dto';
 import { MainDto } from './main.dto';
@@ -9,7 +10,9 @@ export class AttributesDto {
     type: AditionalInformationDto,
     description: 'Aditional information of the asset',
   })
+  @IsOptional()
   @ValidateNested()
+  @Type(() => AditionalInformationDto)
   additionalInformation: AditionalInformationDto;
 
   @ApiProperty({
@@ -17,6 +20,7 @@ export class AttributesDto {
     description: 'popularity of the asset',
   })
   @ValidateNested()
+  @Type(() => CurationDto)
   curation: CurationDto;
 
   @ApiProperty({
@@ -24,5 +28,6 @@ export class AttributesDto {
     description: 'Main data of the asset',
   })
   @ValidateNested()
+  @Type(() => MainDto)
   main: MainDto;
 }

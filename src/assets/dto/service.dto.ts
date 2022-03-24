@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsInt, IsOptional, ValidateNested } from 'class-validator';
+import { IsString, IsInt, IsUrl, IsOptional, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { AttributesDto } from './attributes.dto';
 
@@ -15,7 +15,9 @@ export class ServiceDto {
     example: 'http://localhost:8030/api/v1/gateway/services/consume',
     description: 'Url of the service endpoint',
   })
-  @IsString()
+  @IsUrl({
+    require_tld: false,
+  })
   serviceEndpoint: string;
 
   @ApiProperty({
@@ -38,12 +40,16 @@ export class ServiceDto {
     description: 'Url to purchase asset',
   })
   @IsOptional()
+  @IsUrl({
+    require_tld: false,
+  })
   purchaseEndpoint: string;
 
   @ApiProperty({
-    type: [AttributesDto],
+    type: AttributesDto,
     description: 'Attribute of the metadata',
   })
+  @IsOptional()
   @ValidateNested()
   @Type(() => AttributesDto)
   attributes: AttributesDto;

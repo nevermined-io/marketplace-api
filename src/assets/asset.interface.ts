@@ -1,16 +1,36 @@
-export class Curation {
+export interface Container {
+  entrypoint: string;
+  image: string;
+  tag: string;
+}
+
+export interface Algorithm {
+  language: string;
+  format: string;
+  version: string;
+  container: Container;
+}
+
+export interface Curation {
   numVotes: number;
   rating: number;
   schema: string;
+  isListed: boolean;
 }
 
 export interface File {
+  checksum: string;
+  url: string;
+  checksumType: string;
+  name: string;
   compression: string;
   contentLength: string;
   contentType: string;
   encoding: string;
   index: number;
   resourceId: string;
+  encrypted: boolean;
+  encryptionMode: string;
 }
 
 export interface Link {
@@ -37,6 +57,7 @@ export interface Main {
   name: string;
   price: string;
   type: string;
+  algorithm: Algorithm;
 }
 
 export interface Attributes {
@@ -53,6 +74,7 @@ export interface Authentication {
 export interface Main {
   author: string;
   dateCreated: string;
+  datePublished: string;
   encryptedFiles: string;
   files: File[];
   license: number;
