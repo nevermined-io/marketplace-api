@@ -14,7 +14,7 @@ const configProfile = require('../../../config');
 const DOTENV_SCHEMA = Joi.object({
   NODE_ENV: Joi.string().valid('development', 'production', 'test', 'provision').default('development'),
   JWT_SECRET_KEY: Joi.string().required().error(new Error('JWT_SECRET_KEY is required!')),
-  API_VERSION: Joi.string().required().error(new Error('API_VERSION is required')),
+  API_VERSION: Joi.string().default('v1'),
   server: Joi.object({
     port: Joi.number().default(3000),
   }),
@@ -22,7 +22,7 @@ const DOTENV_SCHEMA = Joi.object({
     node: Joi.string().default('http://localhost:9200'),
     auth: Joi.object({
       username: Joi.string().required().error(new Error('CLUSTER_NAME is required!')),
-      password: Joi.string().default('v1'),
+      password: Joi.string(),
     }).error(new Error('auth of elasticsearch need to be set')),
   })
     .required()
