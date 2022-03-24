@@ -3,9 +3,10 @@ LABEL maintainer="Nevermined <root@nevermined.io>"
 
 RUN apk add --no-cache autoconf automake alpine-sdk
 
-WORKDIR /usr/src/app
+
 COPY package*.json ./
-RUN npm install
+
+RUN npm install 
 
 COPY src ./src
 COPY scripts ./scripts
@@ -16,5 +17,5 @@ COPY ormconfig.js ./
 
 RUN npm run build
 
-CMD ["npm", "run", "start:prod"]
+ENTRYPOINT ["npm", "run", "start:prod"]
 
