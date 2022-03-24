@@ -22,7 +22,7 @@ const DOTENV_SCHEMA = Joi.object({
     node: Joi.string().default('http://localhost:9200'),
     auth: Joi.object({
       username: Joi.string().required().error(new Error('CLUSTER_NAME is required!')),
-      password: Joi.string().required().error(new Error('ELASTIC_PASSWORD is required!')),
+      password: Joi.string().default('v1'),
     }).error(new Error('auth of elasticsearch need to be set')),
   })
     .required()
