@@ -1,10 +1,3 @@
-export interface Access {
-  index: number;
-  purchaseEndpoint: string;
-  serviceEndpoint: string;
-  type: string;
-}
-
 export class Curation {
   numVotes: number;
   rating: number;
@@ -57,13 +50,6 @@ export interface Authentication {
   type: string;
 }
 
-export interface Authorization {
-  index: number;
-  service: string;
-  serviceEndpoint: string;
-  type: string;
-}
-
 export interface Main {
   author: string;
   dateCreated: string;
@@ -72,13 +58,6 @@ export interface Main {
   license: number;
   name: string;
   price: string;
-  type: string;
-}
-
-export interface Metadata {
-  attributes: Attributes;
-  index: number;
-  serviceEndpoint: string;
   type: string;
 }
 
@@ -92,5 +71,14 @@ export interface Proof {
 export interface PublicKey {
   id: string;
   owner: string;
+  type: string;
+}
+
+export interface Service {
+  index: number;
+  attributes: Attributes;
+  service: string;
+  purchaseEndpoint: string;
+  serviceEndpoint: string;
   type: string;
 }

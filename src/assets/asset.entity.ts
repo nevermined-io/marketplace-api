@@ -1,6 +1,4 @@
-import { Authentication, Proof, PublicKey, Authorization, Access, Metadata } from './asset.interface';
-
-type Service = Authorization | Access | Metadata;
+import { Authentication, Proof, PublicKey, Service } from './asset.interface';
 
 export class Asset {
   id: string;

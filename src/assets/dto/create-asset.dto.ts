@@ -4,11 +4,7 @@ import { Type } from 'class-transformer';
 import { AuthenticationDto } from './authentication.dto';
 import { ProofDto } from './proof.dto';
 import { PublicKeyDto } from './publicKey.dto';
-import { AuthorizationDto } from './authorization.dto';
-import { AccessDto } from './access.dto';
-import { MetadataDto } from './metadata.dto';
 import { ServiceDto } from './service.dto';
-import { serviceExample } from './service.example';
 
 export class CreateAssetDto {
   @ApiProperty({
@@ -50,19 +46,10 @@ export class CreateAssetDto {
   publicKey: PublicKeyDto[];
 
   @ApiProperty({
-    example: serviceExample,
+    type: ServiceDto,
     description: 'Services that contains the asset',
   })
   @ValidateNested({ each: true })
-  @Type(() => ServiceDto, {
-    discriminator: {
-      property: '__type',
-      subTypes: [
-        { value: AuthorizationDto, name: 'authorization' },
-        { value: AccessDto, name: 'access' },
-        { value: MetadataDto, name: 'metadata' },
-      ],
-    },
-  })
-  service: (AuthorizationDto | AccessDto | MetadataDto)[];
+  @Type(() => ServiceDto, {})
+  service: ServiceDto[];
 }
