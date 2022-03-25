@@ -24,6 +24,7 @@ export class MainDto {
   @ApiProperty({
     example: '2021-02-01T10:55:11Z',
     description: 'The date on which the asset DDO is registered into the metadata store',
+    required: false,
   })
   @IsOptional()
   @IsDateString()

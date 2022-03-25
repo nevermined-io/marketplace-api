@@ -7,6 +7,7 @@ export class AlgorithmDto {
   @ApiProperty({
     example: 'scala',
     description: 'Language used to implement the software',
+    required: false,
   })
   @IsOptional()
   @IsString()
@@ -15,6 +16,7 @@ export class AlgorithmDto {
   @ApiProperty({
     example: 'docker-image',
     description: 'Packaging format of the software',
+    required: false,
   })
   @IsOptional()
   @IsString()
@@ -23,6 +25,7 @@ export class AlgorithmDto {
   @ApiProperty({
     example: '0.1',
     description: 'Version of the software',
+    required: false,
   })
   @IsOptional()
   @IsString()

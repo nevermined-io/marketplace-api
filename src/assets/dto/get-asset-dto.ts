@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, ValidateNested, IsDate, IsUrl } from 'class-validator';
+import { IsString, ValidateNested, IsDateString, IsUrl } from 'class-validator';
 import { Type } from 'class-transformer';
 import { AuthenticationDto } from './authentication.dto';
 import { ProofDto } from './proof.dto';
@@ -30,8 +30,15 @@ export class GetAssetDto {
     example: '2021-02-01T10:55:11Z',
     description: 'Date when the asset is created',
   })
-  @IsDate()
-  created: Date;
+  @IsDateString()
+  created: string;
+
+  @ApiProperty({
+    example: '2021-02-01T10:55:11Z',
+    description: 'Date when the asset is created',
+  })
+  @IsDateString()
+  updated: string;
 
   @ApiProperty({
     example: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429',

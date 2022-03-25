@@ -30,6 +30,7 @@ export class ServiceDto {
   @ApiProperty({
     example: 'SecretStore',
     description: 'Service name',
+    required: false,
   })
   @IsOptional()
   @IsString()
@@ -38,6 +39,7 @@ export class ServiceDto {
   @ApiProperty({
     example: 'http://localhost:8030/api/v1/gateway/services/access/initialize',
     description: 'Url to purchase asset',
+    required: false,
   })
   @IsOptional()
   @IsUrl({
@@ -48,6 +50,7 @@ export class ServiceDto {
   @ApiProperty({
     type: AttributesDto,
     description: 'Attribute of the metadata',
+    required: false,
   })
   @IsOptional()
   @ValidateNested()

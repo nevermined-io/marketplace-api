@@ -7,6 +7,7 @@ export class FileDto {
     description:
       'Checksum of the file using your preferred format (i.e. MD5). Format specified in checksumType.' +
       "If it's not provided can't be validated if the file was not modified after registering",
+    required: false,
   })
   @IsOptional()
   @IsString()
@@ -17,6 +18,7 @@ export class FileDto {
       'https://raw.githubusercontent.com/tbertinmahieux' +
       '/MSongsDB/master/Tasks_Demos/CoverSongs/shs_dataset_test.txt',
     description: 'Content URL. Omitted from the remote metadata. Supports http(s):// and ipfs:// URLs',
+    required: false,
   })
   @IsOptional()
   @IsUrl({
@@ -27,6 +29,7 @@ export class FileDto {
   @ApiProperty({
     example: 'md5',
     description: 'Format of the provided checksum. Can vary according to server (i.e Amazon vs. Azure)',
+    required: false,
   })
   @IsOptional()
   @IsString()
@@ -35,6 +38,7 @@ export class FileDto {
   @ApiProperty({
     example: 'data.txt',
     description: 'File name',
+    required: false,
   })
   @IsOptional()
   @IsString()
@@ -43,6 +47,7 @@ export class FileDto {
   @ApiProperty({
     example: 'zip',
     description: 'File compression (e.g. no, gzip, bzip2, etc)',
+    required: false,
   })
   @IsOptional()
   @IsString()
@@ -51,6 +56,7 @@ export class FileDto {
   @ApiProperty({
     example: '4535431',
     description: 'Size of the file in bytes',
+    required: false,
   })
   @IsOptional()
   @IsString()
@@ -66,6 +72,7 @@ export class FileDto {
   @ApiProperty({
     example: 'UTF-8',
     description: 'File encoding (e.g. UTF-8)',
+    required: false,
   })
   @IsOptional()
   @IsString()
@@ -83,6 +90,7 @@ export class FileDto {
     description:
       'Remote identifier of the file in the external provider' +
       '. It is typically the remote id in the cloud provider',
+    required: false,
   })
   @IsOptional()
   @IsString()
@@ -91,6 +99,7 @@ export class FileDto {
   @ApiProperty({
     example: false,
     description: 'Boolean. Is the file encrypted? If is not set is assumed the file is not encrypted',
+    required: false,
   })
   @IsOptional()
   @IsString()
@@ -99,6 +108,7 @@ export class FileDto {
   @ApiProperty({
     example: 'gpg',
     description: 'Encryption mode used. Just valid if encrypted=true',
+    required: false,
   })
   @IsOptional()
   @IsString()

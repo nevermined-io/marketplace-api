@@ -4,11 +4,13 @@ import { Type } from 'class-transformer';
 import { AditionalInformationDto } from './aditionalInformation.dto';
 import { CurationDto } from './curation.dto';
 import { MainDto } from './main.dto';
+import { ServiceAgreementTemplateDto } from './serviceAgreementTemplate.dto';
 
 export class AttributesDto {
   @ApiProperty({
     type: AditionalInformationDto,
     description: 'Aditional information of the asset',
+    required: false,
   })
   @IsOptional()
   @ValidateNested()
@@ -30,4 +32,14 @@ export class AttributesDto {
   @ValidateNested()
   @Type(() => MainDto)
   main: MainDto;
+
+  @ApiProperty({
+    type: ServiceAgreementTemplateDto,
+    description: 'Service agreement template',
+    required: false,
+  })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => ServiceAgreementTemplateDto)
+  serviceAgreementTemplate: ServiceAgreementTemplateDto;
 }

@@ -1,3 +1,46 @@
+export class Handler {
+  functionName: string;
+  moduleName: string;
+  version: string;
+}
+
+export interface Parameter {
+  name: string;
+  type: string;
+  value: unknown;
+}
+
+export interface Event {
+  actionType: string;
+  handler: Handler;
+  name: string;
+}
+
+export interface Condition {
+  contractName: string;
+  functionName: string;
+  name: string;
+  events: Event[];
+  parameters: Parameter[];
+  timelock: number;
+  timeout: number;
+}
+
+export interface ConditionDependency {
+  access: string[];
+  escrowPayment: string[];
+  execCompute: string[];
+  lockPayment: string[];
+}
+
+export interface ServiceAgreementTemplate {
+  conditionDependency: ConditionDependency;
+  conditions: Condition[];
+  contractName: number;
+  events: Event[];
+  fulfillmentOrder: string;
+}
+
 export interface Container {
   entrypoint: string;
   image: string;
@@ -46,6 +89,7 @@ export interface AditionalInformation {
   links: Link[];
   tags: string[];
   workExample: string;
+  categories: string[];
 }
 
 export interface Main {
@@ -64,6 +108,7 @@ export interface Attributes {
   additionalInformation: AditionalInformation;
   curation: Curation;
   main: Main;
+  serviceAgreementTemplate: ServiceAgreementTemplate;
 }
 
 export interface Authentication {

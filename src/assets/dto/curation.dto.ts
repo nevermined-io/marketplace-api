@@ -21,6 +21,7 @@ export class CurationDto {
   @ApiProperty({
     example: 'Binary Voting',
     description: 'Schema applied to calculate the rating',
+    required: false,
   })
   @IsOptional()
   @IsString()
@@ -29,6 +30,7 @@ export class CurationDto {
   @ApiProperty({
     example: false,
     description: "Flag unsuitable content. False by default. If it's true, the content must not be returned",
+    required: false,
   })
   @IsOptional()
   @IsBoolean()

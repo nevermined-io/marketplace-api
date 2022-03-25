@@ -4,12 +4,9 @@ export class Asset {
   id: string;
   ['@context']: string;
   authentication: Authentication[];
-  created: Date;
+  created: string;
+  updated: string;
   proof: Proof;
   publicKey: PublicKey[];
   service: Service[];
-
-  constructor() {
-    this.created = new Date();
-  }
 }

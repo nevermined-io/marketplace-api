@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, ValidateNested, IsUrl } from 'class-validator';
+import { IsString, ValidateNested, IsUrl, IsDateString } from 'class-validator';
 import { Type } from 'class-transformer';
 import { AuthenticationDto } from './authentication.dto';
 import { ProofDto } from './proof.dto';
@@ -24,6 +24,22 @@ export class CreateAssetDto {
   })
   @IsString()
   id: string;
+
+  @ApiProperty({
+    example: '2019-02-08T08:13:49Z',
+    description: 'ID of the asset',
+    required: false,
+  })
+  @IsDateString()
+  created: string;
+
+  @ApiProperty({
+    example: '2019-02-08T08:13:49Z',
+    description: 'ID of the asset',
+    required: false,
+  })
+  @IsDateString()
+  updated: string;
 
   @ApiProperty({
     description: 'Authentication used in the asset',
@@ -51,6 +67,7 @@ export class CreateAssetDto {
   @ApiProperty({
     example: serviceExample,
     description: 'Services that contains the asset',
+    type: ServiceDto,
   })
   @ValidateNested({ each: true })
   @Type(() => ServiceDto)
