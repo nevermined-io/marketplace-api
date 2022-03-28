@@ -11,6 +11,7 @@ describe('Asset', () => {
   let app: INestApplication;
   const assetService = {
     createOne: (asset_data) => asset_data,
+    findAllIds: () => [asset.id],
   };
 
   beforeAll(async () => {
@@ -25,10 +26,17 @@ describe('Asset', () => {
     await app.init();
   });
 
-  it('/Post', async () => {
+  it('/POST', async () => {
     const response = await request(app.getHttpServer()).post('/ddo').send(asset);
 
     expect(response.statusCode).toBe(201);
     expect(response.body).toStrictEqual(asset);
+  });
+
+  it('/GET', async () => {
+    const response = await request(app.getHttpServer()).get('/');
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toStrictEqual([asset.id]);
   });
 });

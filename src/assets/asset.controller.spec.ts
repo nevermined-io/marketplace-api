@@ -45,4 +45,10 @@ describe('Asset', () => {
 
     expect(await assetController.createAsset(asset)).toStrictEqual(asset);
   });
+
+  it('should get all asset Ids', async () => {
+    jest.spyOn(assetService, 'findAllIds').mockResolvedValue([asset.id]);
+
+    expect(await assetController.getAllAssetIds(undefined)).toStrictEqual([asset.id]);
+  });
 });
