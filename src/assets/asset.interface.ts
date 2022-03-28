@@ -82,16 +82,6 @@ export interface Link {
   url: string;
 }
 
-export interface AditionalInformation {
-  copyrightHolder: string;
-  description: string;
-  inLanguage: string;
-  links: Link[];
-  tags: string[];
-  workExample: string;
-  categories: string[];
-}
-
 export interface Main {
   author: string;
   dateCreated: string;
@@ -105,7 +95,7 @@ export interface Main {
 }
 
 export interface Attributes {
-  additionalInformation: AditionalInformation;
+  additionalInformation: unknown;
   curation: Curation;
   main: Main;
   serviceAgreementTemplate: ServiceAgreementTemplate;

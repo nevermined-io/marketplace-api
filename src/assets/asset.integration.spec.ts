@@ -7,7 +7,7 @@ import { AssetService } from './asset.service';
 import { AssetModule } from './asset.module';
 import { asset } from './asset.mockup';
 
-describe('Bookmark', () => {
+describe('Asset', () => {
   let app: INestApplication;
   const assetService = {
     createOne: (asset_data) => asset_data,
