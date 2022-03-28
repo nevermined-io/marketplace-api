@@ -12,7 +12,7 @@ export interface EnvConfig {
 const configProfile = require('../../../config');
 
 const DOTENV_SCHEMA = Joi.object({
-  NODE_ENV: Joi.string().valid('development', 'production', 'test', 'provision').default('development'),
+  NODE_ENV: Joi.string().valid('development', 'production', 'test', 'staging').default('development'),
   JWT_SECRET_KEY: Joi.string().required().error(new Error('JWT_SECRET_KEY is required!')),
   API_VERSION: Joi.string().default('v1'),
   server: Joi.object({
