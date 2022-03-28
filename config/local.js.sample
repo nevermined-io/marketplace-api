@@ -20,5 +20,6 @@ module.exports = {
   },
   security: {
     enableHttpsRedirect: false,
-  }
+  },
+  assetIndex: 'metadatadb'
 };

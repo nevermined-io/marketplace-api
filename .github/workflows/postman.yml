@@ -37,7 +37,6 @@ jobs:
     - name: Make Directory for results
       run: |
         mkdir -p testResults
-        ls
 
     - name: Run POSTMAN collection
       env:
