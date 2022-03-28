@@ -20,7 +20,7 @@ const bootstrap = async () => {
   const options = new DocumentBuilder().setTitle('Marketplace API').setVersion(API_VERSION).build();
   const document = SwaggerModule.createDocument(app, options);
 
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('api/v1/docs', app, document);
 
   await app.listen(PORT);
   logger.log({ message: 'server started 🚀', port: PORT, url: `http://localhost:${PORT}/api` });
