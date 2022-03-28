@@ -5,10 +5,8 @@ import { SearchQueryDto } from '../../common/helpers/search-query.dto';
 
 @Injectable()
 export class ElasticService {
-  constructor(
-    private readonly elasticsearchService: ElasticsearchService
-  ) {}
-  
+  constructor(private readonly elasticsearchService: ElasticsearchService) {}
+
   async addDocumentToIndex(index: string, id: string, document: unknown) {
     return this.elasticsearchService.index({
       index,
@@ -20,18 +18,22 @@ export class ElasticService {
   async searchByIndex(
     index: string,
     query: QueryDslQueryContainer,
-    searchQuery: SearchQueryDto
+    searchQuery: SearchQueryDto,
+    _source_includes?: string | string[]
   ): Promise<SearchHit<unknown>[]> {
     /* eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access */
-    return (await this.elasticsearchService.search({
-      index,
-      size: searchQuery?.offset,
-      from: searchQuery?.offset * searchQuery?.page,
-      body: {
-        sort: searchQuery?.sort,
-        query,
-      },
-    })).body.hits.hits;
+    return (
+      await this.elasticsearchService.search({
+        index,
+        size: searchQuery?.offset,
+        from: searchQuery?.offset * searchQuery?.page,
+        body: {
+          sort: searchQuery?.sort,
+          query,
+        },
+        _source_includes,
+      })
+    ).body.hits.hits;
   }
 
   async updateDocumentByIndexAndId(index: string, id: string, document: unknown) {
@@ -43,10 +45,12 @@ export class ElasticService {
   }
 
   async getDocumentByIndexAndId(index: string, id: string): Promise<unknown> {
-    return (await this.elasticsearchService.get({
-      index,
-      id,
-    })).body;
+    return (
+      await this.elasticsearchService.get({
+        index,
+        id,
+      })
+    ).body;
   }
 
   async deleteDocumentByIndexAndId(index: string, id: string): Promise<unknown> {

@@ -1,8 +1,9 @@
-import { Post, Controller, Body } from '@nestjs/common';
+import { Post, Controller, Body, Get, Query } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { GetAssetDto } from './dto/get-asset-dto';
 import { CreateAssetDto } from './dto/create-asset.dto';
 import { AssetService } from './asset.service';
+import { SearchQueryDto } from '../common/helpers/search-query.dto';
 
 @ApiTags('Asset')
 @Controller()
@@ -24,5 +25,22 @@ export class AssetController {
   })
   createAsset(@Body() createAssetDto: CreateAssetDto): Promise<GetAssetDto> {
     return this.assetService.createOne(createAssetDto);
+  }
+
+  @Get()
+  @ApiOperation({
+    description: 'Get all asset Ids',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Assets Ids',
+    isArray: true,
+    schema: {
+      example: ['did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430'],
+      items: { type: 'string' },
+    },
+  })
+  getAllAssetIds(@Query() searchQueryDto: SearchQueryDto): Promise<string[]> {
+    return this.assetService.findAllIds(searchQueryDto);
   }
 }
