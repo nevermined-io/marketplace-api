@@ -18,6 +18,11 @@ const DOTENV_SCHEMA = Joi.object({
   server: Joi.object({
     port: Joi.number().default(3000),
   }),
+  security: Joi.object({
+    enableHttpsRedirect: Joi.bool().default(false),
+  }).default({
+    enableHttpsRedirect: false,
+  }),
   elasticsearch: Joi.object({
     node: Joi.string().default('http://localhost:9200'),
     auth: Joi.object({
