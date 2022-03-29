@@ -20,7 +20,7 @@ export class AssetService {
     return asset;
   }
 
-  async findAllIds(searchQueryDto: SearchQueryDto): Promise<string[]> {
+  async findManyIds(searchQueryDto: SearchQueryDto): Promise<string[]> {
     return (
       await this.elasticService.searchByIndex(
         MarketplaceIndex.Asset,
@@ -33,7 +33,7 @@ export class AssetService {
     ).map((asset) => (asset._source as Asset).id);
   }
 
-  async findAll(searchQueryDto: SearchQueryDto): Promise<SearchHit<Asset>[]> {
+  async findMany(searchQueryDto: SearchQueryDto): Promise<SearchHit<Asset>[]> {
     return this.elasticService.searchByIndex(
       MarketplaceIndex.Asset,
       {

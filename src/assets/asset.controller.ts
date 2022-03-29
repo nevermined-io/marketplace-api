@@ -43,7 +43,7 @@ export class AssetController {
   })
   @UsePipes(new ValidationPipe({ transform: true }))
   getAllAssetIds(@Query() searchQueryDto: SearchQueryDto): Promise<string[]> {
-    return this.assetService.findAllIds(searchQueryDto);
+    return this.assetService.findManyIds(searchQueryDto);
   }
 
   @Get('/ddo')
@@ -100,7 +100,7 @@ export class AssetController {
   }
 
   private async listDDOs(searchQueryDto: SearchQueryDto): Promise<GetAssetDto[]> {
-    const assetsSource = await this.assetService.findAll(searchQueryDto);
+    const assetsSource = await this.assetService.findMany(searchQueryDto);
 
     return assetsSource.map((a) => GetAssetDto.fromSource(a));
   }
