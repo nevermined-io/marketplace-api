@@ -9,6 +9,7 @@ import { Asset } from './asset.entity';
 import { MarketplaceIndex } from '../common/type';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
 import { GetAssetDto } from './dto/get-asset-dto';
+import { SearchQueryDto } from '../common/helpers/search-query.dto';
 
 describe('Asset', () => {
   let assetController: AssetController;
@@ -70,5 +71,87 @@ describe('Asset', () => {
         _id: asset.id,
       }),
     ]);
+  });
+
+  it('should get a list of assets that match with the passed query', async () => {
+    const created = 'Tue Mar 29 2020';
+    const assetCopy = { ...asset, created, id: `div:nv:${faker.datatype.uuid()}` };
+    jest.spyOn(assetService, 'findAll').mockImplementation((query: SearchQueryDto) => {
+      return [asset, assetCopy]
+        .sort((a, b) => {
+          return query.sort.created === 'desc'
+            ? new Date(a.created).getTime() - new Date(b.created).getTime()
+            : new Date(a.created).getTime() - new Date(b.created).getTime();
+        })
+        .map((a) => ({
+          _source: a,
+          _index: MarketplaceIndex.Asset,
+          _id: a.id,
+        })) as any;
+    });
+
+    expect(
+      await assetController.listDDObyQuery({
+        sort: {
+          created: 'desc',
+        },
+        offset: 100,
+        page: 0,
+      })
+    ).toStrictEqual(
+      [
+        {
+          _source: assetCopy,
+          _index: MarketplaceIndex.Asset,
+          _id: assetCopy.id,
+        },
+        {
+          _source: asset,
+          _index: MarketplaceIndex.Asset,
+          _id: asset.id,
+        },
+      ].map((a) => GetAssetDto.fromSource(a))
+    );
+  });
+
+  it('should get a list of assets that match with the passed body query', async () => {
+    const created = 'Tue Mar 29 2020';
+    const assetCopy = { ...asset, created, id: `div:nv:${faker.datatype.uuid()}` };
+    jest.spyOn(assetService, 'findAll').mockImplementation((query: SearchQueryDto) => {
+      return [asset, assetCopy]
+        .sort((a, b) => {
+          return query.sort.created === 'desc'
+            ? new Date(a.created).getTime() - new Date(b.created).getTime()
+            : new Date(b.created).getTime() - new Date(a.created).getTime();
+        })
+        .map((a) => ({
+          _source: a,
+          _index: MarketplaceIndex.Asset,
+          _id: a.id,
+        })) as any;
+    });
+
+    expect(
+      await assetController.listDDObyQueryPost({
+        sort: {
+          created: 'desc',
+        },
+        offset: 100,
+        page: 0,
+      })
+    ).toStrictEqual(
+      [
+        {
+          _source: assetCopy,
+          _index: MarketplaceIndex.Asset,
+          _id: assetCopy.id,
+        },
+        {
+          _source: asset,
+          _index: MarketplaceIndex.Asset,
+          _id: asset.id,
+        },
+      ].map((a) => GetAssetDto.fromSource(a))
+    );
   });
 });

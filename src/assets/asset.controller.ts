@@ -1,9 +1,10 @@
-import { Post, Controller, Body, Get, Query } from '@nestjs/common';
+import { Post, Controller, Body, Get, Query, ValidationPipe, UsePipes } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { GetAssetDto } from './dto/get-asset-dto';
 import { CreateAssetDto } from './dto/create-asset.dto';
 import { AssetService } from './asset.service';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
+import { QueryBodyDDOdto } from './dto/query-body-ddo.dto';
 
 @ApiTags('Asset')
 @Controller()
@@ -40,6 +41,7 @@ export class AssetController {
       items: { type: 'string' },
     },
   })
+  @UsePipes(new ValidationPipe({ transform: true }))
   getAllAssetIds(@Query() searchQueryDto: SearchQueryDto): Promise<string[]> {
     return this.assetService.findAllIds(searchQueryDto);
   }
@@ -53,7 +55,51 @@ export class AssetController {
     description: 'Assets Ids',
     type: [GetAssetDto],
   })
+  @ApiResponse({
+    status: 403,
+    description: 'Bad Request',
+  })
+  @UsePipes(new ValidationPipe({ transform: true }))
   async getDDOAllAssets(@Query() searchQueryDto: SearchQueryDto): Promise<GetAssetDto[]> {
+    return this.listDDOs(searchQueryDto);
+  }
+
+  @Get('/ddo/query')
+  @ApiOperation({
+    description: 'Get a list of DDOs that match with the given text',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'list of DDOs',
+    type: [GetAssetDto],
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Bad Request',
+  })
+  @UsePipes(new ValidationPipe({ transform: true }))
+  listDDObyQuery(@Query() searchQueryDto: SearchQueryDto): Promise<GetAssetDto[]> {
+    return this.listDDOs(searchQueryDto);
+  }
+
+  @Post('/ddo/query')
+  @ApiOperation({
+    description: 'Get a list of DDOs that match with the executed query.',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'list of DDOs',
+    type: [GetAssetDto],
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Bad Request',
+  })
+  listDDObyQueryPost(@Body() searchQueryDto: QueryBodyDDOdto): Promise<GetAssetDto[]> {
+    return this.listDDOs(searchQueryDto);
+  }
+
+  private async listDDOs(searchQueryDto: SearchQueryDto): Promise<GetAssetDto[]> {
     const assetsSource = await this.assetService.findAll(searchQueryDto);
 
     return assetsSource.map((a) => GetAssetDto.fromSource(a));
