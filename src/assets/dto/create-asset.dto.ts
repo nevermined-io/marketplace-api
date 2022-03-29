@@ -67,6 +67,7 @@ export class CreateAssetDto {
   @ApiProperty({
     example: serviceExample,
     description: 'Services that contains the asset',
+    isArray: true,
     type: ServiceDto,
   })
   @ValidateNested({ each: true })

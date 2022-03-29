@@ -6,7 +6,9 @@ import { Logger } from '../shared/logger/logger.service';
 import { AssetController } from './asset.controller';
 import { AssetService } from './asset.service';
 import { Asset } from './asset.entity';
+import { MarketplaceIndex } from '../common/type';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
+import { GetAssetDto } from './dto/get-asset-dto';
 
 describe('Asset', () => {
   let assetController: AssetController;
@@ -50,5 +52,23 @@ describe('Asset', () => {
     jest.spyOn(assetService, 'findAllIds').mockResolvedValue([asset.id]);
 
     expect(await assetController.getAllAssetIds(undefined)).toStrictEqual([asset.id]);
+  });
+
+  it('should get ddo for all the assets', async () => {
+    jest.spyOn(assetService, 'findAll').mockResolvedValue([
+      {
+        _source: asset,
+        _index: MarketplaceIndex.Asset,
+        _id: asset.id,
+      },
+    ]);
+
+    expect(await assetController.getDDOAllAssets(undefined)).toStrictEqual([
+      GetAssetDto.fromSource({
+        _source: asset,
+        _index: MarketplaceIndex.Asset,
+        _id: asset.id,
+      }),
+    ]);
   });
 });

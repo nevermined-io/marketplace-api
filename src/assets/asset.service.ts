@@ -4,6 +4,7 @@ import { CreateAssetDto } from './dto/create-asset.dto';
 import { Asset } from './asset.entity';
 import { MarketplaceIndex } from '../common/type';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
+import { SearchHit } from '@elastic/elasticsearch/api/types';
 
 @Injectable()
 export class AssetService {
@@ -14,7 +15,7 @@ export class AssetService {
   async createOne(createAssetDto: CreateAssetDto): Promise<Asset> {
     const asset = { ...new Asset(), ...createAssetDto };
 
-    await this.elasticService.addDocumentToIndex(MarketplaceIndex.asset, asset.id, asset);
+    await this.elasticService.addDocumentToIndex(MarketplaceIndex.Asset, asset.id, asset);
 
     return asset;
   }
@@ -22,7 +23,7 @@ export class AssetService {
   async findAllIds(searchQueryDto: SearchQueryDto): Promise<string[]> {
     return (
       await this.elasticService.searchByIndex(
-        MarketplaceIndex.asset,
+        MarketplaceIndex.Asset,
         {
           match_all: {},
         },
@@ -30,5 +31,15 @@ export class AssetService {
         'id'
       )
     ).map((asset) => (asset._source as Asset).id);
+  }
+
+  async findAll(searchQueryDto: SearchQueryDto): Promise<SearchHit<Asset>[]> {
+    return this.elasticService.searchByIndex(
+      MarketplaceIndex.Asset,
+      {
+        match_all: {},
+      },
+      searchQueryDto
+    ) as Promise<SearchHit<Asset>[]>;
   }
 }
