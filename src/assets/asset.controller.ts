@@ -117,10 +117,6 @@ export class AssetController {
     status: 403,
     description: 'Bad Request',
   })
-  @ApiResponse({
-    status: 404,
-    description: 'Not found',
-  })
   async deleteAllDDOs() {
     await this.assetService.deleteAll();
   }
