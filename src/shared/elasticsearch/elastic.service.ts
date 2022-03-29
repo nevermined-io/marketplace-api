@@ -59,4 +59,13 @@ export class ElasticService {
       id,
     });
   }
+
+  deleteDocumentByQuery(index: string, query: QueryDslQueryContainer): Promise<unknown> {
+    return this.elasticsearchService.deleteByQuery({
+      index,
+      body: {
+        query,
+      },
+    });
+  }
 }
