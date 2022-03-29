@@ -1,6 +1,7 @@
 export const asset = {
   '@context': 'https://w3id.org/did/v1',
   id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429',
+  created: new Date().toDateString(),
   authentication: [
     {
       publicKey: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430',
