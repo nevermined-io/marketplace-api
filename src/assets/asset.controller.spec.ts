@@ -50,13 +50,13 @@ describe('Asset', () => {
   });
 
   it('should get all asset Ids', async () => {
-    jest.spyOn(assetService, 'findAllIds').mockResolvedValue([asset.id]);
+    jest.spyOn(assetService, 'findManyIds').mockResolvedValue([asset.id]);
 
     expect(await assetController.getAllAssetIds(undefined)).toStrictEqual([asset.id]);
   });
 
   it('should get ddo for all the assets', async () => {
-    jest.spyOn(assetService, 'findAll').mockResolvedValue([
+    jest.spyOn(assetService, 'findMany').mockResolvedValue([
       {
         _source: asset,
         _index: MarketplaceIndex.Asset,
@@ -76,7 +76,7 @@ describe('Asset', () => {
   it('should get a list of assets that match with the passed query', async () => {
     const created = 'Tue Mar 29 2020';
     const assetCopy = { ...asset, created, id: `div:nv:${faker.datatype.uuid()}` };
-    jest.spyOn(assetService, 'findAll').mockImplementation((query: SearchQueryDto) => {
+    jest.spyOn(assetService, 'findMany').mockImplementation((query: SearchQueryDto) => {
       return [asset, assetCopy]
         .sort((a, b) => {
           return query.sort.created === 'desc'
@@ -117,7 +117,7 @@ describe('Asset', () => {
   it('should get a list of assets that match with the passed body query', async () => {
     const created = 'Tue Mar 29 2020';
     const assetCopy = { ...asset, created, id: `div:nv:${faker.datatype.uuid()}` };
-    jest.spyOn(assetService, 'findAll').mockImplementation((query: SearchQueryDto) => {
+    jest.spyOn(assetService, 'findMany').mockImplementation((query: SearchQueryDto) => {
       return [asset, assetCopy]
         .sort((a, b) => {
           return query.sort.created === 'desc'
@@ -153,5 +153,14 @@ describe('Asset', () => {
         },
       ].map((a) => GetAssetDto.fromSource(a))
     );
+  });
+
+  it('should delete all assets from marketplace', async () => {
+    const deleteAllDDOsSpy = jest.spyOn(assetService, 'deleteAll');
+    deleteAllDDOsSpy.mockResolvedValue(undefined);
+
+    await assetController.deleteAllDDOs();
+
+    expect(deleteAllDDOsSpy).toBeCalled();
   });
 });

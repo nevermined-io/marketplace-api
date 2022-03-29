@@ -17,8 +17,8 @@ describe('Asset', () => {
 
   const assetService = {
     createOne: (asset_data) => asset_data,
-    findAllIds: () => [asset.id],
-    findAll: (query: SearchQueryDto) =>
+    findManyIds: () => [asset.id],
+    findMany: (query: SearchQueryDto) =>
       [asset, assetCopy]
         .sort((a, b) => {
           return query?.sort?.created === 'desc'
@@ -30,6 +30,7 @@ describe('Asset', () => {
           _index: MarketplaceIndex.Asset,
           _id: a.id,
         })),
+    deleteAll: () => undefined,
   };
 
   beforeAll(async () => {
@@ -83,5 +84,11 @@ describe('Asset', () => {
 
     expect(response.statusCode).toBe(201);
     expect(response.body).toStrictEqual([assetCopy, asset]);
+  });
+
+  it('DELETE ddo', async () => {
+    const response = await request(app.getHttpServer()).delete('/ddo');
+
+    expect(response.statusCode).toBe(200);
   });
 });
