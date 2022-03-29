@@ -42,4 +42,10 @@ export class AssetService {
       searchQueryDto
     ) as Promise<SearchHit<Asset>[]>;
   }
+
+  async deleteAll() {
+    await this.elasticService.deleteDocumentByQuery(MarketplaceIndex.Asset, {
+      match_all: {},
+    });
+  }
 }

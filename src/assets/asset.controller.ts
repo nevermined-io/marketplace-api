@@ -1,4 +1,4 @@
-import { Post, Controller, Body, Get, Query, ValidationPipe, UsePipes } from '@nestjs/common';
+import { Post, Controller, Body, Get, Query, ValidationPipe, UsePipes, Delete } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { GetAssetDto } from './dto/get-asset-dto';
 import { CreateAssetDto } from './dto/create-asset.dto';
@@ -103,5 +103,25 @@ export class AssetController {
     const assetsSource = await this.assetService.findAll(searchQueryDto);
 
     return assetsSource.map((a) => GetAssetDto.fromSource(a));
+  }
+
+  @Delete('ddo')
+  @ApiOperation({
+    description: 'Retire metadata of all assets',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Deleted all DDOs from marketplace',
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Bad Request',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not found',
+  })
+  async deleteAllDDOs() {
+    await this.assetService.deleteAll();
   }
 }
