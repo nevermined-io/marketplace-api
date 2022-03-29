@@ -1,4 +1,4 @@
 export enum MarketplaceIndex {
-    Bookmark = 'bookmark',
-    asset = 'asset',
+  Bookmark = 'bookmark',
+  Asset = 'asset',
 }

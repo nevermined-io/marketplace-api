@@ -43,4 +43,19 @@ export class AssetController {
   getAllAssetIds(@Query() searchQueryDto: SearchQueryDto): Promise<string[]> {
     return this.assetService.findAllIds(searchQueryDto);
   }
+
+  @Get('/ddo')
+  @ApiOperation({
+    description: 'Get DDO of all assets',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Assets Ids',
+    type: [GetAssetDto],
+  })
+  async getDDOAllAssets(@Query() searchQueryDto: SearchQueryDto): Promise<GetAssetDto[]> {
+    const assetsSource = await this.assetService.findAll(searchQueryDto);
+
+    return assetsSource.map((a) => GetAssetDto.fromSource(a));
+  }
 }
