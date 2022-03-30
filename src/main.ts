@@ -1,11 +1,12 @@
 import { ValidationPipe } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ApplicationModule } from './app.module';
 import { ConfigService } from './shared/config/config.service';
 import { Logger } from './shared/logger/logger.service';
 import info from '../package.json';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
 
 const bootstrap = async () => {
   const logger = new Logger(bootstrap.name);
@@ -14,6 +15,7 @@ const bootstrap = async () => {
   app.enable('trust proxy');
   app.useGlobalPipes(new ValidationPipe());
   app.useLogger(app.get(Logger));
+  app.useGlobalGuards(new JwtAuthGuard(new Reflector()));
 
   const options = new DocumentBuilder()
     .setTitle('Marketplace API')
