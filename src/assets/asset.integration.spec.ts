@@ -9,11 +9,13 @@ import { AssetModule } from './asset.module';
 import { asset } from './asset.mockup';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
 import { MarketplaceIndex } from '../common/type';
+import { Asset } from './asset.entity';
 
 describe('Asset', () => {
   let app: INestApplication;
   const created = 'Tue Mar 29 2020';
   const assetCopy = { ...asset, created, id: `div:nv:${faker.datatype.uuid()}` };
+  delete assetCopy.service;
 
   const assetService = {
     createOne: (asset_data) => asset_data,
@@ -30,7 +32,24 @@ describe('Asset', () => {
           _index: MarketplaceIndex.Asset,
           _id: a.id,
         })),
+    findOneById: (id: string) =>
+      [asset, assetCopy]
+        .map((a) => ({
+          _source: a,
+          _index: MarketplaceIndex.Asset,
+          _id: a.id,
+        }))
+        .find((a) => a._id === id),
+    updateOneByEntryId: (id: string, assetToUpdate: Asset) => {
+      const assetUpdated = { ...[asset, assetCopy].find((a) => a.id === assetToUpdate.id), ...assetToUpdate } as Asset;
+      return {
+        _source: assetUpdated,
+        _index: MarketplaceIndex.Asset,
+        _id: id,
+      };
+    },
     deleteAll: () => undefined,
+    deleteOneByEntryId: () => undefined,
   };
 
   beforeAll(async () => {
@@ -90,5 +109,39 @@ describe('Asset', () => {
     const response = await request(app.getHttpServer()).delete('/ddo');
 
     expect(response.statusCode).toBe(200);
+  });
+
+  it('GET ddo/:did', async () => {
+    const response = await request(app.getHttpServer()).get(`/ddo/${asset.id}`);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toStrictEqual(asset);
+  });
+
+  it('PUT ddo/:did', async () => {
+    const updateAsset = { ...asset, updated: new Date().toDateString() };
+    const response = await request(app.getHttpServer()).put(`/ddo/${asset.id}`).send(updateAsset);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toStrictEqual(updateAsset);
+  });
+
+  it('DELETE ddo/:did', async () => {
+    const response = await request(app.getHttpServer()).delete(`/ddo/${asset.id}`);
+
+    expect(response.statusCode).toBe(200);
+  });
+
+  it('GET metadata/:did', async () => {
+    const response = await request(app.getHttpServer()).get(`/metadata/${asset.id}`);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toStrictEqual(asset.service[2].attributes);
+  });
+
+  it('GET metadata/:did', async () => {
+    const response = await request(app.getHttpServer()).get(`/metadata/${assetCopy.id}`);
+
+    expect(response.statusCode).toBe(404);
   });
 });
