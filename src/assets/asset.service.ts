@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
 import { CreateAssetDto } from './dto/create-asset.dto';
+import { UpdateAssetDto } from './dto/update-asset.dto';
 import { Asset } from './asset.entity';
 import { MarketplaceIndex } from '../common/type';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
@@ -43,9 +44,25 @@ export class AssetService {
     ) as Promise<SearchHit<Asset>[]>;
   }
 
-  async deleteAll() {
+  async findOneById(id: string): Promise<SearchHit<Asset>> {
+    return this.elasticService.getDocumentByIndexAndId(MarketplaceIndex.Asset, id) as Promise<SearchHit<Asset>>;
+  }
+
+  async updateOneByEntryId(entryId: string, updateAssetDto: UpdateAssetDto): Promise<SearchHit<Asset>> {
+    await this.elasticService.updateDocumentByIndexAndId(MarketplaceIndex.Asset, entryId, {
+      doc: updateAssetDto,
+    });
+
+    return this.elasticService.getDocumentByIndexAndId(MarketplaceIndex.Asset, entryId) as Promise<SearchHit<Asset>>;
+  }
+
+  async deleteAll(): Promise<void> {
     await this.elasticService.deleteDocumentByQuery(MarketplaceIndex.Asset, {
       match_all: {},
     });
+  }
+
+  async deleteOneByEntryId(entryId: string): Promise<void> {
+    await this.elasticService.deleteDocumentByIndexAndId(MarketplaceIndex.Asset, entryId);
   }
 }

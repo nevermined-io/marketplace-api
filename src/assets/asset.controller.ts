@@ -1,10 +1,24 @@
-import { Post, Controller, Body, Get, Query, ValidationPipe, UsePipes, Delete } from '@nestjs/common';
+import {
+  Post,
+  Controller,
+  Body,
+  Get,
+  Query,
+  ValidationPipe,
+  UsePipes,
+  Delete,
+  Param,
+  Put,
+  NotFoundException,
+} from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { GetAssetDto } from './dto/get-asset-dto';
 import { CreateAssetDto } from './dto/create-asset.dto';
 import { AssetService } from './asset.service';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
 import { QueryBodyDDOdto } from './dto/query-body-ddo.dto';
+import { UpdateAssetDto } from './dto/update-asset.dto';
+import { AttributesDto } from './dto/attributes.dto';
 
 @ApiTags('Asset')
 @Controller()
@@ -99,12 +113,6 @@ export class AssetController {
     return this.listDDOs(searchQueryDto);
   }
 
-  private async listDDOs(searchQueryDto: SearchQueryDto): Promise<GetAssetDto[]> {
-    const assetsSource = await this.assetService.findMany(searchQueryDto);
-
-    return assetsSource.map((a) => GetAssetDto.fromSource(a));
-  }
-
   @Delete('ddo')
   @ApiOperation({
     description: 'Retire metadata of all assets',
@@ -113,11 +121,96 @@ export class AssetController {
     status: 200,
     description: 'Deleted all DDOs from marketplace',
   })
+  async deleteAllDDOs() {
+    await this.assetService.deleteAll();
+  }
+
+  @Get('ddo/:did')
+  @ApiOperation({
+    description: 'Get DDO of a particular asset',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Get a DDO',
+    type: GetAssetDto,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not found',
+  })
+  async getDDO(@Param('did') did: string): Promise<GetAssetDto> {
+    const AssetSource = await this.assetService.findOneById(did);
+
+    return GetAssetDto.fromSource(AssetSource);
+  }
+
+  @Put('ddo/:did')
+  @ApiOperation({
+    description: 'Update DDO of an existing asset',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Get a updated DDO',
+    type: GetAssetDto,
+  })
   @ApiResponse({
     status: 403,
     description: 'Bad Request',
   })
-  async deleteAllDDOs() {
-    await this.assetService.deleteAll();
+  @ApiResponse({
+    status: 404,
+    description: 'Not found',
+  })
+  async updateDDO(@Param('did') did: string, @Body() updateAssetDto: UpdateAssetDto): Promise<GetAssetDto> {
+    const assetSource = await this.assetService.updateOneByEntryId(did, updateAssetDto);
+
+    return GetAssetDto.fromSource(assetSource);
+  }
+
+  @Delete('ddo/:did')
+  @ApiResponse({
+    description: 'Retire metadata of an asset',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Deleted DDO',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not found',
+  })
+  async deleteDDO(@Param('did') did: string): Promise<void> {
+    await this.assetService.deleteOneByEntryId(did);
+  }
+
+  @Get('metadata/:did')
+  @ApiResponse({
+    description: 'Get metadata of a particular asset',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Get a DDO',
+    type: AttributesDto,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not found',
+  })
+  async getDDOMetadata(@Param('did') did: string): Promise<AttributesDto> {
+    const assetSource = await this.assetService.findOneById(did);
+
+    const metada = GetAssetDto.fromSource(assetSource).service?.find((s) => s.attributes)?.attributes;
+
+    if (!metada) {
+      throw new NotFoundException(`Asset with did ${did} doesn't have metada`);
+    }
+
+    return metada;
+  }
+
+  private async listDDOs(searchQueryDto: SearchQueryDto): Promise<GetAssetDto[]> {
+    const assetsSource = await this.assetService.findMany(searchQueryDto);
+
+    return assetsSource.map((a) => GetAssetDto.fromSource(a));
   }
 }
