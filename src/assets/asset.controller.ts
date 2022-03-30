@@ -189,7 +189,7 @@ export class AssetController {
   })
   @ApiResponse({
     status: 200,
-    description: 'Get a DDO',
+    description: 'Get a metadata from asset',
     type: AttributesDto,
   })
   @ApiResponse({
