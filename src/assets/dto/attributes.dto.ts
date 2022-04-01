@@ -17,6 +17,7 @@ export class AttributesDto {
     type: CurationDto,
     description: 'popularity of the asset',
   })
+  @IsOptional()
   @ValidateNested()
   @Type(() => CurationDto)
   curation: CurationDto;
