@@ -1,11 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsString } from 'class-validator';
+import { IsArray, IsString, IsOptional } from 'class-validator';
 
 export class ConditionDependencyDto {
   @ApiProperty({
     example: [],
     description: 'Access',
   })
+  @IsOptional()
   @IsArray()
   access: string[];
 
@@ -13,6 +14,7 @@ export class ConditionDependencyDto {
     example: ['lockPayment', 'access'],
     description: 'Escrow Payment',
   })
+  @IsOptional()
   @IsArray()
   escrowPayment: string[];
 
@@ -20,6 +22,7 @@ export class ConditionDependencyDto {
     example: [],
     description: 'Exec Compute',
   })
+  @IsOptional()
   @IsString({ each: true })
   execCompute: string[];
 

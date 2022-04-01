@@ -9,6 +9,7 @@ export class MainDto {
     example: 'Met Office',
     description: 'Name of the entity generating this data (e.g. Tfl, Disney Corp, etc.)',
   })
+  @IsOptional()
   @IsString()
   author: string;
 
@@ -18,6 +19,7 @@ export class MainDto {
       'The date on which the asset was created by the originator.' +
       'ISO 8601 format, Coordinated Universal Time, e.g. 2019-01-31T08:38:32Z',
   })
+  @IsOptional()
   @IsDateString()
   dateCreated: string;
 
@@ -34,13 +36,16 @@ export class MainDto {
     example: '0x098213xzckasdf089723hjgdasfkjgasfv',
     description: 'files encrytion signature',
   })
+  @IsOptional()
   @IsString()
+  @IsOptional()
   encryptedFiles: string;
 
   @ApiProperty({
     type: [FileDto],
     description: 'Array of File objects including the encrypted file urls. Further metadata about each file is stored',
   })
+  @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => FileDto)
   files: FileDto[];
@@ -51,6 +56,7 @@ export class MainDto {
       'Short name referencing the license of the asset (e.g. Public Domain, CC-0, CC-BY, ' +
       'No License Specified, etc.). If it\'s not specified, the following value will be added: "No License Specified',
   })
+  @IsOptional()
   @IsString()
   license: number;
 
@@ -58,6 +64,7 @@ export class MainDto {
     example: 'UK Weather information 2011',
     description: 'Descriptive name or title of the asset',
   })
+  @IsOptional()
   @IsString()
   name: string;
 
@@ -65,6 +72,7 @@ export class MainDto {
     example: '10',
     description: 'Price of the asset. It must be an integer encoded as a string, e.g. "123000000000000000000"',
   })
+  @IsOptional()
   @IsString()
   price: string;
 
@@ -73,6 +81,7 @@ export class MainDto {
     description:
       'Type of the asset. Helps to filter by the type of asset. It could be for example ("dataset", "algorithm")',
   })
+  @IsOptional()
   @IsString()
   type: string;
 
@@ -80,6 +89,7 @@ export class MainDto {
     type: AlgorithmDto,
     description: 'Algorithm used in the asset',
   })
+  @IsOptional()
   @ValidateNested()
   @Type(() => AlgorithmDto)
   algorithm: AlgorithmDto;
