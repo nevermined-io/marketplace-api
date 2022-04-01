@@ -5,6 +5,7 @@ export class ConditionDependencyDto {
   @ApiProperty({
     example: [],
     description: 'Access',
+    required: false,
   })
   @IsOptional()
   @IsArray()
@@ -13,6 +14,7 @@ export class ConditionDependencyDto {
   @ApiProperty({
     example: ['lockPayment', 'access'],
     description: 'Escrow Payment',
+    required: false,
   })
   @IsOptional()
   @IsArray()
@@ -21,6 +23,7 @@ export class ConditionDependencyDto {
   @ApiProperty({
     example: [],
     description: 'Exec Compute',
+    required: false,
   })
   @IsOptional()
   @IsString({ each: true })

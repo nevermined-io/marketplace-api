@@ -7,6 +7,7 @@ export class EventDto {
   @ApiProperty({
     example: 'publisher',
     description: 'Action Type',
+    required: false,
   })
   @IsOptional()
   @IsString()
