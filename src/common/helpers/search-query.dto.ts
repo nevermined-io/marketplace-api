@@ -45,7 +45,7 @@ export class SearchQueryDto {
   @Transform(({ value }) => parseInt(value as string, 10))
   @IsOptional()
   @IsNumber()
-  page = 0;
+  page = 1;
 
   @ApiProperty({
     example: '{ "createdAt": "asc" }',

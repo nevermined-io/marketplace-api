@@ -67,7 +67,7 @@ export interface File {
   checksumType: string;
   name: string;
   compression: string;
-  contentLength: string;
+  contentLength: number;
   contentType: string;
   encoding: string;
   index: number;
@@ -89,7 +89,7 @@ export interface Main {
   files: File[];
   license: number;
   name: string;
-  price: string;
+  price: number;
   type: string;
   algorithm: Algorithm;
 }
@@ -114,7 +114,7 @@ export interface Main {
   files: File[];
   license: number;
   name: string;
-  price: string;
+  price: number;
   type: string;
 }
 

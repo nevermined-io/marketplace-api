@@ -5,7 +5,7 @@ import { UpdateAssetDto } from './dto/update-asset.dto';
 import { Asset } from './asset.entity';
 import { MarketplaceIndex } from '../common/type';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
-import { SearchHit } from '@elastic/elasticsearch/api/types';
+import { SearchHitsMetadata, SearchHit } from '@elastic/elasticsearch/api/types';
 
 @Injectable()
 export class AssetService {
@@ -31,17 +31,17 @@ export class AssetService {
         searchQueryDto,
         'id'
       )
-    ).map((asset) => (asset._source as Asset).id);
+    ).hits.map((asset) => (asset._source as Asset).id);
   }
 
-  async findMany(searchQueryDto: SearchQueryDto): Promise<SearchHit<Asset>[]> {
+  async findMany(searchQueryDto: SearchQueryDto): Promise<SearchHitsMetadata<Asset>> {
     return this.elasticService.searchByIndex(
       MarketplaceIndex.Asset,
       {
         match_all: {},
       },
       searchQueryDto
-    ) as Promise<SearchHit<Asset>[]>;
+    ) as Promise<SearchHitsMetadata<Asset>>;
   }
 
   async findOneById(id: string): Promise<SearchHit<Asset>> {
