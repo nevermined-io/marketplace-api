@@ -16,6 +16,7 @@ import { GetAssetDto } from './dto/get-asset-dto';
 import { CreateAssetDto } from './dto/create-asset.dto';
 import { AssetService } from './asset.service';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
+import { SearchResponse } from '../common/helpers/search-response.dto';
 import { QueryBodyDDOdto } from './dto/query-body-ddo.dto';
 import { UpdateAssetDto } from './dto/update-asset.dto';
 import { AttributesDto } from './dto/attributes.dto';
@@ -67,14 +68,14 @@ export class AssetController {
   @ApiResponse({
     status: 200,
     description: 'Assets Ids',
-    type: [GetAssetDto],
+    schema: SearchResponse.toDocs(GetAssetDto),
   })
   @ApiResponse({
     status: 403,
     description: 'Bad Request',
   })
   @UsePipes(new ValidationPipe({ transform: true }))
-  async getDDOAllAssets(@Query() searchQueryDto: SearchQueryDto): Promise<GetAssetDto[]> {
+  getDDOAllAssets(@Query() searchQueryDto: SearchQueryDto): Promise<SearchResponse<GetAssetDto[]>> {
     return this.listDDOs(searchQueryDto);
   }
 
@@ -85,14 +86,14 @@ export class AssetController {
   @ApiResponse({
     status: 200,
     description: 'list of DDOs',
-    type: [GetAssetDto],
+    schema: SearchResponse.toDocs(GetAssetDto),
   })
   @ApiResponse({
     status: 403,
     description: 'Bad Request',
   })
   @UsePipes(new ValidationPipe({ transform: true }))
-  listDDObyQuery(@Query() searchQueryDto: SearchQueryDto): Promise<GetAssetDto[]> {
+  listDDObyQuery(@Query() searchQueryDto: SearchQueryDto): Promise<SearchResponse<GetAssetDto[]>> {
     return this.listDDOs(searchQueryDto);
   }
 
@@ -103,13 +104,13 @@ export class AssetController {
   @ApiResponse({
     status: 200,
     description: 'list of DDOs',
-    type: [GetAssetDto],
+    schema: SearchResponse.toDocs(GetAssetDto),
   })
   @ApiResponse({
     status: 403,
     description: 'Bad Request',
   })
-  listDDObyQueryPost(@Body() searchQueryDto: QueryBodyDDOdto): Promise<GetAssetDto[]> {
+  listDDObyQueryPost(@Body() searchQueryDto: QueryBodyDDOdto): Promise<SearchResponse<GetAssetDto[]>> {
     return this.listDDOs(searchQueryDto);
   }
 
@@ -208,9 +209,13 @@ export class AssetController {
     return metada;
   }
 
-  private async listDDOs(searchQueryDto: SearchQueryDto): Promise<GetAssetDto[]> {
+  private async listDDOs(searchQueryDto: SearchQueryDto): Promise<SearchResponse<GetAssetDto[]>> {
     const assetsSource = await this.assetService.findMany(searchQueryDto);
 
-    return assetsSource.map((a) => GetAssetDto.fromSource(a));
+    return SearchResponse.fromSearchSources(
+      searchQueryDto,
+      assetsSource,
+      assetsSource.hits.map((a) => GetAssetDto.fromSource(a))
+    );
   }
 }

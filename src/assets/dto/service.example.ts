@@ -41,7 +41,7 @@ export const serviceExample = [
         files: [
           {
             compression: 'zip',
-            contentLength: '4535431',
+            contentLength: 4535431,
             contentType: 'text/csv',
             encoding: 'UTF-8',
             index: 0,
@@ -50,7 +50,7 @@ export const serviceExample = [
         ],
         license: 'CC-BY',
         name: 'UK Weather information 2011',
-        price: '10',
+        price: 10,
         type: 'dataset',
       },
     },

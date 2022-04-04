@@ -1,10 +1,11 @@
 import { Post, Get, Put, Delete, Controller, Body, Param, Query, ValidationPipe, UsePipes } from '@nestjs/common';
 import { BookmarkService } from './bookmark.service';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags, getSchemaPath } from '@nestjs/swagger';
 import { CreateBookmarkDto } from './dto/create-bookmark.dto';
 import { GetBookmarkDto } from './dto/get-bookmark.dto';
 import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
+import { SearchResponse } from '../common/helpers/search-response.dto';
 
 @ApiTags('Bookmark')
 @Controller()
@@ -54,16 +55,20 @@ export class BookmarkController {
   @ApiResponse({
     status: 200,
     description: 'Return all bookmark from a user',
-    type: [GetBookmarkDto],
+    schema: SearchResponse.toDocs(GetBookmarkDto),
   })
   @UsePipes(new ValidationPipe({ transform: true }))
   async getBookmarksByUserId(
     @Param('userId') userId: string,
     @Query() searchQueryDto: SearchQueryDto
-  ): Promise<GetBookmarkDto[]> {
+  ): Promise<SearchResponse<GetBookmarkDto[]>> {
     const bookmarksSources = await this.bookmarkService.findManyByUserId(userId, searchQueryDto);
 
-    return bookmarksSources.map(GetBookmarkDto.fromSource);
+    return SearchResponse.fromSearchSources(
+      searchQueryDto,
+      bookmarksSources,
+      bookmarksSources.hits.map(GetBookmarkDto.fromSource)
+    );
   }
 
   @Put(':id')
