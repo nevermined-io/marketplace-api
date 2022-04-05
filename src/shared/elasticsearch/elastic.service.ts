@@ -1,4 +1,4 @@
-import { SearchHitsMetadata, SearchHit, QueryDslQueryContainer } from '@elastic/elasticsearch/api/types';
+import { SearchHitsMetadata, QueryDslQueryContainer } from '@elastic/elasticsearch/api/types';
 import { Injectable } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { SearchQueryDto } from '../../common/helpers/search-query.dto';
