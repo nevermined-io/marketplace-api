@@ -20,8 +20,8 @@ describe('Asset', () => {
   const assetService = {
     createOne: (asset_data) => asset_data,
     findManyIds: () => [asset.id],
-    findMany: (query: SearchQueryDto) =>
-      [asset, assetCopy]
+    findMany: (query: SearchQueryDto) => ({
+      hits: [asset, assetCopy]
         .sort((a, b) => {
           return query?.sort?.created === 'desc'
             ? new Date(a.created).getTime() - new Date(b.created).getTime()
@@ -32,6 +32,8 @@ describe('Asset', () => {
           _index: MarketplaceIndex.Asset,
           _id: a.id,
         })),
+      total: 2,
+    }),
     findOneById: (id: string) =>
       [asset, assetCopy]
         .map((a) => ({
@@ -82,27 +84,44 @@ describe('Asset', () => {
     const response = await request(app.getHttpServer()).get('/ddo');
 
     expect(response.statusCode).toBe(200);
-    expect(response.body).toStrictEqual([asset, assetCopy]);
+    expect(response.body).toStrictEqual({
+      page: 1,
+      total_pages: 1,
+      total_results: 2,
+      results: [asset, assetCopy],
+    });
   });
 
   it('/GET ddo/query', async () => {
     const response = await request(app.getHttpServer()).get('/ddo/query?sort={"created": "asc"}');
 
     expect(response.statusCode).toBe(200);
-    expect(response.body).toStrictEqual([asset, assetCopy]);
+    expect(response.body).toStrictEqual({
+      page: 1,
+      total_pages: 1,
+      total_results: 2,
+      results: [asset, assetCopy],
+    });
   });
 
   it('/POST ddo/query', async () => {
     const response = await request(app.getHttpServer())
       .post('/ddo/query')
       .send({
+        offset: 100,
+        page: 1,
         sort: {
           created: 'desc',
         },
       });
 
     expect(response.statusCode).toBe(201);
-    expect(response.body).toStrictEqual([assetCopy, asset]);
+    expect(response.body).toStrictEqual({
+      page: 1,
+      total_pages: 1,
+      total_results: 2,
+      results: [assetCopy, asset],
+    });
   });
 
   it('DELETE ddo', async () => {
