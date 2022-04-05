@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsDateString, ValidateNested, IsOptional, IsNumber } from 'class-validator';
+import { IsString, IsDateString, ValidateNested, IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
 import { FileDto } from './file.dto';
 import { AlgorithmDto } from './algorithm.dto';
@@ -75,13 +75,13 @@ export class MainDto {
   name: string;
 
   @ApiProperty({
-    example: 10,
+    example: '10',
     description: 'Price of the asset. It must be an integer encoded as a string, e.g. "123000000000000000000"',
     required: false,
   })
   @IsOptional()
-  @IsNumber()
-  price: number;
+  @IsString()
+  price: string;
 
   @ApiProperty({
     example: 'dataset',

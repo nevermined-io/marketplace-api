@@ -85,11 +85,12 @@ export interface Link {
 export interface Main {
   author: string;
   dateCreated: string;
+  datePublished: string;
   encryptedFiles: string;
   files: File[];
   license: number;
   name: string;
-  price: number;
+  price: string;
   type: string;
   algorithm: Algorithm;
 }
@@ -103,18 +104,6 @@ export interface Attributes {
 
 export interface Authentication {
   publicKey: string;
-  type: string;
-}
-
-export interface Main {
-  author: string;
-  dateCreated: string;
-  datePublished: string;
-  encryptedFiles: string;
-  files: File[];
-  license: number;
-  name: string;
-  price: number;
   type: string;
 }
 

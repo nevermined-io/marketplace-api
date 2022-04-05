@@ -66,7 +66,7 @@ export const asset = {
           files: [
             {
               compression: 'zip',
-              contentLength: '4535431',
+              contentLength: 4535431,
               contentType: 'text/csv',
               encoding: 'UTF-8',
               index: 0,
