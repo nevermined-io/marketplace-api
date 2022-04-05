@@ -12,7 +12,7 @@ export class SearchResponse<G> {
     return {
       page: searchQueryDto.page,
       results: dto,
-      total_pages: Math.round((hits.total as number) / searchQueryDto.offset),
+      total_pages: Math.ceil((hits.total as number) / searchQueryDto.offset),
       total_results: hits.total as number,
     };
   }

@@ -11,6 +11,7 @@ import { MarketplaceIndex } from '../common/type';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
 import { GetAssetDto } from './dto/get-asset-dto';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
+import { SearchResponse } from '../common/helpers/search-response.dto';
 import { ServiceDto } from './dto/service.dto';
 import { AttributesDto } from './dto/attributes.dto';
 
@@ -59,30 +60,39 @@ describe('Asset', () => {
   });
 
   it('should get ddo for all the assets', async () => {
-    jest.spyOn(assetService, 'findMany').mockResolvedValue([
-      {
-        _source: asset,
-        _index: MarketplaceIndex.Asset,
-        _id: asset.id,
-      },
-    ]);
+    const hits = {
+      hits: [
+        {
+          _source: asset,
+          _index: MarketplaceIndex.Asset,
+          _id: faker.datatype.uuid(),
+        },
+      ],
+      total: 1,
+    };
 
-    expect(await assetController.getDDOAllAssets(undefined)).toStrictEqual([
-      GetAssetDto.fromSource({
-        _source: asset,
-        _index: MarketplaceIndex.Asset,
-        _id: asset.id,
-      }),
-    ]);
+    jest.spyOn(assetService, 'findMany').mockResolvedValue(hits);
+
+    expect(await assetController.getDDOAllAssets({ page: 1, offset: 100 })).toStrictEqual(
+      SearchResponse.fromSearchSources({ page: 1, offset: 100 }, hits, hits.hits.map(GetAssetDto.fromSource))
+    );
   });
 
   it('should get a list of assets that match with the passed query', async () => {
     const created = 'Tue Mar 29 2020';
     const assetCopy = { ...asset, created, id: `div:nv:${faker.datatype.uuid()}` };
-    jest.spyOn(assetService, 'findMany').mockImplementation((query: SearchQueryDto) => {
-      return [asset, assetCopy]
+    const query = {
+      sort: {
+        created: 'desc',
+      },
+      offset: 100,
+      page: 0,
+    };
+
+    const hits = (querystring: SearchQueryDto) => {
+      const sources = [asset, assetCopy]
         .sort((a, b) => {
-          return query.sort.created === 'desc'
+          return querystring.sort.created === 'desc'
             ? new Date(a.created).getTime() - new Date(b.created).getTime()
             : new Date(a.created).getTime() - new Date(b.created).getTime();
         })
@@ -90,49 +100,67 @@ describe('Asset', () => {
           _source: a,
           _index: MarketplaceIndex.Asset,
           _id: a.id,
-        })) as any;
-    });
+        }));
 
-    expect(
-      await assetController.listDDObyQuery({
-        sort: {
-          created: 'desc',
-        },
-        offset: 100,
-        page: 0,
-      })
-    ).toStrictEqual(
-      [
-        {
-          _source: assetCopy,
-          _index: MarketplaceIndex.Asset,
-          _id: assetCopy.id,
-        },
-        {
-          _source: asset,
-          _index: MarketplaceIndex.Asset,
-          _id: asset.id,
-        },
-      ].map((a) => GetAssetDto.fromSource(a))
+      return {
+        hits: sources,
+        total: 2,
+      };
+    };
+
+    jest.spyOn(assetService, 'findMany').mockImplementation((querystring: SearchQueryDto) => hits(querystring) as any);
+
+    expect(await assetController.listDDObyQuery(query as SearchQueryDto)).toStrictEqual(
+      SearchResponse.fromSearchSources(
+        query as SearchQueryDto,
+        hits(query as SearchQueryDto),
+        [
+          {
+            _source: assetCopy,
+            _index: MarketplaceIndex.Asset,
+            _id: assetCopy.id,
+          },
+          {
+            _source: asset,
+            _index: MarketplaceIndex.Asset,
+            _id: asset.id,
+          },
+        ].map((a) => GetAssetDto.fromSource(a))
+      )
     );
   });
 
   it('should get a list of assets that match with the passed body query', async () => {
     const created = 'Tue Mar 29 2020';
     const assetCopy = { ...asset, created, id: `div:nv:${faker.datatype.uuid()}` };
-    jest.spyOn(assetService, 'findMany').mockImplementation((query: SearchQueryDto) => {
-      return [asset, assetCopy]
+    const query = {
+      sort: {
+        created: 'desc',
+      },
+      offset: 100,
+      page: 0,
+    };
+
+    const hits = (querystring: SearchQueryDto) => {
+      const sources = [asset, assetCopy]
         .sort((a, b) => {
-          return query.sort.created === 'desc'
+          return querystring.sort.created === 'desc'
             ? new Date(a.created).getTime() - new Date(b.created).getTime()
-            : new Date(b.created).getTime() - new Date(a.created).getTime();
+            : new Date(a.created).getTime() - new Date(b.created).getTime();
         })
         .map((a) => ({
           _source: a,
           _index: MarketplaceIndex.Asset,
           _id: a.id,
-        })) as any;
-    });
+        }));
+
+      return {
+        hits: sources,
+        total: 2,
+      };
+    };
+
+    jest.spyOn(assetService, 'findMany').mockImplementation((querystring: SearchQueryDto) => hits(querystring) as any);
 
     expect(
       await assetController.listDDObyQueryPost({
@@ -143,18 +171,22 @@ describe('Asset', () => {
         page: 0,
       })
     ).toStrictEqual(
-      [
-        {
-          _source: assetCopy,
-          _index: MarketplaceIndex.Asset,
-          _id: assetCopy.id,
-        },
-        {
-          _source: asset,
-          _index: MarketplaceIndex.Asset,
-          _id: asset.id,
-        },
-      ].map((a) => GetAssetDto.fromSource(a))
+      SearchResponse.fromSearchSources(
+        query as SearchQueryDto,
+        hits(query as SearchQueryDto),
+        [
+          {
+            _source: assetCopy,
+            _index: MarketplaceIndex.Asset,
+            _id: assetCopy.id,
+          },
+          {
+            _source: asset,
+            _index: MarketplaceIndex.Asset,
+            _id: asset.id,
+          },
+        ].map((a) => GetAssetDto.fromSource(a))
+      )
     );
   });
 

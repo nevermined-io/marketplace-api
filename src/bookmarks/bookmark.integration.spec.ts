@@ -27,7 +27,10 @@ describe('Bookmark', () => {
       };
     },
     findManyByUserId: (userId: string) => {
-      return [{ _source: bookmark }].filter((b) => b._source.userId === userId);
+      return {
+        total: 1,
+        hits: [{ _source: bookmark }].filter((b) => b._source.userId === userId),
+      };
     },
     updateOneByEntryId: (id: string, description: UpdateBookmarkDto) => {
       return {
@@ -72,7 +75,12 @@ describe('Bookmark', () => {
     const response = await request(app.getHttpServer()).get(`/user/${bookmark.userId}`);
 
     expect(response.statusCode).toBe(200);
-    expect(response.body).toStrictEqual([{ ...bookmark, createdAt: bookmark.createdAt.toISOString() }]);
+    expect(response.body).toStrictEqual({
+      total_results: 1,
+      total_pages: 1,
+      page: 1,
+      results: [{ ...bookmark, createdAt: bookmark.createdAt.toISOString() }],
+    });
   });
 
   it('/PUT by id', async () => {

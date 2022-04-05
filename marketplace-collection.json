@@ -738,7 +738,7 @@
 									"    }, (error, response) => {",
 									"        pm.test(\"should get bookmarks by passing userId\", () => {",
 									"            pm.expect(response).to.have.property('code', 200);",
-									"            pm.expect(response.json()[0]).to.have.property('userId', pm.environment.get('userId'));",
+									"            pm.expect(response.json().results[0]).to.have.property('userId', pm.environment.get('userId'));",
 									"        });",
 									"    });",
 									"})"
@@ -777,7 +777,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/api/v1/ugc/bookmarks/user/:userId?text=Provident corrupti est nisi quia.&offset=100&page=0&sort={ \"createdAt\": \"asc\" }",
+							"raw": "{{baseUrl}}/api/v1/ugc/bookmarks/user/:userId?text=Provident corrupti est nisi quia.&offset=100&page=1&sort={ \"createdAt\": \"asc\" }",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -801,7 +801,7 @@
 								},
 								{
 									"key": "page",
-									"value": "0",
+									"value": "1",
 									"description": "Page to retrieve"
 								},
 								{
@@ -826,7 +826,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/ugc/bookmarks/user/:userId?query=match_all: {}&text=Provident corrupti est nisi quia.&offset=culp&page=laborum in&sort={ \"createdAt\": \"asc\" }",
+									"raw": "{{baseUrl}}/api/v1/ugc/bookmarks/user/:userId?query={\"match_all\": {}}&text=Provident corrupti est nisi quia.&offset=100&page=1&sort={ \"createdAt\": \"asc\" }",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -841,7 +841,7 @@
 									"query": [
 										{
 											"key": "query",
-											"value": "match_all: {}"
+											"value": "{\"match_all\": {}}"
 										},
 										{
 											"key": "text",
@@ -849,11 +849,11 @@
 										},
 										{
 											"key": "offset",
-											"value": "culp"
+											"value": "100"
 										},
 										{
 											"key": "page",
-											"value": "laborum in"
+											"value": "1"
 										},
 										{
 											"key": "sort",
@@ -879,7 +879,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "[\n  {\n    \"id\": \"b-123434\",\n    \"did\": \"did:12345\",\n    \"userId\": \"u-12345\",\n    \"description\": \"I am interesting in this asset\",\n    \"createdAt\": \"2022-03-18T13:44:00.931Z\"\n  },\n  {\n    \"id\": \"b-123434\",\n    \"did\": \"did:12345\",\n    \"userId\": \"u-12345\",\n    \"description\": \"I am interesting in this asset\",\n    \"createdAt\": \"2022-03-18T13:44:00.931Z\"\n  }\n]"
+							"body": "{\n    \"page\": 1,\n    \"results\": [\n        {\n            \"id\": \"b-123434\",\n            \"did\": \"did:12345\",\n            \"userId\": \"u-12345\",\n            \"description\": \"I am interesting in this asset\",\n            \"createdAt\": \"2022-03-18T13:44:00.931Z\"\n        },\n        {\n            \"id\": \"b-123434\",\n            \"did\": \"did:12345\",\n            \"userId\": \"u-12345\",\n            \"description\": \"I am interesting in this asset\",\n            \"createdAt\": \"2022-03-18T13:44:00.931Z\"\n        }\n    ],\n    \"total_pages\": 1,\n    \"total_results\": 2    \n}"
 						}
 					]
 				}
@@ -963,7 +963,7 @@
 									"          files: [",
 									"            {",
 									"              compression: 'zip',",
-									"              contentLength: '4535431',",
+									"              contentLength: 4535431,",
 									"              contentType: 'text/csv',",
 									"              encoding: 'UTF-8',",
 									"              index: 0,",
@@ -972,7 +972,7 @@
 									"          ],",
 									"          license: 'CC-BY',",
 									"          name: 'UK Weather information 2011',",
-									"          price: '10',",
+									"          price: 10,",
 									"          type: 'dataset',",
 									"        },",
 									"      },",
@@ -1091,7 +1091,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n  \"curation\": {\n    \"numVotes\": 123,\n    \"rating\": 0.93,\n    \"schema\": \"Binary Voting\",\n    \"isListed\": false\n  },\n  \"main\": {\n    \"author\": \"Met Office\",\n    \"dateCreated\": \"2021-02-01T10:55:11Z\",\n    \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n    \"files\": [\n      {\n        \"contentType\": \"text/csv\",\n        \"index\": 0,\n        \"checksum\": \"efb2c764274b745f5fc37f97c6b0e761\",\n        \"url\": \"https://raw.githubusercontent.com/tbertinmahieux/MSongsDB/master/Tasks_Demos/CoverSongs/shs_dataset_test.txt\",\n        \"checksumType\": \"md5\",\n        \"name\": \"data.txt\",\n        \"compression\": \"zip\",\n        \"contentLength\": \"4535431\",\n        \"encoding\": \"UTF-8\",\n        \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\",\n        \"encrypted\": false,\n        \"encryptionMode\": \"gpg\"\n      },\n      {\n        \"contentType\": \"text/csv\",\n        \"index\": 0,\n        \"checksum\": \"efb2c764274b745f5fc37f97c6b0e761\",\n        \"url\": \"https://raw.githubusercontent.com/tbertinmahieux/MSongsDB/master/Tasks_Demos/CoverSongs/shs_dataset_test.txt\",\n        \"checksumType\": \"md5\",\n        \"name\": \"data.txt\",\n        \"compression\": \"zip\",\n        \"contentLength\": \"4535431\",\n        \"encoding\": \"UTF-8\",\n        \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\",\n        \"encrypted\": false,\n        \"encryptionMode\": \"gpg\"\n      }\n    ],\n    \"license\": 72893273.32422829,\n    \"name\": \"UK Weather information 2011\",\n    \"price\": \"10\",\n    \"type\": \"dataset\",\n    \"algorithm\": {\n      \"container\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"language\": \"scala\",\n      \"format\": \"docker-image\",\n      \"version\": \"0.1\"\n    },\n    \"datePublished\": \"2021-02-01T10:55:11Z\"\n  },\n  \"additionalInformation\": {},\n  \"serviceAgreementTemplate\": {\n    \"conditionDependency\": [\n      {\n        \"escrowPayment\": [\n          \"lockPayment\",\n          \"access\"\n        ]\n      },\n      {\n        \"escrowPayment\": [\n          \"lockPayment\",\n          \"access\"\n        ]\n      }\n    ],\n    \"conditions\": [\n      {\n        \"contractName\": \"LockPaymentCondition\",\n        \"functionName\": \"fulfill\",\n        \"name\": \"lockPayment\",\n        \"events\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"parameters\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"timelock\": 0,\n        \"timeout\": 0\n      },\n      {\n        \"contractName\": \"LockPaymentCondition\",\n        \"functionName\": \"fulfill\",\n        \"name\": \"lockPayment\",\n        \"events\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"parameters\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"timelock\": 0,\n        \"timeout\": 0\n      }\n    ],\n    \"contractName\": -2630363.649898544,\n    \"events\": [\n      {\n        \"actionType\": \"publisher\",\n        \"handler\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": \"Fulfilled\"\n      },\n      {\n        \"actionType\": \"publisher\",\n        \"handler\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": \"Fulfilled\"\n      }\n    ],\n    \"fulfillmentOrder\": \"consectetur aliqua do dolor culpa\"\n  }\n}"
+							"body": "{\n  \"curation\": {\n    \"numVotes\": 123,\n    \"rating\": 0.93,\n    \"schema\": \"Binary Voting\",\n    \"isListed\": false\n  },\n  \"main\": {\n    \"author\": \"Met Office\",\n    \"dateCreated\": \"2021-02-01T10:55:11Z\",\n    \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n    \"files\": [\n      {\n        \"contentType\": \"text/csv\",\n        \"index\": 0,\n        \"checksum\": \"efb2c764274b745f5fc37f97c6b0e761\",\n        \"url\": \"https://raw.githubusercontent.com/tbertinmahieux/MSongsDB/master/Tasks_Demos/CoverSongs/shs_dataset_test.txt\",\n        \"checksumType\": \"md5\",\n        \"name\": \"data.txt\",\n        \"compression\": \"zip\",\n        \"contentLength\": 4535431,\n        \"encoding\": \"UTF-8\",\n        \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\",\n        \"encrypted\": false,\n        \"encryptionMode\": \"gpg\"\n      },\n      {\n        \"contentType\": \"text/csv\",\n        \"index\": 0,\n        \"checksum\": \"efb2c764274b745f5fc37f97c6b0e761\",\n        \"url\": \"https://raw.githubusercontent.com/tbertinmahieux/MSongsDB/master/Tasks_Demos/CoverSongs/shs_dataset_test.txt\",\n        \"checksumType\": \"md5\",\n        \"name\": \"data.txt\",\n        \"compression\": \"zip\",\n        \"contentLength\": 4535431,\n        \"encoding\": \"UTF-8\",\n        \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\",\n        \"encrypted\": false,\n        \"encryptionMode\": \"gpg\"\n      }\n    ],\n    \"license\": 72893273.32422829,\n    \"name\": \"UK Weather information 2011\",\n    \"price\": 10,\n    \"type\": \"dataset\",\n    \"algorithm\": {\n      \"container\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"language\": \"scala\",\n      \"format\": \"docker-image\",\n      \"version\": \"0.1\"\n    },\n    \"datePublished\": \"2021-02-01T10:55:11Z\"\n  },\n  \"additionalInformation\": {},\n  \"serviceAgreementTemplate\": {\n    \"conditionDependency\": [\n      {\n        \"escrowPayment\": [\n          \"lockPayment\",\n          \"access\"\n        ]\n      },\n      {\n        \"escrowPayment\": [\n          \"lockPayment\",\n          \"access\"\n        ]\n      }\n    ],\n    \"conditions\": [\n      {\n        \"contractName\": \"LockPaymentCondition\",\n        \"functionName\": \"fulfill\",\n        \"name\": \"lockPayment\",\n        \"events\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"parameters\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"timelock\": 0,\n        \"timeout\": 0\n      },\n      {\n        \"contractName\": \"LockPaymentCondition\",\n        \"functionName\": \"fulfill\",\n        \"name\": \"lockPayment\",\n        \"events\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"parameters\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"timelock\": 0,\n        \"timeout\": 0\n      }\n    ],\n    \"contractName\": -2630363.649898544,\n    \"events\": [\n      {\n        \"actionType\": \"publisher\",\n        \"handler\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": \"Fulfilled\"\n      },\n      {\n        \"actionType\": \"publisher\",\n        \"handler\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": \"Fulfilled\"\n      }\n    ],\n    \"fulfillmentOrder\": \"consectetur aliqua do dolor culpa\"\n  }\n}"
 						},
 						{
 							"name": "Not found",
@@ -1248,7 +1248,7 @@
 									"          files: [",
 									"            {",
 									"              compression: 'zip',",
-									"              contentLength: '4535431',",
+									"              contentLength: 4535431,",
 									"              contentType: 'text/csv',",
 									"              encoding: 'UTF-8',",
 									"              index: 0,",
@@ -1257,7 +1257,7 @@
 									"          ],",
 									"          license: 'CC-BY',",
 									"          name: 'UK Weather information 2011',",
-									"          price: '10',",
+									"          price: 10,",
 									"          type: 'dataset',",
 									"        },",
 									"      },",
@@ -1367,7 +1367,7 @@
 									"          files: [",
 									"            {",
 									"              compression: 'zip',",
-									"              contentLength: '4535431',",
+									"              contentLength: 4535431,",
 									"              contentType: 'text/csv',",
 									"              encoding: 'UTF-8',",
 									"              index: 0,",
@@ -1376,7 +1376,7 @@
 									"          ],",
 									"          license: 'CC-BY',",
 									"          name: 'UK Weather information 2011',",
-									"          price: '10',",
+									"          price: 10,",
 									"          type: 'dataset',",
 									"        },",
 									"      },",
@@ -1550,7 +1550,7 @@
 									"          files: [",
 									"            {",
 									"              compression: 'zip',",
-									"              contentLength: '4535431',",
+									"              contentLength: 4535431,",
 									"              contentType: 'text/csv',",
 									"              encoding: 'UTF-8',",
 									"              index: 0,",
@@ -1559,7 +1559,7 @@
 									"          ],",
 									"          license: 'CC-BY',",
 									"          name: 'UK Weather information 2011',",
-									"          price: '10',",
+									"          price: 10,",
 									"          type: 'dataset',",
 									"        },",
 									"      },",
@@ -1669,7 +1669,7 @@
 									"          files: [",
 									"            {",
 									"              compression: 'zip',",
-									"              contentLength: '4535431',",
+									"              contentLength: 4535431,",
 									"              contentType: 'text/csv',",
 									"              encoding: 'UTF-8',",
 									"              index: 0,",
@@ -1678,7 +1678,7 @@
 									"          ],",
 									"          license: 'CC-BY',",
 									"          name: 'UK Weather information 2011',",
-									"          price: '10',",
+									"          price: 10,",
 									"          type: 'dataset',",
 									"        },",
 									"      },",
@@ -1773,7 +1773,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"@context\": \"https://w3id.org/did/v1\",\n  \"updated\": \"2019-02-08T08:13:49Z\",\n  \"authentication\": [\n    {\n      \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"RsaSignatureAuthentication2018\"\n    }\n  ],\n  \"proof\": {\n    \"created\": \"2022-01-08T16:02:20Z\",\n    \"creator\": \"2022-01-08T16:02:20Z\",\n    \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n    \"type\": \"DDOIntegritySignature\"\n  },\n  \"publicKey\": [\n    {\n      \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n      \"type\": \"EthereumECDSAKey\"\n    }\n  ],\n  \"service\": [\n    {\n      \"index\": 0,\n      \"service\": \"SecretStore\",\n      \"serviceEndpoint\": \"http://localhost:12001\",\n      \"type\": \"authorization\"\n    },\n    {\n      \"index\": 1,\n      \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n      \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n      \"type\": \"access\"\n    },\n    {\n      \"attributes\": {\n        \"additionalInformation\": {\n          \"copyrightHolder\": \"Met Office\",\n          \"description\": \"Weather information of UK including temperature and humidity\",\n          \"inLanguage\": \"en\",\n          \"links\": [\n            {\n              \"name\": \"Sample of Asset Data\",\n              \"type\": \"sample\",\n              \"url\": \"https://foo.com/sample.csv\"\n            }\n          ],\n          \"tags\": [\n            \"weather\",\n            \"uk\",\n            \"2011\",\n            \"temperature\",\n            \"humidity\"\n          ],\n          \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n          \"numVotes\": 123,\n          \"rating\": 0.93,\n          \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n          \"author\": \"Met Office\",\n          \"dateCreated\": \"2012-02-01T10:55:11Z\",\n          \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n          \"files\": [\n            {\n              \"compression\": \"zip\",\n              \"contentLength\": \"4535431\",\n              \"contentType\": \"text/csv\",\n              \"encoding\": \"UTF-8\",\n              \"index\": 0,\n              \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n            }\n          ],\n          \"license\": \"CC-BY\",\n          \"name\": \"UK Weather information 2011\",\n          \"price\": \"10\",\n          \"type\": \"dataset\"\n        }\n      },\n      \"index\": 2,\n      \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"metadata\"\n    }\n  ]\n}",
+									"raw": "{\n  \"@context\": \"https://w3id.org/did/v1\",\n  \"updated\": \"2019-02-08T08:13:49Z\",\n  \"authentication\": [\n    {\n      \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"RsaSignatureAuthentication2018\"\n    }\n  ],\n  \"proof\": {\n    \"created\": \"2022-01-08T16:02:20Z\",\n    \"creator\": \"2022-01-08T16:02:20Z\",\n    \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n    \"type\": \"DDOIntegritySignature\"\n  },\n  \"publicKey\": [\n    {\n      \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n      \"type\": \"EthereumECDSAKey\"\n    }\n  ],\n  \"service\": [\n    {\n      \"index\": 0,\n      \"service\": \"SecretStore\",\n      \"serviceEndpoint\": \"http://localhost:12001\",\n      \"type\": \"authorization\"\n    },\n    {\n      \"index\": 1,\n      \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n      \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n      \"type\": \"access\"\n    },\n    {\n      \"attributes\": {\n        \"additionalInformation\": {\n          \"copyrightHolder\": \"Met Office\",\n          \"description\": \"Weather information of UK including temperature and humidity\",\n          \"inLanguage\": \"en\",\n          \"links\": [\n            {\n              \"name\": \"Sample of Asset Data\",\n              \"type\": \"sample\",\n              \"url\": \"https://foo.com/sample.csv\"\n            }\n          ],\n          \"tags\": [\n            \"weather\",\n            \"uk\",\n            \"2011\",\n            \"temperature\",\n            \"humidity\"\n          ],\n          \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n          \"numVotes\": 123,\n          \"rating\": 0.93,\n          \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n          \"author\": \"Met Office\",\n          \"dateCreated\": \"2012-02-01T10:55:11Z\",\n          \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n          \"files\": [\n            {\n              \"compression\": \"zip\",\n              \"contentLength\": 4535431,\n              \"contentType\": \"text/csv\",\n              \"encoding\": \"UTF-8\",\n              \"index\": 0,\n              \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n            }\n          ],\n          \"license\": \"CC-BY\",\n          \"name\": \"UK Weather information 2011\",\n          \"price\": 10,\n          \"type\": \"dataset\"\n        }\n      },\n      \"index\": 2,\n      \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"metadata\"\n    }\n  ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1806,10 +1806,10 @@
 							"_postman_previewlanguage": null,
 							"header": null,
 							"cookie": [],
-							"body": "\t\n\nGet a updated DDO\nMedia type\nControls Accept header.\n\n{\n  \"@context\": \"https://w3id.org/did/v1\",\n  \"authentication\": [\n    {\n      \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"RsaSignatureAuthentication2018\"\n    }\n  ],\n  \"created\": \"2021-02-01T10:55:11Z\",\n  \"updated\": \"2021-02-01T10:55:11Z\",\n  \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n  \"proof\": {\n    \"created\": \"2022-01-08T16:02:20Z\",\n    \"creator\": \"2022-01-08T16:02:20Z\",\n    \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n    \"type\": \"DDOIntegritySignature\"\n  },\n  \"publicKey\": [\n    {\n      \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n      \"type\": \"EthereumECDSAKey\"\n    }\n  ],\n  \"service\": [\n    {\n      \"index\": 0,\n      \"service\": \"SecretStore\",\n      \"serviceEndpoint\": \"http://localhost:12001\",\n      \"type\": \"authorization\"\n    },\n    {\n      \"index\": 1,\n      \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n      \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n      \"type\": \"access\"\n    },\n    {\n      \"attributes\": {\n        \"additionalInformation\": {\n          \"copyrightHolder\": \"Met Office\",\n          \"description\": \"Weather information of UK including temperature and humidity\",\n          \"inLanguage\": \"en\",\n          \"links\": [\n            {\n              \"name\": \"Sample of Asset Data\",\n              \"type\": \"sample\",\n              \"url\": \"https://foo.com/sample.csv\"\n            }\n          ],\n          \"tags\": [\n            \"weather\",\n            \"uk\",\n            \"2011\",\n            \"temperature\",\n            \"humidity\"\n          ],\n          \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n          \"numVotes\": 123,\n          \"rating\": 0.93,\n          \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n          \"author\": \"Met Office\",\n          \"dateCreated\": \"2012-02-01T10:55:11Z\",\n          \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n          \"files\": [\n            {\n              \"compression\": \"zip\",\n              \"contentLength\": \"4535431\",\n              \"contentType\": \"text/csv\",\n              \"encoding\": \"UTF-8\",\n              \"index\": 0,\n              \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n            }\n          ],\n          \"license\": \"CC-BY\",\n          \"name\": \"UK Weather information 2011\",\n          \"price\": \"10\",\n          \"type\": \"dataset\"\n        }\n      },\n      \"index\": 2,\n      \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"metadata\"\n    }\n  ]"
+							"body": "\t\n\nGet a updated DDO\nMedia type\nControls Accept header.\n\n{\n  \"@context\": \"https://w3id.org/did/v1\",\n  \"authentication\": [\n    {\n      \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"RsaSignatureAuthentication2018\"\n    }\n  ],\n  \"created\": \"2021-02-01T10:55:11Z\",\n  \"updated\": \"2021-02-01T10:55:11Z\",\n  \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n  \"proof\": {\n    \"created\": \"2022-01-08T16:02:20Z\",\n    \"creator\": \"2022-01-08T16:02:20Z\",\n    \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n    \"type\": \"DDOIntegritySignature\"\n  },\n  \"publicKey\": [\n    {\n      \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n      \"type\": \"EthereumECDSAKey\"\n    }\n  ],\n  \"service\": [\n    {\n      \"index\": 0,\n      \"service\": \"SecretStore\",\n      \"serviceEndpoint\": \"http://localhost:12001\",\n      \"type\": \"authorization\"\n    },\n    {\n      \"index\": 1,\n      \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n      \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n      \"type\": \"access\"\n    },\n    {\n      \"attributes\": {\n        \"additionalInformation\": {\n          \"copyrightHolder\": \"Met Office\",\n          \"description\": \"Weather information of UK including temperature and humidity\",\n          \"inLanguage\": \"en\",\n          \"links\": [\n            {\n              \"name\": \"Sample of Asset Data\",\n              \"type\": \"sample\",\n              \"url\": \"https://foo.com/sample.csv\"\n            }\n          ],\n          \"tags\": [\n            \"weather\",\n            \"uk\",\n            \"2011\",\n            \"temperature\",\n            \"humidity\"\n          ],\n          \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n          \"numVotes\": 123,\n          \"rating\": 0.93,\n          \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n          \"author\": \"Met Office\",\n          \"dateCreated\": \"2012-02-01T10:55:11Z\",\n          \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n          \"files\": [\n            {\n              \"compression\": \"zip\",\n              \"contentLength\": 4535431,\n              \"contentType\": \"text/csv\",\n              \"encoding\": \"UTF-8\",\n              \"index\": 0,\n              \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n            }\n          ],\n          \"license\": \"CC-BY\",\n          \"name\": \"UK Weather information 2011\",\n          \"price\": 10,\n          \"type\": \"dataset\"\n        }\n      },\n      \"index\": 2,\n      \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"metadata\"\n    }\n  ]"
 						},
 						{
-							"name": "Asset Controller update DDO",
+							"name": "Not Found",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [
@@ -1824,7 +1824,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"@context\": \"https://w3id.org/did/v1\",\n  \"updated\": \"2019-02-08T08:13:49Z\",\n  \"authentication\": [\n    {\n      \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"RsaSignatureAuthentication2018\"\n    }\n  ],\n  \"proof\": {\n    \"created\": \"2022-01-08T16:02:20Z\",\n    \"creator\": \"2022-01-08T16:02:20Z\",\n    \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n    \"type\": \"DDOIntegritySignature\"\n  },\n  \"publicKey\": [\n    {\n      \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n      \"type\": \"EthereumECDSAKey\"\n    }\n  ],\n  \"service\": [\n    {\n      \"index\": 0,\n      \"service\": \"SecretStore\",\n      \"serviceEndpoint\": \"http://localhost:12001\",\n      \"type\": \"authorization\"\n    },\n    {\n      \"index\": 1,\n      \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n      \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n      \"type\": \"access\"\n    },\n    {\n      \"attributes\": {\n        \"additionalInformation\": {\n          \"copyrightHolder\": \"Met Office\",\n          \"description\": \"Weather information of UK including temperature and humidity\",\n          \"inLanguage\": \"en\",\n          \"links\": [\n            {\n              \"name\": \"Sample of Asset Data\",\n              \"type\": \"sample\",\n              \"url\": \"https://foo.com/sample.csv\"\n            }\n          ],\n          \"tags\": [\n            \"weather\",\n            \"uk\",\n            \"2011\",\n            \"temperature\",\n            \"humidity\"\n          ],\n          \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n          \"numVotes\": 123,\n          \"rating\": 0.93,\n          \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n          \"author\": \"Met Office\",\n          \"dateCreated\": \"2012-02-01T10:55:11Z\",\n          \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n          \"files\": [\n            {\n              \"compression\": \"zip\",\n              \"contentLength\": \"4535431\",\n              \"contentType\": \"text/csv\",\n              \"encoding\": \"UTF-8\",\n              \"index\": 0,\n              \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n            }\n          ],\n          \"license\": \"CC-BY\",\n          \"name\": \"UK Weather information 2011\",\n          \"price\": \"10\",\n          \"type\": \"dataset\"\n        }\n      },\n      \"index\": 2,\n      \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"metadata\"\n    }\n  ]\n}",
+									"raw": "{\n  \"@context\": \"https://w3id.org/did/v1\",\n  \"updated\": \"2019-02-08T08:13:49Z\",\n  \"authentication\": [\n    {\n      \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"RsaSignatureAuthentication2018\"\n    }\n  ],\n  \"proof\": {\n    \"created\": \"2022-01-08T16:02:20Z\",\n    \"creator\": \"2022-01-08T16:02:20Z\",\n    \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n    \"type\": \"DDOIntegritySignature\"\n  },\n  \"publicKey\": [\n    {\n      \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n      \"type\": \"EthereumECDSAKey\"\n    }\n  ],\n  \"service\": [\n    {\n      \"index\": 0,\n      \"service\": \"SecretStore\",\n      \"serviceEndpoint\": \"http://localhost:12001\",\n      \"type\": \"authorization\"\n    },\n    {\n      \"index\": 1,\n      \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n      \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n      \"type\": \"access\"\n    },\n    {\n      \"attributes\": {\n        \"additionalInformation\": {\n          \"copyrightHolder\": \"Met Office\",\n          \"description\": \"Weather information of UK including temperature and humidity\",\n          \"inLanguage\": \"en\",\n          \"links\": [\n            {\n              \"name\": \"Sample of Asset Data\",\n              \"type\": \"sample\",\n              \"url\": \"https://foo.com/sample.csv\"\n            }\n          ],\n          \"tags\": [\n            \"weather\",\n            \"uk\",\n            \"2011\",\n            \"temperature\",\n            \"humidity\"\n          ],\n          \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n          \"numVotes\": 123,\n          \"rating\": 0.93,\n          \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n          \"author\": \"Met Office\",\n          \"dateCreated\": \"2012-02-01T10:55:11Z\",\n          \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n          \"files\": [\n            {\n              \"compression\": \"zip\",\n              \"contentLength\": 4535431,\n              \"contentType\": \"text/csv\",\n              \"encoding\": \"UTF-8\",\n              \"index\": 0,\n              \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n            }\n          ],\n          \"license\": \"CC-BY\",\n          \"name\": \"UK Weather information 2011\",\n          \"price\": 10,\n          \"type\": \"dataset\"\n        }\n      },\n      \"index\": 2,\n      \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"metadata\"\n    }\n  ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1875,7 +1875,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"@context\": \"https://w3id.org/did/v1\",\n  \"updated\": \"2019-02-08T08:13:49Z\",\n  \"authentication\": [\n    {\n      \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"RsaSignatureAuthentication2018\"\n    }\n  ],\n  \"proof\": {\n    \"created\": \"2022-01-08T16:02:20Z\",\n    \"creator\": \"2022-01-08T16:02:20Z\",\n    \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n    \"type\": \"DDOIntegritySignature\"\n  },\n  \"publicKey\": [\n    {\n      \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n      \"type\": \"EthereumECDSAKey\"\n    }\n  ],\n  \"service\": [\n    {\n      \"index\": 0,\n      \"service\": \"SecretStore\",\n      \"serviceEndpoint\": \"http://localhost:12001\",\n      \"type\": \"authorization\"\n    },\n    {\n      \"index\": 1,\n      \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n      \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n      \"type\": \"access\"\n    },\n    {\n      \"attributes\": {\n        \"additionalInformation\": {\n          \"copyrightHolder\": \"Met Office\",\n          \"description\": \"Weather information of UK including temperature and humidity\",\n          \"inLanguage\": \"en\",\n          \"links\": [\n            {\n              \"name\": \"Sample of Asset Data\",\n              \"type\": \"sample\",\n              \"url\": \"https://foo.com/sample.csv\"\n            }\n          ],\n          \"tags\": [\n            \"weather\",\n            \"uk\",\n            \"2011\",\n            \"temperature\",\n            \"humidity\"\n          ],\n          \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n          \"numVotes\": 123,\n          \"rating\": 0.93,\n          \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n          \"author\": \"Met Office\",\n          \"dateCreated\": \"2012-02-01T10:55:11Z\",\n          \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n          \"files\": [\n            {\n              \"compression\": \"zip\",\n              \"contentLength\": \"4535431\",\n              \"contentType\": \"text/csv\",\n              \"encoding\": \"UTF-8\",\n              \"index\": 0,\n              \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n            }\n          ],\n          \"license\": \"CC-BY\",\n          \"name\": \"UK Weather information 2011\",\n          \"price\": \"10\",\n          \"type\": \"dataset\"\n        }\n      },\n      \"index\": 2,\n      \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"metadata\"\n    }\n  ]\n}",
+									"raw": "{\n  \"@context\": \"https://w3id.org/did/v1\",\n  \"updated\": \"2019-02-08T08:13:49Z\",\n  \"authentication\": [\n    {\n      \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"RsaSignatureAuthentication2018\"\n    }\n  ],\n  \"proof\": {\n    \"created\": \"2022-01-08T16:02:20Z\",\n    \"creator\": \"2022-01-08T16:02:20Z\",\n    \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n    \"type\": \"DDOIntegritySignature\"\n  },\n  \"publicKey\": [\n    {\n      \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n      \"type\": \"EthereumECDSAKey\"\n    }\n  ],\n  \"service\": [\n    {\n      \"index\": 0,\n      \"service\": \"SecretStore\",\n      \"serviceEndpoint\": \"http://localhost:12001\",\n      \"type\": \"authorization\"\n    },\n    {\n      \"index\": 1,\n      \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n      \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n      \"type\": \"access\"\n    },\n    {\n      \"attributes\": {\n        \"additionalInformation\": {\n          \"copyrightHolder\": \"Met Office\",\n          \"description\": \"Weather information of UK including temperature and humidity\",\n          \"inLanguage\": \"en\",\n          \"links\": [\n            {\n              \"name\": \"Sample of Asset Data\",\n              \"type\": \"sample\",\n              \"url\": \"https://foo.com/sample.csv\"\n            }\n          ],\n          \"tags\": [\n            \"weather\",\n            \"uk\",\n            \"2011\",\n            \"temperature\",\n            \"humidity\"\n          ],\n          \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n          \"numVotes\": 123,\n          \"rating\": 0.93,\n          \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n          \"author\": \"Met Office\",\n          \"dateCreated\": \"2012-02-01T10:55:11Z\",\n          \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n          \"files\": [\n            {\n              \"compression\": \"zip\",\n              \"contentLength\": 4535431,\n              \"contentType\": \"text/csv\",\n              \"encoding\": \"UTF-8\",\n              \"index\": 0,\n              \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n            }\n          ],\n          \"license\": \"CC-BY\",\n          \"name\": \"UK Weather information 2011\",\n          \"price\": 10,\n          \"type\": \"dataset\"\n        }\n      },\n      \"index\": 2,\n      \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"metadata\"\n    }\n  ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1987,7 +1987,7 @@
 									"          files: [",
 									"            {",
 									"              compression: 'zip',",
-									"              contentLength: '4535431',",
+									"              contentLength: 4535431,",
 									"              contentType: 'text/csv',",
 									"              encoding: 'UTF-8',",
 									"              index: 0,",
@@ -1996,7 +1996,7 @@
 									"          ],",
 									"          license: 'CC-BY',",
 									"          name: 'UK Weather information 2011',",
-									"          price: '10',",
+									"          price: 10,",
 									"          type: 'dataset',",
 									"        },",
 									"      },",
@@ -2106,7 +2106,7 @@
 									"          files: [",
 									"            {",
 									"              compression: 'zip',",
-									"              contentLength: '4535431',",
+									"              contentLength: 4535431,",
 									"              contentType: 'text/csv',",
 									"              encoding: 'UTF-8',",
 									"              index: 0,",
@@ -2115,7 +2115,7 @@
 									"          ],",
 									"          license: 'CC-BY',",
 									"          name: 'UK Weather information 2011',",
-									"          price: '10',",
+									"          price: 10,",
 									"          type: 'dataset',",
 									"        },",
 									"      },",
@@ -2335,7 +2335,7 @@
 									"          files: [",
 									"            {",
 									"              compression: 'zip',",
-									"              contentLength: '4535431',",
+									"              contentLength: 4535431,",
 									"              contentType: 'text/csv',",
 									"              encoding: 'UTF-8',",
 									"              index: 0,",
@@ -2344,7 +2344,7 @@
 									"          ],",
 									"          license: 'CC-BY',",
 									"          name: 'UK Weather information 2011',",
-									"          price: '10',",
+									"          price: 10,",
 									"          type: 'dataset',",
 									"        },",
 									"      },",
@@ -2392,7 +2392,7 @@
 									"  },",
 									"  \"text\": \"Eius vel alias.\",",
 									"  \"offset\": \"100\",",
-									"  \"page\": \"0\",",
+									"  \"page\": \"1\",",
 									"  \"sort\": {",
 									"    \"created\": \"asc\"",
 									"  }",
@@ -2413,7 +2413,7 @@
 									"    pm.test(\"should get a list of ddos by passing a query\", () => {",
 									"        pm.expect(response).to.have.property('code', 201);",
 									"        pm.expect(response).to.have.property('status', 'Created')",
-									"        pm.expect(response.json()[0]).to.have.property('id', pm.environment.get('did'));",
+									"        pm.expect(response.json().results[0]).to.have.property('id', pm.environment.get('did'));",
 									"    });",
 									"});"
 								],
@@ -2435,7 +2435,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"query\": {\n    \"match_all\": {}\n  },\n  \"text\": \"Eius vel alias.\",\n  \"offset\": \"100\",\n  \"page\": \"0\",\n  \"sort\": {\n    \"created\": \"asc\"\n  }\n}\n",
+							"raw": "{\n  \"query\": {\n    \"match_all\": {}\n  },\n  \"text\": \"Eius vel alias.\",\n  \"offset\": \"100\",\n  \"page\": \"1\",\n  \"sort\": {\n    \"created\": \"asc\"\n  }\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2475,7 +2475,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"query\": {\n    \"match_all\": {}\n  },\n  \"text\": \"Eius vel alias.\",\n  \"offset\": \"100\",\n  \"page\": \"0\",\n  \"sort\": {\n    \"created\": \"asc\"\n  }\n}\n",
+									"raw": "{\n  \"query\": {\n    \"match_all\": {}\n  },\n  \"text\": \"Eius vel alias.\",\n  \"offset\": \"100\",\n  \"page\": \"1\",\n  \"sort\": {\n    \"created\": \"asc\"\n  }\n}\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2502,7 +2502,7 @@
 							"_postman_previewlanguage": null,
 							"header": null,
 							"cookie": [],
-							"body": "[\n  {\n    \"@context\": \"https://w3id.org/did/v1\",\n    \"authentication\": [\n      {\n        \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n        \"type\": \"RsaSignatureAuthentication2018\"\n      }\n    ],\n    \"created\": \"2021-02-01T10:55:11Z\",\n    \"updated\": \"2021-02-01T10:55:11Z\",\n    \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n    \"proof\": {\n      \"created\": \"2022-01-08T16:02:20Z\",\n      \"creator\": \"2022-01-08T16:02:20Z\",\n      \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n      \"type\": \"DDOIntegritySignature\"\n    },\n    \"publicKey\": [\n      {\n        \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n        \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n        \"type\": \"EthereumECDSAKey\"\n      }\n    ],\n    \"service\": [\n      {\n        \"index\": 0,\n        \"service\": \"SecretStore\",\n        \"serviceEndpoint\": \"http://localhost:12001\",\n        \"type\": \"authorization\"\n      },\n      {\n        \"index\": 1,\n        \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n        \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n        \"type\": \"access\"\n      },\n      {\n        \"attributes\": {\n          \"additionalInformation\": {\n            \"copyrightHolder\": \"Met Office\",\n            \"description\": \"Weather information of UK including temperature and humidity\",\n            \"inLanguage\": \"en\",\n            \"links\": [\n              {\n                \"name\": \"Sample of Asset Data\",\n                \"type\": \"sample\",\n                \"url\": \"https://foo.com/sample.csv\"\n              }\n            ],\n            \"tags\": [\n              \"weather\",\n              \"uk\",\n              \"2011\",\n              \"temperature\",\n              \"humidity\"\n            ],\n            \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n          },\n          \"curation\": {\n            \"numVotes\": 123,\n            \"rating\": 0.93,\n            \"schema\": \"Binary Voting\"\n          },\n          \"main\": {\n            \"author\": \"Met Office\",\n            \"dateCreated\": \"2012-02-01T10:55:11Z\",\n            \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n            \"files\": [\n              {\n                \"compression\": \"zip\",\n                \"contentLength\": \"4535431\",\n                \"contentType\": \"text/csv\",\n                \"encoding\": \"UTF-8\",\n                \"index\": 0,\n                \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n              }\n            ],\n            \"license\": \"CC-BY\",\n            \"name\": \"UK Weather information 2011\",\n            \"price\": \"10\",\n            \"type\": \"dataset\"\n          }\n        },\n        \"index\": 2,\n        \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n        \"type\": \"metadata\"\n      }\n    ]\n  }\n]"
+							"body": "{\n    \"page\": 1,\n    \"results\": [\n        {\n            \"@context\": \"https://w3id.org/did/v1\",\n            \"authentication\": [\n            {\n                \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n                \"type\": \"RsaSignatureAuthentication2018\"\n            }\n            ],\n            \"created\": \"2021-02-01T10:55:11Z\",\n            \"updated\": \"2021-02-01T10:55:11Z\",\n            \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n            \"proof\": {\n            \"created\": \"2022-01-08T16:02:20Z\",\n            \"creator\": \"2022-01-08T16:02:20Z\",\n            \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n            \"type\": \"DDOIntegritySignature\"\n            },\n            \"publicKey\": [\n            {\n                \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n                \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n                \"type\": \"EthereumECDSAKey\"\n            }\n            ],\n            \"service\": [\n            {\n                \"index\": 0,\n                \"service\": \"SecretStore\",\n                \"serviceEndpoint\": \"http://localhost:12001\",\n                \"type\": \"authorization\"\n            },\n            {\n                \"index\": 1,\n                \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n                \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n                \"type\": \"access\"\n            },\n            {\n                \"attributes\": {\n                \"additionalInformation\": {\n                    \"copyrightHolder\": \"Met Office\",\n                    \"description\": \"Weather information of UK including temperature and humidity\",\n                    \"inLanguage\": \"en\",\n                    \"links\": [\n                    {\n                        \"name\": \"Sample of Asset Data\",\n                        \"type\": \"sample\",\n                        \"url\": \"https://foo.com/sample.csv\"\n                    }\n                    ],\n                    \"tags\": [\n                    \"weather\",\n                    \"uk\",\n                    \"2011\",\n                    \"temperature\",\n                    \"humidity\"\n                    ],\n                    \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n                },\n                \"curation\": {\n                    \"numVotes\": 123,\n                    \"rating\": 0.93,\n                    \"schema\": \"Binary Voting\"\n                },\n                \"main\": {\n                    \"author\": \"Met Office\",\n                    \"dateCreated\": \"2012-02-01T10:55:11Z\",\n                    \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n                    \"files\": [\n                    {\n                        \"compression\": \"zip\",\n                        \"contentLength\": 4535431,\n                        \"contentType\": \"text/csv\",\n                        \"encoding\": \"UTF-8\",\n                        \"index\": 0,\n                        \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n                    }\n                    ],\n                    \"license\": \"CC-BY\",\n                    \"name\": \"UK Weather information 2011\",\n                    \"price\": 10,\n                    \"type\": \"dataset\"\n                }\n                },\n                \"index\": 2,\n                \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n                \"type\": \"metadata\"\n            }\n            ]\n        }\n    ],\n    \"total_pages\": 1,\n    \"total_results\": 1,\n}"
 						},
 						{
 							"name": "Bad request",
@@ -2520,7 +2520,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"query\": {\n    \"match_all\": {}\n  },\n  \"text\": \"Eius vel alias.\",\n  \"offset\": \"100\",\n  \"page\": \"0\",\n  \"sort\": {\n    \"created\": \"asc\"\n  }\n}\n",
+									"raw": "{\n  \"query\": {\n    \"match_all\": {}\n  },\n  \"text\": \"Eius vel alias.\",\n  \"offset\": \"100\",\n  \"page\": \"1\",\n  \"sort\": {\n    \"created\": \"asc\"\n  }\n}\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2635,7 +2635,7 @@
 									"          files: [",
 									"            {",
 									"              compression: 'zip',",
-									"              contentLength: '4535431',",
+									"              contentLength: 4535431,",
 									"              contentType: 'text/csv',",
 									"              encoding: 'UTF-8',",
 									"              index: 0,",
@@ -2644,7 +2644,7 @@
 									"          ],",
 									"          license: 'CC-BY',",
 									"          name: 'UK Weather information 2011',",
-									"          price: '10',",
+									"          price: 10,",
 									"          type: 'dataset',",
 									"        },",
 									"      },",
@@ -2725,7 +2725,7 @@
 									"          files: [",
 									"            {",
 									"              compression: 'zip',",
-									"              contentLength: '4535431',",
+									"              contentLength: 4535431,",
 									"              contentType: 'text/csv',",
 									"              encoding: 'UTF-8',",
 									"              index: 0,",
@@ -2734,7 +2734,7 @@
 									"          ],",
 									"          license: 'CC-BY',",
 									"          name: 'UK Weather information 2011',",
-									"          price: '10',",
+									"          price: 10,",
 									"          type: 'dataset',",
 									"        },",
 									"      },",
@@ -2830,7 +2830,7 @@
 									"                'master/Tasks_Demos/CoverSongs/shs_dataset_test.txt',",
 									"              checksum: 'efb2c764274b745f5fc37f97c6b0e761',",
 									"              compression: 'zip',",
-									"              contentLength: '4535431',",
+									"              contentLength: 4535431,",
 									"              contentType: 'text/csv',",
 									"              encoding: 'UTF-8',",
 									"              index: 0,",
@@ -2838,7 +2838,7 @@
 									"          ],",
 									"          license: 'CC-BY',",
 									"          name: 'UK Weather information 2011',",
-									"          price: '1',",
+									"          price: 1,",
 									"          type: 'dataset',",
 									"        },",
 									"      },",
@@ -2893,7 +2893,7 @@
 									"          datePublished: '2020-09-03T13:31:02Z',",
 									"          files: [],",
 									"          name: 'dataAssetAccessServiceAgreement',",
-									"          price: '1',",
+									"          price: 1,",
 									"        },",
 									"        serviceAgreementTemplate: {",
 									"          conditionDependency: {",
@@ -3140,14 +3140,14 @@
 									"          dateCreated: '2019-02-08T08:13:49Z',",
 									"          license: 'CC-BY',",
 									"          name: 'Word count script',",
-									"          price: '0',",
+									"          price: 0,",
 									"          files: [",
 									"            {",
 									"              index: 0,",
 									"              contentType: 'text/text',",
 									"              checksum: '52b5c93b82dd9e7ecc3d9fdf4755f7f69a544',",
 									"              checksumType: 'MD5',",
-									"              contentLength: '12057507',",
+									"              contentLength: 12057507,",
 									"              url:",
 									"                'https://raw.githubusercontent.com/keyko-io/nevermined-docs/' +",
 									"                'a46795b19ba61b240ff9dd403d88b069c0b51592/resources/word_count.py',",
@@ -3219,7 +3219,7 @@
 									"          datePublished: '2020-09-03T13:31:02Z',",
 									"          files: [],",
 									"          name: 'dataAssetAccessServiceAgreement',",
-									"          price: '1',",
+									"          price: 1,",
 									"        },",
 									"        serviceAgreementTemplate: {",
 									"          conditionDependency: {",
@@ -3458,7 +3458,7 @@
 									"            {",
 									"              checksum: 'efb2c764274b745f5fc37f97c6b0e761',",
 									"              compression: 'zip',",
-									"              contentLength: '4535431',",
+									"              contentLength: 4535431,",
 									"              contentType: 'text/csv',",
 									"              encoding: 'UTF-8',",
 									"              index: 0,",
@@ -3466,7 +3466,7 @@
 									"          ],",
 									"          license: 'CC-BY',",
 									"          name: 'UK Weather information 2011',",
-									"          price: '1',",
+									"          price: 1,",
 									"          type: 'dataset',",
 									"        },",
 									"      },",
@@ -3517,7 +3517,7 @@
 									"          datePublished: '2020-09-03T13:35:42Z',",
 									"          files: [],",
 									"          name: 'dataAssetComputeServiceAgreement',",
-									"          price: '1',",
+									"          price: 1,",
 									"          provider: {",
 									"            description: '',",
 									"            environment: {",
@@ -3806,7 +3806,7 @@
 									"          dateCreated: '2019-02-08T08:13:49Z',",
 									"          license: 'CC-BY',",
 									"          name: 'UK Weather information 2011',",
-									"          price: '1',",
+									"          price: 1,",
 									"          type: 'service',",
 									"          spec: 'https://my.service.inet:8080/spec',",
 									"          specChecksum: '859486596784567856758aaaa',",
@@ -3846,7 +3846,7 @@
 									"          name: 'dataAssetAccessServiceAgreement',",
 									"          creator: '',",
 									"          datePublished: '2019-02-08T08:13:49Z',",
-									"          price: '10',",
+									"          price: 10,",
 									"          timeout: 36000,",
 									"        },",
 									"        additionalInformation: {",
@@ -4089,7 +4089,7 @@
 									"          datePublished: '2019-05-08T08:13:49Z',",
 									"          license: 'CC-BY',",
 									"          name: 'My workflow',",
-									"          price: '1',",
+									"          price: 1,",
 									"          type: 'workflow',",
 									"          workflow: {",
 									"            stages: [",
@@ -4299,7 +4299,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"@context\": \"https://w3id.org/did/v1\",\n  \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n  \"created\": \"2019-02-08T08:13:49Z\",\n  \"updated\": \"2019-02-08T08:13:49Z\",\n  \"authentication\": [\n    {\n      \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"RsaSignatureAuthentication2018\"\n    }\n  ],\n  \"proof\": {\n    \"created\": \"2022-01-08T16:02:20Z\",\n    \"creator\": \"0xA99D43d86A0758d5632313b8fA3972B6088A21BB\",\n    \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n    \"type\": \"DDOIntegritySignature\"\n  },\n  \"publicKey\": [\n    {\n      \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n      \"type\": \"EthereumECDSAKey\"\n    }\n  ],\n  \"service\": [\n    {\n      \"index\": 0,\n      \"service\": \"SecretStore\",\n      \"serviceEndpoint\": \"http://localhost:12001\",\n      \"type\": \"authorization\"\n    },\n    {\n      \"index\": 1,\n      \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n      \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n      \"type\": \"access\"\n    },\n    {\n      \"attributes\": {\n        \"additionalInformation\": {\n          \"copyrightHolder\": \"Met Office\",\n          \"description\": \"Weather information of UK including temperature and humidity\",\n          \"inLanguage\": \"en\",\n          \"links\": [\n            {\n              \"name\": \"Sample of Asset Data\",\n              \"type\": \"sample\",\n              \"url\": \"https://foo.com/sample.csv\"\n            }\n          ],\n          \"tags\": [\n            \"weather\",\n            \"uk\",\n            \"2011\",\n            \"temperature\",\n            \"humidity\"\n          ],\n          \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n          \"numVotes\": 123,\n          \"rating\": 0.93,\n          \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n          \"author\": \"Met Office\",\n          \"dateCreated\": \"2012-02-01T10:55:11Z\",\n          \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n          \"files\": [\n            {\n              \"compression\": \"zip\",\n              \"contentLength\": \"4535431\",\n              \"contentType\": \"text/csv\",\n              \"encoding\": \"UTF-8\",\n              \"index\": 0,\n              \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n            }\n          ],\n          \"license\": \"CC-BY\",\n          \"name\": \"UK Weather information 2011\",\n          \"price\": \"10\",\n          \"type\": \"dataset\"\n        }\n      },\n      \"index\": 2,\n      \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"metadata\"\n    }\n  ]\n}",
+							"raw": "{\n    \"@context\": \"https://w3id.org/did/v1\",\n    \"id\": \"did:nv:5e8fdbf7bc9b80bbbe53f6ee1c3fde97168742bc6798856656231e46b22d2a84\",\n    \"created\": \"2022-04-04T07:00:17Z\",\n    \"publicKey\": [\n        {\n            \"id\": \"did:nv:5e8fdbf7bc9b80bbbe53f6ee1c3fde97168742bc6798856656231e46b22d2a84\",\n            \"type\": \"EthereumECDSAKey\",\n            \"owner\": \"0x26Da90565e8aAA5A656d370E4CdfC9797496635a\"\n        }\n    ],\n    \"authentication\": [\n        {\n            \"type\": \"RsaSignatureAuthentication2018\",\n            \"publicKey\": \"did:nv:5e8fdbf7bc9b80bbbe53f6ee1c3fde97168742bc6798856656231e46b22d2a84\"\n        }\n    ],\n    \"service\": [\n        {\n            \"type\": \"metadata\",\n            \"serviceEndpoint\": \"https://metadata.defi-marketplace.polygon.nevermined.rocks/api/v1/metadata/assets/ddo/did:nv:5e8fdbf7bc9b80bbbe53f6ee1c3fde97168742bc6798856656231e46b22d2a84\",\n            \"attributes\": {\n                \"main\": {\n                    \"name\": \"Aave v2\",\n                    \"dateCreated\": \"2022-04-04T07:00:16Z\",\n                    \"author\": \"Keyko GmbH\",\n                    \"license\": \"CC0: Public Domain\",\n                    \"price\": 0,\n                    \"datePublished\": \"2022-04-03T00:00:00Z\",\n                    \"network\": \"Ethereum\",\n                    \"files\": [\n                        {\n                            \"index\": 0,\n                            \"contentType\": \"text/csv\",\n                            \"checksum\": \"a508198b-a619-4dc0-8b13-746ac45139d6\",\n                            \"checksumType\": \"MD5\",\n                            \"contentLength\": 136\n                        }\n                    ],\n                    \"type\": \"dataset\"\n                },\n                \"additionalInformation\": {\n                    \"description\": \"This dataset contains all the Borrows events between the dates Apr 03 2022 and Apr 04 2022 in the the Aave protocol version 2 in the Ethereum blockchain in CSV format. \\nThe fields contained in this file are:- User: User that sent the swap- Protocol: Protocol where the swap was executed- Blockchain: Blochain where the swap was executed- Version: version of the protocol- TrasactionId: Transaction id where the trade was executed- Token: Token borrowed- Amount: Amount of token borrowed- Timestamp: Block timestamp where the transaction was included\",\n                    \"categories\": [\n                        \"ProtocolType:Lending\",\n                        \"EventType:Borrows\",\n                        \"Blockchain:Ethereum\",\n                        \"UseCase:defi-datasets\",\n                        \"Version:0.0.5\"\n                    ],\n                    \"blockchain\": \"Ethereum\",\n                    \"version\": \"0.0.5\",\n                    \"source\": \"filecoin\",\n                    \"file_name\": \"Aave-v2-LENDBOR-Ethereum_20220403_00:00.csv\",\n                    \"key\": \"0417eb57f99403b79ce2d7be7e4f3d5d99419d15df3700cbcb7f98b1ec0d79c7b3545aa27c7f5f497d276efec9aecc4043b55023400223c07358c5c7b2c8d9242fef81f03be74fe5528e83a71f517714a0cef1e2df9566b4d135e45970a24a624d79ad75ddcb8295731f9d1bff49f6babc6d895e66876d8c4d186459b02c643d54af0bed3800afba8e05873dfa15e886c46ab47ff79ede010fb650541932cc59d711\",\n                    \"sampleUrl\": \"https://bafkreihli7bq6ikp3kfpdsd35s3edxkx7jakcdth6chjadwjw5ujg35tja.ipfs.dweb.link\"\n                },\n                \"encryptedFiles\": \"0x594633465052695a6349414e41585949415855782b75313654352b3066436f6b7036336d582b5a6e2b2b4d566a795a4157466c7a566e51494c444c754c68796578765a4772373078642b35365156536c576e2f6745717a6662787a494f2f77367439552f356d7730673172524c74494173736c6a4651684a6370617658486457394d4535735956634630375948556638782f4d5451423537344876323466305848376e73582f307838476650354a75506b6a69307573684a50496d6641366a6f6d526e7a4473616552444778464c484d527a7a59326a34716b45435950536348636179737334427a5542464d3444446b56342b474431744762524530646b6745557375546466794e6a685249664f62675561325078476b5639705243504c48596879657752745a6255624873324773666f726669397441436d677178375a4d69|0x70dddbb3d20a38fd535be8407419945d650d2b40c2a09415cbc40dd076badbafaedbe5286f6d88c575df575ad36fbc74f8a75544f24cf22f3e415e192de3653f0bcecd75506ee953fa783aafb3b87dac64fb1e896deb84bc3e7f6d3f90d536940c7cc87c07752c4259a0b8ea60111bf57c588ed2a3d430235ed558e91559ad9a\",\n                \"curation\": {\n                    \"rating\": 0.0,\n                    \"numVotes\": 0,\n                    \"isListed\": true\n                }\n            },\n            \"index\": 0\n        },\n        {\n            \"type\": \"authorization\",\n            \"serviceEndpoint\": \"https://gateway.defi-marketplace.polygon.nevermined.rocks/api/v1/gateway/services/access\",\n            \"attributes\": {\n                \"main\": {\n                    \"service\": \"PSK-RSA\",\n                    \"publicKey\": \"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC/EAopv83yn/OlilJc97yLR+Gtg8x+xG6A5v0oPjIb0aDzsrOFsEC7EcFhmrJ+LNUFn2q6kE/XVML80pw96mARW9fQEd2qgHFfbJY4mYLm/gANyvi4UF0mp6qoNxY8Yy3ES4j+Eu6FCfaZgHq30CkXVguH2gcDZUjedQwTO3ruBwIDAQAB\"\n                }\n            },\n            \"index\": 1\n        },\n        {\n            \"type\": \"access\",\n            \"serviceEndpoint\": \"https://gateway.defi-marketplace.polygon.nevermined.rocks/api/v1/gateway/services/access\",\n            \"templateId\": \"0x8cCc9097F05fE49fe70014a36831304C2B7d2F47\",\n            \"attributes\": {\n                \"main\": {\n                    \"name\": \"dataAssetAccessServiceAgreement\",\n                    \"creator\": \"0x26Da90565e8aAA5A656d370E4CdfC9797496635a\",\n                    \"price\": 0,\n                    \"timeout\": 3600,\n                    \"datePublished\": \"2022-04-04T07:00:16Z\",\n                    \"_amounts\": [\n                        \"0\"\n                    ],\n                    \"_receivers\": [\n                        \"0x26Da90565e8aAA5A656d370E4CdfC9797496635a\"\n                    ],\n                    \"_tokenAddress\": \"0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174\"\n                },\n                \"serviceAgreementTemplate\": {\n                    \"contractName\": \"AccessTemplate\",\n                    \"events\": [\n                        {\n                            \"name\": \"AgreementCreated\",\n                            \"actorType\": \"consumer\",\n                            \"handler\": {\n                                \"moduleName\": \"escrowAccessTemplate\",\n                                \"functionName\": \"fulfillLockPaymentCondition\",\n                                \"version\": \"0.1\"\n                            }\n                        }\n                    ],\n                    \"fulfillmentOrder\": [\n                        \"lockPayment.fulfill\",\n                        \"access.fulfill\",\n                        \"escrowPayment.fulfill\"\n                    ],\n                    \"conditionDependency\": {\n                        \"lockPayment\": [],\n                        \"access\": [],\n                        \"escrowPayment\": [\n                            \"lockPayment\",\n                            \"access\"\n                        ]\n                    },\n                    \"conditions\": [\n                        {\n                            \"name\": \"lockPayment\",\n                            \"timelock\": 0,\n                            \"timeout\": 0,\n                            \"contractName\": \"LockPaymentCondition\",\n                            \"functionName\": \"fulfill\",\n                            \"events\": [\n                                {\n                                    \"name\": \"Fulfilled\",\n                                    \"actorType\": \"publisher\",\n                                    \"handler\": {\n                                        \"moduleName\": \"lockPaymentCondition\",\n                                        \"functionName\": \"fulfillAccessCondition\",\n                                        \"version\": \"0.1\"\n                                    }\n                                }\n                            ],\n                            \"parameters\": [\n                                {\n                                    \"name\": \"_did\",\n                                    \"type\": \"bytes32\",\n                                    \"value\": \"5e8fdbf7bc9b80bbbe53f6ee1c3fde97168742bc6798856656231e46b22d2a84\"\n                                },\n                                {\n                                    \"name\": \"_rewardAddress\",\n                                    \"type\": \"address\",\n                                    \"value\": \"0x003948364B028970e8daf3455a8BF715B550d3E5\"\n                                },\n                                {\n                                    \"name\": \"_tokenAddress\",\n                                    \"type\": \"address\",\n                                    \"value\": \"0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174\"\n                                },\n                                {\n                                    \"name\": \"_amounts\",\n                                    \"type\": \"uint256[]\",\n                                    \"value\": [\n                                        \"0\"\n                                    ]\n                                },\n                                {\n                                    \"name\": \"_receivers\",\n                                    \"type\": \"address[]\",\n                                    \"value\": [\n                                        \"0x26Da90565e8aAA5A656d370E4CdfC9797496635a\"\n                                    ]\n                                }\n                            ]\n                        },\n                        {\n                            \"name\": \"access\",\n                            \"timelock\": 0,\n                            \"timeout\": 0,\n                            \"contractName\": \"AccessCondition\",\n                            \"functionName\": \"fulfill\",\n                            \"events\": [\n                                {\n                                    \"name\": \"Fulfilled\",\n                                    \"actorType\": \"publisher\",\n                                    \"handler\": {\n                                        \"moduleName\": \"access\",\n                                        \"functionName\": \"fulfillEscrowPaymentCondition\",\n                                        \"version\": \"0.1\"\n                                    }\n                                },\n                                {\n                                    \"name\": \"TimedOut\",\n                                    \"actorType\": \"consumer\",\n                                    \"handler\": {\n                                        \"moduleName\": \"access\",\n                                        \"functionName\": \"fulfillEscrowPaymentCondition\",\n                                        \"version\": \"0.1\"\n                                    }\n                                }\n                            ],\n                            \"parameters\": [\n                                {\n                                    \"name\": \"_documentId\",\n                                    \"type\": \"bytes32\",\n                                    \"value\": \"5e8fdbf7bc9b80bbbe53f6ee1c3fde97168742bc6798856656231e46b22d2a84\"\n                                },\n                                {\n                                    \"name\": \"_grantee\",\n                                    \"type\": \"address\",\n                                    \"value\": \"\"\n                                }\n                            ]\n                        },\n                        {\n                            \"name\": \"escrowPayment\",\n                            \"timelock\": 0,\n                            \"timeout\": 0,\n                            \"contractName\": \"EscrowPaymentCondition\",\n                            \"functionName\": \"fulfill\",\n                            \"events\": [\n                                {\n                                    \"name\": \"Fulfilled\",\n                                    \"actorType\": \"publisher\",\n                                    \"handler\": {\n                                        \"moduleName\": \"escrowPaymentCondition\",\n                                        \"functionName\": \"verifyRewardTokens\",\n                                        \"version\": \"0.1\"\n                                    }\n                                }\n                            ],\n                            \"parameters\": [\n                                {\n                                    \"name\": \"_did\",\n                                    \"type\": \"bytes32\",\n                                    \"value\": \"5e8fdbf7bc9b80bbbe53f6ee1c3fde97168742bc6798856656231e46b22d2a84\"\n                                },\n                                {\n                                    \"name\": \"_amounts\",\n                                    \"type\": \"uint256[]\",\n                                    \"value\": [\n                                        \"0\"\n                                    ]\n                                },\n                                {\n                                    \"name\": \"_receivers\",\n                                    \"type\": \"address[]\",\n                                    \"value\": [\n                                        \"0x26Da90565e8aAA5A656d370E4CdfC9797496635a\"\n                                    ]\n                                },\n                                {\n                                    \"name\": \"_sender\",\n                                    \"type\": \"address\",\n                                    \"value\": \"\"\n                                },\n                                {\n                                    \"name\": \"_tokenAddress\",\n                                    \"type\": \"address\",\n                                    \"value\": \"0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174\"\n                                },\n                                {\n                                    \"name\": \"_lockCondition\",\n                                    \"type\": \"bytes32\",\n                                    \"value\": \"\"\n                                },\n                                {\n                                    \"name\": \"_releaseCondition\",\n                                    \"type\": \"bytes32\",\n                                    \"value\": \"\"\n                                }\n                            ]\n                        }\n                    ]\n                }\n            },\n            \"index\": 3\n        }\n    ],\n    \"proof\": {\n        \"type\": \"DDOIntegritySignature\",\n        \"created\": \"2022-04-04T07:00:19Z\",\n        \"creator\": \"0x26Da90565e8aAA5A656d370E4CdfC9797496635a\",\n        \"signatureValue\": \"0x517f33dd60b66dcd1da95d9b921bc799f263bd1aa3a61fcb3d95302b0cc0f2da00957318a08d42cb3073fbb6e72f3226bb06e99daca3f63e63187c0f190282531b\",\n        \"checksum\": {\n            \"0\": \"57260ef54e94b4e625051402ddc2bdcc5d5b528ba91159c4af64ed3fc83ed8da\",\n            \"2\": \"bc2086b95ed3ed1b362a4e4fa16e7efefac5e051b27835189779caf5806b61f3\",\n            \"3\": \"8b6bb294df596c5992c7315cdbc10e545f31bfd5c3f7c2724672623d8ec8f113\"\n        }\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4338,7 +4338,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"@context\": \"https://w3id.org/did/v1\",\n  \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n  \"created\": \"2019-02-08T08:13:49Z\",\n  \"updated\": \"0xA99D43d86A0758d5632313b8fA3972B6088A21BB\",\n  \"authentication\": [\n    {\n      \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"RsaSignatureAuthentication2018\"\n    }\n  ],\n  \"proof\": {\n    \"created\": \"2022-01-08T16:02:20Z\",\n    \"creator\": \"2022-01-08T16:02:20Z\",\n    \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n    \"type\": \"DDOIntegritySignature\"\n  },\n  \"publicKey\": [\n    {\n      \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n      \"type\": \"EthereumECDSAKey\"\n    }\n  ],\n  \"service\": [\n    {\n      \"index\": 0,\n      \"service\": \"SecretStore\",\n      \"serviceEndpoint\": \"http://localhost:12001\",\n      \"type\": \"authorization\"\n    },\n    {\n      \"index\": 1,\n      \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n      \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n      \"type\": \"access\"\n    },\n    {\n      \"attributes\": {\n        \"additionalInformation\": {\n          \"copyrightHolder\": \"Met Office\",\n          \"description\": \"Weather information of UK including temperature and humidity\",\n          \"inLanguage\": \"en\",\n          \"links\": [\n            {\n              \"name\": \"Sample of Asset Data\",\n              \"type\": \"sample\",\n              \"url\": \"https://foo.com/sample.csv\"\n            }\n          ],\n          \"tags\": [\n            \"weather\",\n            \"uk\",\n            \"2011\",\n            \"temperature\",\n            \"humidity\"\n          ],\n          \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n          \"numVotes\": 123,\n          \"rating\": 0.93,\n          \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n          \"author\": \"Met Office\",\n          \"dateCreated\": \"2012-02-01T10:55:11Z\",\n          \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n          \"files\": [\n            {\n              \"compression\": \"zip\",\n              \"contentLength\": \"4535431\",\n              \"contentType\": \"text/csv\",\n              \"encoding\": \"UTF-8\",\n              \"index\": 0,\n              \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n            }\n          ],\n          \"license\": \"CC-BY\",\n          \"name\": \"UK Weather information 2011\",\n          \"price\": \"10\",\n          \"type\": \"dataset\"\n        }\n      },\n      \"index\": 2,\n      \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"metadata\"\n    }\n  ]\n}",
+									"raw": "{\n  \"@context\": \"https://w3id.org/did/v1\",\n  \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n  \"created\": \"2019-02-08T08:13:49Z\",\n  \"updated\": \"0xA99D43d86A0758d5632313b8fA3972B6088A21BB\",\n  \"authentication\": [\n    {\n      \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"RsaSignatureAuthentication2018\"\n    }\n  ],\n  \"proof\": {\n    \"created\": \"2022-01-08T16:02:20Z\",\n    \"creator\": \"2022-01-08T16:02:20Z\",\n    \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n    \"type\": \"DDOIntegritySignature\"\n  },\n  \"publicKey\": [\n    {\n      \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n      \"type\": \"EthereumECDSAKey\"\n    }\n  ],\n  \"service\": [\n    {\n      \"index\": 0,\n      \"service\": \"SecretStore\",\n      \"serviceEndpoint\": \"http://localhost:12001\",\n      \"type\": \"authorization\"\n    },\n    {\n      \"index\": 1,\n      \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n      \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n      \"type\": \"access\"\n    },\n    {\n      \"attributes\": {\n        \"additionalInformation\": {\n          \"copyrightHolder\": \"Met Office\",\n          \"description\": \"Weather information of UK including temperature and humidity\",\n          \"inLanguage\": \"en\",\n          \"links\": [\n            {\n              \"name\": \"Sample of Asset Data\",\n              \"type\": \"sample\",\n              \"url\": \"https://foo.com/sample.csv\"\n            }\n          ],\n          \"tags\": [\n            \"weather\",\n            \"uk\",\n            \"2011\",\n            \"temperature\",\n            \"humidity\"\n          ],\n          \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n          \"numVotes\": 123,\n          \"rating\": 0.93,\n          \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n          \"author\": \"Met Office\",\n          \"dateCreated\": \"2012-02-01T10:55:11Z\",\n          \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n          \"files\": [\n            {\n              \"compression\": \"zip\",\n              \"contentLength\": 4535431,\n              \"contentType\": \"text/csv\",\n              \"encoding\": \"UTF-8\",\n              \"index\": 0,\n              \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n            }\n          ],\n          \"license\": \"CC-BY\",\n          \"name\": \"UK Weather information 2011\",\n          \"price\": 10,\n          \"type\": \"dataset\"\n        }\n      },\n      \"index\": 2,\n      \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"metadata\"\n    }\n  ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4364,7 +4364,7 @@
 							"_postman_previewlanguage": null,
 							"header": null,
 							"cookie": [],
-							"body": "{\n  \"@context\": \"https://w3id.org/did/v1\",\n  \"authentication\": [\n    {\n      \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"RsaSignatureAuthentication2018\"\n    }\n  ],\n  \"created\": \"2021-02-01T10:55:11Z\",\n  \"updated\": \"2021-02-01T10:55:11Z\",\n  \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n  \"proof\": {\n    \"created\": \"2022-01-08T16:02:20Z\",\n    \"creator\": \"2022-01-08T16:02:20Z\",\n    \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n    \"type\": \"DDOIntegritySignature\"\n  },\n  \"publicKey\": [\n    {\n      \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n      \"type\": \"EthereumECDSAKey\"\n    }\n  ],\n  \"service\": [\n    {\n      \"index\": 0,\n      \"service\": \"SecretStore\",\n      \"serviceEndpoint\": \"http://localhost:12001\",\n      \"type\": \"authorization\"\n    },\n    {\n      \"index\": 1,\n      \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n      \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n      \"type\": \"access\"\n    },\n    {\n      \"attributes\": {\n        \"additionalInformation\": {\n          \"copyrightHolder\": \"Met Office\",\n          \"description\": \"Weather information of UK including temperature and humidity\",\n          \"inLanguage\": \"en\",\n          \"links\": [\n            {\n              \"name\": \"Sample of Asset Data\",\n              \"type\": \"sample\",\n              \"url\": \"https://foo.com/sample.csv\"\n            }\n          ],\n          \"tags\": [\n            \"weather\",\n            \"uk\",\n            \"2011\",\n            \"temperature\",\n            \"humidity\"\n          ],\n          \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n          \"numVotes\": 123,\n          \"rating\": 0.93,\n          \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n          \"author\": \"Met Office\",\n          \"dateCreated\": \"2012-02-01T10:55:11Z\",\n          \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n          \"files\": [\n            {\n              \"compression\": \"zip\",\n              \"contentLength\": \"4535431\",\n              \"contentType\": \"text/csv\",\n              \"encoding\": \"UTF-8\",\n              \"index\": 0,\n              \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n            }\n          ],\n          \"license\": \"CC-BY\",\n          \"name\": \"UK Weather information 2011\",\n          \"price\": \"10\",\n          \"type\": \"dataset\"\n        }\n      },\n      \"index\": 2,\n      \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"metadata\"\n    }\n  ]\n}"
+							"body": "{\n  \"@context\": \"https://w3id.org/did/v1\",\n  \"authentication\": [\n    {\n      \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"RsaSignatureAuthentication2018\"\n    }\n  ],\n  \"created\": \"2021-02-01T10:55:11Z\",\n  \"updated\": \"2021-02-01T10:55:11Z\",\n  \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n  \"proof\": {\n    \"created\": \"2022-01-08T16:02:20Z\",\n    \"creator\": \"2022-01-08T16:02:20Z\",\n    \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n    \"type\": \"DDOIntegritySignature\"\n  },\n  \"publicKey\": [\n    {\n      \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n      \"type\": \"EthereumECDSAKey\"\n    }\n  ],\n  \"service\": [\n    {\n      \"index\": 0,\n      \"service\": \"SecretStore\",\n      \"serviceEndpoint\": \"http://localhost:12001\",\n      \"type\": \"authorization\"\n    },\n    {\n      \"index\": 1,\n      \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n      \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n      \"type\": \"access\"\n    },\n    {\n      \"attributes\": {\n        \"additionalInformation\": {\n          \"copyrightHolder\": \"Met Office\",\n          \"description\": \"Weather information of UK including temperature and humidity\",\n          \"inLanguage\": \"en\",\n          \"links\": [\n            {\n              \"name\": \"Sample of Asset Data\",\n              \"type\": \"sample\",\n              \"url\": \"https://foo.com/sample.csv\"\n            }\n          ],\n          \"tags\": [\n            \"weather\",\n            \"uk\",\n            \"2011\",\n            \"temperature\",\n            \"humidity\"\n          ],\n          \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n          \"numVotes\": 123,\n          \"rating\": 0.93,\n          \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n          \"author\": \"Met Office\",\n          \"dateCreated\": \"2012-02-01T10:55:11Z\",\n          \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n          \"files\": [\n            {\n              \"compression\": \"zip\",\n              \"contentLength\": 4535431,\n              \"contentType\": \"text/csv\",\n              \"encoding\": \"UTF-8\",\n              \"index\": 0,\n              \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n            }\n          ],\n          \"license\": \"CC-BY\",\n          \"name\": \"UK Weather information 2011\",\n          \"price\": 10,\n          \"type\": \"dataset\"\n        }\n      },\n      \"index\": 2,\n      \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"metadata\"\n    }\n  ]\n}"
 						},
 						{
 							"name": "Bad Request",
@@ -4382,7 +4382,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"@context\": \"https://w3id.org/did/v1\",\n  \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n  \"created\": \"2019-02-08T08:13:49Z\",\n  \"updated\": \"2019-02-08T08:13:49Z\",\n  \"authentication\": [\n    {\n      \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"RsaSignatureAuthentication2018\"\n    }\n  ],\n  \"proof\": {\n    \"created\": \"2022-01-08T16:02:20Z\",\n    \"creator\": \"2022-01-08T16:02:20Z\",\n    \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n    \"type\": \"DDOIntegritySignature\"\n  },\n  \"publicKey\": [\n    {\n      \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n      \"type\": \"EthereumECDSAKey\"\n    }\n  ],\n  \"service\": [\n    {\n      \"index\": 0,\n      \"service\": \"SecretStore\",\n      \"serviceEndpoint\": \"http://localhost:12001\",\n      \"type\": \"authorization\"\n    },\n    {\n      \"index\": 1,\n      \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n      \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n      \"type\": \"access\"\n    },\n    {\n      \"attributes\": {\n        \"additionalInformation\": {\n          \"copyrightHolder\": \"Met Office\",\n          \"description\": \"Weather information of UK including temperature and humidity\",\n          \"inLanguage\": \"en\",\n          \"links\": [\n            {\n              \"name\": \"Sample of Asset Data\",\n              \"type\": \"sample\",\n              \"url\": \"https://foo.com/sample.csv\"\n            }\n          ],\n          \"tags\": [\n            \"weather\",\n            \"uk\",\n            \"2011\",\n            \"temperature\",\n            \"humidity\"\n          ],\n          \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n          \"numVotes\": 123,\n          \"rating\": 0.93,\n          \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n          \"author\": \"Met Office\",\n          \"dateCreated\": \"2012-02-01T10:55:11Z\",\n          \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n          \"files\": [\n            {\n              \"compression\": \"zip\",\n              \"contentLength\": \"4535431\",\n              \"contentType\": \"text/csv\",\n              \"encoding\": \"UTF-8\",\n              \"index\": 0,\n              \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n            }\n          ],\n          \"license\": \"CC-BY\",\n          \"name\": \"UK Weather information 2011\",\n          \"price\": \"10\",\n          \"type\": \"dataset\"\n        }\n      },\n      \"index\": 2,\n      \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"metadata\"\n    }\n  ]\n}",
+									"raw": "{\n  \"@context\": \"https://w3id.org/did/v1\",\n  \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n  \"created\": \"2019-02-08T08:13:49Z\",\n  \"updated\": \"2019-02-08T08:13:49Z\",\n  \"authentication\": [\n    {\n      \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"RsaSignatureAuthentication2018\"\n    }\n  ],\n  \"proof\": {\n    \"created\": \"2022-01-08T16:02:20Z\",\n    \"creator\": \"2022-01-08T16:02:20Z\",\n    \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n    \"type\": \"DDOIntegritySignature\"\n  },\n  \"publicKey\": [\n    {\n      \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n      \"type\": \"EthereumECDSAKey\"\n    }\n  ],\n  \"service\": [\n    {\n      \"index\": 0,\n      \"service\": \"SecretStore\",\n      \"serviceEndpoint\": \"http://localhost:12001\",\n      \"type\": \"authorization\"\n    },\n    {\n      \"index\": 1,\n      \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n      \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n      \"type\": \"access\"\n    },\n    {\n      \"attributes\": {\n        \"additionalInformation\": {\n          \"copyrightHolder\": \"Met Office\",\n          \"description\": \"Weather information of UK including temperature and humidity\",\n          \"inLanguage\": \"en\",\n          \"links\": [\n            {\n              \"name\": \"Sample of Asset Data\",\n              \"type\": \"sample\",\n              \"url\": \"https://foo.com/sample.csv\"\n            }\n          ],\n          \"tags\": [\n            \"weather\",\n            \"uk\",\n            \"2011\",\n            \"temperature\",\n            \"humidity\"\n          ],\n          \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n          \"numVotes\": 123,\n          \"rating\": 0.93,\n          \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n          \"author\": \"Met Office\",\n          \"dateCreated\": \"2012-02-01T10:55:11Z\",\n          \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n          \"files\": [\n            {\n              \"compression\": \"zip\",\n              \"contentLength\": 4535431,\n              \"contentType\": \"text/csv\",\n              \"encoding\": \"UTF-8\",\n              \"index\": 0,\n              \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n            }\n          ],\n          \"license\": \"CC-BY\",\n          \"name\": \"UK Weather information 2011\",\n          \"price\": 10,\n          \"type\": \"dataset\"\n        }\n      },\n      \"index\": 2,\n      \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"metadata\"\n    }\n  ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4487,7 +4487,7 @@
 									"          files: [",
 									"            {",
 									"              compression: 'zip',",
-									"              contentLength: '4535431',",
+									"              contentLength: 4535431,",
 									"              contentType: 'text/csv',",
 									"              encoding: 'UTF-8',",
 									"              index: 0,",
@@ -4496,7 +4496,7 @@
 									"          ],",
 									"          license: 'CC-BY',",
 									"          name: 'UK Weather information 2011',",
-									"          price: '10',",
+									"          price: 10,",
 									"          type: 'dataset',",
 									"        },",
 									"      },",
@@ -4539,7 +4539,7 @@
 							"script": {
 								"exec": [
 									"pm.sendRequest({",
-									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/ddo?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=0&sort={ \"created\": \"asc\" }'),",
+									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/ddo?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=1&sort={ \"created\": \"asc\" }'),",
 									"        method: 'GET',",
 									"        header: {",
 									"            'Content-Type': 'application/json',",
@@ -4548,7 +4548,7 @@
 									"    pm.test(\"should get a list of ddos\", () => {",
 									"        pm.expect(response).to.have.property('code', 200);",
 									"        pm.expect(response).to.have.property('status', 'OK')",
-									"        pm.expect(response.json().some(a => a.id === pm.environment.get('did'))).to.be.true;",
+									"        pm.expect(response.json().results.some(a => a.id === pm.environment.get('did'))).to.be.true;",
 									"    });",
 									"});"
 								],
@@ -4565,7 +4565,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=0&sort={ \"created\": \"asc\" }",
+							"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=1&sort={ \"created\": \"asc\" }",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -4594,7 +4594,7 @@
 								},
 								{
 									"key": "page",
-									"value": "0",
+									"value": "1",
 									"description": "Page to retrieve"
 								},
 								{
@@ -4618,7 +4618,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=0&sort={ \"created\": \"asc\" }",
+									"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=1&sort={ \"created\": \"asc\" }",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -4647,7 +4647,7 @@
 										},
 										{
 											"key": "page",
-											"value": "0",
+											"value": "1",
 											"description": "Page to retrieve"
 										},
 										{
@@ -4663,7 +4663,7 @@
 							"_postman_previewlanguage": null,
 							"header": null,
 							"cookie": [],
-							"body": "[\n  {\n    \"@context\": \"https://w3id.org/did/v1\",\n    \"authentication\": [\n      {\n        \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n        \"type\": \"RsaSignatureAuthentication2018\"\n      }\n    ],\n    \"created\": \"2021-02-01T10:55:11Z\",\n    \"updated\": \"2021-02-01T10:55:11Z\",\n    \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n    \"proof\": {\n      \"created\": \"2022-01-08T16:02:20Z\",\n      \"creator\": \"2022-01-08T16:02:20Z\",\n      \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n      \"type\": \"DDOIntegritySignature\"\n    },\n    \"publicKey\": [\n      {\n        \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n        \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n        \"type\": \"EthereumECDSAKey\"\n      }\n    ],\n    \"service\": [\n      {\n        \"index\": 0,\n        \"service\": \"SecretStore\",\n        \"serviceEndpoint\": \"http://localhost:12001\",\n        \"type\": \"authorization\"\n      },\n      {\n        \"index\": 1,\n        \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n        \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n        \"type\": \"access\"\n      },\n      {\n        \"attributes\": {\n          \"additionalInformation\": {\n            \"copyrightHolder\": \"Met Office\",\n            \"description\": \"Weather information of UK including temperature and humidity\",\n            \"inLanguage\": \"en\",\n            \"links\": [\n              {\n                \"name\": \"Sample of Asset Data\",\n                \"type\": \"sample\",\n                \"url\": \"https://foo.com/sample.csv\"\n              }\n            ],\n            \"tags\": [\n              \"weather\",\n              \"uk\",\n              \"2011\",\n              \"temperature\",\n              \"humidity\"\n            ],\n            \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n          },\n          \"curation\": {\n            \"numVotes\": 123,\n            \"rating\": 0.93,\n            \"schema\": \"Binary Voting\"\n          },\n          \"main\": {\n            \"author\": \"Met Office\",\n            \"dateCreated\": \"2012-02-01T10:55:11Z\",\n            \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n            \"files\": [\n              {\n                \"compression\": \"zip\",\n                \"contentLength\": \"4535431\",\n                \"contentType\": \"text/csv\",\n                \"encoding\": \"UTF-8\",\n                \"index\": 0,\n                \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n              }\n            ],\n            \"license\": \"CC-BY\",\n            \"name\": \"UK Weather information 2011\",\n            \"price\": \"10\",\n            \"type\": \"dataset\"\n          }\n        },\n        \"index\": 2,\n        \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n        \"type\": \"metadata\"\n      }\n    ]\n  }\n]"
+							"body": "{\n    \"page\": 1,\n    \"results\": [\n        {\n            \"@context\": \"https://w3id.org/did/v1\",\n            \"authentication\": [\n            {\n                \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n                \"type\": \"RsaSignatureAuthentication2018\"\n            }\n            ],\n            \"created\": \"2021-02-01T10:55:11Z\",\n            \"updated\": \"2021-02-01T10:55:11Z\",\n            \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n            \"proof\": {\n            \"created\": \"2022-01-08T16:02:20Z\",\n            \"creator\": \"2022-01-08T16:02:20Z\",\n            \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n            \"type\": \"DDOIntegritySignature\"\n            },\n            \"publicKey\": [\n            {\n                \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n                \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n                \"type\": \"EthereumECDSAKey\"\n            }\n            ],\n            \"service\": [\n            {\n                \"index\": 0,\n                \"service\": \"SecretStore\",\n                \"serviceEndpoint\": \"http://localhost:12001\",\n                \"type\": \"authorization\"\n            },\n            {\n                \"index\": 1,\n                \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n                \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n                \"type\": \"access\"\n            },\n            {\n                \"attributes\": {\n                \"additionalInformation\": {\n                    \"copyrightHolder\": \"Met Office\",\n                    \"description\": \"Weather information of UK including temperature and humidity\",\n                    \"inLanguage\": \"en\",\n                    \"links\": [\n                    {\n                        \"name\": \"Sample of Asset Data\",\n                        \"type\": \"sample\",\n                        \"url\": \"https://foo.com/sample.csv\"\n                    }\n                    ],\n                    \"tags\": [\n                    \"weather\",\n                    \"uk\",\n                    \"2011\",\n                    \"temperature\",\n                    \"humidity\"\n                    ],\n                    \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n                },\n                \"curation\": {\n                    \"numVotes\": 123,\n                    \"rating\": 0.93,\n                    \"schema\": \"Binary Voting\"\n                },\n                \"main\": {\n                    \"author\": \"Met Office\",\n                    \"dateCreated\": \"2012-02-01T10:55:11Z\",\n                    \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n                    \"files\": [\n                    {\n                        \"compression\": \"zip\",\n                        \"contentLength\": 4535431,\n                        \"contentType\": \"text/csv\",\n                        \"encoding\": \"UTF-8\",\n                        \"index\": 0,\n                        \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n                    }\n                    ],\n                    \"license\": \"CC-BY\",\n                    \"name\": \"UK Weather information 2011\",\n                    \"price\": 10,\n                    \"type\": \"dataset\"\n                }\n                },\n                \"index\": 2,\n                \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n                \"type\": \"metadata\"\n            }\n            ]\n        }\n    ],\n    \"total_pages\": 1,\n    \"total_results\": 1,\n}"
 						},
 						{
 							"name": "Bad Request",
@@ -4676,7 +4676,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=0&sort={ \"created\": \"asc\" }",
+									"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=1&sort={ \"created\": \"asc\" }",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -4704,7 +4704,7 @@
 										},
 										{
 											"key": "page",
-											"value": "0",
+											"value": "1",
 											"description": "Page to retrieve"
 										},
 										{
@@ -4799,7 +4799,7 @@
 									"          files: [",
 									"            {",
 									"              compression: 'zip',",
-									"              contentLength: '4535431',",
+									"              contentLength: 4535431,",
 									"              contentType: 'text/csv',",
 									"              encoding: 'UTF-8',",
 									"              index: 0,",
@@ -4808,7 +4808,7 @@
 									"          ],",
 									"          license: 'CC-BY',",
 									"          name: 'UK Weather information 2011',",
-									"          price: '10',",
+									"          price: 10,",
 									"          type: 'dataset',",
 									"        },",
 									"      },",
@@ -4851,7 +4851,7 @@
 							"script": {
 								"exec": [
 									"pm.sendRequest({",
-									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=0&sort={ \"created\": \"asc\" }'),",
+									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=1&sort={ \"created\": \"asc\" }'),",
 									"        method: 'GET',",
 									"        header: {",
 									"            'Content-Type': 'application/json',",
@@ -4877,7 +4877,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/api/v1/metadata/assets?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=0&sort={ \"created\": \"asc\" }",
+							"raw": "{{baseUrl}}/api/v1/metadata/assets?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=1&sort={ \"created\": \"asc\" }",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -4905,7 +4905,7 @@
 								},
 								{
 									"key": "page",
-									"value": "0",
+									"value": "1",
 									"description": "Page to retrieve"
 								},
 								{
@@ -5109,7 +5109,7 @@
 									"          files: [",
 									"            {",
 									"              compression: 'zip',",
-									"              contentLength: '4535431',",
+									"              contentLength: 4535431,",
 									"              contentType: 'text/csv',",
 									"              encoding: 'UTF-8',",
 									"              index: 0,",
@@ -5118,7 +5118,7 @@
 									"          ],",
 									"          license: 'CC-BY',",
 									"          name: 'UK Weather information 2011',",
-									"          price: '10',",
+									"          price: 10,",
 									"          type: 'dataset',",
 									"        },",
 									"      },",
@@ -5161,7 +5161,7 @@
 							"script": {
 								"exec": [
 									"pm.sendRequest({",
-									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/ddo/query?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=0&sort={ \"created\": \"asc\" }'),",
+									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/ddo/query?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=1&sort={ \"created\": \"asc\" }'),",
 									"        method: 'GET',",
 									"        header: {",
 									"            'Content-Type': 'application/json',",
@@ -5170,7 +5170,7 @@
 									"    pm.test(\"should get a list of ddos by passing a query\", () => {",
 									"        pm.expect(response).to.have.property('code', 200);",
 									"        pm.expect(response).to.have.property('status', 'OK')",
-									"        pm.expect(response.json().some(a => a.id === pm.environment.get('did'))).to.be.true;",
+									"        pm.expect(response.json().results.some(a => a.id === pm.environment.get('did'))).to.be.true;",
 									"    });",
 									"});"
 								],
@@ -5187,7 +5187,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo/query?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=0&sort={ \"created\": \"asc\" }",
+							"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo/query?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=1&sort={ \"created\": \"asc\" }",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -5217,7 +5217,7 @@
 								},
 								{
 									"key": "page",
-									"value": "0",
+									"value": "1",
 									"description": "Page to retrieve"
 								},
 								{
@@ -5287,7 +5287,7 @@
 							"_postman_previewlanguage": null,
 							"header": null,
 							"cookie": [],
-							"body": "[\n  {\n    \"@context\": \"https://w3id.org/did/v1\",\n    \"authentication\": [\n      {\n        \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n        \"type\": \"RsaSignatureAuthentication2018\"\n      }\n    ],\n    \"created\": \"2021-02-01T10:55:11Z\",\n    \"updated\": \"2021-02-01T10:55:11Z\",\n    \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n    \"proof\": {\n      \"created\": \"2022-01-08T16:02:20Z\",\n      \"creator\": \"2022-01-08T16:02:20Z\",\n      \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n      \"type\": \"DDOIntegritySignature\"\n    },\n    \"publicKey\": [\n      {\n        \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n        \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n        \"type\": \"EthereumECDSAKey\"\n      }\n    ],\n    \"service\": [\n      {\n        \"index\": 0,\n        \"service\": \"SecretStore\",\n        \"serviceEndpoint\": \"http://localhost:12001\",\n        \"type\": \"authorization\"\n      },\n      {\n        \"index\": 1,\n        \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n        \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n        \"type\": \"access\"\n      },\n      {\n        \"attributes\": {\n          \"additionalInformation\": {\n            \"copyrightHolder\": \"Met Office\",\n            \"description\": \"Weather information of UK including temperature and humidity\",\n            \"inLanguage\": \"en\",\n            \"links\": [\n              {\n                \"name\": \"Sample of Asset Data\",\n                \"type\": \"sample\",\n                \"url\": \"https://foo.com/sample.csv\"\n              }\n            ],\n            \"tags\": [\n              \"weather\",\n              \"uk\",\n              \"2011\",\n              \"temperature\",\n              \"humidity\"\n            ],\n            \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n          },\n          \"curation\": {\n            \"numVotes\": 123,\n            \"rating\": 0.93,\n            \"schema\": \"Binary Voting\"\n          },\n          \"main\": {\n            \"author\": \"Met Office\",\n            \"dateCreated\": \"2012-02-01T10:55:11Z\",\n            \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n            \"files\": [\n              {\n                \"compression\": \"zip\",\n                \"contentLength\": \"4535431\",\n                \"contentType\": \"text/csv\",\n                \"encoding\": \"UTF-8\",\n                \"index\": 0,\n                \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n              }\n            ],\n            \"license\": \"CC-BY\",\n            \"name\": \"UK Weather information 2011\",\n            \"price\": \"10\",\n            \"type\": \"dataset\"\n          }\n        },\n        \"index\": 2,\n        \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n        \"type\": \"metadata\"\n      }\n    ]\n  }\n]"
+							"body": "[\n  {\n    \"@context\": \"https://w3id.org/did/v1\",\n    \"authentication\": [\n      {\n        \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n        \"type\": \"RsaSignatureAuthentication2018\"\n      }\n    ],\n    \"created\": \"2021-02-01T10:55:11Z\",\n    \"updated\": \"2021-02-01T10:55:11Z\",\n    \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n    \"proof\": {\n      \"created\": \"2022-01-08T16:02:20Z\",\n      \"creator\": \"2022-01-08T16:02:20Z\",\n      \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n      \"type\": \"DDOIntegritySignature\"\n    },\n    \"publicKey\": [\n      {\n        \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n        \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n        \"type\": \"EthereumECDSAKey\"\n      }\n    ],\n    \"service\": [\n      {\n        \"index\": 0,\n        \"service\": \"SecretStore\",\n        \"serviceEndpoint\": \"http://localhost:12001\",\n        \"type\": \"authorization\"\n      },\n      {\n        \"index\": 1,\n        \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n        \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n        \"type\": \"access\"\n      },\n      {\n        \"attributes\": {\n          \"additionalInformation\": {\n            \"copyrightHolder\": \"Met Office\",\n            \"description\": \"Weather information of UK including temperature and humidity\",\n            \"inLanguage\": \"en\",\n            \"links\": [\n              {\n                \"name\": \"Sample of Asset Data\",\n                \"type\": \"sample\",\n                \"url\": \"https://foo.com/sample.csv\"\n              }\n            ],\n            \"tags\": [\n              \"weather\",\n              \"uk\",\n              \"2011\",\n              \"temperature\",\n              \"humidity\"\n            ],\n            \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n          },\n          \"curation\": {\n            \"numVotes\": 123,\n            \"rating\": 0.93,\n            \"schema\": \"Binary Voting\"\n          },\n          \"main\": {\n            \"author\": \"Met Office\",\n            \"dateCreated\": \"2012-02-01T10:55:11Z\",\n            \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n            \"files\": [\n              {\n                \"compression\": \"zip\",\n                \"contentLength\": 4535431,\n                \"contentType\": \"text/csv\",\n                \"encoding\": \"UTF-8\",\n                \"index\": 0,\n                \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n              }\n            ],\n            \"license\": \"CC-BY\",\n            \"name\": \"UK Weather information 2011\",\n            \"price\": 10,\n            \"type\": \"dataset\"\n          }\n        },\n        \"index\": 2,\n        \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n        \"type\": \"metadata\"\n      }\n    ]\n  }\n]"
 						},
 						{
 							"name": "Bad Request",
@@ -5300,7 +5300,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo/query?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=0&sort={ \"created\": \"asc\" }",
+									"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo/query?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=1&sort={ \"created\": \"asc\" }",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -5330,7 +5330,7 @@
 										},
 										{
 											"key": "page",
-											"value": "0",
+											"value": "1",
 											"description": "Page to retrieve"
 										},
 										{
@@ -5425,7 +5425,7 @@
 									"          files: [",
 									"            {",
 									"              compression: 'zip',",
-									"              contentLength: '4535431',",
+									"              contentLength: 4535431,",
 									"              contentType: 'text/csv',",
 									"              encoding: 'UTF-8',",
 									"              index: 0,",
@@ -5434,7 +5434,7 @@
 									"          ],",
 									"          license: 'CC-BY',",
 									"          name: 'UK Weather information 2011',",
-									"          price: '10',",
+									"          price: 10,",
 									"          type: 'dataset',",
 									"        },",
 									"      },",
@@ -5561,7 +5561,7 @@
 							"_postman_previewlanguage": null,
 							"header": null,
 							"cookie": [],
-							"body": "{\n  \"@context\": \"https://w3id.org/did/v1\",\n  \"authentication\": [\n    {\n      \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"RsaSignatureAuthentication2018\"\n    }\n  ],\n  \"created\": \"2021-02-01T10:55:11Z\",\n  \"updated\": \"2021-02-01T10:55:11Z\",\n  \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n  \"proof\": {\n    \"created\": \"2022-01-08T16:02:20Z\",\n    \"creator\": \"2022-01-08T16:02:20Z\",\n    \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n    \"type\": \"DDOIntegritySignature\"\n  },\n  \"publicKey\": [\n    {\n      \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n      \"type\": \"EthereumECDSAKey\"\n    }\n  ],\n  \"service\": [\n    {\n      \"index\": 0,\n      \"service\": \"SecretStore\",\n      \"serviceEndpoint\": \"http://localhost:12001\",\n      \"type\": \"authorization\"\n    },\n    {\n      \"index\": 1,\n      \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n      \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n      \"type\": \"access\"\n    },\n    {\n      \"attributes\": {\n        \"additionalInformation\": {\n          \"copyrightHolder\": \"Met Office\",\n          \"description\": \"Weather information of UK including temperature and humidity\",\n          \"inLanguage\": \"en\",\n          \"links\": [\n            {\n              \"name\": \"Sample of Asset Data\",\n              \"type\": \"sample\",\n              \"url\": \"https://foo.com/sample.csv\"\n            }\n          ],\n          \"tags\": [\n            \"weather\",\n            \"uk\",\n            \"2011\",\n            \"temperature\",\n            \"humidity\"\n          ],\n          \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n          \"numVotes\": 123,\n          \"rating\": 0.93,\n          \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n          \"author\": \"Met Office\",\n          \"dateCreated\": \"2012-02-01T10:55:11Z\",\n          \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n          \"files\": [\n            {\n              \"compression\": \"zip\",\n              \"contentLength\": \"4535431\",\n              \"contentType\": \"text/csv\",\n              \"encoding\": \"UTF-8\",\n              \"index\": 0,\n              \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n            }\n          ],\n          \"license\": \"CC-BY\",\n          \"name\": \"UK Weather information 2011\",\n          \"price\": \"10\",\n          \"type\": \"dataset\"\n        }\n      },\n      \"index\": 2,\n      \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"metadata\"\n    }\n  ]\n}"
+							"body": "{\n  \"@context\": \"https://w3id.org/did/v1\",\n  \"authentication\": [\n    {\n      \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"RsaSignatureAuthentication2018\"\n    }\n  ],\n  \"created\": \"2021-02-01T10:55:11Z\",\n  \"updated\": \"2021-02-01T10:55:11Z\",\n  \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n  \"proof\": {\n    \"created\": \"2022-01-08T16:02:20Z\",\n    \"creator\": \"2022-01-08T16:02:20Z\",\n    \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n    \"type\": \"DDOIntegritySignature\"\n  },\n  \"publicKey\": [\n    {\n      \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n      \"type\": \"EthereumECDSAKey\"\n    }\n  ],\n  \"service\": [\n    {\n      \"index\": 0,\n      \"service\": \"SecretStore\",\n      \"serviceEndpoint\": \"http://localhost:12001\",\n      \"type\": \"authorization\"\n    },\n    {\n      \"index\": 1,\n      \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n      \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n      \"type\": \"access\"\n    },\n    {\n      \"attributes\": {\n        \"additionalInformation\": {\n          \"copyrightHolder\": \"Met Office\",\n          \"description\": \"Weather information of UK including temperature and humidity\",\n          \"inLanguage\": \"en\",\n          \"links\": [\n            {\n              \"name\": \"Sample of Asset Data\",\n              \"type\": \"sample\",\n              \"url\": \"https://foo.com/sample.csv\"\n            }\n          ],\n          \"tags\": [\n            \"weather\",\n            \"uk\",\n            \"2011\",\n            \"temperature\",\n            \"humidity\"\n          ],\n          \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n          \"numVotes\": 123,\n          \"rating\": 0.93,\n          \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n          \"author\": \"Met Office\",\n          \"dateCreated\": \"2012-02-01T10:55:11Z\",\n          \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n          \"files\": [\n            {\n              \"compression\": \"zip\",\n              \"contentLength\": 4535431,\n              \"contentType\": \"text/csv\",\n              \"encoding\": \"UTF-8\",\n              \"index\": 0,\n              \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n            }\n          ],\n          \"license\": \"CC-BY\",\n          \"name\": \"UK Weather information 2011\",\n          \"price\": 10,\n          \"type\": \"dataset\"\n        }\n      },\n      \"index\": 2,\n      \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"metadata\"\n    }\n  ]\n}"
 						},
 						{
 							"name": "Bad Request",
