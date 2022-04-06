@@ -3,13 +3,11 @@ LABEL maintainer="Nevermined <root@nevermined.io>"
 
 RUN apk add --no-cache autoconf automake alpine-sdk
 
-
 COPY package*.json ./
 
 RUN npm install 
 
 COPY src ./src
-COPY scripts ./scripts
 COPY config ./config
 COPY package*.json ./
 COPY tsconfig* ./
