@@ -2,16 +2,15 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsOptional, ValidateNested, IsNumber } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { faker } from '@faker-js/faker';
-import { Sort } from './search-query.interface';
+import { Sort } from '../../common/helpers/search-query.interface';
 
-export class SearchQueryDto {
+export class QueryBodyDDOdto {
   @ApiProperty({
-    example: '{"match_all": {}}',
+    example: { match_all: {} },
     description: 'execute directly queries to elasticsearch from the client',
     required: false,
-    type: 'string',
+    type: 'object',
   })
-  @Transform(({ value }) => JSON.parse(value as string) as { [jsonPath: string]: any })
   @IsOptional()
   @ValidateNested()
   query?: { [jsonPath: string]: any };
@@ -45,15 +44,14 @@ export class SearchQueryDto {
   @Transform(({ value }) => parseInt(value as string, 10))
   @IsOptional()
   @IsNumber()
-  page = 1;
+  page = 0;
 
   @ApiProperty({
-    example: '{ "createdAt": "asc" }',
+    example: { created: 'asc' },
     description: 'sort the response by specified parameter',
     required: false,
-    type: 'string',
+    type: 'object',
   })
-  @Transform(({ value }) => JSON.parse(value as string) as Sort)
   @IsOptional()
   @ValidateNested()
   sort?: Sort;

@@ -1,4 +1,4 @@
-import { SearchHit, QueryDslQueryContainer } from '@elastic/elasticsearch/api/types';
+import { SearchHitsMetadata, QueryDslQueryContainer } from '@elastic/elasticsearch/api/types';
 import { Injectable } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { SearchQueryDto } from '../../common/helpers/search-query.dto';
@@ -20,20 +20,22 @@ export class ElasticService {
     query: QueryDslQueryContainer,
     searchQuery: SearchQueryDto,
     _source_includes?: string | string[]
-  ): Promise<SearchHit<unknown>[]> {
+  ): Promise<SearchHitsMetadata<unknown>> {
+    const page = searchQuery?.page - 1;
+
     /* eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access */
     return (
       await this.elasticsearchService.search({
         index,
         size: searchQuery?.offset,
-        from: searchQuery?.offset * searchQuery?.page,
+        from: searchQuery?.offset * page,
         body: {
           sort: searchQuery?.sort,
           query,
         },
         _source_includes,
       })
-    ).body.hits.hits;
+    ).body.hits;
   }
 
   async updateDocumentByIndexAndId(index: string, id: string, document: unknown) {
@@ -57,6 +59,15 @@ export class ElasticService {
     return this.elasticsearchService.delete({
       index,
       id,
+    });
+  }
+
+  deleteDocumentByQuery(index: string, query: QueryDslQueryContainer): Promise<unknown> {
+    return this.elasticsearchService.deleteByQuery({
+      index,
+      body: {
+        query,
+      },
     });
   }
 }

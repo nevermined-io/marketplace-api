@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsInt, IsUrl, IsOptional } from 'class-validator';
+import { IsString, IsInt, IsUrl, IsOptional, IsNumber } from 'class-validator';
 
 export class FileDto {
   @ApiProperty({
@@ -54,13 +54,13 @@ export class FileDto {
   compression: string;
 
   @ApiProperty({
-    example: '4535431',
+    example: 4535431,
     description: 'Size of the file in bytes',
     required: false,
   })
   @IsOptional()
-  @IsString()
-  contentLength: string;
+  @IsNumber()
+  contentLength: number;
 
   @ApiProperty({
     example: 'text/csv',

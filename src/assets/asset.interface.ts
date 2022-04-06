@@ -67,7 +67,7 @@ export interface File {
   checksumType: string;
   name: string;
   compression: string;
-  contentLength: string;
+  contentLength: number;
   contentType: string;
   encoding: string;
   index: number;
@@ -85,6 +85,7 @@ export interface Link {
 export interface Main {
   author: string;
   dateCreated: string;
+  datePublished: string;
   encryptedFiles: string;
   files: File[];
   license: number;
@@ -103,18 +104,6 @@ export interface Attributes {
 
 export interface Authentication {
   publicKey: string;
-  type: string;
-}
-
-export interface Main {
-  author: string;
-  dateCreated: string;
-  datePublished: string;
-  encryptedFiles: string;
-  files: File[];
-  license: number;
-  name: string;
-  price: string;
   type: string;
 }
 

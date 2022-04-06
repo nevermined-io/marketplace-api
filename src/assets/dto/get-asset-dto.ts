@@ -6,8 +6,23 @@ import { ProofDto } from './proof.dto';
 import { PublicKeyDto } from './publicKey.dto';
 import { serviceExample } from './service.example';
 import { ServiceDto } from './service.dto';
+import { SearchHit } from '@elastic/elasticsearch/api/types';
+import { Asset } from '../asset.entity';
 
 export class GetAssetDto {
+  static fromSource(assetSource: SearchHit<Asset>): GetAssetDto {
+    return new GetAssetDto(
+      assetSource._source['@context'],
+      assetSource._source.authentication,
+      assetSource._source.created,
+      assetSource._source.updated,
+      assetSource._source.id,
+      assetSource._source.proof,
+      assetSource._source.publicKey,
+      assetSource._source.service
+    );
+  }
+
   @ApiProperty({
     example: 'https://w3id.org/did/v1',
     description: 'Context of the asset',
@@ -65,8 +80,30 @@ export class GetAssetDto {
   @ApiProperty({
     example: serviceExample,
     description: 'Services that contains the asset',
+    isArray: true,
+    type: ServiceDto,
   })
   @ValidateNested({ each: true })
   @Type(() => ServiceDto)
   service: ServiceDto[];
+
+  constructor(
+    context: string,
+    authentication: AuthenticationDto[],
+    created: string,
+    updated: string,
+    id: string,
+    proof: ProofDto,
+    publicKey: PublicKeyDto[],
+    service: ServiceDto[]
+  ) {
+    this['@context'] = context;
+    this.authentication = authentication;
+    this.created = created;
+    this.updated = updated;
+    this.id = id;
+    this.proof = proof;
+    this.publicKey = publicKey;
+    this.service = service;
+  }
 }
