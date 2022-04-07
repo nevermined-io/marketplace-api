@@ -34,5 +34,6 @@ export class ConditionDependencyDto {
     description: 'Lock Payment',
   })
   @IsArray()
+  @IsOptional()
   lockPayment: string[];
 }
