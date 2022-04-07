@@ -6,6 +6,7 @@ import { faker } from '@faker-js/faker';
 import { Logger } from '../shared/logger/logger.service';
 import { AssetController } from './asset.controller';
 import { AssetService } from './asset.service';
+import { DDOStatusService } from './ddo-status.service';
 import { Asset } from './asset.entity';
 import { MarketplaceIndex } from '../common/type';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
@@ -18,6 +19,7 @@ import { AttributesDto } from './dto/attributes.dto';
 describe('Asset', () => {
   let assetController: AssetController;
   let assetService: AssetService;
+  let ddosStatusService: DDOStatusService;
 
   const asset = new Asset();
   asset.id = `did:nv:${faker.datatype.uuid()}`;
@@ -39,18 +41,21 @@ describe('Asset', () => {
             },
           },
         },
+        DDOStatusService,
         AssetService,
       ],
     }).compile();
 
     assetService = module.get<AssetService>(AssetService);
+    ddosStatusService = module.get<DDOStatusService>(DDOStatusService);
     assetController = module.get<AssetController>(AssetController);
   });
 
   it('should create a Asset', async () => {
     jest.spyOn(assetService, 'createOne').mockResolvedValue(asset);
+    jest.spyOn(ddosStatusService, 'createOne').mockResolvedValue(undefined);
 
-    expect(await assetController.createAsset(asset)).toStrictEqual(asset);
+    expect(await assetController.createAsset({ url: 'http://example.com' }, asset)).toStrictEqual(asset);
   });
 
   it('should get all asset Ids', async () => {
