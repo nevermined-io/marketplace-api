@@ -12,7 +12,6 @@ import { asset } from './asset.mockup';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
 import { MarketplaceIndex } from '../common/type';
 import { Asset } from './asset.entity';
-import { ElasticService } from '../shared/elasticsearch/elastic.service';
 
 describe('Asset', () => {
   let app: INestApplication;

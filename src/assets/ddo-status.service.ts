@@ -1,12 +1,9 @@
-import { PATH_METADATA } from '@nestjs/common/constants';
 import { Injectable } from '@nestjs/common';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
 import { CreateAssetDto } from './dto/create-asset.dto';
 import { DDOStatus } from './ddo-status.entity';
 import { Status, SourceType } from '../common/type';
 import { MarketplaceIndex } from '../common/type';
-import { AssetController } from './asset.controller';
-import { Logger } from '../shared/logger/logger.service';
 
 @Injectable()
 export class DDOStatusService {
