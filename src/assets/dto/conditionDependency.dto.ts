@@ -32,6 +32,7 @@ export class ConditionDependencyDto {
   @ApiProperty({
     example: [],
     description: 'Lock Payment',
+    required: false,
   })
   @IsArray()
   @IsOptional()
