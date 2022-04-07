@@ -9,8 +9,6 @@ import { SearchHitsMetadata, SearchHit } from '@elastic/elasticsearch/api/types'
 
 @Injectable()
 export class AssetService {
-  indexDB: string;
-
   constructor(private readonly elasticService: ElasticService) {}
 
   async createOne(createAssetDto: CreateAssetDto): Promise<Asset> {

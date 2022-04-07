@@ -9,12 +9,14 @@ import {
   Delete,
   Param,
   Put,
+  Req,
   NotFoundException,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { GetAssetDto } from './dto/get-asset-dto';
 import { CreateAssetDto } from './dto/create-asset.dto';
 import { AssetService } from './asset.service';
+import { DDOStatusService } from './ddo-status.service';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
 import { SearchResponse } from '../common/helpers/search-response.dto';
 import { QueryBodyDDOdto } from './dto/query-body-ddo.dto';
@@ -24,7 +26,7 @@ import { AttributesDto } from './dto/attributes.dto';
 @ApiTags('Asset')
 @Controller()
 export class AssetController {
-  constructor(private readonly assetService: AssetService) {}
+  constructor(private readonly assetService: AssetService, private readonly ddosStatusService: DDOStatusService) {}
 
   @Post('/ddo')
   @ApiOperation({
@@ -39,8 +41,11 @@ export class AssetController {
     status: 403,
     description: 'Bad Request',
   })
-  createAsset(@Body() createAssetDto: CreateAssetDto): Promise<GetAssetDto> {
-    return this.assetService.createOne(createAssetDto);
+  async createAsset(@Req() req: { url: string }, @Body() createAssetDto: CreateAssetDto): Promise<GetAssetDto> {
+    const assetDto = await this.assetService.createOne(createAssetDto);
+    await this.ddosStatusService.createOne(createAssetDto, req.url);
+
+    return assetDto;
   }
 
   @Get()

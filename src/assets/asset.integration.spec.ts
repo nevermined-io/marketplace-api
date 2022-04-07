@@ -5,11 +5,14 @@ import { faker } from '@faker-js/faker';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { AssetService } from './asset.service';
+import { DDOStatusService } from './ddo-status.service';
+import { Logger } from '../shared/logger/logger.service';
 import { AssetModule } from './asset.module';
 import { asset } from './asset.mockup';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
 import { MarketplaceIndex } from '../common/type';
 import { Asset } from './asset.entity';
+import { ElasticService } from '../shared/elasticsearch/elastic.service';
 
 describe('Asset', () => {
   let app: INestApplication;
@@ -54,12 +57,27 @@ describe('Asset', () => {
     deleteOneByEntryId: () => undefined,
   };
 
+  const ddosStatusService = {
+    createOne: () => {},
+  };
+
+  const elasticService = {
+    addDocumentToIndex: (): void => {
+      Logger.log<string>('add document to index');
+    },
+    searchByIndex: (): void => {
+      Logger.log<string>('Searching');
+    },
+  };
+
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AssetModule],
     })
       .overrideProvider(AssetService)
       .useValue(assetService)
+      .overrideProvider(DDOStatusService)
+      .useValue(ddosStatusService)
       .compile();
 
     app = moduleRef.createNestApplication();
