@@ -6,9 +6,8 @@ import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { AssetService } from './asset.service';
 import { DDOStatusService } from './ddo-status.service';
-import { Logger } from '../shared/logger/logger.service';
 import { AssetModule } from './asset.module';
-import { asset } from './asset.mockup';
+import { asset, ddoStatus } from './asset.mockup';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
 import { MarketplaceIndex } from '../common/type';
 import { Asset } from './asset.entity';
@@ -58,15 +57,11 @@ describe('Asset', () => {
 
   const ddosStatusService = {
     createOne: () => {},
-  };
-
-  const elasticService = {
-    addDocumentToIndex: (): void => {
-      Logger.log<string>('add document to index');
-    },
-    searchByIndex: (): void => {
-      Logger.log<string>('Searching');
-    },
+    findOneById: (did: string) => ({
+      _source: { ...ddoStatus },
+      _index: MarketplaceIndex.DDOStatus,
+      _id: did,
+    }),
   };
 
   beforeAll(async () => {
@@ -179,5 +174,12 @@ describe('Asset', () => {
     const response = await request(app.getHttpServer()).get(`/metadata/${assetCopy.id}`);
 
     expect(response.statusCode).toBe(404);
+  });
+
+  it('GET ddo/:did/status', async () => {
+    const response = await request(app.getHttpServer()).get(`/ddo/${ddoStatus.did}/status`);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toStrictEqual(ddoStatus);
   });
 });

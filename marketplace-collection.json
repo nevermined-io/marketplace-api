@@ -17,6 +17,7 @@
 								{
 									"listen": "test",
 									"script": {
+										"type": "text/javascript",
 										"exec": [
 											"pm.sendRequest({",
 											"    url: pm.environment.replaceIn('{{baseUrl}}/api/v1/ugc/bookmarks/{{id}}'),",
@@ -32,13 +33,13 @@
 											"});",
 											"",
 											""
-										],
-										"type": "text/javascript"
+										]
 									}
 								},
 								{
 									"listen": "prerequest",
 									"script": {
+										"type": "text/javascript",
 										"exec": [
 											"pm.sendRequest({",
 											"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/ugc/bookmarks'),",
@@ -54,8 +55,7 @@
 											"    pm.environment.set(\"id\", response.json().id);",
 											"    pm.environment.set(\"userId\", response.json().userId);",
 											"});"
-										],
-										"type": "text/javascript"
+										]
 									}
 								}
 							],
@@ -173,6 +173,7 @@
 								{
 									"listen": "prerequest",
 									"script": {
+										"type": "text/javascript",
 										"exec": [
 											"pm.sendRequest({",
 											"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/ugc/bookmarks'),",
@@ -187,13 +188,13 @@
 											"}, (error, response) => {",
 											"    pm.environment.set(\"id\", response.json().id);",
 											"});"
-										],
-										"type": "text/javascript"
+										]
 									}
 								},
 								{
 									"listen": "test",
 									"script": {
+										"type": "text/javascript",
 										"exec": [
 											"pm.sendRequest({",
 											"    url: pm.environment.replaceIn('{{baseUrl}}/api/v1/ugc/bookmarks/{{id}}'),",
@@ -213,8 +214,7 @@
 											"        pm.expect(response.json()).to.have.property('description', 'This assets is the best');",
 											"    });",
 											"});"
-										],
-										"type": "text/javascript"
+										]
 									}
 								}
 							],
@@ -410,6 +410,7 @@
 								{
 									"listen": "prerequest",
 									"script": {
+										"type": "text/javascript",
 										"exec": [
 											"pm.sendRequest({",
 											"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/ugc/bookmarks'),",
@@ -424,13 +425,13 @@
 											"}, (error, response) => {",
 											"    pm.environment.set(\"id\", response.json().id);",
 											"});"
-										],
-										"type": "text/javascript"
+										]
 									}
 								},
 								{
 									"listen": "test",
 									"script": {
+										"type": "text/javascript",
 										"exec": [
 											"pm.sendRequest({",
 											"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/ugc/bookmarks'),",
@@ -455,8 +456,7 @@
 											"        });",
 											"    });",
 											"});"
-										],
-										"type": "text/javascript"
+										]
 									}
 								}
 							],
@@ -721,6 +721,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"    url: pm.collectionVariables.replaceIn('{{elsUrl}}/bookmark/_refresh'),",
@@ -742,13 +743,13 @@
 									"        });",
 									"    });",
 									"})"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/ugc/bookmarks'),",
@@ -763,8 +764,7 @@
 									"}, (error, response) => {",
 									"    pm.environment.set(\"userId\", response.json().userId);",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -894,6 +894,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -998,13 +999,13 @@
 									"}, (error, response) => {",
 									"    pm.environment.set('did', response.json().id);",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/metadata/{{did}}'),",
@@ -1019,8 +1020,7 @@
 									"        pm.expect(response.json()).to.have.property('curation');",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -1179,6 +1179,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -1291,13 +1292,13 @@
 									"        },",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -1423,8 +1424,7 @@
 									"        });",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -1468,8 +1468,8 @@
 							},
 							"status": "OK",
 							"code": 200,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
 							"body": null
 						}
@@ -1481,6 +1481,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -1593,13 +1594,13 @@
 									"        },",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const assetToUpdate = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -1708,8 +1709,7 @@
 									"        pm.expect(response.json()).to.have.property('updated', '2020-02-08T08:13:49Z');",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -1796,15 +1796,15 @@
 									"variable": [
 										{
 											"key": "did",
-											"value": null
+											"value": "did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429"
 										}
 									]
 								}
 							},
 							"status": "OK",
 							"code": 200,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
 							"body": "\t\n\nGet a updated DDO\nMedia type\nControls Accept header.\n\n{\n  \"@context\": \"https://w3id.org/did/v1\",\n  \"authentication\": [\n    {\n      \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"RsaSignatureAuthentication2018\"\n    }\n  ],\n  \"created\": \"2021-02-01T10:55:11Z\",\n  \"updated\": \"2021-02-01T10:55:11Z\",\n  \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n  \"proof\": {\n    \"created\": \"2022-01-08T16:02:20Z\",\n    \"creator\": \"2022-01-08T16:02:20Z\",\n    \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n    \"type\": \"DDOIntegritySignature\"\n  },\n  \"publicKey\": [\n    {\n      \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n      \"type\": \"EthereumECDSAKey\"\n    }\n  ],\n  \"service\": [\n    {\n      \"index\": 0,\n      \"service\": \"SecretStore\",\n      \"serviceEndpoint\": \"http://localhost:12001\",\n      \"type\": \"authorization\"\n    },\n    {\n      \"index\": 1,\n      \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n      \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n      \"type\": \"access\"\n    },\n    {\n      \"attributes\": {\n        \"additionalInformation\": {\n          \"copyrightHolder\": \"Met Office\",\n          \"description\": \"Weather information of UK including temperature and humidity\",\n          \"inLanguage\": \"en\",\n          \"links\": [\n            {\n              \"name\": \"Sample of Asset Data\",\n              \"type\": \"sample\",\n              \"url\": \"https://foo.com/sample.csv\"\n            }\n          ],\n          \"tags\": [\n            \"weather\",\n            \"uk\",\n            \"2011\",\n            \"temperature\",\n            \"humidity\"\n          ],\n          \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n          \"numVotes\": 123,\n          \"rating\": 0.93,\n          \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n          \"author\": \"Met Office\",\n          \"dateCreated\": \"2012-02-01T10:55:11Z\",\n          \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n          \"files\": [\n            {\n              \"compression\": \"zip\",\n              \"contentLength\": \"4535431\",\n              \"contentType\": \"text/csv\",\n              \"encoding\": \"UTF-8\",\n              \"index\": 0,\n              \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n            }\n          ],\n          \"license\": \"CC-BY\",\n          \"name\": \"UK Weather information 2011\",\n          \"price\": \"10\",\n          \"type\": \"dataset\"\n        }\n      },\n      \"index\": 2,\n      \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"metadata\"\n    }\n  ]"
 						},
@@ -1854,8 +1854,8 @@
 							},
 							"status": "Not Found",
 							"code": 404,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
 							"body": null
 						},
@@ -1905,8 +1905,8 @@
 							},
 							"status": "Bad Request",
 							"code": 400,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
 							"body": null
 						}
@@ -1918,6 +1918,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -2030,13 +2031,13 @@
 									"        },",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -2162,8 +2163,7 @@
 									"        });",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -2220,8 +2220,8 @@
 							},
 							"status": "OK",
 							"code": 200,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
 							"body": null
 						},
@@ -2253,8 +2253,8 @@
 							},
 							"status": "Not Found",
 							"code": 404,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
 							"body": null
 						}
@@ -2266,6 +2266,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -2378,13 +2379,13 @@
 									"        },",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const query = {",
 									"  \"query\": {",
@@ -2416,8 +2417,7 @@
 									"        pm.expect(response.json().results[0]).to.have.property('id', pm.environment.get('did'));",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -2499,8 +2499,8 @@
 							},
 							"status": "Created",
 							"code": 201,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
 							"body": "{\n    \"page\": 1,\n    \"results\": [\n        {\n            \"@context\": \"https://w3id.org/did/v1\",\n            \"authentication\": [\n            {\n                \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n                \"type\": \"RsaSignatureAuthentication2018\"\n            }\n            ],\n            \"created\": \"2021-02-01T10:55:11Z\",\n            \"updated\": \"2021-02-01T10:55:11Z\",\n            \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n            \"proof\": {\n            \"created\": \"2022-01-08T16:02:20Z\",\n            \"creator\": \"2022-01-08T16:02:20Z\",\n            \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n            \"type\": \"DDOIntegritySignature\"\n            },\n            \"publicKey\": [\n            {\n                \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n                \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n                \"type\": \"EthereumECDSAKey\"\n            }\n            ],\n            \"service\": [\n            {\n                \"index\": 0,\n                \"service\": \"SecretStore\",\n                \"serviceEndpoint\": \"http://localhost:12001\",\n                \"type\": \"authorization\"\n            },\n            {\n                \"index\": 1,\n                \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n                \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n                \"type\": \"access\"\n            },\n            {\n                \"attributes\": {\n                \"additionalInformation\": {\n                    \"copyrightHolder\": \"Met Office\",\n                    \"description\": \"Weather information of UK including temperature and humidity\",\n                    \"inLanguage\": \"en\",\n                    \"links\": [\n                    {\n                        \"name\": \"Sample of Asset Data\",\n                        \"type\": \"sample\",\n                        \"url\": \"https://foo.com/sample.csv\"\n                    }\n                    ],\n                    \"tags\": [\n                    \"weather\",\n                    \"uk\",\n                    \"2011\",\n                    \"temperature\",\n                    \"humidity\"\n                    ],\n                    \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n                },\n                \"curation\": {\n                    \"numVotes\": 123,\n                    \"rating\": 0.93,\n                    \"schema\": \"Binary Voting\"\n                },\n                \"main\": {\n                    \"author\": \"Met Office\",\n                    \"dateCreated\": \"2012-02-01T10:55:11Z\",\n                    \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n                    \"files\": [\n                    {\n                        \"compression\": \"zip\",\n                        \"contentLength\": \"4535431\",\n                        \"contentType\": \"text/csv\",\n                        \"encoding\": \"UTF-8\",\n                        \"index\": 0,\n                        \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n                    }\n                    ],\n                    \"license\": \"CC-BY\",\n                    \"name\": \"UK Weather information 2011\",\n                    \"price\": \"10\",\n                    \"type\": \"dataset\"\n                }\n                },\n                \"index\": 2,\n                \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n                \"type\": \"metadata\"\n            }\n            ]\n        }\n    ],\n    \"total_pages\": 1,\n    \"total_results\": 1,\n}"
 						},
@@ -2544,8 +2544,8 @@
 							},
 							"status": "Bad Request",
 							"code": 400,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
 							"body": null
 						}
@@ -2557,15 +2557,16 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									""
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -4280,8 +4281,7 @@
 									"            pm.expect(response).to.have.property('status', 'Created');",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -4361,8 +4361,8 @@
 							},
 							"status": "Created",
 							"code": 201,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
 							"body": "{\n  \"@context\": \"https://w3id.org/did/v1\",\n  \"authentication\": [\n    {\n      \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"RsaSignatureAuthentication2018\"\n    }\n  ],\n  \"created\": \"2021-02-01T10:55:11Z\",\n  \"updated\": \"2021-02-01T10:55:11Z\",\n  \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n  \"proof\": {\n    \"created\": \"2022-01-08T16:02:20Z\",\n    \"creator\": \"2022-01-08T16:02:20Z\",\n    \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n    \"type\": \"DDOIntegritySignature\"\n  },\n  \"publicKey\": [\n    {\n      \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n      \"type\": \"EthereumECDSAKey\"\n    }\n  ],\n  \"service\": [\n    {\n      \"index\": 0,\n      \"service\": \"SecretStore\",\n      \"serviceEndpoint\": \"http://localhost:12001\",\n      \"type\": \"authorization\"\n    },\n    {\n      \"index\": 1,\n      \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n      \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n      \"type\": \"access\"\n    },\n    {\n      \"attributes\": {\n        \"additionalInformation\": {\n          \"copyrightHolder\": \"Met Office\",\n          \"description\": \"Weather information of UK including temperature and humidity\",\n          \"inLanguage\": \"en\",\n          \"links\": [\n            {\n              \"name\": \"Sample of Asset Data\",\n              \"type\": \"sample\",\n              \"url\": \"https://foo.com/sample.csv\"\n            }\n          ],\n          \"tags\": [\n            \"weather\",\n            \"uk\",\n            \"2011\",\n            \"temperature\",\n            \"humidity\"\n          ],\n          \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n          \"numVotes\": 123,\n          \"rating\": 0.93,\n          \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n          \"author\": \"Met Office\",\n          \"dateCreated\": \"2012-02-01T10:55:11Z\",\n          \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n          \"files\": [\n            {\n              \"compression\": \"zip\",\n              \"contentLength\": \"4535431\",\n              \"contentType\": \"text/csv\",\n              \"encoding\": \"UTF-8\",\n              \"index\": 0,\n              \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n            }\n          ],\n          \"license\": \"CC-BY\",\n          \"name\": \"UK Weather information 2011\",\n          \"price\": \"10\",\n          \"type\": \"dataset\"\n        }\n      },\n      \"index\": 2,\n      \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"metadata\"\n    }\n  ]\n}"
 						},
@@ -4405,8 +4405,8 @@
 							},
 							"status": "Bad Request",
 							"code": 400,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
 							"body": null
 						}
@@ -4418,6 +4418,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -4530,13 +4531,13 @@
 									"        },",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/ddo?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=1&sort={ \"created\": \"asc\" }'),",
@@ -4551,8 +4552,7 @@
 									"        pm.expect(response.json().results.some(a => a.id === pm.environment.get('did'))).to.be.true;",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -4660,8 +4660,8 @@
 							},
 							"status": "OK",
 							"code": 200,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
 							"body": "{\n    \"page\": 1,\n    \"results\": [\n        {\n            \"@context\": \"https://w3id.org/did/v1\",\n            \"authentication\": [\n            {\n                \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n                \"type\": \"RsaSignatureAuthentication2018\"\n            }\n            ],\n            \"created\": \"2021-02-01T10:55:11Z\",\n            \"updated\": \"2021-02-01T10:55:11Z\",\n            \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n            \"proof\": {\n            \"created\": \"2022-01-08T16:02:20Z\",\n            \"creator\": \"2022-01-08T16:02:20Z\",\n            \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n            \"type\": \"DDOIntegritySignature\"\n            },\n            \"publicKey\": [\n            {\n                \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n                \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n                \"type\": \"EthereumECDSAKey\"\n            }\n            ],\n            \"service\": [\n            {\n                \"index\": 0,\n                \"service\": \"SecretStore\",\n                \"serviceEndpoint\": \"http://localhost:12001\",\n                \"type\": \"authorization\"\n            },\n            {\n                \"index\": 1,\n                \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n                \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n                \"type\": \"access\"\n            },\n            {\n                \"attributes\": {\n                \"additionalInformation\": {\n                    \"copyrightHolder\": \"Met Office\",\n                    \"description\": \"Weather information of UK including temperature and humidity\",\n                    \"inLanguage\": \"en\",\n                    \"links\": [\n                    {\n                        \"name\": \"Sample of Asset Data\",\n                        \"type\": \"sample\",\n                        \"url\": \"https://foo.com/sample.csv\"\n                    }\n                    ],\n                    \"tags\": [\n                    \"weather\",\n                    \"uk\",\n                    \"2011\",\n                    \"temperature\",\n                    \"humidity\"\n                    ],\n                    \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n                },\n                \"curation\": {\n                    \"numVotes\": 123,\n                    \"rating\": 0.93,\n                    \"schema\": \"Binary Voting\"\n                },\n                \"main\": {\n                    \"author\": \"Met Office\",\n                    \"dateCreated\": \"2012-02-01T10:55:11Z\",\n                    \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n                    \"files\": [\n                    {\n                        \"compression\": \"zip\",\n                        \"contentLength\": \"4535431\",\n                        \"contentType\": \"text/csv\",\n                        \"encoding\": \"UTF-8\",\n                        \"index\": 0,\n                        \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n                    }\n                    ],\n                    \"license\": \"CC-BY\",\n                    \"name\": \"UK Weather information 2011\",\n                    \"price\": \"10\",\n                    \"type\": \"dataset\"\n                }\n                },\n                \"index\": 2,\n                \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n                \"type\": \"metadata\"\n            }\n            ]\n        }\n    ],\n    \"total_pages\": 1,\n    \"total_results\": 1,\n}"
 						},
@@ -4717,8 +4717,8 @@
 							},
 							"status": "Bad Request",
 							"code": 400,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
 							"body": null
 						}
@@ -4730,6 +4730,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -4842,13 +4843,13 @@
 									"        },",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=1&sort={ \"created\": \"asc\" }'),",
@@ -4863,8 +4864,7 @@
 									"        pm.expect(response.json().some(a => a === pm.environment.get('did'))).to.be.true;",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -4970,8 +4970,8 @@
 							},
 							"status": "OK",
 							"code": 200,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
 							"body": "[\n  \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\"\n]"
 						},
@@ -5027,8 +5027,8 @@
 							},
 							"status": "Bad Request",
 							"code": 400,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
 							"body": null
 						}
@@ -5040,6 +5040,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -5152,13 +5153,13 @@
 									"        },",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/ddo/query?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=1&sort={ \"created\": \"asc\" }'),",
@@ -5173,8 +5174,7 @@
 									"        pm.expect(response.json().results.some(a => a.id === pm.environment.get('did'))).to.be.true;",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -5284,8 +5284,8 @@
 							},
 							"status": "OK",
 							"code": 200,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
 							"body": "[\n  {\n    \"@context\": \"https://w3id.org/did/v1\",\n    \"authentication\": [\n      {\n        \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n        \"type\": \"RsaSignatureAuthentication2018\"\n      }\n    ],\n    \"created\": \"2021-02-01T10:55:11Z\",\n    \"updated\": \"2021-02-01T10:55:11Z\",\n    \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n    \"proof\": {\n      \"created\": \"2022-01-08T16:02:20Z\",\n      \"creator\": \"2022-01-08T16:02:20Z\",\n      \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n      \"type\": \"DDOIntegritySignature\"\n    },\n    \"publicKey\": [\n      {\n        \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n        \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n        \"type\": \"EthereumECDSAKey\"\n      }\n    ],\n    \"service\": [\n      {\n        \"index\": 0,\n        \"service\": \"SecretStore\",\n        \"serviceEndpoint\": \"http://localhost:12001\",\n        \"type\": \"authorization\"\n      },\n      {\n        \"index\": 1,\n        \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n        \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n        \"type\": \"access\"\n      },\n      {\n        \"attributes\": {\n          \"additionalInformation\": {\n            \"copyrightHolder\": \"Met Office\",\n            \"description\": \"Weather information of UK including temperature and humidity\",\n            \"inLanguage\": \"en\",\n            \"links\": [\n              {\n                \"name\": \"Sample of Asset Data\",\n                \"type\": \"sample\",\n                \"url\": \"https://foo.com/sample.csv\"\n              }\n            ],\n            \"tags\": [\n              \"weather\",\n              \"uk\",\n              \"2011\",\n              \"temperature\",\n              \"humidity\"\n            ],\n            \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n          },\n          \"curation\": {\n            \"numVotes\": 123,\n            \"rating\": 0.93,\n            \"schema\": \"Binary Voting\"\n          },\n          \"main\": {\n            \"author\": \"Met Office\",\n            \"dateCreated\": \"2012-02-01T10:55:11Z\",\n            \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n            \"files\": [\n              {\n                \"compression\": \"zip\",\n                \"contentLength\": \"4535431\",\n                \"contentType\": \"text/csv\",\n                \"encoding\": \"UTF-8\",\n                \"index\": 0,\n                \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n              }\n            ],\n            \"license\": \"CC-BY\",\n            \"name\": \"UK Weather information 2011\",\n            \"price\": \"10\",\n            \"type\": \"dataset\"\n          }\n        },\n        \"index\": 2,\n        \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n        \"type\": \"metadata\"\n      }\n    ]\n  }\n]"
 						},
@@ -5343,8 +5343,8 @@
 							},
 							"status": "Bad Request",
 							"code": 400,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
 							"body": null
 						}
@@ -5353,6 +5353,318 @@
 				{
 					"name": "Asset Controller get DDO",
 					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"const asset = {",
+									"  '@context': 'https://w3id.org/did/v1',",
+									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429',",
+									"  created: \"2019-02-08T08:13:49Z\",",
+									"  authentication: [",
+									"    {",
+									"      publicKey: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430',",
+									"      type: 'RsaSignatureAuthentication2018',",
+									"    },",
+									"  ],",
+									"  proof: {",
+									"    created: '2022-01-08T16:02:20Z',",
+									"    creator: '0xA99D43d86A0758d5632313b8fA3972B6088A21BB',",
+									"    signatureValue:",
+									"      '0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb' +",
+									"      '6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b',",
+									"    type: 'DDOIntegritySignature',",
+									"  },",
+									"  publicKey: [",
+									"    {",
+									"      id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430',",
+									"      owner: '0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e',",
+									"      type: 'EthereumECDSAKey',",
+									"    },",
+									"  ],",
+									"  service: [",
+									"    {",
+									"      index: 0,",
+									"      service: 'SecretStore',",
+									"      serviceEndpoint: 'http://localhost:12001',",
+									"      type: 'authorization',",
+									"    },",
+									"    {",
+									"      index: 1,",
+									"      purchaseEndpoint: 'http://localhost:8030/api/v1/gateway/services/access/initialize',",
+									"      serviceEndpoint: 'http://localhost:8030/api/v1/gateway/services/consume',",
+									"      type: 'access',",
+									"    },",
+									"    {",
+									"      attributes: {",
+									"        additionalInformation: {",
+									"          copyrightHolder: 'Met Office',",
+									"          description: 'Weather information of UK including temperature and humidity',",
+									"          inLanguage: 'en',",
+									"          links: [",
+									"            {",
+									"              name: 'Sample of Asset Data',",
+									"              type: 'sample',",
+									"              url: 'https://foo.com/sample.csv',",
+									"            },",
+									"          ],",
+									"          tags: ['weather', 'uk', '2011', 'temperature', 'humidity'],",
+									"          workExample:",
+									"            'stationId,latitude,longitude,datetime, ' +",
+									"            'temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68',",
+									"        },",
+									"        curation: {",
+									"          numVotes: 123,",
+									"          rating: 0.93,",
+									"          schema: 'Binary Voting',",
+									"        },",
+									"        main: {",
+									"          author: 'Met Office',",
+									"          dateCreated: '2012-02-01T10:55:11Z',",
+									"          encryptedFiles: '0x098213xzckasdf089723hjgdasfkjgasfv',",
+									"          files: [",
+									"            {",
+									"              compression: 'zip',",
+									"              contentLength: '4535431',",
+									"              contentType: 'text/csv',",
+									"              encoding: 'UTF-8',",
+									"              index: 0,",
+									"              resourceId: 'access-log2018-02-13-15-17-29-18386C502CAEA932',",
+									"            },",
+									"          ],",
+									"          license: 'CC-BY',",
+									"          name: 'UK Weather information 2011',",
+									"          price: '10',",
+									"          type: 'dataset',",
+									"        },",
+									"      },",
+									"      index: 2,",
+									"      serviceEndpoint:",
+									"        'http://mymetadata.org/api/v1/provider/assets/metadata/' +",
+									"        'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430',",
+									"      type: 'metadata',",
+									"    },",
+									"  ],",
+									"};",
+									"",
+									"pm.sendRequest({",
+									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/ddo'),",
+									"        method: 'POST',",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"        },",
+									"        body: {",
+									"            mode: 'raw',",
+									"            raw: JSON.stringify(asset)",
+									"        }",
+									"}, (error, response) => {",
+									"    pm.environment.set('did', response.json().id);",
+									"",
+									"    pm.sendRequest({",
+									"        url: pm.collectionVariables.replaceIn('{{elsUrl}}/asset/_refresh'),",
+									"        method: 'POST',",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"        },",
+									"    });",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/ddo/{{did}}'),",
+									"        method: 'GET',",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"        },",
+									"}, (error, response) => {",
+									"    pm.test(\"should get a ddo\", () => {",
+									"        pm.expect(response).to.have.property('code', 200);",
+									"        pm.expect(response).to.have.property('status', 'OK')",
+									"        pm.expect(response.json()).to.have.property('id', pm.environment.get('did'));",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo/:did",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"metadata",
+								"assets",
+								"ddo",
+								":did"
+							],
+							"variable": [
+								{
+									"key": "did",
+									"value": "{{did}}"
+								}
+							]
+						},
+						"description": "Get DDO of a particular asset"
+					},
+					"response": [
+						{
+							"name": "Get DDO",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo/:did",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"metadata",
+										"assets",
+										"ddo",
+										":did"
+									],
+									"variable": [
+										{
+											"key": "did",
+											"value": "did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"@context\": \"https://w3id.org/did/v1\",\n  \"authentication\": [\n    {\n      \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"RsaSignatureAuthentication2018\"\n    }\n  ],\n  \"created\": \"2021-02-01T10:55:11Z\",\n  \"updated\": \"2021-02-01T10:55:11Z\",\n  \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n  \"proof\": {\n    \"created\": \"2022-01-08T16:02:20Z\",\n    \"creator\": \"2022-01-08T16:02:20Z\",\n    \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n    \"type\": \"DDOIntegritySignature\"\n  },\n  \"publicKey\": [\n    {\n      \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n      \"type\": \"EthereumECDSAKey\"\n    }\n  ],\n  \"service\": [\n    {\n      \"index\": 0,\n      \"service\": \"SecretStore\",\n      \"serviceEndpoint\": \"http://localhost:12001\",\n      \"type\": \"authorization\"\n    },\n    {\n      \"index\": 1,\n      \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n      \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n      \"type\": \"access\"\n    },\n    {\n      \"attributes\": {\n        \"additionalInformation\": {\n          \"copyrightHolder\": \"Met Office\",\n          \"description\": \"Weather information of UK including temperature and humidity\",\n          \"inLanguage\": \"en\",\n          \"links\": [\n            {\n              \"name\": \"Sample of Asset Data\",\n              \"type\": \"sample\",\n              \"url\": \"https://foo.com/sample.csv\"\n            }\n          ],\n          \"tags\": [\n            \"weather\",\n            \"uk\",\n            \"2011\",\n            \"temperature\",\n            \"humidity\"\n          ],\n          \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n          \"numVotes\": 123,\n          \"rating\": 0.93,\n          \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n          \"author\": \"Met Office\",\n          \"dateCreated\": \"2012-02-01T10:55:11Z\",\n          \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n          \"files\": [\n            {\n              \"compression\": \"zip\",\n              \"contentLength\": \"4535431\",\n              \"contentType\": \"text/csv\",\n              \"encoding\": \"UTF-8\",\n              \"index\": 0,\n              \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n            }\n          ],\n          \"license\": \"CC-BY\",\n          \"name\": \"UK Weather information 2011\",\n          \"price\": \"10\",\n          \"type\": \"dataset\"\n        }\n      },\n      \"index\": 2,\n      \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"metadata\"\n    }\n  ]\n}"
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo/:did",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"metadata",
+										"assets",
+										"ddo",
+										":did"
+									],
+									"variable": [
+										{
+											"key": "did",
+											"value": "{{did}}"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo/:did",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"metadata",
+										"assets",
+										"ddo",
+										":did"
+									],
+									"variable": [
+										{
+											"key": "did",
+											"value": "{{did}}"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Asset Controller get DDO Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/ddo/{{did}}/status'),",
+									"        method: 'GET',",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"        },",
+									"}, (error, response) => {",
+									"    pm.test(\"should get a ddo\", () => {",
+									"        pm.expect(response).to.have.property('code', 200);",
+									"        pm.expect(response).to.have.property('status', 'OK')",
+									"        pm.expect(response.json()).to.have.property('did', pm.environment.get('did'));",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
 						{
 							"listen": "prerequest",
 							"script": {
@@ -5471,27 +5783,6 @@
 								],
 								"type": "text/javascript"
 							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.sendRequest({",
-									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/ddo/{{did}}'),",
-									"        method: 'GET',",
-									"        header: {",
-									"            'Content-Type': 'application/json',",
-									"        },",
-									"}, (error, response) => {",
-									"    pm.test(\"should get a ddo\", () => {",
-									"        pm.expect(response).to.have.property('code', 200);",
-									"        pm.expect(response).to.have.property('status', 'OK')",
-									"        pm.expect(response.json()).to.have.property('id', pm.environment.get('did'));",
-									"    });",
-									"});"
-								],
-								"type": "text/javascript"
-							}
 						}
 					],
 					"request": {
@@ -5503,7 +5794,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo/:did",
+							"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo/:did/status",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -5513,30 +5804,27 @@
 								"metadata",
 								"assets",
 								"ddo",
-								":did"
+								":did",
+								"status"
 							],
 							"variable": [
 								{
 									"key": "did",
-									"value": "{{did}}"
+									"value": "{{did}}",
+									"description": "(Required) "
 								}
 							]
 						},
-						"description": "Get DDO of a particular asset"
+						"description": "Get DDO status of a particular asset"
 					},
 					"response": [
 						{
-							"name": "Get DDO",
+							"name": "Get a DDO status",
 							"originalRequest": {
 								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
+								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo/:did",
+									"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo/:did/status",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -5546,35 +5834,37 @@
 										"metadata",
 										"assets",
 										"ddo",
-										":did"
+										":did",
+										"status"
 									],
 									"variable": [
 										{
 											"key": "did",
-											"value": "{{did}}"
+											"value": "did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429",
+											"description": "(Required) "
 										}
 									]
 								}
 							},
 							"status": "OK",
 							"code": 200,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
 							"cookie": [],
-							"body": "{\n  \"@context\": \"https://w3id.org/did/v1\",\n  \"authentication\": [\n    {\n      \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"RsaSignatureAuthentication2018\"\n    }\n  ],\n  \"created\": \"2021-02-01T10:55:11Z\",\n  \"updated\": \"2021-02-01T10:55:11Z\",\n  \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n  \"proof\": {\n    \"created\": \"2022-01-08T16:02:20Z\",\n    \"creator\": \"2022-01-08T16:02:20Z\",\n    \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n    \"type\": \"DDOIntegritySignature\"\n  },\n  \"publicKey\": [\n    {\n      \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n      \"type\": \"EthereumECDSAKey\"\n    }\n  ],\n  \"service\": [\n    {\n      \"index\": 0,\n      \"service\": \"SecretStore\",\n      \"serviceEndpoint\": \"http://localhost:12001\",\n      \"type\": \"authorization\"\n    },\n    {\n      \"index\": 1,\n      \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n      \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n      \"type\": \"access\"\n    },\n    {\n      \"attributes\": {\n        \"additionalInformation\": {\n          \"copyrightHolder\": \"Met Office\",\n          \"description\": \"Weather information of UK including temperature and humidity\",\n          \"inLanguage\": \"en\",\n          \"links\": [\n            {\n              \"name\": \"Sample of Asset Data\",\n              \"type\": \"sample\",\n              \"url\": \"https://foo.com/sample.csv\"\n            }\n          ],\n          \"tags\": [\n            \"weather\",\n            \"uk\",\n            \"2011\",\n            \"temperature\",\n            \"humidity\"\n          ],\n          \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n          \"numVotes\": 123,\n          \"rating\": 0.93,\n          \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n          \"author\": \"Met Office\",\n          \"dateCreated\": \"2012-02-01T10:55:11Z\",\n          \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n          \"files\": [\n            {\n              \"compression\": \"zip\",\n              \"contentLength\": \"4535431\",\n              \"contentType\": \"text/csv\",\n              \"encoding\": \"UTF-8\",\n              \"index\": 0,\n              \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n            }\n          ],\n          \"license\": \"CC-BY\",\n          \"name\": \"UK Weather information 2011\",\n          \"price\": \"10\",\n          \"type\": \"dataset\"\n        }\n      },\n      \"index\": 2,\n      \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"metadata\"\n    }\n  ]\n}"
+							"body": "{\n  \"did\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n  \"internal\": {\n    \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\",\n    \"type\": \"Elasticsearch\",\n    \"status\": \"ACCEPTED\",\n    \"url\": \"http://localhost:3100/api/v1/metadata/assets/ddo/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429\"\n  },\n  \"external\": null\n}"
 						},
 						{
-							"name": "Bad Request",
+							"name": "Not found",
 							"originalRequest": {
 								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
+								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo/:did",
+									"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo/:did/status",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -5584,60 +5874,29 @@
 										"metadata",
 										"assets",
 										"ddo",
-										":did"
+										":did",
+										"status"
 									],
 									"variable": [
 										{
 											"key": "did",
-											"value": "{{did}}"
+											"value": "{{did}}",
+											"description": "(Required) "
 										}
 									]
 								}
 							},
 							"status": "Not Found",
 							"code": 404,
-							"_postman_previewlanguage": null,
-							"header": null,
-							"cookie": [],
-							"body": null
-						},
-						{
-							"name": "Not Found",
-							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo/:did",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"metadata",
-										"assets",
-										"ddo",
-										":did"
-									],
-									"variable": [
-										{
-											"key": "did",
-											"value": "{{did}}"
-										}
-									]
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
 								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": null,
-							"header": null,
+							],
 							"cookie": [],
-							"body": null
+							"body": ""
 						}
 					]
 				}

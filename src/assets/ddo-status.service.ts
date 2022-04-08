@@ -4,10 +4,12 @@ import { CreateAssetDto } from './dto/create-asset.dto';
 import { DDOStatus } from './ddo-status.entity';
 import { Status, SourceType } from '../common/type';
 import { MarketplaceIndex } from '../common/type';
+import { SearchHit } from '@elastic/elasticsearch/api/types';
 
 @Injectable()
 export class DDOStatusService {
   constructor(private readonly elasticService: ElasticService) {}
+
   async createOne(createAssetDto: CreateAssetDto, url: string) {
     const ddoStatus = new DDOStatus();
 
@@ -16,12 +18,16 @@ export class DDOStatusService {
       id: createAssetDto.id,
       type: SourceType.Elasticsearch,
       status: Status.Accepted,
-      url,
+      url: `${url}/${createAssetDto.id}`,
     };
     ddoStatus.external = null;
 
     await this.elasticService.addDocumentToIndex(MarketplaceIndex.DDOStatus, ddoStatus.did, ddoStatus);
 
     return ddoStatus;
+  }
+
+  async findOneById(id: string): Promise<SearchHit<DDOStatus>> {
+    return this.elasticService.getDocumentByIndexAndId(MarketplaceIndex.DDOStatus, id) as Promise<SearchHit<DDOStatus>>;
   }
 }

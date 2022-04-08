@@ -19,9 +19,11 @@ import { AssetService } from './asset.service';
 import { DDOStatusService } from './ddo-status.service';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
 import { SearchResponse } from '../common/helpers/search-response.dto';
+import { Request } from '../common/helpers/request.interface';
 import { QueryBodyDDOdto } from './dto/query-body-ddo.dto';
 import { UpdateAssetDto } from './dto/update-asset.dto';
 import { AttributesDto } from './dto/attributes.dto';
+import { GetDDOStatusDto } from './dto/get-ddo-status.dto';
 
 @ApiTags('Asset')
 @Controller()
@@ -41,9 +43,10 @@ export class AssetController {
     status: 403,
     description: 'Bad Request',
   })
-  async createAsset(@Req() req: { url: string }, @Body() createAssetDto: CreateAssetDto): Promise<GetAssetDto> {
+  async createAsset(@Req() req: Request, @Body() createAssetDto: CreateAssetDto): Promise<GetAssetDto> {
+    const url = `${req.protocol}://${req.hostname}${req.client.localPort ? `:${req.client.localPort}` : ''}${req.url}`;
     const assetDto = await this.assetService.createOne(createAssetDto);
-    await this.ddosStatusService.createOne(createAssetDto, req.url);
+    await this.ddosStatusService.createOne(createAssetDto, url);
 
     return assetDto;
   }
@@ -145,9 +148,28 @@ export class AssetController {
     description: 'Not found',
   })
   async getDDO(@Param('did') did: string): Promise<GetAssetDto> {
-    const AssetSource = await this.assetService.findOneById(did);
+    const assetSource = await this.assetService.findOneById(did);
 
-    return GetAssetDto.fromSource(AssetSource);
+    return GetAssetDto.fromSource(assetSource);
+  }
+
+  @Get('ddo/:did/status')
+  @ApiOperation({
+    description: 'Get DDO status of a particular asset',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Get a DDO status',
+    type: GetDDOStatusDto,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not found',
+  })
+  async getDDOStatus(@Param('did') did: string): Promise<GetDDOStatusDto> {
+    const statusSource = await this.ddosStatusService.findOneById(did);
+
+    return GetDDOStatusDto.fromSource(statusSource);
   }
 
   @Put('ddo/:did')

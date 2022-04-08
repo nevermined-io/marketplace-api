@@ -87,3 +87,16 @@ export const asset = {
     },
   ],
 };
+
+export const ddoStatus = {
+  did: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429',
+  internal: {
+    id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429',
+    type: 'Elasticsearch',
+    status: 'ACCEPTED',
+    url:
+      'http://localhost:3100/api/v1/metadata/assets/ddo/' +
+      'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429/status',
+  },
+  external: null,
+};
