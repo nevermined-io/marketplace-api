@@ -24,11 +24,18 @@ import { QueryBodyDDOdto } from './dto/query-body-ddo.dto';
 import { UpdateAssetDto } from './dto/update-asset.dto';
 import { AttributesDto } from './dto/attributes.dto';
 import { GetDDOStatusDto } from './dto/get-ddo-status.dto';
+import { CreateServiceDto } from './dto/create-service.dto';
+import { GetServiceDto } from './dto/get-service.dto';
+import { ServiceDDOService } from './ddo-service.service';
 
 @ApiTags('Asset')
 @Controller()
 export class AssetController {
-  constructor(private readonly assetService: AssetService, private readonly ddosStatusService: DDOStatusService) {}
+  constructor(
+    private readonly assetService: AssetService,
+    private readonly ddosStatusService: DDOStatusService,
+    private readonly serviceDDOService: ServiceDDOService
+  ) {}
 
   @Post('/ddo')
   @ApiOperation({
@@ -236,13 +243,72 @@ export class AssetController {
     return metada;
   }
 
+  @Post('service')
+  @ApiResponse({
+    description: 'Create a service',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Service created',
+    type: AttributesDto,
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Bad Request',
+  })
+  async createService(@Body() serviceDto: CreateServiceDto): Promise<GetServiceDto> {
+    return this.serviceDDOService.createOne(serviceDto);
+  }
+
+  @Get('/service/query')
+  @ApiOperation({
+    description: 'Get a list of services that match with the executed query.',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'list of services',
+    schema: SearchResponse.toDocs(GetAssetDto),
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Bad Request',
+  })
+  async getServiceQueryPost(@Body() searchQueryDto: QueryBodyDDOdto): Promise<SearchResponse<GetServiceDto[]>> {
+    const servicesSource = await this.serviceDDOService.findMany(searchQueryDto);
+
+    return SearchResponse.fromSearchSources(
+      searchQueryDto,
+      servicesSource,
+      servicesSource.hits.map(GetServiceDto.fromSource)
+    );
+  }
+
+  @Get('service/:agreementId')
+  @ApiOperation({
+    description: 'Get service by passing agreementId',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Get a service',
+    type: GetServiceDto,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not found',
+  })
+  async getService(@Param('agreementId') agreementId: string): Promise<GetServiceDto> {
+    const serviceSource = await this.serviceDDOService.findOneById(agreementId);
+
+    return GetServiceDto.fromSource(serviceSource);
+  }
+
   private async listDDOs(searchQueryDto: SearchQueryDto): Promise<SearchResponse<GetAssetDto[]>> {
     const assetsSource = await this.assetService.findMany(searchQueryDto);
 
     return SearchResponse.fromSearchSources(
       searchQueryDto,
       assetsSource,
-      assetsSource.hits.map((a) => GetAssetDto.fromSource(a))
+      assetsSource.hits.map(GetAssetDto.fromSource)
     );
   }
 }
