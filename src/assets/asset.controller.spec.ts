@@ -17,6 +17,7 @@ import { SearchResponse } from '../common/helpers/search-response.dto';
 import { ServiceDto } from './dto/service.dto';
 import { AttributesDto } from './dto/attributes.dto';
 import { GetDDOStatusDto } from './dto/get-ddo-status.dto';
+import { ServiceDDOService } from './ddo-service.service';
 
 describe('Asset', () => {
   let assetController: AssetController;
@@ -55,6 +56,7 @@ describe('Asset', () => {
         },
         DDOStatusService,
         AssetService,
+        ServiceDDOService,
       ],
     }).compile();
 
