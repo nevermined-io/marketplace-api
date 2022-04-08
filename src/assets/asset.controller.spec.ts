@@ -8,13 +8,15 @@ import { AssetController } from './asset.controller';
 import { AssetService } from './asset.service';
 import { DDOStatusService } from './ddo-status.service';
 import { Asset } from './asset.entity';
-import { MarketplaceIndex } from '../common/type';
+import { DDOStatus } from './ddo-status.entity';
+import { MarketplaceIndex, SourceType, Status } from '../common/type';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
 import { GetAssetDto } from './dto/get-asset-dto';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
 import { SearchResponse } from '../common/helpers/search-response.dto';
 import { ServiceDto } from './dto/service.dto';
 import { AttributesDto } from './dto/attributes.dto';
+import { GetDDOStatusDto } from './dto/get-ddo-status.dto';
 
 describe('Asset', () => {
   let assetController: AssetController;
@@ -25,6 +27,16 @@ describe('Asset', () => {
   asset.id = `did:nv:${faker.datatype.uuid()}`;
   asset['@context'] = 'https://w3id.org/did/v1';
   asset.created = new Date().toDateString();
+
+  const ddoStatus = new DDOStatus();
+  ddoStatus.did = asset.id;
+  ddoStatus.external = null;
+  ddoStatus.internal = {
+    id: asset.id,
+    type: SourceType.Elasticsearch,
+    status: Status.Accepted,
+    url: faker.internet.url(),
+  };
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
@@ -55,7 +67,12 @@ describe('Asset', () => {
     jest.spyOn(assetService, 'createOne').mockResolvedValue(asset);
     jest.spyOn(ddosStatusService, 'createOne').mockResolvedValue(undefined);
 
-    expect(await assetController.createAsset({ url: 'http://example.com' }, asset)).toStrictEqual(asset);
+    expect(
+      await assetController.createAsset(
+        { url: '/api/v1/metadata/assets/ddo/', protocol: 'http', client: { localPort: 3100 }, hostname: 'localhost' },
+        asset
+      )
+    ).toStrictEqual(asset);
   });
 
   it('should get all asset Ids', async () => {
@@ -286,6 +303,22 @@ describe('Asset', () => {
 
     await expect(assetController.getDDOMetadata(asset.id)).rejects.toEqual(
       new NotFoundException(`Asset with did ${asset.id} doesn't have metada`)
+    );
+  });
+
+  it('should get the status of the asset', async () => {
+    jest.spyOn(ddosStatusService, 'findOneById').mockResolvedValue({
+      _source: ddoStatus,
+      _index: MarketplaceIndex.DDOStatus,
+      _id: ddoStatus.did,
+    });
+
+    expect(await assetController.getDDOStatus(ddoStatus.did)).toStrictEqual(
+      GetDDOStatusDto.fromSource({
+        _source: ddoStatus,
+        _index: MarketplaceIndex.DDOStatus,
+        _id: ddoStatus.did,
+      })
     );
   });
 });
