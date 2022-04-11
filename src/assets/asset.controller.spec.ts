@@ -377,4 +377,13 @@ describe('Asset', () => {
       SearchResponse.fromSearchSources(query, serviceHits, serviceHits.hits.map(GetServiceDto.fromSource))
     );
   });
+
+  it('should delete all services', async () => {
+    const deleteAllServicesSpy = jest.spyOn(serviceDDOService, 'deleteAll');
+    deleteAllServicesSpy.mockResolvedValue(undefined);
+
+    await assetController.deleteAllServices();
+
+    expect(deleteAllServicesSpy).toBeCalled();
+  });
 });
