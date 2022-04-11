@@ -82,6 +82,7 @@ describe('Asset', () => {
       ],
       total: 1,
     }),
+    deleteAll: () => undefined,
   };
 
   beforeAll(async () => {
@@ -232,5 +233,11 @@ describe('Asset', () => {
       total_results: 1,
       results: [service],
     });
+  });
+
+  it('DELETE service', async () => {
+    const response = await request(app.getHttpServer()).delete('/service');
+
+    expect(response.statusCode).toBe(200);
   });
 });

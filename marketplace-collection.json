@@ -5907,8 +5907,10 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"const uuid = require('uuid');",
+									"",
 									"const service = {",
-									"    \"agreementId\": \"incididunt dolor sed\",",
+									"    \"agreementId\": `a-${uuid.v4()}`,",
 									"    \"index\": 0,",
 									"    \"templateId\": \"sed\",",
 									"    \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",",
@@ -5997,7 +5999,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"agreementId\": \"a-12334\",\n    \"index\": 0,\n    \"templateId\": \"t-12345\",\n    \"serviceEndpoint\": \"http://service.com\",\n    \"type\": \"p\",\n    \"attributes\": {\n        \"additionalInformation\": {\n            \"copyrightHolder\": \"Met Office\",\n            \"description\": \"Weather information of UK including temperature and humidity\",\n            \"inLanguage\": \"en\",\n            \"links\": [\n                {\n                    \"name\": \"Sample of Asset Data\",\n                    \"type\": \"sample\",\n                    \"url\": \"https://foo.com/sample.csv\"\n                }\n            ],\n            \"tags\": [\n                \"weather\",\n                \"uk\",\n                \"2011\",\n                \"temperature\",\n                \"humidity\"\n            ],\n            \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n            \"numVotes\": 123,\n            \"rating\": 0.93,\n            \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n            \"author\": \"Met Office\",\n            \"dateCreated\": \"2012-02-01T10:55:11Z\",\n            \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n            \"files\": [\n                {\n                    \"compression\": \"zip\",\n                    \"contentLength\": \"4535431\",\n                    \"contentType\": \"text/csv\",\n                    \"encoding\": \"UTF-8\",\n                    \"index\": 0,\n                    \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n                }\n            ],\n            \"license\": \"CC-BY\",\n            \"name\": \"UK Weather information 2011\",\n            \"price\": \"10\",\n            \"type\": \"dataset\"\n        }\n    }\n}",
+							"raw": "{\n    \"agreementId\": \"a-123456\",\n    \"index\": 0,\n    \"templateId\": \"t-12345\",\n    \"serviceEndpoint\": \"http://service.com\",\n    \"type\": \"p\",\n    \"attributes\": {\n        \"additionalInformation\": {\n            \"copyrightHolder\": \"Met Office\",\n            \"description\": \"Weather information of UK including temperature and humidity\",\n            \"inLanguage\": \"en\",\n            \"links\": [\n                {\n                    \"name\": \"Sample of Asset Data\",\n                    \"type\": \"sample\",\n                    \"url\": \"https://foo.com/sample.csv\"\n                }\n            ],\n            \"tags\": [\n                \"weather\",\n                \"uk\",\n                \"2011\",\n                \"temperature\",\n                \"humidity\"\n            ],\n            \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n            \"numVotes\": 123,\n            \"rating\": 0.93,\n            \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n            \"author\": \"Met Office\",\n            \"dateCreated\": \"2012-02-01T10:55:11Z\",\n            \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n            \"files\": [\n                {\n                    \"compression\": \"zip\",\n                    \"contentLength\": \"4535431\",\n                    \"contentType\": \"text/csv\",\n                    \"encoding\": \"UTF-8\",\n                    \"index\": 0,\n                    \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n                }\n            ],\n            \"license\": \"CC-BY\",\n            \"name\": \"UK Weather information 2011\",\n            \"price\": \"10\",\n            \"type\": \"dataset\"\n        }\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -6058,8 +6060,8 @@
 							},
 							"status": "OK",
 							"code": 200,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
 							"body": "{\n    \"agreementId\": \"a-12334\",\n    \"index\": 0,\n    \"templateId\": \"t-12345\",\n    \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n    \"type\": \"metadata\",\n    \"attributes\": {\n        \"additionalInformation\": {\n            \"copyrightHolder\": \"Met Office\",\n            \"description\": \"Weather information of UK including temperature and humidity\",\n            \"inLanguage\": \"en\",\n            \"links\": [\n                {\n                    \"name\": \"Sample of Asset Data\",\n                    \"type\": \"sample\",\n                    \"url\": \"https://foo.com/sample.csv\"\n                }\n            ],\n            \"tags\": [\n                \"weather\",\n                \"uk\",\n                \"2011\",\n                \"temperature\",\n                \"humidity\"\n            ],\n            \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n            \"numVotes\": 123,\n            \"rating\": 0.93,\n            \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n            \"author\": \"Met Office\",\n            \"dateCreated\": \"2012-02-01T10:55:11Z\",\n            \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n            \"files\": [\n                {\n                    \"compression\": \"zip\",\n                    \"contentLength\": \"4535431\",\n                    \"contentType\": \"text/csv\",\n                    \"encoding\": \"UTF-8\",\n                    \"index\": 0,\n                    \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n                }\n            ],\n            \"license\": \"CC-BY\",\n            \"name\": \"UK Weather information 2011\",\n            \"price\": \"10\",\n            \"type\": \"dataset\"\n        }\n    }\n}"
 						},
@@ -6102,8 +6104,8 @@
 							},
 							"status": "Bad Request",
 							"code": 400,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
 							"body": null
 						}
@@ -6116,8 +6118,10 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
+									"const uuid = require('uuid');",
+									"",
 									"const service = {",
-									"    \"agreementId\": \"a-12345\",",
+									"    \"agreementId\": `a-${uuid.v4()}`,",
 									"    \"index\": 0,",
 									"    \"templateId\": \"t-12345\",",
 									"    \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",",
@@ -6182,14 +6186,6 @@
 									"        }",
 									"}, (error, response) => {",
 									"    pm.environment.set('agreementId', response.json().agreementId);",
-									"",
-									"    pm.sendRequest({",
-									"        url: pm.collectionVariables.replaceIn('{{elsUrl}}/asset/_refresh'),",
-									"        method: 'POST',",
-									"        header: {",
-									"            'Content-Type': 'application/json',",
-									"        },",
-									"    });",
 									"});"
 								],
 								"type": "text/javascript"
@@ -6205,6 +6201,13 @@
 									"};",
 									"",
 									"pm.sendRequest({",
+									"        url: pm.collectionVariables.replaceIn('{{elsUrl}}/service/_refresh'),",
+									"        method: 'POST',",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"        },",
+									"}, (error, response) => {",
+									"    pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/service/query'),",
 									"        method: 'POST',",
 									"        header: {",
@@ -6214,14 +6217,12 @@
 									"            mode: 'raw',",
 									"            raw: JSON.stringify(query)",
 									"        }",
-									"",
-									"}, (error, response) => {",
-									"    pm.test(\"should get a list of ddos by passing a query\", () => {",
-									"        pm.expect(response).to.have.property('code', 201);",
-									"        pm.expect(response).to.have.property('status', 'Created')",
-									"        console.log(response.json());",
-									"        console.log(`AGREEMENTID: ${pm.environment.get('agreementId')}`)",
-									"        pm.expect(response.json().results.some(a => a.agreementId === pm.environment.get('agreementId'))).to.be.true;",
+									"    }, (error, response) => {",
+									"        pm.test(\"should get a list of ddos by passing a query\", () => {",
+									"            pm.expect(response).to.have.property('code', 201);",
+									"            pm.expect(response).to.have.property('status', 'Created')",
+									"            pm.expect(response.json().results.some(a => a.agreementId === pm.environment.get('agreementId'))).to.be.true;",
+									"        });",
 									"    });",
 									"});"
 								],
@@ -6243,7 +6244,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"query\": {},\n  \"text\": \"est cillum\",\n  \"offset\": 100,\n  \"page\": 1,\n  \"sort\": {}\n}",
+							"raw": "{\n  \"query\": {},\n  \"text\": \"est cillum\",\n  \"offset\": \"100\",\n  \"page\": \"1\",\n  \"sort\": {}\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -6283,7 +6284,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"query\": {},\n  \"text\": \"est cillum\",\n  \"offset\": 100,\n  \"page\": 0,\n  \"sort\": {}\n}",
+									"raw": "{\n  \"query\": {},\n  \"text\": \"est cillum\",\n  \"offset\": \"100\",\n  \"page\": \"0\",\n  \"sort\": {}\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -6307,8 +6308,8 @@
 							},
 							"status": "OK",
 							"code": 200,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
 							"body": "{\n    \"page\": 1,\n    \"results\": [\n        {\n            \"agreementId\": \"a-12334\",\n            \"index\": 0,\n            \"templateId\": \"t-12345\",\n            \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n            \"type\": \"metadata\",\n            \"attributes\": {\n                \"additionalInformation\": {\n                    \"copyrightHolder\": \"Met Office\",\n                    \"description\": \"Weather information of UK including temperature and humidity\",\n                    \"inLanguage\": \"en\",\n                    \"links\": [\n                        {\n                            \"name\": \"Sample of Asset Data\",\n                            \"type\": \"sample\",\n                            \"url\": \"https://foo.com/sample.csv\"\n                        }\n                    ],\n                    \"tags\": [\n                        \"weather\",\n                        \"uk\",\n                        \"2011\",\n                        \"temperature\",\n                        \"humidity\"\n                    ],\n                    \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n                },\n                \"curation\": {\n                    \"numVotes\": 123,\n                    \"rating\": 0.93,\n                    \"schema\": \"Binary Voting\"\n                },\n                \"main\": {\n                    \"author\": \"Met Office\",\n                    \"dateCreated\": \"2012-02-01T10:55:11Z\",\n                    \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n                    \"files\": [\n                        {\n                            \"compression\": \"zip\",\n                            \"contentLength\": \"4535431\",\n                            \"contentType\": \"text/csv\",\n                            \"encoding\": \"UTF-8\",\n                            \"index\": 0,\n                            \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n                        }\n                    ],\n                    \"license\": \"CC-BY\",\n                    \"name\": \"UK Weather information 2011\",\n                    \"price\": \"10\",\n                    \"type\": \"dataset\"\n                }\n            }\n        }\n    ],\n    \"total_pages\": 1,\n    \"total_results\": 1,\n}"
 						},
@@ -6352,8 +6353,8 @@
 							},
 							"status": "Bad Request",
 							"code": 400,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
 							"body": null
 						}
@@ -6366,8 +6367,10 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
+									"const uuid = require('uuid');",
+									"",
 									"const service = {",
-									"    \"agreementId\": \"a-12345\",",
+									"    \"agreementId\": `a-${uuid.v4()}`,",
 									"    \"index\": 0,",
 									"    \"templateId\": \"t-12345\",",
 									"    \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",",
@@ -6434,7 +6437,7 @@
 									"    pm.environment.set('agreementId', response.json().agreementId);",
 									"",
 									"    pm.sendRequest({",
-									"        url: pm.collectionVariables.replaceIn('{{elsUrl}}/asset/_refresh'),",
+									"        url: pm.collectionVariables.replaceIn('{{elsUrl}}/service/_refresh'),",
 									"        method: 'POST',",
 									"        header: {",
 									"            'Content-Type': 'application/json',",
@@ -6567,6 +6570,241 @@
 							},
 							"status": "Not Found",
 							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Asset Controller delete All Services",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const uuid = require('uuid');",
+									"",
+									"const service = {",
+									"    \"agreementId\": `a-${uuid.v4()}`,",
+									"    \"index\": 0,",
+									"    \"templateId\": \"t-12345\",",
+									"    \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",",
+									"    \"type\": \"p\",",
+									"    \"attributes\": {",
+									"        \"additionalInformation\": {",
+									"            \"copyrightHolder\": \"Met Office\",",
+									"            \"description\": \"Weather information of UK including temperature and humidity\",",
+									"            \"inLanguage\": \"en\",",
+									"            \"links\": [",
+									"                {",
+									"                    \"name\": \"Sample of Asset Data\",",
+									"                    \"type\": \"sample\",",
+									"                    \"url\": \"https://foo.com/sample.csv\"",
+									"                }",
+									"            ],",
+									"            \"tags\": [",
+									"                \"weather\",",
+									"                \"uk\",",
+									"                \"2011\",",
+									"                \"temperature\",",
+									"                \"humidity\"",
+									"            ],",
+									"            \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"",
+									"        },",
+									"        \"curation\": {",
+									"            \"numVotes\": 123,",
+									"            \"rating\": 0.93,",
+									"            \"schema\": \"Binary Voting\"",
+									"        },",
+									"        \"main\": {",
+									"            \"author\": \"Met Office\",",
+									"            \"dateCreated\": \"2012-02-01T10:55:11Z\",",
+									"            \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",",
+									"            \"files\": [",
+									"                {",
+									"                    \"compression\": \"zip\",",
+									"                    \"contentLength\": \"4535431\",",
+									"                    \"contentType\": \"text/csv\",",
+									"                    \"encoding\": \"UTF-8\",",
+									"                    \"index\": 0,",
+									"                    \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"",
+									"                }",
+									"            ],",
+									"            \"license\": \"CC-BY\",",
+									"            \"name\": \"UK Weather information 2011\",",
+									"            \"price\": \"10\",",
+									"            \"type\": \"dataset\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"pm.sendRequest({",
+									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/service'),",
+									"        method: 'POST',",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"        },",
+									"        body: {",
+									"            mode: 'raw',",
+									"            raw: JSON.stringify(service)",
+									"        }",
+									"}, (error, response) => {",
+									"    pm.sendRequest({",
+									"        url: pm.collectionVariables.replaceIn('{{elsUrl}}/service/_refresh'),",
+									"        method: 'POST',",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"        },",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const uuid = require('uuid');",
+									"",
+									"const service = {",
+									"    \"agreementId\": `a-${uuid.v4()}`,",
+									"    \"index\": 0,",
+									"    \"templateId\": \"t-12345\",",
+									"    \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",",
+									"    \"type\": \"p\",",
+									"    \"attributes\": {",
+									"        \"additionalInformation\": {",
+									"            \"copyrightHolder\": \"Met Office\",",
+									"            \"description\": \"Weather information of UK including temperature and humidity\",",
+									"            \"inLanguage\": \"en\",",
+									"            \"links\": [",
+									"                {",
+									"                    \"name\": \"Sample of Asset Data\",",
+									"                    \"type\": \"sample\",",
+									"                    \"url\": \"https://foo.com/sample.csv\"",
+									"                }",
+									"            ],",
+									"            \"tags\": [",
+									"                \"weather\",",
+									"                \"uk\",",
+									"                \"2011\",",
+									"                \"temperature\",",
+									"                \"humidity\"",
+									"            ],",
+									"            \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"",
+									"        },",
+									"        \"curation\": {",
+									"            \"numVotes\": 123,",
+									"            \"rating\": 0.93,",
+									"            \"schema\": \"Binary Voting\"",
+									"        },",
+									"        \"main\": {",
+									"            \"author\": \"Met Office\",",
+									"            \"dateCreated\": \"2012-02-01T10:55:11Z\",",
+									"            \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",",
+									"            \"files\": [",
+									"                {",
+									"                    \"compression\": \"zip\",",
+									"                    \"contentLength\": \"4535431\",",
+									"                    \"contentType\": \"text/csv\",",
+									"                    \"encoding\": \"UTF-8\",",
+									"                    \"index\": 0,",
+									"                    \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"",
+									"                }",
+									"            ],",
+									"            \"license\": \"CC-BY\",",
+									"            \"name\": \"UK Weather information 2011\",",
+									"            \"price\": \"10\",",
+									"            \"type\": \"dataset\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"pm.sendRequest({",
+									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/service'),",
+									"        method: 'POST',",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"        },",
+									"        body: {",
+									"            mode: 'raw',",
+									"            raw: JSON.stringify(service)",
+									"        }",
+									"}, (error, response) => {",
+									"    pm.sendRequest({",
+									"        url: pm.collectionVariables.replaceIn('{{elsUrl}}/service/_refresh'),",
+									"        method: 'POST',",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"        },",
+									"    }, (error, response) => {",
+									"        pm.sendRequest({",
+									"            url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/service'),",
+									"            method: 'DELETE',",
+									"            header: {",
+									"                'Content-Type': 'application/json',",
+									"            }",
+									"        }, (error, response) => {",
+									"            pm.test(\"should delete all ddos\", () => {",
+									"                pm.expect(response).to.have.property('code', 200);",
+									"                pm.expect(response).to.have.property('status', 'OK')",
+									"            });",
+									"        });",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/metadata/assets/service",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"metadata",
+								"assets",
+								"service"
+							]
+						},
+						"description": "Delete all the services"
+					},
+					"response": [
+						{
+							"name": "Deleted all services",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/metadata/assets/service",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"metadata",
+										"assets",
+										"service"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
 							"_postman_previewlanguage": "text",
 							"header": [
 								{

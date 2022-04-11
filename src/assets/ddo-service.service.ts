@@ -31,4 +31,10 @@ export class ServiceDDOService {
       searchQueryDto
     ) as Promise<SearchHitsMetadata<Service>>;
   }
+
+  async deleteAll(): Promise<void> {
+    await this.elasticService.deleteDocumentByQuery(MarketplaceIndex.Service, {
+      match_all: {},
+    });
+  }
 }

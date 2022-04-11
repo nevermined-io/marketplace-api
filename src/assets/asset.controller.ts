@@ -302,6 +302,18 @@ export class AssetController {
     return GetServiceDto.fromSource(serviceSource);
   }
 
+  @Delete('service')
+  @ApiOperation({
+    description: 'Delete all the services',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Deleted all services',
+  })
+  async deleteAllServices() {
+    await this.serviceDDOService.deleteAll();
+  }
+
   private async listDDOs(searchQueryDto: SearchQueryDto): Promise<SearchResponse<GetAssetDto[]>> {
     const assetsSource = await this.assetService.findMany(searchQueryDto);
 
