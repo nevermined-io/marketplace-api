@@ -250,7 +250,7 @@ export class AssetController {
   @ApiResponse({
     status: 201,
     description: 'Service created',
-    type: AttributesDto,
+    type: GetServiceDto,
   })
   @ApiResponse({
     status: 403,
@@ -260,14 +260,14 @@ export class AssetController {
     return this.serviceDDOService.createOne(serviceDto);
   }
 
-  @Get('/service/query')
+  @Post('service/query')
   @ApiOperation({
     description: 'Get a list of services that match with the executed query.',
   })
   @ApiResponse({
     status: 200,
     description: 'list of services',
-    schema: SearchResponse.toDocs(GetAssetDto),
+    schema: SearchResponse.toDocs(GetServiceDto),
   })
   @ApiResponse({
     status: 403,

@@ -9,6 +9,7 @@ import { AssetService } from './asset.service';
 import { DDOStatusService } from './ddo-status.service';
 import { Asset } from './asset.entity';
 import { DDOStatus } from './ddo-status.entity';
+import { Service } from './ddo-service.entity';
 import { MarketplaceIndex, SourceType, Status } from '../common/type';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
 import { GetAssetDto } from './dto/get-asset-dto';
@@ -18,11 +19,13 @@ import { ServiceDto } from './dto/service.dto';
 import { AttributesDto } from './dto/attributes.dto';
 import { GetDDOStatusDto } from './dto/get-ddo-status.dto';
 import { ServiceDDOService } from './ddo-service.service';
+import { GetServiceDto } from './dto/get-service.dto';
 
 describe('Asset', () => {
   let assetController: AssetController;
   let assetService: AssetService;
   let ddosStatusService: DDOStatusService;
+  let serviceDDOService: ServiceDDOService;
 
   const asset = new Asset();
   asset.id = `did:nv:${faker.datatype.uuid()}`;
@@ -38,6 +41,13 @@ describe('Asset', () => {
     status: Status.Accepted,
     url: faker.internet.url(),
   };
+
+  const service = new Service();
+  service.agreementId = faker.datatype.uuid();
+  service.index = faker.datatype.number();
+  service.templateId = faker.datatype.uuid();
+  service.type = 'metadata';
+  service.attributes = new AttributesDto();
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
@@ -63,6 +73,7 @@ describe('Asset', () => {
     assetService = module.get<AssetService>(AssetService);
     ddosStatusService = module.get<DDOStatusService>(DDOStatusService);
     assetController = module.get<AssetController>(AssetController);
+    serviceDDOService = module.get<ServiceDDOService>(ServiceDDOService);
   });
 
   it('should create a Asset', async () => {
@@ -321,6 +332,49 @@ describe('Asset', () => {
         _index: MarketplaceIndex.DDOStatus,
         _id: ddoStatus.did,
       })
+    );
+  });
+
+  it('should create a service', async () => {
+    jest.spyOn(serviceDDOService, 'createOne').mockResolvedValue(service);
+
+    expect(await assetController.createService(service)).toStrictEqual(service);
+  });
+
+  it('should get a service', async () => {
+    jest.spyOn(serviceDDOService, 'findOneById').mockResolvedValue({
+      _source: service,
+      _index: MarketplaceIndex.Service,
+      _id: service.agreementId,
+    });
+
+    expect(await assetController.getService(service.agreementId)).toStrictEqual(
+      GetServiceDto.fromSource({
+        _source: service,
+        _index: MarketplaceIndex.Service,
+        _id: service.agreementId,
+      })
+    );
+  });
+
+  it('should get services by query', async () => {
+    const serviceHits = {
+      hits: [
+        {
+          _source: service,
+          _index: MarketplaceIndex.Service,
+          _id: service.agreementId,
+        },
+      ],
+      total: 1,
+    };
+
+    const query = { page: 0, offset: 100 };
+
+    jest.spyOn(serviceDDOService, 'findMany').mockResolvedValue(serviceHits);
+
+    expect(await assetController.getServiceQueryPost(query)).toStrictEqual(
+      SearchResponse.fromSearchSources(query, serviceHits, serviceHits.hits.map(GetServiceDto.fromSource))
     );
   });
 });
