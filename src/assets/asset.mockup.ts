@@ -1,3 +1,5 @@
+import { faker } from '@faker-js/faker';
+
 export const asset = {
   '@context': 'https://w3id.org/did/v1',
   id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429',
@@ -99,4 +101,12 @@ export const ddoStatus = {
       'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429/status',
   },
   external: null,
+};
+
+export const service = {
+  agreementId: faker.datatype.uuid(),
+  index: faker.datatype.number(),
+  templateId: faker.datatype.uuid(),
+  type: 'metadata',
+  attributes: asset.service[2].attributes,
 };
