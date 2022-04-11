@@ -36,7 +36,7 @@ export class QueryBodyDDOdto {
   offset = 100;
 
   @ApiProperty({
-    example: 0,
+    example: 1,
     description: 'Page to retrieve',
     required: false,
     type: 'string',
@@ -44,7 +44,7 @@ export class QueryBodyDDOdto {
   @Transform(({ value }) => parseInt(value as string, 10))
   @IsOptional()
   @IsNumber()
-  page = 0;
+  page = 1;
 
   @ApiProperty({
     example: { created: 'asc' },
