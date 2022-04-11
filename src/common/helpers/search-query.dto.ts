@@ -37,7 +37,7 @@ export class SearchQueryDto {
   offset = 100;
 
   @ApiProperty({
-    example: 0,
+    example: 1,
     description: 'Page to retrieve',
     required: false,
     type: 'string',
