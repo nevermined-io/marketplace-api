@@ -18,7 +18,10 @@ jobs:
     - name: Compile and lint
       run: |
         npm run build
-        npm run lint     
+        npm run lint
+    - name: Run ganache
+      run: |
+        npx ganache &
     - name: Run tests
       run: |
         npm run setup:dev
