@@ -57,7 +57,7 @@ describe('Asset', () => {
   };
 
   const ddosStatusService = {
-    createOne: () => {},
+    createOne: () => { },
     findOneById: (did: string) => ({
       _source: { ...ddoStatus },
       _index: MarketplaceIndex.DDOStatus,

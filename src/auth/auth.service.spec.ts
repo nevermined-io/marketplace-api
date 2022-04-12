@@ -14,6 +14,16 @@ import Web3 from 'web3';
 
 describe('AuthService', () => {
   let service: AuthService;
+  let web3: Web3;
+  let account: Account;
+
+  beforeAll(() => {
+    const seedphrase = 'taxi music thumb unique chat sand crew more leg another off lamp';
+    const provider = new HDWalletProvider(seedphrase, 'http://localhost:8545', 0, 10);
+    const address: string = provider.getAddresses()[0];
+    account = new Account(address);
+    web3 = new Web3(provider);
+  });
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -37,11 +47,7 @@ describe('AuthService', () => {
   });
 
   it('should get a token with web3 signing', async () => {
-    const seedphrase = 'taxi music thumb unique chat sand crew more leg another off lamp';
-    const provider = new HDWalletProvider(seedphrase, 'http://localhost:8545', 0, 10);
-    const address: string = provider.getAddresses()[0];
-    const account = new Account(address);
-    const web3 = new Web3(provider);
+
     const clientAssertion = await new EthSignJWT({
       iss: web3.utils.toChecksumAddress(account.getId())
     })

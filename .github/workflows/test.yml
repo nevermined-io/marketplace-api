@@ -25,4 +25,5 @@ jobs:
     - name: Run tests
       run: |
         npm run setup:dev
-        npm run test:cov
+        # HDWalletProvider keeps jest from exiting
+        npm run test:cov -- --forceExit
