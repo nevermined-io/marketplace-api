@@ -12,28 +12,31 @@ export interface EnvConfig {
 const configProfile = require('../../../config');
 
 const DOTENV_SCHEMA = Joi.object({
-  NODE_ENV: Joi.string()
-    .valid('development', 'production', 'test', 'provision')
-    .default('development'),
-  JWT_SECRET_KEY: Joi.string()
-    .required()
-    .error(new Error('JWT_SECRET_KEY is required!')),
+  NODE_ENV: Joi.string().valid('development', 'production', 'test', 'staging').default('development'),
+  JWT_SECRET_KEY: Joi.string().required().error(new Error('JWT_SECRET_KEY is required!')),
+  API_VERSION: Joi.string().default('v1'),
   server: Joi.object({
     port: Joi.number().default(3000),
+  }),
+  security: Joi.object({
+    enableHttpsRedirect: Joi.bool().default(false),
+  }).default({
+    enableHttpsRedirect: false,
   }),
   elasticsearch: Joi.object({
     node: Joi.string().default('http://localhost:9200'),
     auth: Joi.object({
-      username: Joi.string()
-        .required()
-        .error(new Error('CLUSTER_NAME is required!')),
-      password: Joi.string().required().error(new Error('ELASTIC_PASSWORD is required!')),
+      username: Joi.string().required().error(new Error('CLUSTER_NAME is required!')),
+      password: Joi.string(),
     }).error(new Error('auth of elasticsearch need to be set')),
-  }).required().error(new Error('The config of elasticsearch need to be set')),
+  })
+    .required()
+    .error(new Error('The config of elasticsearch need to be set')),
 });
 
 type DotenvSchemaKeys =
   | 'NODE_ENV'
+  | 'API_VERSION'
   | 'server.port'
   | 'database.url'
   | 'JWT_SECRET_KEY'
@@ -50,7 +53,7 @@ export class ConfigService {
   }
 
   get<T>(path: DotenvSchemaKeys): T | undefined {
-    return (loGet(this.envConfig, path) as unknown) as T | undefined;
+    return loGet(this.envConfig, path) as unknown as T | undefined;
   }
 
   private validateInput(envConfig: EnvConfig): EnvConfig {
