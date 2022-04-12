@@ -10,6 +10,8 @@ import {
 } from "jose";
 import Web3 from "web3";
 
+// TODO: Used only for testing and copied from the sdk
+//       expose from the SDK side
 export class EthSignJWT extends SignJWT {
     protectedHeader: JWSHeaderParameters;
 
@@ -65,17 +67,6 @@ export class EthSignJWT extends SignJWT {
     }
 }
 
-export const concat = (...buffers: Uint8Array[]): Uint8Array => {
-    const size = buffers.reduce((acc, { length }) => acc + length, 0);
-    const buf = new Uint8Array(size);
-    let i = 0;
-    buffers.forEach(buffer => {
-        buf.set(buffer, i);
-        i += buffer.length;
-    });
-    return buf;
-};
-
 export const recoverPublicKey = async (protectedHeader: string, payload: string, signature: string) => {
     const signatureInput = `${protectedHeader}.${payload}`;
     const signatureDecoded = `0x${Buffer.from(signature, 'base64').toString('hex')}`;
@@ -84,10 +75,14 @@ export const recoverPublicKey = async (protectedHeader: string, payload: string,
     const provider = new HDWalletProvider(seedphrase, 'http://localhost:8545', 0, 10);
     const web3 = new Web3(provider);
 
+    // TODO: Replace this with a library that does not require a web3provider
     const address = await web3.eth.personal.ecRecover(signatureInput, signatureDecoded);
     return web3.utils.toChecksumAddress(address);
 };
 
+// TODO: A lot of this functionality should maybe be turned
+//       into a passport strategy
+// Verify a jwt signed by a web3 provider
 export const jwtEthVerify = async (
     jwt: string,
 ) => {
@@ -98,7 +93,6 @@ export const jwtEthVerify = async (
     }
 
     // decode and validate protected header
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     let parsedProtectedHeader: ProtectedHeaderParameters;
     try {
         parsedProtectedHeader = decodeProtectedHeader(jwt);
