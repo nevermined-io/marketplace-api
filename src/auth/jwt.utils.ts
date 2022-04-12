@@ -103,7 +103,7 @@ export const jwtEthVerify = async (
     try {
         parsedProtectedHeader = decodeProtectedHeader(jwt);
     } catch (error) {
-        throw new Error(`ProtectedHeader: Failed to decode header (${error.message})`);
+        throw new Error(`ProtectedHeader: Failed to decode header (${(error as Error).message})`);
     }
     if (parsedProtectedHeader.alg !== 'ES256K') {
         throw new Error('ProtectedHeader: Invalid algorithm');
@@ -115,7 +115,7 @@ export const jwtEthVerify = async (
     try {
         publicKey = await recoverPublicKey(protectedHeader, payload, signature);
     } catch (error) {
-        throw new Error(`Signature: Failed to validate signature (${error.message})`);
+        throw new Error(`Signature: Failed to validate signature (${(error as Error).message})`);
     }
 
     // verify the payload
@@ -123,7 +123,7 @@ export const jwtEthVerify = async (
     try {
         parsedPayload = decodeJwt(jwt);
     } catch (error) {
-        throw new Error(`Payload: Failed to decode payload (${error.message})`);
+        throw new Error(`Payload: Failed to decode payload (${(error as Error).message})`);
     }
     if (!parsedPayload.iss) {
         throw new Error('Payload: `iss` field is required');
@@ -132,7 +132,7 @@ export const jwtEthVerify = async (
     try {
         isValidAddress = Web3.utils.checkAddressChecksum(parsedPayload.iss);
     } catch (error) {
-        throw new Error(`Payload: 'iss' field must be a valid checksum ethereum address (${error.message})`);
+        throw new Error(`Payload: 'iss' field must be a valid checksum ethereum address (${(error as Error).message})`);
     }
     if (!isValidAddress) {
         throw new Error('Payload: `iss` field must be a valid checksum ethereum address');

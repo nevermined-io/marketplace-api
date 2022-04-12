@@ -25,7 +25,7 @@ export class AuthService {
         try {
             payload = await jwtEthVerify(clientAssertion);
         } catch (error) {
-            throw new UnauthorizedException(`The 'client_assertion' is invalid: ${error.message}`);
+            throw new UnauthorizedException(`The 'client_assertion' is invalid: ${(error as Error).message}`);
         }
         return {
             access_token: this.jwtService.sign({ iss: payload.iss })
