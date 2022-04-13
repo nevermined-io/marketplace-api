@@ -1,26 +1,30 @@
-import { Controller, Post, Request, Get, Body } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Controller, Post, Body } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from './auth.decorator';
 import { AuthService } from './auth.service';
+import { ClientAssertionDto } from './dto/clientAssertion.dto';
 import { LoginDto } from './dto/login.dto';
 
 @ApiTags('Auth')
 @Controller()
 export class AuthController {
     constructor(private authService: AuthService) { }
-    @Public()
-    @Post('login')
-    login(
-        @Body('client_assertion_type') clientAssertionType: string,
-        @Body('client_assertion') clientAssertion: string,
-    ): LoginDto {
-        return this.authService.validateClaim(clientAssertionType, clientAssertion);
-    }
 
-    // Test endpoint
-    @Get('profile')
-    getProfile(@Request() req) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
-        return req.user;
+    @Post('login')
+    @ApiOperation({
+        description: 'Login using a JWT claim for client authentication'
+    })
+    @ApiResponse({
+        status: 201,
+        description: 'The access_token',
+        type: LoginDto
+    })
+    @ApiResponse({
+        status: 401,
+        description: 'Unauthorized access'
+    })
+    @Public()
+    login(@Body() clientAssertion: ClientAssertionDto): LoginDto {
+        return this.authService.validateClaim(clientAssertion.client_assertion_type, clientAssertion.client_assertion);
     }
 }

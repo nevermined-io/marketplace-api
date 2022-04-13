@@ -129,6 +129,6 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   },
-  "author": "Keyko",
+  "author": "Nevermined",
   "license": "ISC"
 }

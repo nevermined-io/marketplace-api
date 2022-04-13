@@ -2,9 +2,10 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ethers } from 'ethers';
+import { ConfigService } from '../shared/config/config.service';
+import { ConfigModule } from '../shared/config/config.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { jwtConstants } from './constants';
 import { JwtStrategy } from './jwt.strategy';
 import { EthSignJWT } from './jwt.utils';
 
@@ -19,13 +20,14 @@ describe('AuthController', () => {
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             imports: [
+                ConfigModule,
                 PassportModule,
                 JwtModule.register({
-                    secret: jwtConstants.secret,
+                    secret: 'secret',
                     signOptions: { expiresIn: '60m' }
                 })
             ],
-            providers: [AuthService, JwtStrategy],
+            providers: [AuthService, JwtStrategy, ConfigService],
             controllers: [AuthController]
         }).compile();
 
@@ -42,7 +44,8 @@ describe('AuthController', () => {
             .ethSign(wallet);
         const clientAssertionType = 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer';
 
-        const response = authController.login(clientAssertionType, clientAssertion);
+        const response = authController.login(
+            { client_assertion_type: clientAssertionType, client_assertion: clientAssertion });
         expect(response).toHaveProperty('access_token');
     });
 });

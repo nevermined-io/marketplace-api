@@ -110,15 +110,20 @@ export const jwtEthVerify = (
         throw new Error(`Payload: Failed to decode payload (${(error as Error).message})`);
     }
     if (!parsedPayload.iss) {
-        throw new Error('Payload: `iss` field is required');
+        throw new Error('Payload: "iss" field is required');
     }
 
     const isValidAddress = ethers.utils.isAddress(parsedPayload.iss);
     if (!isValidAddress) {
-        throw new Error('Payload: `iss` field must be a valid checksum ethereum address');
+        throw new Error('Payload: "iss" field must be a valid ethereum address');
     }
+    const isChecksumAddress = ethers.utils.getAddress(parsedPayload.iss) === parsedPayload.iss;
+    if (!isChecksumAddress) {
+        throw new Error('Payload: "iss" field must be a checksum address');
+    }
+
     if (parsedPayload.iss !== publicKey) {
-        throw new Error('Payload: `iss` is not the signer of the payload');
+        throw new Error('Payload: "iss" is not the signer of the payload');
     }
 
     return parsedPayload;
