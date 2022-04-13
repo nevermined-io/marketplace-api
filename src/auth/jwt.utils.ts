@@ -9,6 +9,7 @@ import {
     SignJWT
 } from "jose";
 import Web3 from "web3";
+import { ethers } from "ethers";
 
 // TODO: Used only for testing and copied from the sdk
 //       expose from the SDK side
@@ -71,13 +72,8 @@ export const recoverPublicKey = async (protectedHeader: string, payload: string,
     const signatureInput = `${protectedHeader}.${payload}`;
     const signatureDecoded = `0x${Buffer.from(signature, 'base64').toString('hex')}`;
 
-    const seedphrase = 'taxi music thumb unique chat sand crew more leg another off lamp';
-    const provider = new HDWalletProvider(seedphrase, 'http://localhost:8545', 0, 10);
-    const web3 = new Web3(provider);
-
-    // TODO: Replace this with a library that does not require a web3provider
-    const address = await web3.eth.personal.ecRecover(signatureInput, signatureDecoded);
-    return web3.utils.toChecksumAddress(address);
+    const address = ethers.utils.verifyMessage(signatureInput, signatureDecoded);
+    return ethers.utils.getAddress(address);
 };
 
 // TODO: A lot of this functionality should maybe be turned
