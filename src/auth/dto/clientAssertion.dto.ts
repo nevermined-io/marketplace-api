@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Equals, IsJWT } from "class-validator";
-import { CLIENT_ASSERTION_TYPE } from "../constants";
+import { CLIENT_ASSERTION_TYPE } from "../../common/guards/shared/jwt.utils";
 
 export class ClientAssertionDto {
     @ApiProperty({

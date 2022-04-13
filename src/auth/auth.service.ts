@@ -1,9 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { JWTPayload } from 'jose';
-import { CLIENT_ASSERTION_TYPE } from './constants';
 import { LoginDto } from './dto/login.dto';
-import { jwtEthVerify } from './jwt.utils';
+import { CLIENT_ASSERTION_TYPE, jwtEthVerify } from '../common/guards/shared/jwt.utils';
 
 @Injectable()
 export class AuthService {

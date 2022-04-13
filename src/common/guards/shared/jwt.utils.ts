@@ -8,6 +8,8 @@ import {
 } from "jose";
 import { ethers } from "ethers";
 
+export const CLIENT_ASSERTION_TYPE = 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer';
+
 // TODO: Used only for testing and copied from the sdk
 //       expose from the SDK side
 export class EthSignJWT extends SignJWT {

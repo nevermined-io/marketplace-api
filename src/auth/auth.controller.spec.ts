@@ -6,8 +6,8 @@ import { ConfigService } from '../shared/config/config.service';
 import { ConfigModule } from '../shared/config/config.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { JwtStrategy } from './jwt.strategy';
-import { EthSignJWT } from './jwt.utils';
+import { JwtStrategy } from '../common/strategies/jwt.strategy';
+import { EthSignJWT } from '../common/guards/shared/jwt.utils';
 
 describe('AuthController', () => {
     let authController: AuthController;
