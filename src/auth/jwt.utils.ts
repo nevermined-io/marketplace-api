@@ -1,5 +1,3 @@
-import { Account } from "@nevermined-io/nevermined-sdk-js";
-import HDWalletProvider from "@truffle/hdwallet-provider";
 import {
     decodeJwt,
     decodeProtectedHeader,
@@ -8,7 +6,6 @@ import {
     ProtectedHeaderParameters,
     SignJWT
 } from "jose";
-import Web3 from "web3";
 import { ethers } from "ethers";
 
 // TODO: Used only for testing and copied from the sdk
@@ -22,8 +19,7 @@ export class EthSignJWT extends SignJWT {
     }
 
     public async ethSign(
-        account: Account,
-        web3: Web3
+        wallet: ethers.Wallet
     ): Promise<string> {
         const encoder = new TextEncoder();
         const decoder = new TextDecoder();
@@ -36,11 +32,9 @@ export class EthSignJWT extends SignJWT {
         );
         const data = this.concat(encodedHeader, encoder.encode('.'), encodedPayload);
 
-        const sign = await web3.eth.personal.sign(decoder.decode(data), account.getId(), undefined);
+        const sign = await wallet.signMessage(decoder.decode(data));
 
-        const signed = this.base64url(
-            Uint8Array.from(web3.utils.hexToBytes(sign))
-        );
+        const signed = this.base64url(ethers.utils.arrayify(sign));
         const grantToken = `${decoder.decode(encodedHeader)}.${decoder.decode(
             encodedPayload
         )}.${signed}`;
@@ -68,7 +62,7 @@ export class EthSignJWT extends SignJWT {
     }
 }
 
-export const recoverPublicKey = async (protectedHeader: string, payload: string, signature: string) => {
+export const recoverPublicKey = (protectedHeader: string, payload: string, signature: string) => {
     const signatureInput = `${protectedHeader}.${payload}`;
     const signatureDecoded = `0x${Buffer.from(signature, 'base64').toString('hex')}`;
 
@@ -78,8 +72,8 @@ export const recoverPublicKey = async (protectedHeader: string, payload: string,
 
 // TODO: A lot of this functionality should maybe be turned
 //       into a passport strategy
-// Verify a jwt signed by a web3 provider
-export const jwtEthVerify = async (
+// Verify a jwt with an ethereum signature
+export const jwtEthVerify = (
     jwt: string,
 ) => {
     const { 0: protectedHeader, 1: payload, 2: signature, length } = jwt.split('.');
@@ -103,7 +97,7 @@ export const jwtEthVerify = async (
     // This is the de-facto signature validation
     let publicKey: string;
     try {
-        publicKey = await recoverPublicKey(protectedHeader, payload, signature);
+        publicKey = recoverPublicKey(protectedHeader, payload, signature);
     } catch (error) {
         throw new Error(`Signature: Failed to validate signature (${(error as Error).message})`);
     }
@@ -118,12 +112,8 @@ export const jwtEthVerify = async (
     if (!parsedPayload.iss) {
         throw new Error('Payload: `iss` field is required');
     }
-    let isValidAddress: boolean;
-    try {
-        isValidAddress = Web3.utils.checkAddressChecksum(parsedPayload.iss);
-    } catch (error) {
-        throw new Error(`Payload: 'iss' field must be a valid checksum ethereum address (${(error as Error).message})`);
-    }
+
+    const isValidAddress = ethers.utils.isAddress(parsedPayload.iss);
     if (!isValidAddress) {
         throw new Error('Payload: `iss` field must be a valid checksum ethereum address');
     }

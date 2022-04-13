@@ -10,10 +10,10 @@ export class AuthController {
     constructor(private authService: AuthService) { }
     @Public()
     @Post('login')
-    async login(
+    login(
         @Body('client_assertion_type') clientAssertionType: string,
         @Body('client_assertion') clientAssertion: string,
-    ): Promise<LoginDto> {
+    ): LoginDto {
         return this.authService.validateClaim(clientAssertionType, clientAssertion);
     }
 

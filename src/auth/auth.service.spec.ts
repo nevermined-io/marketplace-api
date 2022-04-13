@@ -6,22 +6,15 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { jwtConstants } from './constants';
 import { JwtStrategy } from './jwt.strategy';
-import HDWalletProvider from '@truffle/hdwallet-provider';
-import { Account } from '@nevermined-io/nevermined-sdk-js';
 import { EthSignJWT } from './jwt.utils';
-import Web3 from 'web3';
+import { ethers } from 'ethers';
 
 describe('AuthService', () => {
   let service: AuthService;
-  let web3: Web3;
-  let account: Account;
+  let wallet: ethers.Wallet;
 
   beforeAll(() => {
-    const seedphrase = 'taxi music thumb unique chat sand crew more leg another off lamp';
-    const provider = new HDWalletProvider(seedphrase, 'http://localhost:8545', 0, 10);
-    const address: string = provider.getAddresses()[0];
-    account = new Account(address);
-    web3 = new Web3(provider);
+    wallet = ethers.Wallet.createRandom();
   });
 
   beforeEach(async () => {
@@ -40,28 +33,24 @@ describe('AuthService', () => {
     service = module.get<AuthService>(AuthService);
   });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
-
-  it('should get a token with web3 signing', async () => {
+  it('should get an access token with an ethereum signed claim', async () => {
 
     const clientAssertion = await new EthSignJWT({
-      iss: web3.utils.toChecksumAddress(account.getId())
+      iss: wallet.address
     })
       .setProtectedHeader({ alg: 'ES256K' })
       .setIssuedAt()
       .setExpirationTime('60m')
-      .ethSign(account, web3);
+      .ethSign(wallet);
 
-    const result = await service.validateClaim(
+    const result = service.validateClaim(
       'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
       clientAssertion
     );
     expect(result).toHaveProperty('access_token');
 
     const payload = decodeJwt(result.access_token);
-    expect(payload.iss).toEqual(web3.utils.toChecksumAddress(account.getId()));
+    expect(payload.iss).toEqual(wallet.address);
   });
 
 });

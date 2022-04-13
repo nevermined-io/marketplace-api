@@ -1,9 +1,7 @@
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Account } from '@nevermined-io/nevermined-sdk-js';
-import HDWalletProvider from '@truffle/hdwallet-provider';
-import Web3 from 'web3';
+import { ethers } from 'ethers';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { jwtConstants } from './constants';
@@ -12,15 +10,10 @@ import { EthSignJWT } from './jwt.utils';
 
 describe('AuthController', () => {
     let authController: AuthController;
-    let account: Account;
-    let web3: Web3;
+    let wallet: ethers.Wallet;
 
     beforeAll(() => {
-        const seedphrase = 'taxi music thumb unique chat sand crew more leg another off lamp';
-        const provider = new HDWalletProvider(seedphrase, 'http://localhost:8545', 0, 10);
-        const address: string = provider.getAddresses()[0];
-        account = new Account(address);
-        web3 = new Web3(provider);
+        wallet = ethers.Wallet.createRandom();
     });
 
     beforeEach(async () => {
@@ -41,15 +34,15 @@ describe('AuthController', () => {
 
     it('should get an access_token', async () => {
         const clientAssertion = await new EthSignJWT({
-            iss: web3.utils.toChecksumAddress(account.getId())
+            iss: wallet.address
         })
             .setProtectedHeader({ alg: 'ES256K' })
             .setIssuedAt()
             .setExpirationTime('60m')
-            .ethSign(account, web3);
+            .ethSign(wallet);
         const clientAssertionType = 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer';
 
-        const response = await authController.login(clientAssertionType, clientAssertion);
+        const response = authController.login(clientAssertionType, clientAssertion);
         expect(response).toHaveProperty('access_token');
     });
 });

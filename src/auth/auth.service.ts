@@ -16,14 +16,14 @@ export class AuthService {
     //  - the size of the signature. ethereum adds an extra byte to the signature to help
     //    with recovering the public key that create the signature
     //  - the hash function used. ES256K uses sha-256 while ethereum uses keccak
-    async validateClaim(clientAssertionType: string, clientAssertion: string): Promise<LoginDto> {
+    validateClaim(clientAssertionType: string, clientAssertion: string): LoginDto {
         if (clientAssertionType !== CLIENT_ASSERTION_TYPE) {
             throw new UnauthorizedException('Invalid "client_assertion_type"');
         }
 
         let payload: JWTPayload;
         try {
-            payload = await jwtEthVerify(clientAssertion);
+            payload = jwtEthVerify(clientAssertion);
         } catch (error) {
             throw new UnauthorizedException(`The 'client_assertion' is invalid: ${(error as Error).message}`);
         }
