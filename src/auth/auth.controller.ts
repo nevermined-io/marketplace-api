@@ -1,9 +1,8 @@
-import { Controller, Post, UseGuards, Request, Get, Body } from '@nestjs/common';
+import { Controller, Post, Request, Get, Body } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Public } from './auth.decorator';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
-import { JwtAuthGuard } from './jwt-auth.guard';
 
 @ApiTags('Auth')
 @Controller()
@@ -19,7 +18,6 @@ export class AuthController {
     }
 
     // Test endpoint
-    @UseGuards(JwtAuthGuard)
     @Get('profile')
     getProfile(@Request() req) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
