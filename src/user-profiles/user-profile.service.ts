@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { MarketplaceIndex } from '../common/type';
+import { SearchHit } from '@elastic/elasticsearch/api/types';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
 import { UserProfile } from './user-profile.entity';
 import { CreateUserProfileDto } from './dto/create-user-profile.dto';
@@ -14,5 +15,11 @@ export class UserProfileService {
     await this.elasticService.addDocumentToIndex(MarketplaceIndex.UserProfile, userProfile.userId, userProfile);
 
     return userProfile;
+  }
+
+  async findOneById(id: string): Promise<SearchHit<UserProfile>> {
+    return this.elasticService.getDocumentByIndexAndId(MarketplaceIndex.UserProfile, id) as Promise<
+      SearchHit<UserProfile>
+    >;
   }
 }

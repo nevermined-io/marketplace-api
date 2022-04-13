@@ -3,8 +3,25 @@ import { IsString, IsEmail, IsDate, IsBoolean, IsEnum, IsOptional, ValidateNeste
 import { Type } from 'class-transformer';
 import { State } from '../../common/type';
 import { AdditionalInformation } from './additional-information.dto';
+import { SearchHit } from '@elastic/elasticsearch/api/types';
+import { UserProfile } from '../user-profile.entity';
 
 export class GetUserProfileDto {
+  static fromSource(userProfileSource: SearchHit<UserProfile>): GetUserProfileDto {
+    return new GetUserProfileDto(
+      userProfileSource._source.userId,
+      userProfileSource._source.isListed,
+      userProfileSource._source.state,
+      userProfileSource._source.addresses,
+      userProfileSource._source.nickname,
+      userProfileSource._source.name,
+      userProfileSource._source.email,
+      userProfileSource._source.creationDate,
+      userProfileSource._source.updateDate,
+      userProfileSource._source.additionalInformation
+    );
+  }
+
   @ApiProperty({
     example: 'jifdwqejidqwa9okdasodkaso',
     description: 'Unique identifier of the user',
@@ -79,4 +96,28 @@ export class GetUserProfileDto {
   @ValidateNested()
   @Type(() => AdditionalInformation)
   additionalInformation: AdditionalInformation;
+
+  constructor(
+    userId: string,
+    isListed: boolean,
+    state: State,
+    addresses: string[],
+    nickname: string,
+    name: string,
+    email: string,
+    creationDate: Date,
+    updateDate: Date,
+    additionalInformation: AdditionalInformation
+  ) {
+    this.userId = userId;
+    this.isListed = isListed;
+    this.state = state;
+    this.addresses = addresses;
+    this.nickname = nickname;
+    this.name = name;
+    this.email = email;
+    this.creationDate = creationDate;
+    this.updateDate = updateDate;
+    this.additionalInformation = additionalInformation;
+  }
 }

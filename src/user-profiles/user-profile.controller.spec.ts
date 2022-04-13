@@ -8,6 +8,8 @@ import { UserProfileService } from './user-profile.service';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
 import { UserProfile } from './user-profile.entity';
 import { State } from '../common/type';
+import { MarketplaceIndex } from '../common/type';
+import { GetUserProfileDto } from './dto/get-user-profile.dto';
 
 describe('UserProfileController', () => {
   let userProfileController: UserProfileController;
@@ -51,5 +53,19 @@ describe('UserProfileController', () => {
     jest.spyOn(userProfileService, 'createOne').mockResolvedValue(userProfile);
 
     expect(await userProfileController.createUserProfile(userProfile)).toStrictEqual(userProfile);
+  });
+
+  it('should get a user profile passing', async () => {
+    const userProfileSource = {
+      _source: userProfile,
+      _index: MarketplaceIndex.UserProfile,
+      _id: userProfile.userId,
+    };
+
+    jest.spyOn(userProfileService, 'findOneById').mockResolvedValue(userProfileSource);
+
+    expect(await userProfileController.getUserProfileByUserId(userProfile.userId)).toStrictEqual(
+      GetUserProfileDto.fromSource(userProfileSource)
+    );
   });
 });

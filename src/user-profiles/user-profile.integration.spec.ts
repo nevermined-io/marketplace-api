@@ -5,7 +5,7 @@ import request from 'supertest';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { UserProfile } from './user-profile.entity';
-import { State } from '../common/type';
+import { MarketplaceIndex, State } from '../common/type';
 import { UserProfileModule } from './user-profile.module';
 import { UserProfileService } from './user-profile.service';
 
@@ -22,6 +22,11 @@ describe('User Profile', () => {
 
   const userProfileService = {
     createOne: (userProfileDto: UserProfile) => userProfileDto,
+    findOneById: () => ({
+      _source: userProfile,
+      _index: MarketplaceIndex.UserProfile,
+      _id: userProfile.userId,
+    }),
   };
 
   beforeAll(async () => {
@@ -40,6 +45,17 @@ describe('User Profile', () => {
     const response = await request(app.getHttpServer()).post('/').send(userProfile);
 
     expect(response.statusCode).toBe(201);
+    expect(response.body).toStrictEqual({
+      ...userProfile,
+      creationDate: userProfile.creationDate.toISOString(),
+      updateDate: userProfile.updateDate.toISOString(),
+    });
+  });
+
+  it('GET by userId', async () => {
+    const response = await request(app.getHttpServer()).get(`/${userProfile.userId}`);
+
+    expect(response.statusCode).toBe(200);
     expect(response.body).toStrictEqual({
       ...userProfile,
       creationDate: userProfile.creationDate.toISOString(),
