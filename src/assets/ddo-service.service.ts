@@ -23,13 +23,9 @@ export class ServiceDDOService {
   }
 
   async findMany(searchQueryDto: SearchQueryDto): Promise<SearchHitsMetadata<Service>> {
-    return this.elasticService.searchByIndex(
-      MarketplaceIndex.Service,
-      {
-        match_all: {},
-      },
-      searchQueryDto
-    ) as Promise<SearchHitsMetadata<Service>>;
+    return this.elasticService.searchByIndex(MarketplaceIndex.Service, searchQueryDto.query, searchQueryDto) as Promise<
+      SearchHitsMetadata<Service>
+    >;
   }
 
   async deleteAll(): Promise<void> {
