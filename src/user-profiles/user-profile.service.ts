@@ -22,4 +22,22 @@ export class UserProfileService {
       SearchHit<UserProfile>
     >;
   }
+
+  async findOneByAddress(address: string): Promise<SearchHit<UserProfile>> {
+    return (
+      await this.elasticService.searchByIndex(
+        MarketplaceIndex.UserProfile,
+        {
+          bool: {
+            must: {
+              term: {
+                addresses: address,
+              },
+            },
+          },
+        },
+        undefined
+      )
+    ).hits?.[0] as SearchHit<UserProfile>;
+  }
 }

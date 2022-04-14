@@ -1,4 +1,4 @@
-import { Post, Controller, Body, Get, Param } from '@nestjs/common';
+import { Post, Controller, Body, Get, Param, NotFoundException } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserProfileService } from './user-profile.service';
 import { CreateUserProfileDto } from './dto/create-user-profile.dto';
@@ -31,7 +31,7 @@ export class UserProfileController {
     description: 'Get the metadata of a user profile ',
   })
   @ApiResponse({
-    status: 201,
+    status: 200,
     description: 'User profile returned',
     type: GetUserProfileDto,
   })
@@ -41,6 +41,29 @@ export class UserProfileController {
   })
   async getUserProfileByUserId(@Param('userId') userId: string): Promise<GetUserProfileDto> {
     const userProfileSource = await this.userProfileService.findOneById(userId);
+
+    return GetUserProfileDto.fromSource(userProfileSource);
+  }
+
+  @Get('address/:publicAddress')
+  @ApiOperation({
+    description: 'Get the metadata of a user profile given an address',
+  })
+  @ApiResponse({
+    status: 202,
+    description: 'User profile returned',
+    type: GetUserProfileDto,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not found',
+  })
+  async getUserProfileByAddress(@Param('publicAddress') publicAddress: string): Promise<GetUserProfileDto> {
+    const userProfileSource = await this.userProfileService.findOneByAddress(publicAddress);
+
+    if (!userProfileSource) {
+      throw new NotFoundException(`User profile with public address ${publicAddress} does not exist`);
+    }
 
     return GetUserProfileDto.fromSource(userProfileSource);
   }
