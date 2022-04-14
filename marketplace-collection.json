@@ -2266,7 +2266,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -2379,19 +2378,18 @@
 									"        },",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"const query = {",
 									"  \"query\": {",
 									"    \"match_all\": {}",
 									"  },",
-									"  \"text\": \"Eius vel alias.\",",
 									"  \"offset\": \"100\",",
 									"  \"page\": \"1\",",
 									"  \"sort\": {",
@@ -2417,7 +2415,8 @@
 									"        pm.expect(response.json().results[0]).to.have.property('id', pm.environment.get('did'));",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -2435,7 +2434,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"query\": {\n    \"match_all\": {}\n  },\n  \"text\": \"Eius vel alias.\",\n  \"offset\": \"100\",\n  \"page\": \"1\",\n  \"sort\": {\n    \"created\": \"asc\"\n  }\n}\n",
+							"raw": "{\n  \"query\": {\n    \"match_all\": {}\n  },\n  \"offset\": \"100\",\n  \"page\": \"1\",\n  \"sort\": {\n    \"created\": \"asc\"\n  }\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4418,7 +4417,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -4531,16 +4529,16 @@
 									"        },",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
-									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/ddo?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=1&sort={ \"created\": \"asc\" }'),",
+									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/ddo?query={\"match_all\": {}}&offset=100&page=1&sort={ \"created\": \"asc\" }'),",
 									"        method: 'GET',",
 									"        header: {",
 									"            'Content-Type': 'application/json',",
@@ -4552,7 +4550,8 @@
 									"        pm.expect(response.json().results.some(a => a.id === pm.environment.get('did'))).to.be.true;",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -4565,7 +4564,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=1&sort={ \"created\": \"asc\" }",
+							"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo?query={\"match_all\": {}}&page=1&sort={ \"created\": \"asc\" }",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -4581,16 +4580,6 @@
 									"key": "query",
 									"value": "{\"match_all\": {}}",
 									"description": "execute directly queries to elasticsearch from the client"
-								},
-								{
-									"key": "text",
-									"value": "Ipsum ipsam esse aspernatur est dicta qui doloribus animi.",
-									"description": "Text to search"
-								},
-								{
-									"key": "offset",
-									"value": "100",
-									"description": "Page Size"
 								},
 								{
 									"key": "page",
@@ -4730,7 +4719,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -4843,16 +4831,16 @@
 									"        },",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
-									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=1&sort={ \"created\": \"asc\" }'),",
+									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets?query={\"match_all\": {}}&offset=100&page=1&sort={ \"created\": \"asc\" }'),",
 									"        method: 'GET',",
 									"        header: {",
 									"            'Content-Type': 'application/json',",
@@ -4864,7 +4852,8 @@
 									"        pm.expect(response.json().some(a => a === pm.environment.get('did'))).to.be.true;",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -4877,7 +4866,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/api/v1/metadata/assets?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=1&sort={ \"created\": \"asc\" }",
+							"raw": "{{baseUrl}}/api/v1/metadata/assets?query={\"match_all\": {}}&offset=100&page=1&sort={ \"created\": \"asc\" }",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -4890,18 +4879,11 @@
 							"query": [
 								{
 									"key": "query",
-									"value": "{\"match_all\": {}}",
-									"description": "execute directly queries to elasticsearch from the client"
-								},
-								{
-									"key": "text",
-									"value": "Ipsum ipsam esse aspernatur est dicta qui doloribus animi.",
-									"description": "Text to search"
+									"value": "{\"match_all\": {}}"
 								},
 								{
 									"key": "offset",
-									"value": "100",
-									"description": "Page Size"
+									"value": "100"
 								},
 								{
 									"key": "page",
@@ -5040,7 +5022,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -5153,16 +5134,16 @@
 									"        },",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
-									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/ddo/query?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=1&sort={ \"created\": \"asc\" }'),",
+									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/ddo/query?query={\"match_all\": {}}&offset=100&page=1&sort={ \"created\": \"asc\" }'),",
 									"        method: 'GET',",
 									"        header: {",
 									"            'Content-Type': 'application/json',",
@@ -5174,7 +5155,8 @@
 									"        pm.expect(response.json().results.some(a => a.id === pm.environment.get('did'))).to.be.true;",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -5187,7 +5169,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo/query?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=1&sort={ \"created\": \"asc\" }",
+							"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo/query?query={\"match_all\": {}}&offset=100&page=1&sort={ \"created\": \"asc\" }",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -5204,11 +5186,6 @@
 									"key": "query",
 									"value": "{\"match_all\": {}}",
 									"description": "execute directly queries to elasticsearch from the client"
-								},
-								{
-									"key": "text",
-									"value": "Ipsum ipsam esse aspernatur est dicta qui doloribus animi.",
-									"description": "Text to search"
 								},
 								{
 									"key": "offset",
@@ -5241,7 +5218,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo/query?query={\"match_all\": {}}&text=Ipsum ipsam esse aspernatur est dicta qui doloribus animi.&offset=100&page=0&sort={ \"created\": \"asc\" }",
+									"raw": "{{baseUrl}}/api/v1/metadata/assets/ddo/query?query={\"match_all\": {}}&offset=100&page=0&sort={ \"created\": \"asc\" }",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -5258,11 +5235,6 @@
 											"key": "query",
 											"value": "{\"match_all\": {}}",
 											"description": "execute directly queries to elasticsearch from the client"
-										},
-										{
-											"key": "text",
-											"value": "Ipsum ipsam esse aspernatur est dicta qui doloribus animi.",
-											"description": "Text to search"
 										},
 										{
 											"key": "offset",
