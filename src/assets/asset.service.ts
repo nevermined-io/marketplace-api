@@ -21,14 +21,7 @@ export class AssetService {
 
   async findManyIds(searchQueryDto: SearchQueryDto): Promise<string[]> {
     return (
-      await this.elasticService.searchByIndex(
-        MarketplaceIndex.Asset,
-        {
-          match_all: {},
-        },
-        searchQueryDto,
-        'id'
-      )
+      await this.elasticService.searchByIndex(MarketplaceIndex.Asset, searchQueryDto.query, searchQueryDto, 'id')
     ).hits.map((asset) => (asset._source as Asset).id);
   }
 
