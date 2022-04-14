@@ -20,6 +20,14 @@ describe('User Profile', () => {
   userProfile.email = faker.internet.email();
   userProfile.state = State.Confirmed;
 
+  const userProfileTwo = {
+    ...userProfile,
+    name: faker.name.findName(),
+    nickname: faker.internet.userName(),
+    email: faker.internet.email(),
+    addresses: ['0x47BB53e3d293494DE59fBe1FF78500423dcFd43C'],
+  };
+
   const userProfileService = {
     createOne: (userProfileDto: UserProfile) => userProfileDto,
     findOneById: () => ({
@@ -27,6 +35,19 @@ describe('User Profile', () => {
       _index: MarketplaceIndex.UserProfile,
       _id: userProfile.userId,
     }),
+    findOneByAddress: (address: string) => {
+      const source = [userProfile, userProfileTwo].find((u) => u.addresses.some((a) => a === address));
+
+      if (source) {
+        return {
+          _source: source,
+          _index: MarketplaceIndex.UserProfile,
+          _id: source.userId,
+        };
+      }
+
+      return undefined;
+    },
   };
 
   beforeAll(async () => {
@@ -61,5 +82,22 @@ describe('User Profile', () => {
       creationDate: userProfile.creationDate.toISOString(),
       updateDate: userProfile.updateDate.toISOString(),
     });
+  });
+
+  it('GET by address', async () => {
+    const response = await request(app.getHttpServer()).get(`/address/${userProfileTwo.addresses[0]}`);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toStrictEqual({
+      ...userProfileTwo,
+      creationDate: userProfileTwo.creationDate.toISOString(),
+      updateDate: userProfileTwo.updateDate.toISOString(),
+    });
+  });
+
+  it('GET by address not found', async () => {
+    const response = await request(app.getHttpServer()).get('/address/12334');
+
+    expect(response.statusCode).toBe(404);
   });
 });

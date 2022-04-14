@@ -1,5 +1,6 @@
 /* eslint @typescript-eslint/no-unsafe-return: 0 */
 /* eslint @typescript-eslint/no-floating-promises: 0 */
+import { NotFoundException } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { faker } from '@faker-js/faker';
 import { Logger } from '../shared/logger/logger.service';
@@ -25,6 +26,12 @@ describe('UserProfileController', () => {
   userProfile.name = faker.name.findName();
   userProfile.email = faker.internet.email();
   userProfile.state = State.Confirmed;
+
+  const userProfileSource = {
+    _source: userProfile,
+    _index: MarketplaceIndex.UserProfile,
+    _id: userProfile.userId,
+  };
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
@@ -55,17 +62,39 @@ describe('UserProfileController', () => {
     expect(await userProfileController.createUserProfile(userProfile)).toStrictEqual(userProfile);
   });
 
-  it('should get a user profile passing', async () => {
-    const userProfileSource = {
-      _source: userProfile,
-      _index: MarketplaceIndex.UserProfile,
-      _id: userProfile.userId,
-    };
-
+  it('should get a user profile passing user id', async () => {
     jest.spyOn(userProfileService, 'findOneById').mockResolvedValue(userProfileSource);
 
     expect(await userProfileController.getUserProfileByUserId(userProfile.userId)).toStrictEqual(
       GetUserProfileDto.fromSource(userProfileSource)
+    );
+  });
+
+  it('should get a user profile passing an address', async () => {
+    jest.spyOn(userProfileService, 'findOneByAddress').mockImplementation((address: string) => {
+      if (userProfile.addresses.some((a) => a === address)) {
+        return userProfileSource;
+      }
+
+      return undefined as any;
+    });
+
+    expect(await userProfileController.getUserProfileByAddress(userProfile.addresses[0])).toStrictEqual(
+      GetUserProfileDto.fromSource(userProfileSource)
+    );
+  });
+
+  it('should thorw error when no user profile is found by the address given', async () => {
+    jest.spyOn(userProfileService, 'findOneByAddress').mockImplementation((address: string) => {
+      if (userProfile.addresses.some((a) => a === address)) {
+        return userProfileSource;
+      }
+
+      return undefined as any;
+    });
+
+    await expect(userProfileController.getUserProfileByAddress('12233')).rejects.toEqual(
+      new NotFoundException('User profile with public address 12233 does not exist')
     );
   });
 });
