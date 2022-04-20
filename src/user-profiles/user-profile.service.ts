@@ -4,6 +4,7 @@ import { SearchHit } from '@elastic/elasticsearch/api/types';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
 import { UserProfile } from './user-profile.entity';
 import { CreateUserProfileDto } from './dto/create-user-profile.dto';
+import { UpdateUserProfileDto } from './dto/update-user-profile.dto';
 
 @Injectable()
 export class UserProfileService {
@@ -39,5 +40,18 @@ export class UserProfileService {
         undefined
       )
     ).hits?.[0] as SearchHit<UserProfile>;
+  }
+
+  async updateOneByEntryId(
+    entryId: string,
+    updateUserProfileDto: UpdateUserProfileDto
+  ): Promise<SearchHit<UserProfile>> {
+    await this.elasticService.updateDocumentByIndexAndId(MarketplaceIndex.UserProfile, entryId, {
+      doc: updateUserProfileDto,
+    });
+
+    return this.elasticService.getDocumentByIndexAndId(MarketplaceIndex.UserProfile, entryId) as Promise<
+      SearchHit<UserProfile>
+    >;
   }
 }
