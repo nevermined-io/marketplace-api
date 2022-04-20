@@ -51,7 +51,7 @@ describe('User Profile', () => {
       return undefined;
     },
 
-    updateOneByEntryId: (userId, updateUserProfileDto: UpdateUserProfileDto) => {
+    updateOneByEntryId: (userId: string, updateUserProfileDto: UpdateUserProfileDto) => {
       const source = [userProfile, userProfileTwo].find((u) => u.userId === userId);
 
       if (source) {
@@ -63,6 +63,12 @@ describe('User Profile', () => {
       }
 
       return undefined;
+    },
+
+    disableOneByEntryId: (userId: string) => {
+      const source = [userProfile, userProfileTwo].find((u) => u.userId === userId);
+
+      return { ...source, state: State.Disabled };
     },
   };
 
@@ -127,6 +133,17 @@ describe('User Profile', () => {
       ...newUserProfile,
       creationDate: newUserProfile.creationDate.toISOString(),
       updateDate: newUserProfile.updateDate.toISOString(),
+    });
+  });
+
+  it('DELETE disable user profile by userId', async () => {
+    const disbledUserProfile = { ...userProfile, state: State.Disabled };
+
+    const response = await request(app.getHttpServer()).delete(`/${userProfile.userId}`);
+    expect(response.body).toStrictEqual({
+      ...disbledUserProfile,
+      creationDate: disbledUserProfile.creationDate.toISOString(),
+      updateDate: disbledUserProfile.updateDate.toISOString(),
     });
   });
 });

@@ -108,8 +108,18 @@ describe('UserProfileController', () => {
 
     jest.spyOn(userProfileService, 'updateOneByEntryId').mockResolvedValue(newUserProfileSource);
 
-    expect(await userProfileController.updateUserProfileById(userProfile.userId, newUserProfile)).toStrictEqual(
+    expect(await userProfileController.updateUserProfileByUserId(userProfile.userId, newUserProfile)).toStrictEqual(
       GetUserProfileDto.fromSource(newUserProfileSource)
+    );
+  });
+
+  it('should delete user profile', async () => {
+    const disabledUserProfile = { ...userProfile, state: State.Disabled };
+
+    jest.spyOn(userProfileService, 'disableOneByEntryId').mockResolvedValue(disabledUserProfile);
+
+    expect(await userProfileController.disableUserProfileByUserId(userProfile.userId)).toStrictEqual(
+      disabledUserProfile
     );
   });
 });
