@@ -8,6 +8,8 @@ import { UserProfile } from './user-profile.entity';
 import { MarketplaceIndex, State } from '../common/type';
 import { UserProfileModule } from './user-profile.module';
 import { UserProfileService } from './user-profile.service';
+import { CreateUserProfileDto } from './dto/create-user-profile.dto';
+import { UpdateUserProfileDto } from './dto/update-user-profile.dto';
 
 describe('User Profile', () => {
   let app: INestApplication;
@@ -29,7 +31,7 @@ describe('User Profile', () => {
   };
 
   const userProfileService = {
-    createOne: (userProfileDto: UserProfile) => userProfileDto,
+    createOne: (createUserProfileDto: CreateUserProfileDto) => createUserProfileDto,
     findOneById: () => ({
       _source: userProfile,
       _index: MarketplaceIndex.UserProfile,
@@ -41,6 +43,20 @@ describe('User Profile', () => {
       if (source) {
         return {
           _source: source,
+          _index: MarketplaceIndex.UserProfile,
+          _id: source.userId,
+        };
+      }
+
+      return undefined;
+    },
+
+    updateOneByEntryId: (userId, updateUserProfileDto: UpdateUserProfileDto) => {
+      const source = [userProfile, userProfileTwo].find((u) => u.userId === userId);
+
+      if (source) {
+        return {
+          _source: { ...source, ...updateUserProfileDto },
           _index: MarketplaceIndex.UserProfile,
           _id: source.userId,
         };
@@ -99,5 +115,18 @@ describe('User Profile', () => {
     const response = await request(app.getHttpServer()).get('/address/12334');
 
     expect(response.statusCode).toBe(404);
+  });
+
+  it('PUT by userId', async () => {
+    const newUserProfile = { ...userProfile, state: State.Disabled };
+
+    const response = await request(app.getHttpServer()).put(`/${userProfile.userId}`).send(newUserProfile);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toStrictEqual({
+      ...newUserProfile,
+      creationDate: newUserProfile.creationDate.toISOString(),
+      updateDate: newUserProfile.updateDate.toISOString(),
+    });
   });
 });

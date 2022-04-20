@@ -98,5 +98,18 @@ describe('UserProfileController', () => {
     );
   });
 
-  it('should update user profile', async () => {});
+  it('should update user profile', async () => {
+    const newUserProfile = { ...userProfile, state: State.Disabled };
+    const newUserProfileSource = {
+      _source: newUserProfile,
+      _id: newUserProfile.userId,
+      _index: MarketplaceIndex.UserProfile,
+    };
+
+    jest.spyOn(userProfileService, 'updateOneByEntryId').mockResolvedValue(newUserProfileSource);
+
+    expect(await userProfileController.updateBookmarkById(userProfile.userId, newUserProfile)).toStrictEqual(
+      GetUserProfileDto.fromSource(newUserProfileSource)
+    );
+  });
 });

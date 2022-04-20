@@ -90,8 +90,8 @@ export class UserProfileController {
     @Param('userId') userId: string,
     @Body() updateUserProfileDto: UpdateUserProfileDto
   ): Promise<GetUserProfileDto> {
-    const userProfile = await this.userProfileService.updateOneByEntryId(userId, updateUserProfileDto);
+    const userProfileSource = await this.userProfileService.updateOneByEntryId(userId, updateUserProfileDto);
 
-    return GetUserProfileDto.fromSource(userProfile);
+    return GetUserProfileDto.fromSource(userProfileSource);
   }
 }
