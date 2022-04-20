@@ -108,7 +108,7 @@ describe('UserProfileController', () => {
 
     jest.spyOn(userProfileService, 'updateOneByEntryId').mockResolvedValue(newUserProfileSource);
 
-    expect(await userProfileController.updateBookmarkById(userProfile.userId, newUserProfile)).toStrictEqual(
+    expect(await userProfileController.updateUserProfileById(userProfile.userId, newUserProfile)).toStrictEqual(
       GetUserProfileDto.fromSource(newUserProfileSource)
     );
   });
