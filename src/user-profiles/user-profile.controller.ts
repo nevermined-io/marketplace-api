@@ -1,8 +1,9 @@
-import { Post, Controller, Body, Get, Param, NotFoundException } from '@nestjs/common';
+import { Post, Controller, Body, Get, Put, Param, NotFoundException } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserProfileService } from './user-profile.service';
 import { CreateUserProfileDto } from './dto/create-user-profile.dto';
 import { GetUserProfileDto } from './dto/get-user-profile.dto';
+import { UpdateUserProfileDto } from './dto/update-user-profile.dto';
 
 @ApiTags('User Profile')
 @Controller()
@@ -66,5 +67,31 @@ export class UserProfileController {
     }
 
     return GetUserProfileDto.fromSource(userProfileSource);
+  }
+
+  @Put(':userId')
+  @ApiOperation({
+    description: 'Update the user profile',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Return a updated user profile',
+    type: GetUserProfileDto,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not found',
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Bad Request',
+  })
+  async updateBookmarkById(
+    @Param('userId') userId: string,
+    @Body() updateUserProfileDto: UpdateUserProfileDto
+  ): Promise<GetUserProfileDto> {
+    const userProfile = await this.userProfileService.updateOneByEntryId(userId, updateUserProfileDto);
+
+    return GetUserProfileDto.fromSource(userProfile);
   }
 }

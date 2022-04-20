@@ -97,4 +97,6 @@ describe('UserProfileController', () => {
       new NotFoundException('User profile with public address 12233 does not exist')
     );
   });
+
+  it('should update user profile', async () => {});
 });

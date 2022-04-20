@@ -55,6 +55,7 @@ export class CreateUserProfileDto {
     example: AdditionalInformation,
     description: 'List of additional key-value attributes with additional information',
   })
+  @IsOptional()
   @ValidateNested()
   @Type(() => AdditionalInformation)
   additionalInformation: AdditionalInformation;
