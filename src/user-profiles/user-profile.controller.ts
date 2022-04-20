@@ -86,7 +86,7 @@ export class UserProfileController {
     status: 403,
     description: 'Bad Request',
   })
-  async updateBookmarkById(
+  async updateUserProfileById(
     @Param('userId') userId: string,
     @Body() updateUserProfileDto: UpdateUserProfileDto
   ): Promise<GetUserProfileDto> {
