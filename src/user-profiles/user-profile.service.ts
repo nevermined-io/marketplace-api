@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { MarketplaceIndex } from '../common/type';
+import { MarketplaceIndex, State } from '../common/type';
 import { SearchHit } from '@elastic/elasticsearch/api/types';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
 import { UserProfile } from './user-profile.entity';
@@ -53,5 +53,22 @@ export class UserProfileService {
     return this.elasticService.getDocumentByIndexAndId(MarketplaceIndex.UserProfile, entryId) as Promise<
       SearchHit<UserProfile>
     >;
+  }
+
+  async disableOneByEntryId(entryId: string): Promise<UserProfile> {
+    const userProfile = (
+      (await this.elasticService.getDocumentByIndexAndId(
+        MarketplaceIndex.UserProfile,
+        entryId
+      )) as SearchHit<UserProfile>
+    )?._source;
+
+    const disabledUserProfile = { ...userProfile, state: State.Disabled };
+
+    await this.elasticService.updateDocumentByIndexAndId(MarketplaceIndex.UserProfile, entryId, {
+      doc: disabledUserProfile,
+    });
+
+    return disabledUserProfile;
   }
 }

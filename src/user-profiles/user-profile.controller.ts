@@ -1,4 +1,4 @@
-import { Post, Controller, Body, Get, Put, Param, NotFoundException } from '@nestjs/common';
+import { Post, Controller, Body, Get, Put, Delete, Param, NotFoundException } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserProfileService } from './user-profile.service';
 import { CreateUserProfileDto } from './dto/create-user-profile.dto';
@@ -86,12 +86,29 @@ export class UserProfileController {
     status: 403,
     description: 'Bad Request',
   })
-  async updateUserProfileById(
+  async updateUserProfileByUserId(
     @Param('userId') userId: string,
     @Body() updateUserProfileDto: UpdateUserProfileDto
   ): Promise<GetUserProfileDto> {
     const userProfileSource = await this.userProfileService.updateOneByEntryId(userId, updateUserProfileDto);
 
     return GetUserProfileDto.fromSource(userProfileSource);
+  }
+
+  @Delete(':userId')
+  @ApiOperation({
+    description: 'Disable the user profile',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'User profile disabled',
+    type: GetUserProfileDto,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not found',
+  })
+  async disableUserProfileByUserId(@Param('userId') userId: string): Promise<GetUserProfileDto> {
+    return this.userProfileService.disableOneByEntryId(userId);
   }
 }
