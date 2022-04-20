@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import { jwtValidation } from './jwtValidation';
 
 describe('JwtValidation', () => {
-  let token;
+  let token: string;
   const dayMilliseconds = 1000 * 60 * 60 * 24;
 
   beforeAll(() => {
@@ -32,10 +32,12 @@ describe('JwtValidation', () => {
   it('should throw error for invalid token', () => {
     const anotherToken = token.slice(0, -1);
 
-    expect(() => jwtValidation({
-      secret: 'secret',
-      token: anotherToken,
-    })).toThrowError(new ForbiddenException("invalid signature"));
+    expect(() =>
+      jwtValidation({
+        secret: 'secret',
+        token: anotherToken,
+      })
+    ).toThrowError(new ForbiddenException('invalid signature'));
   });
 
   it('should accept Bearer token', () => {
@@ -64,9 +66,11 @@ describe('JwtValidation', () => {
 
     advanceBy(dayMilliseconds * 2);
 
-    expect(() => jwtValidation({
-      secret: 'secret',
-      token,
-    })).toThrowError(new ForbiddenException("jwt expired"));
+    expect(() =>
+      jwtValidation({
+        secret: 'secret',
+        token,
+      })
+    ).toThrowError(new ForbiddenException('jwt expired'));
   });
 });
