@@ -113,7 +113,7 @@ describe('UserProfileController', () => {
     );
   });
 
-  it('should delete user profile', async () => {
+  it('should disable user profile', async () => {
     const disabledUserProfile = { ...userProfile, state: State.Disabled };
 
     jest.spyOn(userProfileService, 'disableOneByEntryId').mockResolvedValue(disabledUserProfile);
