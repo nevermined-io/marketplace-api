@@ -8,23 +8,24 @@ import { LoginDto } from './dto/login.dto';
 @ApiTags('Auth')
 @Controller()
 export class AuthController {
-    constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
-    @Post('login')
-    @ApiOperation({
-        description: 'Login using a JWT claim for client authentication'
-    })
-    @ApiResponse({
-        status: 201,
-        description: 'The access_token',
-        type: LoginDto
-    })
-    @ApiResponse({
-        status: 401,
-        description: 'Unauthorized access'
-    })
-    @Public()
-    login(@Body() clientAssertion: ClientAssertionDto): LoginDto {
-        return this.authService.validateClaim(clientAssertion.client_assertion_type, clientAssertion.client_assertion);
-    }
+  @Post('login')
+  @ApiOperation({
+    description: 'Login using a JWT claim for client authentication',
+    summary: 'Public',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'The access_token',
+    type: LoginDto,
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized access',
+  })
+  @Public()
+  login(@Body() clientAssertion: ClientAssertionDto): LoginDto {
+    return this.authService.validateClaim(clientAssertion.client_assertion_type, clientAssertion.client_assertion);
+  }
 }

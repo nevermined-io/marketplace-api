@@ -29,12 +29,8 @@ export class UserProfileService {
       await this.elasticService.searchByIndex(
         MarketplaceIndex.UserProfile,
         {
-          bool: {
-            must: {
-              term: {
-                addresses: address,
-              },
-            },
+          match: {
+            addresses: address,
           },
         },
         undefined

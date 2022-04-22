@@ -19,7 +19,16 @@ const bootstrap = async () => {
   const PORT = app.get<ConfigService>(ConfigService).get<number>('server.port');
   const API_VERSION = app.get<ConfigService>(ConfigService).get<string>('API_VERSION');
 
-  const options = new DocumentBuilder().setTitle('Marketplace API').setVersion(API_VERSION).build();
+  const options = new DocumentBuilder()
+    .setTitle('Marketplace API')
+    .setVersion(API_VERSION)
+    .addBearerAuth(
+      {
+        type: 'http',
+      },
+      'Authorization'
+    )
+    .build();
   const document = SwaggerModule.createDocument(app, options);
 
   SwaggerModule.setup('api/v1/docs', app, document);

@@ -1,11 +1,12 @@
 import { Post, Get, Put, Delete, Controller, Body, Param, Query, ValidationPipe, UsePipes } from '@nestjs/common';
 import { BookmarkService } from './bookmark.service';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { CreateBookmarkDto } from './dto/create-bookmark.dto';
 import { GetBookmarkDto } from './dto/get-bookmark.dto';
 import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
 import { SearchResponse } from '../common/helpers/search-response.dto';
+import { Public } from '../common/decorators/auth.decorator';
 
 @ApiTags('Bookmark')
 @Controller()
@@ -13,6 +14,7 @@ export class BookmarkController {
   constructor(private readonly bookmarkService: BookmarkService) {}
 
   @Post()
+  @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Create a bookmark entry',
   })
@@ -25,6 +27,10 @@ export class BookmarkController {
     status: 403,
     description: 'Bad Request',
   })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
   async createBookmark(@Body() createBookmark: CreateBookmarkDto): Promise<GetBookmarkDto> {
     return this.bookmarkService.createOne(createBookmark);
   }
@@ -32,6 +38,7 @@ export class BookmarkController {
   @Get(':id')
   @ApiOperation({
     description: 'Get a bookmark entry',
+    summary: 'Public',
   })
   @ApiResponse({
     status: 200,
@@ -42,6 +49,7 @@ export class BookmarkController {
     status: 404,
     description: 'Not found',
   })
+  @Public()
   async getBookmarkById(@Param('id') bookmarkId: string): Promise<GetBookmarkDto> {
     const bookmarkSources = await this.bookmarkService.findOneById(bookmarkId);
 
@@ -51,6 +59,7 @@ export class BookmarkController {
   @Get('user/:userId')
   @ApiOperation({
     description: 'Get all the user bookmarks',
+    summary: 'Public',
   })
   @ApiResponse({
     status: 200,
@@ -58,6 +67,7 @@ export class BookmarkController {
     schema: SearchResponse.toDocs(GetBookmarkDto),
   })
   @UsePipes(new ValidationPipe({ transform: true }))
+  @Public()
   async getBookmarksByUserId(
     @Param('userId') userId: string,
     @Query() searchQueryDto: SearchQueryDto
@@ -72,6 +82,7 @@ export class BookmarkController {
   }
 
   @Put(':id')
+  @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Update an existing bookmark',
   })
@@ -88,6 +99,10 @@ export class BookmarkController {
     status: 403,
     description: 'Bad Request',
   })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
   async updateBookmarkById(
     @Param('id') id: string,
     @Body() updateBookmarkDto: UpdateBookmarkDto
@@ -98,6 +113,7 @@ export class BookmarkController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Delete a bookmark',
   })
@@ -108,6 +124,10 @@ export class BookmarkController {
   @ApiResponse({
     status: 404,
     description: 'Not found',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
   })
   async deleteBookmarkById(@Param('id') id: string): Promise<void> {
     await this.bookmarkService.deleteOneByEntryId(id);
