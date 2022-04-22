@@ -7,9 +7,18 @@ import { BookmarkModule } from './bookmarks/bookmark.module';
 import { AssetModule } from './assets/asset.module';
 import { UserProfileModule } from './user-profiles/user-profile.module';
 import { HttpsRedirectMiddleware } from './common/middlewares/https-redirection/https-redirection.middleware';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [RouterModule.forRoutes(routes), AssetModule, LoggerModule, ConfigModule, BookmarkModule, UserProfileModule],
+  imports: [
+    RouterModule.forRoutes(routes),
+    AssetModule,
+    LoggerModule,
+    ConfigModule,
+    BookmarkModule,
+    UserProfileModule,
+    AuthModule,
+  ],
 })
 export class ApplicationModule {
   configure(consumer: MiddlewareConsumer) {

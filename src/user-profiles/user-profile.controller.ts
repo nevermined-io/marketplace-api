@@ -1,9 +1,11 @@
 import { Post, Controller, Body, Get, Put, Delete, Param, NotFoundException } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { UserProfileService } from './user-profile.service';
 import { CreateUserProfileDto } from './dto/create-user-profile.dto';
 import { GetUserProfileDto } from './dto/get-user-profile.dto';
 import { UpdateUserProfileDto } from './dto/update-user-profile.dto';
+import { DisableUserProfileDto } from './dto/disable-user-profile.dto';
+import { Public } from '../common/decorators/auth.decorator';
 
 @ApiTags('User Profile')
 @Controller()
@@ -11,8 +13,10 @@ export class UserProfileController {
   constructor(private readonly userProfileService: UserProfileService) {}
 
   @Post()
+  @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Create a user profile entry',
+    summary: 'Public',
   })
   @ApiResponse({
     status: 201,
@@ -23,6 +27,10 @@ export class UserProfileController {
     status: 403,
     description: 'Bad Request',
   })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
   async createUserProfile(@Body() createUserProfileDto: CreateUserProfileDto): Promise<GetUserProfileDto> {
     return this.userProfileService.createOne(createUserProfileDto);
   }
@@ -30,6 +38,7 @@ export class UserProfileController {
   @Get(':userId')
   @ApiOperation({
     description: 'Get the metadata of a user profile ',
+    summary: 'Public',
   })
   @ApiResponse({
     status: 200,
@@ -40,6 +49,7 @@ export class UserProfileController {
     status: 404,
     description: 'Not found',
   })
+  @Public()
   async getUserProfileByUserId(@Param('userId') userId: string): Promise<GetUserProfileDto> {
     const userProfileSource = await this.userProfileService.findOneById(userId);
 
@@ -49,6 +59,7 @@ export class UserProfileController {
   @Get('address/:publicAddress')
   @ApiOperation({
     description: 'Get the metadata of a user profile given an address',
+    summary: 'Public',
   })
   @ApiResponse({
     status: 202,
@@ -59,6 +70,7 @@ export class UserProfileController {
     status: 404,
     description: 'Not found',
   })
+  @Public()
   async getUserProfileByAddress(@Param('publicAddress') publicAddress: string): Promise<GetUserProfileDto> {
     const userProfileSource = await this.userProfileService.findOneByAddress(publicAddress);
 
@@ -70,6 +82,7 @@ export class UserProfileController {
   }
 
   @Put(':userId')
+  @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Update the user profile',
   })
@@ -86,6 +99,10 @@ export class UserProfileController {
     status: 403,
     description: 'Bad Request',
   })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
   async updateUserProfileByUserId(
     @Param('userId') userId: string,
     @Body() updateUserProfileDto: UpdateUserProfileDto
@@ -96,19 +113,24 @@ export class UserProfileController {
   }
 
   @Delete(':userId')
+  @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Disable the user profile',
   })
   @ApiResponse({
     status: 200,
     description: 'User profile disabled',
-    type: GetUserProfileDto,
+    type: DisableUserProfileDto,
   })
   @ApiResponse({
     status: 404,
     description: 'Not found',
   })
-  async disableUserProfileByUserId(@Param('userId') userId: string): Promise<GetUserProfileDto> {
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
+  async disableUserProfileByUserId(@Param('userId') userId: string): Promise<DisableUserProfileDto> {
     return this.userProfileService.disableOneByEntryId(userId);
   }
 }

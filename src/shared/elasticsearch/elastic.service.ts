@@ -28,14 +28,14 @@ export class ElasticService {
       await this.elasticsearchService.search({
         index,
         size: searchQuery?.offset,
-        from: searchQuery?.offset * page,
+        from: searchQuery?.offset ? searchQuery.offset * page : undefined,
         body: {
           sort: searchQuery?.sort,
           query: query || {
             match_all: {},
           },
         },
-        q: searchQuery.text,
+        q: searchQuery?.text,
         _source_includes,
       })
     ).body.hits;
