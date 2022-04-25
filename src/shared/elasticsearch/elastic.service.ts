@@ -28,11 +28,14 @@ export class ElasticService {
       await this.elasticsearchService.search({
         index,
         size: searchQuery?.offset,
-        from: searchQuery?.offset * page,
+        from: searchQuery?.offset ? searchQuery.offset * page : undefined,
         body: {
           sort: searchQuery?.sort,
-          query,
+          query: query || {
+            match_all: {},
+          },
         },
+        q: searchQuery?.text,
         _source_includes,
       })
     ).body.hits;
@@ -62,7 +65,7 @@ export class ElasticService {
     });
   }
 
-  deleteDocumentByQuery(index: string, query: QueryDslQueryContainer): Promise<unknown> {
+  async deleteDocumentByQuery(index: string, query: QueryDslQueryContainer): Promise<unknown> {
     return this.elasticsearchService.deleteByQuery({
       index,
       body: {

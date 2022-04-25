@@ -5,8 +5,10 @@ import { faker } from '@faker-js/faker';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { AssetService } from './asset.service';
+import { DDOStatusService } from './ddo-status.service';
+import { ServiceDDOService } from './ddo-service.service';
 import { AssetModule } from './asset.module';
-import { asset } from './asset.mockup';
+import { asset, ddoStatus, service } from './asset.mockup';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
 import { MarketplaceIndex } from '../common/type';
 import { Asset } from './asset.entity';
@@ -54,12 +56,45 @@ describe('Asset', () => {
     deleteOneByEntryId: () => undefined,
   };
 
+  const ddosStatusService = {
+    createOne: () => { },
+    findOneById: (did: string) => ({
+      _source: { ...ddoStatus },
+      _index: MarketplaceIndex.DDOStatus,
+      _id: did,
+    }),
+  };
+
+  const serviceDDOService = {
+    createOne: (servicePayload) => servicePayload,
+    findOneById: (did: string) => ({
+      _source: { ...service },
+      _index: MarketplaceIndex.Service,
+      _id: did,
+    }),
+    findMany: () => ({
+      hits: [
+        {
+          _source: { ...service },
+          _index: MarketplaceIndex.Service,
+          _id: service.agreementId,
+        },
+      ],
+      total: 1,
+    }),
+    deleteAll: () => undefined,
+  };
+
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AssetModule],
     })
       .overrideProvider(AssetService)
       .useValue(assetService)
+      .overrideProvider(DDOStatusService)
+      .useValue(ddosStatusService)
+      .overrideProvider(ServiceDDOService)
+      .useValue(serviceDDOService)
       .compile();
 
     app = moduleRef.createNestApplication();
@@ -162,5 +197,47 @@ describe('Asset', () => {
     const response = await request(app.getHttpServer()).get(`/metadata/${assetCopy.id}`);
 
     expect(response.statusCode).toBe(404);
+  });
+
+  it('GET ddo/:did/status', async () => {
+    const response = await request(app.getHttpServer()).get(`/ddo/${ddoStatus.did}/status`);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toStrictEqual(ddoStatus);
+  });
+
+  it('POST service', async () => {
+    const response = await request(app.getHttpServer()).post('/service').send(service);
+
+    expect(response.statusCode).toBe(201);
+    expect(response.body).toStrictEqual(service);
+  });
+
+  it('GET service/:agreementId', async () => {
+    const response = await request(app.getHttpServer()).get(`/service/${service.agreementId}`);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toStrictEqual(service);
+  });
+
+  it('POST service/query', async () => {
+    const response = await request(app.getHttpServer()).post('/service/query').send({
+      offset: 100,
+      page: 1,
+    });
+
+    expect(response.statusCode).toBe(201);
+    expect(response.body).toStrictEqual({
+      page: 1,
+      total_pages: 1,
+      total_results: 1,
+      results: [service],
+    });
+  });
+
+  it('DELETE service', async () => {
+    const response = await request(app.getHttpServer()).delete('/service');
+
+    expect(response.statusCode).toBe(200);
   });
 });

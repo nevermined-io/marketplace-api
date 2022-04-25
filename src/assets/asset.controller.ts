@@ -9,24 +9,37 @@ import {
   Delete,
   Param,
   Put,
+  Req,
   NotFoundException,
 } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { GetAssetDto } from './dto/get-asset-dto';
 import { CreateAssetDto } from './dto/create-asset.dto';
 import { AssetService } from './asset.service';
+import { DDOStatusService } from './ddo-status.service';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
 import { SearchResponse } from '../common/helpers/search-response.dto';
+import { Request } from '../common/helpers/request.interface';
 import { QueryBodyDDOdto } from './dto/query-body-ddo.dto';
 import { UpdateAssetDto } from './dto/update-asset.dto';
 import { AttributesDto } from './dto/attributes.dto';
+import { GetDDOStatusDto } from './dto/get-ddo-status.dto';
+import { CreateServiceDto } from './dto/create-service.dto';
+import { GetServiceDto } from './dto/get-service.dto';
+import { ServiceDDOService } from './ddo-service.service';
+import { Public } from '../common/decorators/auth.decorator';
 
 @ApiTags('Asset')
 @Controller()
 export class AssetController {
-  constructor(private readonly assetService: AssetService) {}
+  constructor(
+    private readonly assetService: AssetService,
+    private readonly ddosStatusService: DDOStatusService,
+    private readonly serviceDDOService: ServiceDDOService
+  ) {}
 
   @Post('/ddo')
+  @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Create a asset entry',
   })
@@ -39,13 +52,22 @@ export class AssetController {
     status: 403,
     description: 'Bad Request',
   })
-  createAsset(@Body() createAssetDto: CreateAssetDto): Promise<GetAssetDto> {
-    return this.assetService.createOne(createAssetDto);
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
+  async createAsset(@Req() req: Request, @Body() createAssetDto: CreateAssetDto): Promise<GetAssetDto> {
+    const url = `${req.protocol}://${req.hostname}${req.client.localPort ? `:${req.client.localPort}` : ''}${req.url}`;
+    const assetDto = await this.assetService.createOne(createAssetDto);
+    await this.ddosStatusService.createOne(createAssetDto, url);
+
+    return assetDto;
   }
 
   @Get()
   @ApiOperation({
     description: 'Get all asset Ids',
+    summary: 'Public',
   })
   @ApiResponse({
     status: 200,
@@ -56,6 +78,7 @@ export class AssetController {
       items: { type: 'string' },
     },
   })
+  @Public()
   @UsePipes(new ValidationPipe({ transform: true }))
   getAllAssetIds(@Query() searchQueryDto: SearchQueryDto): Promise<string[]> {
     return this.assetService.findManyIds(searchQueryDto);
@@ -64,6 +87,7 @@ export class AssetController {
   @Get('/ddo')
   @ApiOperation({
     description: 'Get DDO of all assets',
+    summary: 'Public',
   })
   @ApiResponse({
     status: 200,
@@ -74,6 +98,7 @@ export class AssetController {
     status: 403,
     description: 'Bad Request',
   })
+  @Public()
   @UsePipes(new ValidationPipe({ transform: true }))
   getDDOAllAssets(@Query() searchQueryDto: SearchQueryDto): Promise<SearchResponse<GetAssetDto[]>> {
     return this.listDDOs(searchQueryDto);
@@ -82,6 +107,7 @@ export class AssetController {
   @Get('/ddo/query')
   @ApiOperation({
     description: 'Get a list of DDOs that match with the given text',
+    summary: 'Public',
   })
   @ApiResponse({
     status: 200,
@@ -93,6 +119,7 @@ export class AssetController {
     description: 'Bad Request',
   })
   @UsePipes(new ValidationPipe({ transform: true }))
+  @Public()
   listDDObyQuery(@Query() searchQueryDto: SearchQueryDto): Promise<SearchResponse<GetAssetDto[]>> {
     return this.listDDOs(searchQueryDto);
   }
@@ -100,6 +127,7 @@ export class AssetController {
   @Post('/ddo/query')
   @ApiOperation({
     description: 'Get a list of DDOs that match with the executed query.',
+    summary: 'Public',
   })
   @ApiResponse({
     status: 200,
@@ -110,17 +138,23 @@ export class AssetController {
     status: 403,
     description: 'Bad Request',
   })
+  @Public()
   listDDObyQueryPost(@Body() searchQueryDto: QueryBodyDDOdto): Promise<SearchResponse<GetAssetDto[]>> {
     return this.listDDOs(searchQueryDto);
   }
 
   @Delete('ddo')
+  @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Retire metadata of all assets',
   })
   @ApiResponse({
     status: 200,
     description: 'Deleted all DDOs from marketplace',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
   })
   async deleteAllDDOs() {
     await this.assetService.deleteAll();
@@ -129,6 +163,7 @@ export class AssetController {
   @Get('ddo/:did')
   @ApiOperation({
     description: 'Get DDO of a particular asset',
+    summary: 'Public',
   })
   @ApiResponse({
     status: 200,
@@ -139,13 +174,36 @@ export class AssetController {
     status: 404,
     description: 'Not found',
   })
+  @Public()
   async getDDO(@Param('did') did: string): Promise<GetAssetDto> {
-    const AssetSource = await this.assetService.findOneById(did);
+    const assetSource = await this.assetService.findOneById(did);
 
-    return GetAssetDto.fromSource(AssetSource);
+    return GetAssetDto.fromSource(assetSource);
+  }
+
+  @Get('ddo/:did/status')
+  @ApiOperation({
+    description: 'Get DDO status of a particular asset',
+    summary: 'Public',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Get a DDO status',
+    type: GetDDOStatusDto,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not found',
+  })
+  @Public()
+  async getDDOStatus(@Param('did') did: string): Promise<GetDDOStatusDto> {
+    const statusSource = await this.ddosStatusService.findOneById(did);
+
+    return GetDDOStatusDto.fromSource(statusSource);
   }
 
   @Put('ddo/:did')
+  @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Update DDO of an existing asset',
   })
@@ -162,6 +220,10 @@ export class AssetController {
     status: 404,
     description: 'Not found',
   })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
   async updateDDO(@Param('did') did: string, @Body() updateAssetDto: UpdateAssetDto): Promise<GetAssetDto> {
     const assetSource = await this.assetService.updateOneByEntryId(did, updateAssetDto);
 
@@ -169,8 +231,10 @@ export class AssetController {
   }
 
   @Delete('ddo/:did')
-  @ApiResponse({
+  @ApiBearerAuth('Authorization')
+  @ApiOperation({
     description: 'Retire metadata of an asset',
+    summary: 'Public',
   })
   @ApiResponse({
     status: 200,
@@ -180,13 +244,18 @@ export class AssetController {
     status: 404,
     description: 'Not found',
   })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
   async deleteDDO(@Param('did') did: string): Promise<void> {
     await this.assetService.deleteOneByEntryId(did);
   }
 
   @Get('metadata/:did')
-  @ApiResponse({
+  @ApiOperation({
     description: 'Get metadata of a particular asset',
+    summary: 'Public',
   })
   @ApiResponse({
     status: 200,
@@ -197,6 +266,7 @@ export class AssetController {
     status: 404,
     description: 'Not found',
   })
+  @Public()
   async getDDOMetadata(@Param('did') did: string): Promise<AttributesDto> {
     const assetSource = await this.assetService.findOneById(did);
 
@@ -209,13 +279,98 @@ export class AssetController {
     return metada;
   }
 
+  @Post('service')
+  @ApiBearerAuth('Authorization')
+  @ApiResponse({
+    description: 'Create a service',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Service created',
+    type: GetServiceDto,
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Bad Request',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
+  async createService(@Body() serviceDto: CreateServiceDto): Promise<GetServiceDto> {
+    return this.serviceDDOService.createOne(serviceDto);
+  }
+
+  @Post('service/query')
+  @ApiOperation({
+    description: 'Get a list of services that match with the executed query.',
+    summary: 'Public',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'list of services',
+    schema: SearchResponse.toDocs(GetServiceDto),
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Bad Request',
+  })
+  @Public()
+  async getServiceQueryPost(@Body() searchQueryDto: QueryBodyDDOdto): Promise<SearchResponse<GetServiceDto[]>> {
+    const servicesSource = await this.serviceDDOService.findMany(searchQueryDto);
+
+    return SearchResponse.fromSearchSources(
+      searchQueryDto,
+      servicesSource,
+      servicesSource.hits.map(GetServiceDto.fromSource)
+    );
+  }
+
+  @Get('service/:agreementId')
+  @ApiOperation({
+    description: 'Get service by passing agreementId',
+    summary: 'Public',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Get a service',
+    type: GetServiceDto,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not found',
+  })
+  @Public()
+  async getService(@Param('agreementId') agreementId: string): Promise<GetServiceDto> {
+    const serviceSource = await this.serviceDDOService.findOneById(agreementId);
+
+    return GetServiceDto.fromSource(serviceSource);
+  }
+
+  @Delete('service')
+  @ApiBearerAuth('Authorization')
+  @ApiOperation({
+    description: 'Delete all the services',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Deleted all services',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
+  async deleteAllServices() {
+    await this.serviceDDOService.deleteAll();
+  }
+
   private async listDDOs(searchQueryDto: SearchQueryDto): Promise<SearchResponse<GetAssetDto[]>> {
     const assetsSource = await this.assetService.findMany(searchQueryDto);
 
     return SearchResponse.fromSearchSources(
       searchQueryDto,
       assetsSource,
-      assetsSource.hits.map((a) => GetAssetDto.fromSource(a))
+      assetsSource.hits.map(GetAssetDto.fromSource)
     );
   }
 }

@@ -1,3 +1,5 @@
+import { SourceType, Status } from '../common/type';
+
 export class Handler {
   functionName: string;
   moduleName: string;
@@ -127,4 +129,11 @@ export interface Service {
   purchaseEndpoint: string;
   serviceEndpoint: string;
   type: string;
+}
+
+export interface Internal {
+  id: string;
+  type: SourceType;
+  status: Status;
+  url: string;
 }

@@ -6,23 +6,48 @@ import { faker } from '@faker-js/faker';
 import { Logger } from '../shared/logger/logger.service';
 import { AssetController } from './asset.controller';
 import { AssetService } from './asset.service';
+import { DDOStatusService } from './ddo-status.service';
 import { Asset } from './asset.entity';
-import { MarketplaceIndex } from '../common/type';
+import { DDOStatus } from './ddo-status.entity';
+import { Service } from './ddo-service.entity';
+import { MarketplaceIndex, SourceType, Status } from '../common/type';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
 import { GetAssetDto } from './dto/get-asset-dto';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
 import { SearchResponse } from '../common/helpers/search-response.dto';
 import { ServiceDto } from './dto/service.dto';
 import { AttributesDto } from './dto/attributes.dto';
+import { GetDDOStatusDto } from './dto/get-ddo-status.dto';
+import { ServiceDDOService } from './ddo-service.service';
+import { GetServiceDto } from './dto/get-service.dto';
 
 describe('Asset', () => {
   let assetController: AssetController;
   let assetService: AssetService;
+  let ddosStatusService: DDOStatusService;
+  let serviceDDOService: ServiceDDOService;
 
   const asset = new Asset();
   asset.id = `did:nv:${faker.datatype.uuid()}`;
   asset['@context'] = 'https://w3id.org/did/v1';
   asset.created = new Date().toDateString();
+
+  const ddoStatus = new DDOStatus();
+  ddoStatus.did = asset.id;
+  ddoStatus.external = null;
+  ddoStatus.internal = {
+    id: asset.id,
+    type: SourceType.Elasticsearch,
+    status: Status.Accepted,
+    url: faker.internet.url(),
+  };
+
+  const service = new Service();
+  service.agreementId = faker.datatype.uuid();
+  service.index = faker.datatype.number();
+  service.templateId = faker.datatype.uuid();
+  service.type = 'metadata';
+  service.attributes = new AttributesDto();
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
@@ -39,18 +64,28 @@ describe('Asset', () => {
             },
           },
         },
+        DDOStatusService,
         AssetService,
+        ServiceDDOService,
       ],
     }).compile();
 
     assetService = module.get<AssetService>(AssetService);
+    ddosStatusService = module.get<DDOStatusService>(DDOStatusService);
     assetController = module.get<AssetController>(AssetController);
+    serviceDDOService = module.get<ServiceDDOService>(ServiceDDOService);
   });
 
   it('should create a Asset', async () => {
     jest.spyOn(assetService, 'createOne').mockResolvedValue(asset);
+    jest.spyOn(ddosStatusService, 'createOne').mockResolvedValue(undefined);
 
-    expect(await assetController.createAsset(asset)).toStrictEqual(asset);
+    expect(
+      await assetController.createAsset(
+        { url: '/api/v1/metadata/assets/ddo/', protocol: 'http', client: { localPort: 3100 }, hostname: 'localhost' },
+        asset
+      )
+    ).toStrictEqual(asset);
   });
 
   it('should get all asset Ids', async () => {
@@ -282,5 +317,73 @@ describe('Asset', () => {
     await expect(assetController.getDDOMetadata(asset.id)).rejects.toEqual(
       new NotFoundException(`Asset with did ${asset.id} doesn't have metada`)
     );
+  });
+
+  it('should get the status of the asset', async () => {
+    jest.spyOn(ddosStatusService, 'findOneById').mockResolvedValue({
+      _source: ddoStatus,
+      _index: MarketplaceIndex.DDOStatus,
+      _id: ddoStatus.did,
+    });
+
+    expect(await assetController.getDDOStatus(ddoStatus.did)).toStrictEqual(
+      GetDDOStatusDto.fromSource({
+        _source: ddoStatus,
+        _index: MarketplaceIndex.DDOStatus,
+        _id: ddoStatus.did,
+      })
+    );
+  });
+
+  it('should create a service', async () => {
+    jest.spyOn(serviceDDOService, 'createOne').mockResolvedValue(service);
+
+    expect(await assetController.createService(service)).toStrictEqual(service);
+  });
+
+  it('should get a service', async () => {
+    jest.spyOn(serviceDDOService, 'findOneById').mockResolvedValue({
+      _source: service,
+      _index: MarketplaceIndex.Service,
+      _id: service.agreementId,
+    });
+
+    expect(await assetController.getService(service.agreementId)).toStrictEqual(
+      GetServiceDto.fromSource({
+        _source: service,
+        _index: MarketplaceIndex.Service,
+        _id: service.agreementId,
+      })
+    );
+  });
+
+  it('should get services by query', async () => {
+    const serviceHits = {
+      hits: [
+        {
+          _source: service,
+          _index: MarketplaceIndex.Service,
+          _id: service.agreementId,
+        },
+      ],
+      total: 1,
+    };
+
+    const query = { page: 0, offset: 100 };
+
+    jest.spyOn(serviceDDOService, 'findMany').mockResolvedValue(serviceHits);
+
+    expect(await assetController.getServiceQueryPost(query)).toStrictEqual(
+      SearchResponse.fromSearchSources(query, serviceHits, serviceHits.hits.map(GetServiceDto.fromSource))
+    );
+  });
+
+  it('should delete all services', async () => {
+    const deleteAllServicesSpy = jest.spyOn(serviceDDOService, 'deleteAll');
+    deleteAllServicesSpy.mockResolvedValue(undefined);
+
+    await assetController.deleteAllServices();
+
+    expect(deleteAllServicesSpy).toBeCalled();
   });
 });
