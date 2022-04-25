@@ -25,7 +25,7 @@ export class AuthController {
     description: 'Unauthorized access',
   })
   @Public()
-  login(@Body() clientAssertion: ClientAssertionDto): LoginDto {
+  login(@Body() clientAssertion: ClientAssertionDto): Promise<LoginDto> {
     return this.authService.validateClaim(clientAssertion.client_assertion_type, clientAssertion.client_assertion);
   }
 }

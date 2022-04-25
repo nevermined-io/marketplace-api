@@ -6,6 +6,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from '../common/strategies/jwt.strategy';
 import { ConfigModule } from '../shared/config/config.module';
 import { ConfigService } from '../shared/config/config.service';
+import { UserProfileService } from '../user-profiles/user-profile.service';
 
 @Module({
   imports: [
@@ -17,12 +18,12 @@ import { ConfigService } from '../shared/config/config.service';
       useFactory: (config: ConfigService) => {
         return {
           secret: config.get('JWT_SECRET_KEY'),
-          signOptions: { expiresIn: '60m' }
+          signOptions: { expiresIn: '60m' },
         };
-      }
-    })
+      },
+    }),
   ],
-  providers: [AuthService, JwtStrategy, ConfigService],
-  controllers: [AuthController]
+  providers: [AuthService, JwtStrategy, ConfigService, UserProfileService],
+  controllers: [AuthController],
 })
-export class AuthModule { }
+export class AuthModule {}

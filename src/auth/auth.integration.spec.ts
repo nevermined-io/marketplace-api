@@ -10,6 +10,9 @@ import { EthSignJWT } from '../common/guards/shared/jwt.utils';
 import { ethers } from 'ethers';
 import { ConfigModule } from '../shared/config/config.module';
 import { ConfigService } from '../shared/config/config.service';
+import { UserProfileService } from '../user-profiles/user-profile.service';
+import { UserProfile } from '../user-profiles/user-profile.entity';
+import { State, MarketplaceIndex } from '../common/type';
 
 describe('AuthController', () => {
   let app: INestApplication;
@@ -26,11 +29,33 @@ describe('AuthController', () => {
         PassportModule,
         JwtModule.register({
           secret: 'secret',
-          signOptions: { expiresIn: '60m' }
-        })
+          signOptions: { expiresIn: '60m' },
+        }),
       ],
-      providers: [AuthService, JwtStrategy, ConfigService],
-      controllers: [AuthController]
+      providers: [
+        AuthService,
+        JwtStrategy,
+        ConfigService,
+        {
+          provide: UserProfileService,
+          useValue: {
+            findOneByAddress: (address: string) => {
+              const userProfile = new UserProfile();
+              userProfile.addresses = [address];
+              userProfile.nickname = address;
+              userProfile.state = State.Confirmed;
+              userProfile.isListed = true;
+
+              return {
+                _source: userProfile,
+                _index: MarketplaceIndex.UserProfile,
+                _id: userProfile.userId,
+              };
+            },
+          },
+        },
+      ],
+      controllers: [AuthController],
     }).compile();
 
     app = module.createNestApplication();
@@ -39,7 +64,7 @@ describe('AuthController', () => {
 
   it('/POST login', async () => {
     const clientAssertion = await new EthSignJWT({
-      iss: wallet.address
+      iss: wallet.address,
     })
       .setProtectedHeader({ alg: 'ES256K' })
       .setIssuedAt()
