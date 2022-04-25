@@ -12,6 +12,7 @@ import { UserProfileModule } from '../user-profiles/user-profile.module';
   imports: [
     ConfigModule,
     PassportModule,
+    UserProfileModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -23,7 +24,7 @@ import { UserProfileModule } from '../user-profiles/user-profile.module';
       },
     }),
   ],
-  providers: [AuthService, JwtStrategy, ConfigService, UserProfileModule],
+  providers: [AuthService, JwtStrategy, ConfigService],
   controllers: [AuthController],
 })
 export class AuthModule {}
