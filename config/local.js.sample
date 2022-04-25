@@ -4,7 +4,6 @@ process.env.NODE_ENV = 'development';
 module.exports = {
   NODE_ENV: process.env.NODE_ENV,
   JWT_SECRET_KEY: 'secret',
-  API_VERSION: '0.1.1',
   server: {
     port: 3100,
   },
@@ -21,6 +20,5 @@ module.exports = {
   },
   security: {
     enableHttpsRedirect: false,
-  },
-  assetIndex: 'metadatadb'
+  }
 };

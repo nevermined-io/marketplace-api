@@ -10,7 +10,7 @@
       "experimentalDecorators": true,
       "target": "es2019",
       "sourceMap": true,
-      "outDir": "./dist",
+      "outDir": "./dist/src",
       "rootDir": "src",
       "baseUrl": "./",
       "skipLibCheck": true,
@@ -18,5 +18,5 @@
       "resolveJsonModule": true,
       "composite": true
     },
-    "exclude": ["node_modules"],
+    "exclude": ["node_modules"]
 }

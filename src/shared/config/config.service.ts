@@ -14,7 +14,6 @@ const configProfile = require('../../../config');
 const DOTENV_SCHEMA = Joi.object({
   NODE_ENV: Joi.string().valid('development', 'production', 'test', 'staging').default('development'),
   JWT_SECRET_KEY: Joi.string().required().error(new Error('JWT_SECRET_KEY is required!')),
-  API_VERSION: Joi.string().default('v1'),
   server: Joi.object({
     port: Joi.number().default(3000),
   }),
@@ -36,7 +35,6 @@ const DOTENV_SCHEMA = Joi.object({
 
 type DotenvSchemaKeys =
   | 'NODE_ENV'
-  | 'API_VERSION'
   | 'server.port'
   | 'database.url'
   | 'JWT_SECRET_KEY'

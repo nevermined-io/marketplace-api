@@ -1,7 +1,6 @@
 module.exports = {
   NODE_ENV: 'staging',
   JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
-  API_VERSION: process.env.API_VERSION,
   server: {
     port: process.env.PORT || 3100,
   },
@@ -19,5 +18,4 @@ module.exports = {
       password: process.env.ELASTIC_PASSWORD,
     },
   },
-  assetIndex: process.env.ASSET_INDEX,
 };
