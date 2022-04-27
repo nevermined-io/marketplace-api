@@ -67,9 +67,7 @@ export class AuthService {
       const userProfile = (await this.userProfileService.findOneById(userId))?._source;
 
       if (userProfile.addresses.some((a) => a === address)) {
-        throw new UnauthorizedException(
-          `The address ${address} already exists in ${userProfile.nickname} account with id ${userProfile.userId}`
-        );
+        throw new UnauthorizedException(`The address ${address} already exists in ${userProfile.nickname} account`);
       }
 
       userProfile.addresses.push(address);
