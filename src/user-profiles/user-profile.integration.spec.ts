@@ -129,11 +129,7 @@ describe('User Profile', () => {
     const response = await request(app.getHttpServer()).put(`/${userProfile.userId}`).send(newUserProfile);
 
     expect(response.statusCode).toBe(200);
-    expect(response.body).toStrictEqual({
-      ...newUserProfile,
-      creationDate: newUserProfile.creationDate.toISOString(),
-      updateDate: newUserProfile.updateDate.toISOString(),
-    });
+    expect((response.body as UserProfile).state).toEqual(State.Disabled);
   });
 
   it('DELETE disable user profile by userId', async () => {

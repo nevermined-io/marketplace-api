@@ -5,6 +5,7 @@ import { LoginDto } from './dto/login.dto';
 import { CLIENT_ASSERTION_TYPE, jwtEthVerify } from '../common/guards/shared/jwt.utils';
 import { UserProfileService } from '../user-profiles/user-profile.service';
 import { UserProfile } from '../user-profiles/user-profile.entity';
+import { ClientAssertionDto } from './dto/clientAssertion.dto';
 import { State } from '../common/type';
 
 @Injectable()
@@ -45,8 +46,40 @@ export class AuthService {
 
       return {
         access_token: this.jwtService.sign({
-          iss: payload.iss,
+          iss: address,
           sub: userProfile.userId,
+        }),
+      };
+    } catch (error) {
+      throw new UnauthorizedException(`The 'client_assertion' is invalid: ${(error as Error).message}`);
+    }
+  }
+
+  async validateNewAddressClaim(clientAssertionDto: ClientAssertionDto, userId: string): Promise<LoginDto> {
+    if (clientAssertionDto.client_assertion_type !== CLIENT_ASSERTION_TYPE) {
+      throw new UnauthorizedException('Invalid "client_assertion_type"');
+    }
+
+    try {
+      const payload = jwtEthVerify(clientAssertionDto.client_assertion);
+      const address = payload.iss;
+
+      const userProfile = (await this.userProfileService.findOneById(userId))?._source;
+
+      if (userProfile.addresses.some((a) => a === address)) {
+        throw new UnauthorizedException(
+          `The address ${address} already exists in ${userProfile.nickname} account with id ${userProfile.userId}`
+        );
+      }
+
+      userProfile.addresses.push(address);
+
+      const userProfileUpdated = (await this.userProfileService.updateOneByEntryId(userId, userProfile))?._source;
+
+      return {
+        access_token: this.jwtService.sign({
+          iss: address,
+          sub: userProfileUpdated.userId,
         }),
       };
     } catch (error) {

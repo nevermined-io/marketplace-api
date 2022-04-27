@@ -1,10 +1,23 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsEmail, IsBoolean, IsEnum, IsOptional, ValidateNested } from 'class-validator';
+import { IsString, IsEmail, IsBoolean, IsEnum, IsDate, IsOptional, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { State } from '../../common/type';
 import { AdditionalInformation } from './additional-information.dto';
 
 export class UpdateUserProfileDto {
+  static fromPayload(userProfile: UpdateUserProfileDto): UpdateUserProfileDto {
+    return new UpdateUserProfileDto(
+      userProfile.isListed,
+      userProfile.state,
+      userProfile.addresses,
+      userProfile.nickname,
+      userProfile.name,
+      userProfile.email,
+      new Date(),
+      userProfile.additionalInformation
+    );
+  }
+
   @ApiProperty({
     example: true,
     description: 'Flag identifying if the user is listed in the marketplace. Possible values: true or false',
@@ -63,4 +76,32 @@ export class UpdateUserProfileDto {
   @ValidateNested()
   @Type(() => AdditionalInformation)
   additionalInformation: AdditionalInformation;
+
+  @ApiProperty({
+    example: '2019-01-01T19:73:24Z',
+    description: 'When was the last time the user information was updated',
+  })
+  @IsOptional()
+  @IsDate()
+  updateDate: Date;
+
+  constructor(
+    isListed: boolean,
+    state: State,
+    addresses: string[],
+    nickname: string,
+    name: string,
+    email: string,
+    updateDate: Date,
+    additionalInformation: AdditionalInformation
+  ) {
+    this.isListed = isListed;
+    this.state = state;
+    this.addresses = addresses;
+    this.nickname = nickname;
+    this.name = name;
+    this.email = email;
+    this.updateDate = updateDate;
+    this.additionalInformation = additionalInformation;
+  }
 }
