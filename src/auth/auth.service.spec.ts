@@ -46,6 +46,11 @@ describe('AuthService', () => {
           provide: UserProfileService,
           useValue: {
             createOne: (userProfileEntity: UserProfile) => userProfileEntity,
+            findOneById: () => ({
+              _source: userProfile,
+              _index: MarketplaceIndex.UserProfile,
+              _id: userProfile.userId,
+            }),
             findOneByAddress: (address: string) => {
               userProfile.addresses = [address];
               userProfile.nickname = address;
@@ -56,6 +61,11 @@ describe('AuthService', () => {
                 _id: userProfile.userId,
               };
             },
+            updateOneByEntryId: (userId: string, userProfileEntity: UserProfile) => ({
+              _source: userProfileEntity,
+              _index: MarketplaceIndex.UserProfile,
+              _id: userId,
+            }),
           },
         },
       ],
@@ -202,5 +212,71 @@ describe('AuthService', () => {
 
     expect(findOneByAddressSpy).toBeCalledTimes(1);
     expect(createOneSpy).toBeCalledTimes(1);
+  });
+
+  it('should add wallet address to existing user profile', async () => {
+    clientAssertion = await new EthSignJWT({
+      iss: wallet.address,
+    })
+      .setProtectedHeader({ alg: 'ES256K' })
+      .setIssuedAt()
+      .setExpirationTime('60m')
+      .ethSign(wallet);
+
+    const currentToken = await authService.validateClaim(CLIENT_ASSERTION_TYPE, clientAssertion);
+
+    const payload = decodeJwt(currentToken.access_token);
+
+    const newWallet = ethers.Wallet.createRandom();
+
+    const newClientAssertion = await new EthSignJWT({
+      iss: newWallet.address,
+    })
+      .setProtectedHeader({ alg: 'ES256K' })
+      .setIssuedAt()
+      .setExpirationTime('60m')
+      .ethSign(newWallet);
+
+    const newToken = await authService.validateNewAddressClaim(
+      {
+        client_assertion_type: CLIENT_ASSERTION_TYPE,
+        client_assertion: newClientAssertion,
+      },
+      payload.sub
+    );
+
+    const newPayload = decodeJwt(newToken.access_token);
+
+    expect(newPayload.iss).toEqual(newWallet.address);
+    expect(newPayload.sub).toEqual(userProfile.userId);
+  });
+
+  it('should fail if an existing user profile is added an existing wallet address', async () => {
+    clientAssertion = await new EthSignJWT({
+      iss: wallet.address,
+    })
+      .setProtectedHeader({ alg: 'ES256K' })
+      .setIssuedAt()
+      .setExpirationTime('60m')
+      .ethSign(wallet);
+
+    const result = await authService.validateClaim(CLIENT_ASSERTION_TYPE, clientAssertion);
+
+    const payload = decodeJwt(result.access_token);
+
+    await expect(
+      authService.validateNewAddressClaim(
+        {
+          client_assertion: clientAssertion,
+          client_assertion_type: CLIENT_ASSERTION_TYPE,
+        },
+        payload.sub
+      )
+    ).rejects.toEqual(
+      new UnauthorizedException(
+        `The 'client_assertion' is invalid: The address ${wallet.address}` +
+          ` already exists in ${userProfile.nickname} account`
+      )
+    );
   });
 });

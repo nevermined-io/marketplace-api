@@ -107,7 +107,10 @@ export class UserProfileController {
     @Param('userId') userId: string,
     @Body() updateUserProfileDto: UpdateUserProfileDto
   ): Promise<GetUserProfileDto> {
-    const userProfileSource = await this.userProfileService.updateOneByEntryId(userId, updateUserProfileDto);
+    const userProfileSource = await this.userProfileService.updateOneByEntryId(
+      userId,
+      UpdateUserProfileDto.fromPayload(updateUserProfileDto)
+    );
 
     return GetUserProfileDto.fromSource(userProfileSource);
   }
