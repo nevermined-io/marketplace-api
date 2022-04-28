@@ -83,7 +83,15 @@ describe('Asset', () => {
 
     expect(
       await assetController.createAsset(
-        { url: '/api/v1/metadata/assets/ddo/', protocol: 'http', client: { localPort: 3100 }, hostname: 'localhost' },
+        {
+          url: '/api/v1/metadata/assets/ddo/',
+          protocol: 'http',
+          client: { localPort: 3100 },
+          hostname: 'localhost',
+          body: asset,
+          params: undefined,
+          query: undefined,
+        },
         asset
       )
     ).toStrictEqual(asset);

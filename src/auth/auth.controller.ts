@@ -48,7 +48,10 @@ export class AuthController {
     status: 400,
     description: 'Bad Request',
   })
-  authNewAddress(@Body() clientAssertionDto: ClientAssertionDto, @Req() req: Pick<Request, 'user'>) {
+  authNewAddress(
+    @Body() clientAssertionDto: ClientAssertionDto,
+    @Req() req: Pick<Request<ClientAssertionDto>, 'user'>
+  ) {
     return this.authService.validateNewAddressClaim(clientAssertionDto, req.user.userId);
   }
 }

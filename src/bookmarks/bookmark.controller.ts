@@ -1,4 +1,16 @@
-import { Post, Get, Put, Delete, Controller, Body, Param, Query, ValidationPipe, UsePipes } from '@nestjs/common';
+import {
+  Post,
+  Get,
+  Put,
+  Delete,
+  Controller,
+  Body,
+  Param,
+  Query,
+  ValidationPipe,
+  UsePipes,
+  UseGuards,
+} from '@nestjs/common';
 import { BookmarkService } from './bookmark.service';
 import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { CreateBookmarkDto } from './dto/create-bookmark.dto';
@@ -7,6 +19,8 @@ import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
 import { SearchResponse } from '../common/helpers/search-response.dto';
 import { Public } from '../common/decorators/auth.decorator';
+import { UserMatchId } from '../common/guards/auth/user-match-id.guard';
+import { AuthRoles } from '../common/type';
 
 @ApiTags('Bookmark')
 @Controller()
@@ -14,6 +28,7 @@ export class BookmarkController {
   constructor(private readonly bookmarkService: BookmarkService) {}
 
   @Post()
+  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Create a bookmark entry',
@@ -82,6 +97,7 @@ export class BookmarkController {
   }
 
   @Put(':id')
+  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Update an existing bookmark',
@@ -113,6 +129,7 @@ export class BookmarkController {
   }
 
   @Delete(':id')
+  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Delete a bookmark',

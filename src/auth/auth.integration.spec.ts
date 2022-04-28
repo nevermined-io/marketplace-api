@@ -94,10 +94,9 @@ describe('AuthController', () => {
       .setExpirationTime('60m')
       .ethSign(wallet);
 
-    const clientAssertionType = 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer';
     const response = await request(app.getHttpServer())
       .post('/login')
-      .send(`client_assertion_type=${clientAssertionType}&client_assertion=${clientAssertion}`);
+      .send(`client_assertion_type=${CLIENT_ASSERTION_TYPE}&client_assertion=${clientAssertion}`);
 
     expect(response.statusCode).toBe(201);
     expect(response.body).toHaveProperty('access_token');

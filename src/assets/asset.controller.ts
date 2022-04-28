@@ -11,6 +11,7 @@ import {
   Put,
   Req,
   NotFoundException,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { GetAssetDto } from './dto/get-asset-dto';
@@ -28,6 +29,8 @@ import { CreateServiceDto } from './dto/create-service.dto';
 import { GetServiceDto } from './dto/get-service.dto';
 import { ServiceDDOService } from './ddo-service.service';
 import { Public } from '../common/decorators/auth.decorator';
+import { UserMatchId } from '../common/guards/auth/user-match-id.guard';
+import { AuthRoles } from '../common/type';
 
 @ApiTags('Asset')
 @Controller()
@@ -39,6 +42,7 @@ export class AssetController {
   ) {}
 
   @Post('/ddo')
+  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Create a asset entry',
@@ -56,7 +60,7 @@ export class AssetController {
     status: 401,
     description: 'Unauthorized',
   })
-  async createAsset(@Req() req: Request, @Body() createAssetDto: CreateAssetDto): Promise<GetAssetDto> {
+  async createAsset(@Req() req: Request<unknown>, @Body() createAssetDto: CreateAssetDto): Promise<GetAssetDto> {
     const url = `${req.protocol}://${req.hostname}${req.client.localPort ? `:${req.client.localPort}` : ''}${req.url}`;
     const assetDto = await this.assetService.createOne(createAssetDto);
     await this.ddosStatusService.createOne(createAssetDto, url);
@@ -144,6 +148,7 @@ export class AssetController {
   }
 
   @Delete('ddo')
+  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Retire metadata of all assets',
@@ -203,6 +208,7 @@ export class AssetController {
   }
 
   @Put('ddo/:did')
+  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Update DDO of an existing asset',
@@ -231,6 +237,7 @@ export class AssetController {
   }
 
   @Delete('ddo/:did')
+  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Retire metadata of an asset',
@@ -280,6 +287,7 @@ export class AssetController {
   }
 
   @Post('service')
+  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
   @ApiBearerAuth('Authorization')
   @ApiResponse({
     description: 'Create a service',
@@ -348,6 +356,7 @@ export class AssetController {
   }
 
   @Delete('service')
+  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Delete all the services',

@@ -48,6 +48,7 @@ export class AuthService {
         access_token: this.jwtService.sign({
           iss: address,
           sub: userProfile.userId,
+          roles: [],
         }),
       };
     } catch (error) {
@@ -78,6 +79,7 @@ export class AuthService {
         access_token: this.jwtService.sign({
           iss: address,
           sub: userProfileUpdated.userId,
+          roles: [],
         }),
       };
     } catch (error) {
