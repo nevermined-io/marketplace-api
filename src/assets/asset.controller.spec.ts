@@ -31,6 +31,7 @@ describe('Asset', () => {
   asset.id = `did:nv:${faker.datatype.uuid()}`;
   asset['@context'] = 'https://w3id.org/did/v1';
   asset.created = new Date().toDateString();
+  asset.userId = `u-${faker.datatype.uuid()}`;
 
   const ddoStatus = new DDOStatus();
   ddoStatus.did = asset.id;

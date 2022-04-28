@@ -12,6 +12,13 @@ export class CreateServiceDto {
   agreementId: string;
 
   @ApiProperty({
+    example: 'u-12345',
+    description: 'The userId who created the service',
+  })
+  @IsString()
+  userId: string;
+
+  @ApiProperty({
     example: 0,
     description: 'index of the service',
   })
