@@ -20,3 +20,7 @@ export enum State {
   Unconfirmed = 'unconfirmed',
   Confirmed = 'confirmed',
 }
+
+export enum AuthRoles {
+  Admin = 'admin',
+}

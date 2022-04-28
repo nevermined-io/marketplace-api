@@ -1,4 +1,4 @@
-import { Post, Controller, Body, Get, Put, Delete, Param, NotFoundException } from '@nestjs/common';
+import { Post, Controller, Body, Get, Put, Delete, Param, UseGuards, NotFoundException } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { UserProfileService } from './user-profile.service';
 import { CreateUserProfileDto } from './dto/create-user-profile.dto';
@@ -6,6 +6,9 @@ import { GetUserProfileDto } from './dto/get-user-profile.dto';
 import { UpdateUserProfileDto } from './dto/update-user-profile.dto';
 import { DisableUserProfileDto } from './dto/disable-user-profile.dto';
 import { Public } from '../common/decorators/auth.decorator';
+import { Roles } from '../common/decorators/roles.decorators';
+import { UserMatchId } from '../common/guards/auth/user-match-id.guard';
+import { AuthRoles } from '../common/type';
 
 @ApiTags('User Profile')
 @Controller()
@@ -13,10 +16,11 @@ export class UserProfileController {
   constructor(private readonly userProfileService: UserProfileService) {}
 
   @Post()
+  @Roles(AuthRoles.Admin)
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Create a user profile entry',
-    summary: 'Public',
+    summary: 'Admin',
   })
   @ApiResponse({
     status: 201,
@@ -82,6 +86,7 @@ export class UserProfileController {
   }
 
   @Put(':userId')
+  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Update the user profile',
@@ -116,6 +121,7 @@ export class UserProfileController {
   }
 
   @Delete(':userId')
+  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Disable the user profile',

@@ -131,6 +131,7 @@ describe('AuthController', () => {
         user: {
           address: payload.iss,
           userId: payload.sub,
+          roles: [],
         },
       }
     );
