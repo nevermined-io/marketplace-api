@@ -10,6 +10,7 @@ export class GetServiceDto {
     return new GetServiceDto(
       serviceSource._source.agreementId,
       serviceSource._source.index,
+      serviceSource._source.userId,
       serviceSource._source.templateId,
       serviceSource._source.serviceEndpoint,
       serviceSource._source.type,
@@ -23,6 +24,13 @@ export class GetServiceDto {
   })
   @IsString()
   agreementId: string;
+
+  @ApiProperty({
+    example: 'u-12345',
+    description: 'The userId who created the service',
+  })
+  @IsString()
+  userId: string;
 
   @ApiProperty({
     example: 0,
@@ -66,6 +74,7 @@ export class GetServiceDto {
   constructor(
     agreementId: string,
     index: number,
+    userId: string,
     templateId: string,
     serviceEndpoint: string,
     type: string,
@@ -73,6 +82,7 @@ export class GetServiceDto {
   ) {
     this.agreementId = agreementId;
     this.index = index;
+    this.userId = userId;
     this.templateId = templateId;
     this.serviceEndpoint = serviceEndpoint;
     this.type = type;

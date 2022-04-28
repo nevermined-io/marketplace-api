@@ -14,6 +14,7 @@ export class GetAssetDto {
     return new GetAssetDto(
       assetSource._source['@context'],
       assetSource._source.authentication,
+      assetSource._source.userId,
       assetSource._source.created,
       assetSource._source.updated,
       assetSource._source.id,
@@ -40,6 +41,13 @@ export class GetAssetDto {
   @ValidateNested({ each: true })
   @Type(() => AuthenticationDto)
   authentication: AuthenticationDto[];
+
+  @ApiProperty({
+    example: 'u-12345',
+    description: 'The userId who created the asset',
+  })
+  @IsString()
+  userId: string;
 
   @ApiProperty({
     example: '2021-02-01T10:55:11Z',
@@ -90,6 +98,7 @@ export class GetAssetDto {
   constructor(
     context: string,
     authentication: AuthenticationDto[],
+    userId: string,
     created: string,
     updated: string,
     id: string,
@@ -99,6 +108,7 @@ export class GetAssetDto {
   ) {
     this['@context'] = context;
     this.authentication = authentication;
+    this.userId = userId;
     this.created = created;
     this.updated = updated;
     this.id = id;

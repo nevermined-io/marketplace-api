@@ -19,6 +19,13 @@ export class CreateAssetDto {
   ['@context']: string;
 
   @ApiProperty({
+    example: 'u-12345',
+    description: 'The userId who created the asset',
+  })
+  @IsString()
+  userId: string;
+
+  @ApiProperty({
     example: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429',
     description: 'ID of the asset',
   })
