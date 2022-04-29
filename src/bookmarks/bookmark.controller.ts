@@ -10,6 +10,8 @@ import {
   ValidationPipe,
   UsePipes,
   UseGuards,
+  Req,
+  ForbiddenException,
 } from '@nestjs/common';
 import { BookmarkService } from './bookmark.service';
 import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
@@ -21,6 +23,7 @@ import { SearchResponse } from '../common/helpers/search-response.dto';
 import { Public } from '../common/decorators/auth.decorator';
 import { UserMatchId } from '../common/guards/auth/user-match-id.guard';
 import { AuthRoles } from '../common/type';
+import { Request } from '../common/helpers/request.interface';
 
 @ApiTags('Bookmark')
 @Controller()
@@ -39,12 +42,16 @@ export class BookmarkController {
     type: GetBookmarkDto,
   })
   @ApiResponse({
-    status: 403,
+    status: 400,
     description: 'Bad Request',
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized',
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden',
   })
   async createBookmark(@Body() createBookmark: CreateBookmarkDto): Promise<GetBookmarkDto> {
     return this.bookmarkService.createOne(createBookmark);
@@ -112,12 +119,16 @@ export class BookmarkController {
     description: 'Not found',
   })
   @ApiResponse({
-    status: 403,
+    status: 400,
     description: 'Bad Request',
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized',
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden',
   })
   async updateBookmarkById(
     @Param('id') id: string,
@@ -129,7 +140,6 @@ export class BookmarkController {
   }
 
   @Delete(':id')
-  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Delete a bookmark',
@@ -146,7 +156,20 @@ export class BookmarkController {
     status: 401,
     description: 'Unauthorized',
   })
-  async deleteBookmarkById(@Param('id') id: string): Promise<void> {
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden',
+  })
+  async deleteBookmarkById(
+    @Param('id') id: string,
+    @Req() request: Pick<Request<{ id: string }>, 'user'>
+  ): Promise<void> {
+    const bookmarkSource = await this.bookmarkService.findOneById(id);
+
+    if (bookmarkSource._source.userId !== request.user.userId) {
+      throw new ForbiddenException('The bookmark to delete does not belong to the loged account');
+    }
+
     await this.bookmarkService.deleteOneByEntryId(id);
   }
 }

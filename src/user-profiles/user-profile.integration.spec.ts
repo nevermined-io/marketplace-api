@@ -7,12 +7,11 @@ import { INestApplication } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { Reflector } from '@nestjs/core';
-import { ethers } from 'ethers';
 import { decodeJwt } from 'jose';
 import { JwtStrategy } from '../common/strategies/jwt.strategy';
 import { JwtAuthGuard } from '../common/guards/auth/jwt-auth.guard';
+import { createWallet } from '../common/helpers/create-wallet.mock';
 import { ConfigModule } from '../shared/config/config.module';
-import { CLIENT_ASSERTION_TYPE, EthSignJWT } from '../common/guards/shared/jwt.utils';
 import { AuthService } from '../auth/auth.service';
 import { LoginDto } from '../auth/dto/login.dto';
 import { UserProfile } from './user-profile.entity';
@@ -24,7 +23,6 @@ import { UpdateUserProfileDto } from './dto/update-user-profile.dto';
 
 describe('User Profile', () => {
   let app: INestApplication;
-  let wallet: ethers.Wallet;
   let authService: AuthService;
   let token: LoginDto;
   let userIdAuth: string;
@@ -101,16 +99,7 @@ describe('User Profile', () => {
     app.useGlobalGuards(new JwtAuthGuard(new Reflector()));
     await app.init();
 
-    wallet = ethers.Wallet.createRandom();
-    const clientAssertion = await new EthSignJWT({
-      iss: wallet.address,
-    })
-      .setProtectedHeader({ alg: 'ES256K' })
-      .setIssuedAt()
-      .setExpirationTime('60m')
-      .ethSign(wallet);
-
-    token = await authService.validateClaim(CLIENT_ASSERTION_TYPE, clientAssertion);
+    token = await createWallet(authService);
     userIdAuth = decodeJwt(token.access_token).sub;
   });
 

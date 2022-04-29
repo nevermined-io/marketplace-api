@@ -4,6 +4,19 @@ import { faker } from '@faker-js/faker';
 import request from 'supertest';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+import { Reflector } from '@nestjs/core';
+import { JwtStrategy } from '../common/strategies/jwt.strategy';
+import { JwtAuthGuard } from '../common/guards/auth/jwt-auth.guard';
+import { createWallet } from '../common/helpers/create-wallet.mock';
+import { AuthService } from '../auth/auth.service';
+import { LoginDto } from '../auth/dto/login.dto';
+import { ConfigModule } from '../shared/config/config.module';
+import { UserProfileModule } from '../user-profiles/user-profile.module';
+import { UserProfile } from '../user-profiles/user-profile.entity';
+import { UserProfileService } from '../user-profiles/user-profile.service';
+import { State, MarketplaceIndex } from '../common/type';
 import { BookmarkModule } from './bookmark.module';
 import { BookmarkService } from './bookmark.service';
 import { Bookmark } from './bookmark.entity';
@@ -12,7 +25,18 @@ import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
 describe('Bookmark', () => {
   let app: INestApplication;
   const bookmark = new Bookmark();
-  bookmark.userId = `u-${faker.datatype.uuid()}`;
+  let token: LoginDto;
+  let authService: AuthService;
+
+  const userProfile = new UserProfile();
+  userProfile.addresses = ['0x37BB53e3d293494DE59fBe1FF78500423dcFd43B'];
+  userProfile.isListed = true;
+  userProfile.nickname = faker.internet.userName();
+  userProfile.name = faker.name.findName();
+  userProfile.email = faker.internet.email();
+  userProfile.state = State.Confirmed;
+
+  bookmark.userId = userProfile.userId;
   bookmark.did = `did:${faker.datatype.uuid()}`;
   bookmark.description = faker.lorem.sentence();
 
@@ -43,22 +67,54 @@ describe('Bookmark', () => {
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [BookmarkModule],
+      imports: [
+        BookmarkModule,
+        UserProfileModule,
+        ConfigModule,
+        PassportModule,
+        JwtModule.register({
+          secret: 'secret',
+          signOptions: { expiresIn: '60m' },
+        }),
+      ],
+      providers: [
+        AuthService,
+        JwtStrategy,
+        {
+          provide: UserProfileService,
+          useValue: {
+            findOneByAddress: () => {
+              return {
+                _source: userProfile,
+                _index: MarketplaceIndex.UserProfile,
+                _id: userProfile.userId,
+              };
+            },
+          },
+        },
+      ],
     })
       .overrideProvider(BookmarkService)
       .useValue(bookmarkService)
       .compile();
 
+    authService = moduleRef.get<AuthService>(AuthService);
     app = moduleRef.createNestApplication();
+    app.useGlobalGuards(new JwtAuthGuard(new Reflector()));
     await app.init();
+
+    token = await createWallet(authService);
   });
 
   it('/POST', async () => {
-    const response = await request(app.getHttpServer()).post('/').send({
-      userId: bookmark.userId,
-      did: bookmark.did,
-      description: bookmark.description,
-    });
+    const response = await request(app.getHttpServer())
+      .post('/')
+      .set('Authorization', `Bearer ${token.access_token}`)
+      .send({
+        userId: bookmark.userId,
+        did: bookmark.did,
+        description: bookmark.description,
+      });
 
     expect(response.statusCode).toBe(201);
     expect(response.body).toStrictEqual({ ...bookmark, createdAt: bookmark.createdAt.toISOString() });
@@ -84,15 +140,22 @@ describe('Bookmark', () => {
   });
 
   it('/PUT by id', async () => {
-    const response = await request(app.getHttpServer()).put(`/${bookmark.id}`).send({
-      description: newBookmark.description,
-    });
+    const response = await request(app.getHttpServer())
+      .put(`/${bookmark.id}`)
+      .set('Authorization', `Bearer ${token.access_token}`)
+      .send({
+        description: newBookmark.description,
+        userId: newBookmark.userId,
+      });
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toStrictEqual({ ...newBookmark, createdAt: bookmark.createdAt.toISOString() });
   });
 
   it('/DELETE by id', async () => {
-    await request(app.getHttpServer()).del(`/${bookmark.id}`).expect(200);
+    await request(app.getHttpServer())
+      .del(`/${bookmark.id}`)
+      .set('Authorization', `Bearer ${token.access_token}`)
+      .expect(200);
   });
 });

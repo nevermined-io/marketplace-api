@@ -11,6 +11,7 @@ import {
   Put,
   Req,
   NotFoundException,
+  ForbiddenException,
   UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
@@ -31,6 +32,7 @@ import { ServiceDDOService } from './ddo-service.service';
 import { Public } from '../common/decorators/auth.decorator';
 import { UserMatchId } from '../common/guards/auth/user-match-id.guard';
 import { AuthRoles } from '../common/type';
+import { Roles } from '../common/decorators/roles.decorators';
 
 @ApiTags('Asset')
 @Controller()
@@ -53,12 +55,16 @@ export class AssetController {
     type: GetAssetDto,
   })
   @ApiResponse({
-    status: 403,
+    status: 400,
     description: 'Bad Request',
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized',
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden',
   })
   async createAsset(@Req() req: Request<unknown>, @Body() createAssetDto: CreateAssetDto): Promise<GetAssetDto> {
     const url = `${req.protocol}://${req.hostname}${req.client.localPort ? `:${req.client.localPort}` : ''}${req.url}`;
@@ -99,7 +105,7 @@ export class AssetController {
     schema: SearchResponse.toDocs(GetAssetDto),
   })
   @ApiResponse({
-    status: 403,
+    status: 400,
     description: 'Bad Request',
   })
   @Public()
@@ -119,7 +125,7 @@ export class AssetController {
     schema: SearchResponse.toDocs(GetAssetDto),
   })
   @ApiResponse({
-    status: 403,
+    status: 400,
     description: 'Bad Request',
   })
   @UsePipes(new ValidationPipe({ transform: true }))
@@ -139,7 +145,7 @@ export class AssetController {
     schema: SearchResponse.toDocs(GetAssetDto),
   })
   @ApiResponse({
-    status: 403,
+    status: 400,
     description: 'Bad Request',
   })
   @Public()
@@ -148,7 +154,7 @@ export class AssetController {
   }
 
   @Delete('ddo')
-  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
+  @Roles(AuthRoles.Admin)
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Retire metadata of all assets',
@@ -160,6 +166,10 @@ export class AssetController {
   @ApiResponse({
     status: 401,
     description: 'Unauthorized',
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden',
   })
   async deleteAllDDOs() {
     await this.assetService.deleteAll();
@@ -219,7 +229,7 @@ export class AssetController {
     type: GetAssetDto,
   })
   @ApiResponse({
-    status: 403,
+    status: 400,
     description: 'Bad Request',
   })
   @ApiResponse({
@@ -230,6 +240,10 @@ export class AssetController {
     status: 401,
     description: 'Unauthorized',
   })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden',
+  })
   async updateDDO(@Param('did') did: string, @Body() updateAssetDto: UpdateAssetDto): Promise<GetAssetDto> {
     const assetSource = await this.assetService.updateOneByEntryId(did, updateAssetDto);
 
@@ -237,7 +251,6 @@ export class AssetController {
   }
 
   @Delete('ddo/:did')
-  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Retire metadata of an asset',
@@ -255,7 +268,17 @@ export class AssetController {
     status: 401,
     description: 'Unauthorized',
   })
-  async deleteDDO(@Param('did') did: string): Promise<void> {
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden',
+  })
+  async deleteDDO(@Param('did') did: string, @Req() request: Pick<Request<{ did: string }>, 'user'>): Promise<void> {
+    const assetSource = await this.assetService.findOneById(did);
+
+    if (assetSource._source.userId !== request.user.userId) {
+      throw new ForbiddenException(`This account does not own asset with did ${did}`);
+    }
+
     await this.assetService.deleteOneByEntryId(did);
   }
 
@@ -356,7 +379,7 @@ export class AssetController {
   }
 
   @Delete('service')
-  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
+  @Roles(AuthRoles.Admin)
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Delete all the services',
