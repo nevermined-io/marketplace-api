@@ -281,11 +281,23 @@ describe('Asset', () => {
   });
 
   it('should delete one ddo passing the did', async () => {
+    jest.spyOn(assetService, 'findOneById').mockResolvedValue({
+      _source: asset,
+      _index: MarketplaceIndex.Asset,
+      _id: asset.id,
+    });
+
     const deleteOneByEntryIdSpy = jest.spyOn(assetService, 'deleteOneByEntryId');
 
     deleteOneByEntryIdSpy.mockResolvedValue(undefined);
 
-    await assetController.deleteDDO(asset.id);
+    await assetController.deleteDDO(asset.id, {
+      user: {
+        userId: asset.userId,
+        address: faker.datatype.hexadecimal(18),
+        roles: [],
+      },
+    });
 
     expect(deleteOneByEntryIdSpy).toBeCalled();
   });

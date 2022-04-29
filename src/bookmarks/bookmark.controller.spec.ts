@@ -106,6 +106,7 @@ describe('BookmarkController', () => {
     expect(
       await bookmarkController.updateBookmarkById(bookmark.id, {
         description: newBookmark.description,
+        userId: newBookmark.userId,
       })
     ).toStrictEqual(
       GetBookmarkDto.fromSource({
@@ -117,11 +118,23 @@ describe('BookmarkController', () => {
   });
 
   it('should delete bookmark by passing id', async () => {
+    jest.spyOn(bookmarkService, 'findOneById').mockResolvedValue({
+      _source: bookmark,
+      _index: MarketplaceIndex.Bookmark,
+      _id: bookmark.id,
+    });
+
     const bookmarkServiceSpy = jest.spyOn(bookmarkService, 'deleteOneByEntryId');
 
     bookmarkServiceSpy.mockResolvedValue(undefined);
 
-    await bookmarkController.deleteBookmarkById(bookmark.id);
+    await bookmarkController.deleteBookmarkById(bookmark.id, {
+      user: {
+        userId: bookmark.userId,
+        address: faker.datatype.hexadecimal(18),
+        roles: [],
+      },
+    });
 
     expect(bookmarkServiceSpy).toBeCalled();
   });

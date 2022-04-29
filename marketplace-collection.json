@@ -121,6 +121,7 @@
 									"                pm.expect(profileResponse).to.have.property('code', 200);",
 									"                pm.expect(profileResponse).to.have.property('status', 'OK');",
 									"                pm.expect(profileResponse.json().addresses.some(a => pm.environment.get('publicAddress'))).to.be.true;",
+									"                pm.environment.set('userId', profileResponse.json().userId);",
 									"            });",
 									"        });",
 									"    });",
@@ -546,7 +547,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"type": "text/javascript",
 										"exec": [
 											"pm.sendRequest({",
 											"    url: pm.environment.replaceIn('{{baseUrl}}/api/v1/ugc/bookmarks/{{id}}'),",
@@ -562,13 +562,13 @@
 											"});",
 											"",
 											""
-										]
+										],
+										"type": "text/javascript"
 									}
 								},
 								{
 									"listen": "prerequest",
 									"script": {
-										"type": "text/javascript",
 										"exec": [
 											"pm.sendRequest({",
 											"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/ugc/bookmarks'),",
@@ -579,13 +579,14 @@
 											"        },",
 											"        body: {",
 											"            mode: 'raw',",
-											"            raw: JSON.stringify({\"did\": \"did:12345\",\"userId\": \"u-12345\",\"description\": \"I am interesting in this asset\"})",
+											"            raw: JSON.stringify({\"did\": \"did:12345\",\"userId\": pm.environment.get('userId'),\"description\": \"I am interesting in this asset\"})",
 											"        }",
 											"}, (error, response) => {",
 											"    pm.environment.set(\"id\", response.json().id);",
 											"    pm.environment.set(\"userId\", response.json().userId);",
 											"});"
-										]
+										],
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -703,7 +704,6 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"type": "text/javascript",
 										"exec": [
 											"pm.sendRequest({",
 											"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/ugc/bookmarks'),",
@@ -714,18 +714,18 @@
 											"        },",
 											"        body: {",
 											"            mode: 'raw',",
-											"            raw: JSON.stringify({\"did\": \"did:12345\",\"userId\": \"u-12345\",\"description\": \"I am interesting in this asset\"})",
+											"            raw: JSON.stringify({\"did\": \"did:12345\",\"userId\": pm.environment.get('userId'),\"description\": \"I am interesting in this asset\"})",
 											"        }",
 											"}, (error, response) => {",
 											"    pm.environment.set(\"id\", response.json().id);",
 											"});"
-										]
+										],
+										"type": "text/javascript"
 									}
 								},
 								{
 									"listen": "test",
 									"script": {
-										"type": "text/javascript",
 										"exec": [
 											"pm.sendRequest({",
 											"    url: pm.environment.replaceIn('{{baseUrl}}/api/v1/ugc/bookmarks/{{id}}'),",
@@ -738,6 +738,7 @@
 											"        mode: 'raw',",
 											"        raw: JSON.stringify({",
 											"            description: 'This assets is the best',",
+											"            userId: pm.environment.get('userId'),",
 											"        }),",
 											"    }",
 											"}, (error, response) => {",
@@ -746,7 +747,8 @@
 											"        pm.expect(response.json()).to.have.property('description', 'This assets is the best');",
 											"    });",
 											"});"
-										]
+										],
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -768,7 +770,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"description\": \"I am interesting in this asset\"\n}",
+									"raw": "{\n  \"description\": \"I am interesting in this asset\",\n  \"userId\": \"{{userId}}\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1025,7 +1027,6 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"type": "text/javascript",
 										"exec": [
 											"pm.sendRequest({",
 											"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/ugc/bookmarks'),",
@@ -1036,18 +1037,18 @@
 											"        },",
 											"        body: {",
 											"            mode: 'raw',",
-											"            raw: JSON.stringify({\"did\": \"did:12345\",\"userId\": \"u-12345\",\"description\": \"I am interesting in this asset\"})",
+											"            raw: JSON.stringify({\"did\": \"did:12345\",\"userId\": pm.environment.get('userId'),\"description\": \"I am interesting in this asset\"})",
 											"        }",
 											"}, (error, response) => {",
 											"    pm.environment.set(\"id\", response.json().id);",
 											"});"
-										]
+										],
+										"type": "text/javascript"
 									}
 								},
 								{
 									"listen": "test",
 									"script": {
-										"type": "text/javascript",
 										"exec": [
 											"pm.sendRequest({",
 											"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/ugc/bookmarks'),",
@@ -1058,7 +1059,7 @@
 											"        },",
 											"        body: {",
 											"            mode: 'raw',",
-											"            raw: JSON.stringify({\"did\": \"did:12345\",\"userId\": \"u-12345\",\"description\": \"I am interesting in this asset\"})",
+											"            raw: JSON.stringify({\"did\": \"did:12345\",\"userId\": pm.environment.get('userId'),\"description\": \"I am interesting in this asset\"})",
 											"        }",
 											"}, (error, bookmarkResp) => {",
 											"    pm.sendRequest({",
@@ -1074,7 +1075,8 @@
 											"        });",
 											"    });",
 											"});"
-										]
+										],
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -1246,7 +1248,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/ugc/bookmarks'),",
@@ -1259,7 +1260,7 @@
 									"            mode: 'raw',",
 									"            raw: JSON.stringify({",
 									"                \"did\": \"did:12345\",",
-									"                \"userId\": \"u-12345\",",
+									"                \"userId\": pm.environment.get('userId'),",
 									"                \"description\": \"I am interesting in this asset\"",
 									"            })",
 									"        }",
@@ -1267,11 +1268,12 @@
 									"        pm.test(\"should create bookmark\", () => {",
 									"            pm.expect(response).to.have.property('code', 201);",
 									"            pm.expect(response).to.have.property('status', 'Created');",
-									"            pm.expect(response.json()).to.have.property('userId', 'u-12345');",
+									"            pm.expect(response.json()).to.have.property('userId', pm.environment.get('userId'));",
 									"        })",
 									"});",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1293,7 +1295,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"did\": \"did:12345\",\n  \"userId\": \"u-12345\",\n  \"description\": \"I am interesting in this asset\"\n}",
+							"raw": "{\n  \"did\": \"did:12345\",\n  \"userId\": \"{{userId}}\",\n  \"description\": \"I am interesting in this asset\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1497,7 +1499,7 @@
 									"        },",
 									"        body: {",
 									"            mode: 'raw',",
-									"            raw: JSON.stringify({\"did\": \"did:12345\",\"userId\": \"u-12345\",\"description\": \"I am interesting in this asset\"})",
+									"            raw: JSON.stringify({\"did\": \"did:12345\",\"userId\": pm.environment.get('userId'),\"description\": \"I am interesting in this asset\"})",
 									"        }",
 									"}, (error, response) => {",
 									"    pm.environment.set(\"userId\", response.json().userId);",
@@ -1619,1180 +1621,6 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"page\": 1,\n    \"results\": [\n        {\n            \"id\": \"b-123434\",\n            \"did\": \"did:12345\",\n            \"userId\": \"u-12345\",\n            \"description\": \"I am interesting in this asset\",\n            \"createdAt\": \"2022-03-18T13:44:00.931Z\"\n        },\n        {\n            \"id\": \"b-123434\",\n            \"did\": \"did:12345\",\n            \"userId\": \"u-12345\",\n            \"description\": \"I am interesting in this asset\",\n            \"createdAt\": \"2022-03-18T13:44:00.931Z\"\n        }\n    ],\n    \"total_pages\": 1,\n    \"total_results\": 2    \n}"
-						}
-					]
-				}
-			]
-		},
-		{
-			"name": "api/v1/metadata/profiles",
-			"item": [
-				{
-					"name": "User Profile Controller create User Profile",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.sendRequest({",
-									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/profiles'),",
-									"        method: 'POST',",
-									"        header: {",
-									"            'Content-Type': 'application/json',",
-									"            'Authorization': `Bearer ${pm.environment.get('authToken')}`",
-									"        },",
-									"        body: {",
-									"            mode: 'raw',",
-									"            raw: JSON.stringify({",
-									"                \"isListed\": false,",
-									"                \"state\": \"confirmed\",",
-									"                \"addresses\": [",
-									"                    pm.environment.get('publicAddress')",
-									"                ],",
-									"                \"nickname\": \"nevermined\",",
-									"                \"name\": \"est tempor ut officia\",",
-									"                \"email\": \"test@nevermined.io\",",
-									"                \"additionalInformation\": {",
-									"                    \"profilePicture\": \"http://example.com/avatar.jpg\",",
-									"                    \"linkedinProfile\": \"http://linkedin.com\"",
-									"                }",
-									"            })",
-									"        }",
-									"    }, (error, response) => {",
-									"        pm.test(\"should create a user profile\", () => {",
-									"            pm.expect(response).to.have.property('code', 201);",
-									"            pm.expect(response).to.have.property('status', 'Created');",
-									"            pm.expect(response.json()).to.have.property('nickname', 'nevermined');",
-									"        })",
-									"});"
-								]
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"isListed\": false,\n    \"state\": \"confirmed\",\n    \"addresses\": [\n        \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"\n    ],\n    \"nickname\": \"dolor irure\",\n    \"name\": \"est tempor ut officia\",\n    \"email\": \"test@nevermined.io\",\n    \"additionalInformation\": {\n        \"profilePicture\": \"http://example.com/avatar.jpg\",\n        \"linkedinProfile\": \"http://linkedin.com\"\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/api/v1/metadata/profiles",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"metadata",
-								"profiles"
-							]
-						},
-						"description": "Create a user profile entry"
-					},
-					"response": [
-						{
-							"name": "Create user profile",
-							"originalRequest": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIweGUyREQwOWQ3MTlEYTg5ZTVhM0QwRjI1NDljN0UyNDU2NmU5NDcyNjAiLCJpYXQiOjE2NTA2MzczNTIsImV4cCI6MTY1MDY0MDk1Mn0.CXLmOVBA_i5mcgaHWAnmXOy6HEB7Lr_5gEjGSb36VDQ"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"isListed\": false,\n    \"state\": \"confirmed\",\n    \"addresses\": [\n        \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"\n    ],\n    \"nickname\": \"dolor irure\",\n    \"name\": \"est tempor ut officia\",\n    \"email\": \"test@nevermined.io\",\n    \"additionalInformation\": {\n        \"profilePicture\": \"http://example.com/avatar.jpg\",\n        \"linkedinProfile\": \"http://linkedin.com\"\n    }\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/api/v1/metadata/profiles",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"metadata",
-										"profiles"
-									]
-								}
-							},
-							"status": "Created",
-							"code": 201,
-							"_postman_previewlanguage": "Text",
-							"header": [],
-							"cookie": [],
-							"body": "{\n    \"userId\": \"u-0c63ac3f-f092-4951-9e21-a5a010dd7d94\",\n    \"isListed\": false,\n    \"state\": \"confirmed\",\n    \"addresses\": [\n        \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"\n    ],\n    \"nickname\": \"nevermined\",\n    \"name\": \"est tempor ut officia\",\n    \"email\": \"test@nevermined.io\",\n    \"creationDate\": \"2022-04-22T09:54:14.415Z\",\n    \"updateDate\": \"2022-04-22T09:54:14.415Z\",\n    \"additionalInformation\": {\n        \"profilePicture\": \"http://example.com/avatar.jpg\",\n        \"linkedinProfile\": \"http://linkedin.com\"\n    }\n}"
-						},
-						{
-							"name": "Bad Request",
-							"originalRequest": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIweGUyREQwOWQ3MTlEYTg5ZTVhM0QwRjI1NDljN0UyNDU2NmU5NDcyNjAiLCJpYXQiOjE2NTA2MzczNTIsImV4cCI6MTY1MDY0MDk1Mn0.CXLmOVBA_i5mcgaHWAnmXOy6HEB7Lr_5gEjGSb36VDQ"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"isListed\": false,\n    \"state\": \"confirmed\",\n    \"addresses\": [\n        \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"\n    ],\n    \"nickname\": \"dolor irure\",\n    \"name\": \"est tempor ut officia\",\n    \"email\": \"test@nevermined.io\",\n    \"additionalInformation\": {\n        \"profilePicture\": \"http://example.com/avatar.jpg\",\n        \"linkedinProfile\": \"http://linkedin.com\"\n    }\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/api/v1/metadata/profiles",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"metadata",
-										"profiles"
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "Text",
-							"header": [],
-							"cookie": [],
-							"body": null
-						},
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"isListed\": false,\n    \"state\": \"confirmed\",\n    \"addresses\": [\n        \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"\n    ],\n    \"nickname\": \"dolor irure\",\n    \"name\": \"est tempor ut officia\",\n    \"email\": \"test@nevermined.io\",\n    \"additionalInformation\": {\n        \"profilePicture\": \"http://example.com/avatar.jpg\",\n        \"linkedinProfile\": \"http://linkedin.com\"\n    }\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/api/v1/metadata/profiles",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"metadata",
-										"profiles"
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
-							"_postman_previewlanguage": "Text",
-							"header": [],
-							"cookie": [],
-							"body": null
-						}
-					]
-				},
-				{
-					"name": "User Profile Controller get User Profile By User Id",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.sendRequest({",
-									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/profiles'),",
-									"        method: 'POST',",
-									"        header: {",
-									"            'Content-Type': 'application/json',",
-									"            'Authorization': `Bearer ${pm.environment.get('authToken')}`",
-									"        },",
-									"        body: {",
-									"            mode: 'raw',",
-									"            raw: JSON.stringify({",
-									"                \"isListed\": false,",
-									"                \"state\": \"confirmed\",",
-									"                \"addresses\": [",
-									"                    \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"",
-									"                ],",
-									"                \"nickname\": \"nevermined\",",
-									"                \"name\": \"est tempor ut officia\",",
-									"                \"email\": \"test@nevermined.io\",",
-									"                \"additionalInformation\": {",
-									"                    \"profilePicture\": \"http://example.com/avatar.jpg\",",
-									"                    \"linkedinProfile\": \"http://linkedin.com\"",
-									"                }",
-									"            })",
-									"        }",
-									"    }, (error, response) => {",
-									"        pm.environment.set('userId', response.json().userId);",
-									"});"
-								]
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.sendRequest({",
-									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/profiles/{{userId}}'),",
-									"        method: 'GET',",
-									"        header: {",
-									"            'Content-Type': 'application/json',",
-									"        }",
-									"    }, (error, response) => {",
-									"        pm.test(\"should get a user profile\", () => {",
-									"            pm.expect(response).to.have.property('code', 200);",
-									"            pm.expect(response).to.have.property('status', 'OK');",
-									"            pm.expect(response.json()).to.have.property('userId', pm.environment.get('userId'));",
-									"        })",
-									"});"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "{{baseUrl}}/api/v1/metadata/profiles/:userId",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"metadata",
-								"profiles",
-								":userId"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": "{{userId}}",
-									"description": "(Required) "
-								}
-							]
-						},
-						"description": "Get the metadata of a user profile "
-					},
-					"response": [
-						{
-							"name": "Get user profile",
-							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"name": "Content-Type",
-										"key": "Content-Type",
-										"value": "application/x-www-form-urlencoded"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/api/v1/metadata/profiles/:userId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"metadata",
-										"profiles",
-										":userId"
-									],
-									"variable": [
-										{
-											"key": "userId",
-											"value": "u-12345",
-											"description": "(Required) "
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "Text",
-							"header": [],
-							"cookie": [],
-							"body": "{\n    \"userId\": \"u-0c63ac3f-f092-4951-9e21-a5a010dd7d94\",\n    \"isListed\": false,\n    \"state\": \"confirmed\",\n    \"addresses\": [\n        \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"\n    ],\n    \"nickname\": \"nevermined\",\n    \"name\": \"est tempor ut officia\",\n    \"email\": \"test@nevermined.io\",\n    \"creationDate\": \"2022-04-22T09:54:14.415Z\",\n    \"updateDate\": \"2022-04-22T09:54:14.415Z\",\n    \"additionalInformation\": {\n        \"profilePicture\": \"http://example.com/avatar.jpg\",\n        \"linkedinProfile\": \"http://linkedin.com\"\n    }\n}"
-						},
-						{
-							"name": "Not Found",
-							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"name": "Content-Type",
-										"key": "Content-Type",
-										"value": "application/x-www-form-urlencoded"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/api/v1/metadata/profiles/:userId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"metadata",
-										"profiles",
-										":userId"
-									],
-									"variable": [
-										{
-											"key": "userId",
-											"value": "u-12345",
-											"description": "(Required) "
-										}
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "Text",
-							"header": [],
-							"cookie": [],
-							"body": ""
-						}
-					]
-				},
-				{
-					"name": "User Profile Controller update User Profile By User Id",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.sendRequest({",
-									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/profiles'),",
-									"        method: 'POST',",
-									"        header: {",
-									"            'Content-Type': 'application/json',",
-									"            'Authorization': `Bearer ${pm.environment.get('authToken')}`",
-									"        },",
-									"        body: {",
-									"            mode: 'raw',",
-									"            raw: JSON.stringify({",
-									"                \"isListed\": false,",
-									"                \"state\": \"confirmed\",",
-									"                \"addresses\": [",
-									"                    \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"",
-									"                ],",
-									"                \"nickname\": \"nevermined\",",
-									"                \"name\": \"est tempor ut officia\",",
-									"                \"email\": \"test@nevermined.io\",",
-									"                \"additionalInformation\": {",
-									"                    \"profilePicture\": \"http://example.com/avatar.jpg\",",
-									"                    \"linkedinProfile\": \"http://linkedin.com\"",
-									"                }",
-									"            })",
-									"        }",
-									"    }, (error, response) => {",
-									"        pm.environment.set('userId', response.json().userId);",
-									"});"
-								]
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.sendRequest({",
-									"    url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/profiles/{{userId}}'),",
-									"    method: 'PUT',",
-									"    header: {",
-									"        'Content-Type': 'application/json',",
-									"        'Authorization': `Bearer ${pm.environment.get('authToken')}`",
-									"    },",
-									"    body: {",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify({",
-									"            email: \"test2@nevermined.io\",",
-									"        }),",
-									"    }",
-									"}, (error, response) => {",
-									"    pm.test(\"should update user profile by passing userId\", () => {",
-									"        pm.expect(response).to.have.property('code', 200);",
-									"        pm.expect(response.json()).to.have.property('email', 'test2@nevermined.io');",
-									"    });",
-									"});"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"isListed\": true\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/api/v1/metadata/profiles/:userId",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"metadata",
-								"profiles",
-								":userId"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": "{{userId}}",
-									"description": "(Required) "
-								}
-							]
-						},
-						"description": "Update the user profile"
-					},
-					"response": [
-						{
-							"name": "Update user profile",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIweGUyREQwOWQ3MTlEYTg5ZTVhM0QwRjI1NDljN0UyNDU2NmU5NDcyNjAiLCJpYXQiOjE2NTA2MzczNTIsImV4cCI6MTY1MDY0MDk1Mn0.CXLmOVBA_i5mcgaHWAnmXOy6HEB7Lr_5gEjGSb36VDQ"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"isListed\": true\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/api/v1/metadata/profiles/:userId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"metadata",
-										"profiles",
-										":userId"
-									],
-									"variable": [
-										{
-											"key": "userId",
-											"value": "u-12345",
-											"description": "(Required) "
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "Text",
-							"header": [],
-							"cookie": [],
-							"body": "{\n    \"userId\": \"u-5f94bc38-1178-435d-80bd-518eb1a0986d\",\n    \"isListed\": true,\n    \"state\": \"confirmed\",\n    \"addresses\": [\n        \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"\n    ],\n    \"nickname\": \"nevermined\",\n    \"name\": \"est tempor ut officia\",\n    \"email\": \"test@nevermined.io\",\n    \"creationDate\": \"2022-04-22T10:10:45.529Z\",\n    \"updateDate\": \"2022-04-22T10:10:45.529Z\",\n    \"additionalInformation\": {\n        \"profilePicture\": \"http://example.com/avatar.jpg\",\n        \"linkedinProfile\": \"http://linkedin.com\"\n    }\n}"
-						},
-						{
-							"name": "Not Found",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIweGUyREQwOWQ3MTlEYTg5ZTVhM0QwRjI1NDljN0UyNDU2NmU5NDcyNjAiLCJpYXQiOjE2NTA2MzczNTIsImV4cCI6MTY1MDY0MDk1Mn0.CXLmOVBA_i5mcgaHWAnmXOy6HEB7Lr_5gEjGSb36VDQ"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"isListed\": true\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/api/v1/metadata/profiles/:userId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"metadata",
-										"profiles",
-										":userId"
-									],
-									"variable": [
-										{
-											"key": "userId",
-											"value": "u-12345",
-											"description": "(Required) "
-										}
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "Text",
-							"header": [],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Bad Request",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIweGUyREQwOWQ3MTlEYTg5ZTVhM0QwRjI1NDljN0UyNDU2NmU5NDcyNjAiLCJpYXQiOjE2NTA2MzczNTIsImV4cCI6MTY1MDY0MDk1Mn0.CXLmOVBA_i5mcgaHWAnmXOy6HEB7Lr_5gEjGSb36VDQ"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"isListed\": true\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/api/v1/metadata/profiles/:userId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"metadata",
-										"profiles",
-										":userId"
-									],
-									"variable": [
-										{
-											"key": "userId",
-											"value": "u-12345",
-											"description": "(Required) "
-										}
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "Text",
-							"header": [],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"isListed\": true\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/api/v1/metadata/profiles/:userId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"metadata",
-										"profiles",
-										":userId"
-									],
-									"variable": [
-										{
-											"key": "userId",
-											"value": "u-12345",
-											"description": "(Required) "
-										}
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
-							"_postman_previewlanguage": "Text",
-							"header": [],
-							"cookie": [],
-							"body": ""
-						}
-					]
-				},
-				{
-					"name": "User Profile Controller disable User Profile By User Id",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.sendRequest({",
-									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/profiles'),",
-									"        method: 'POST',",
-									"        header: {",
-									"            'Content-Type': 'application/json',",
-									"            'Authorization': `Bearer ${pm.environment.get('authToken')}`",
-									"        },",
-									"        body: {",
-									"            mode: 'raw',",
-									"            raw: JSON.stringify({",
-									"                \"isListed\": false,",
-									"                \"state\": \"confirmed\",",
-									"                \"addresses\": [",
-									"                    \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"",
-									"                ],",
-									"                \"nickname\": \"nevermined\",",
-									"                \"name\": \"est tempor ut officia\",",
-									"                \"email\": \"test@nevermined.io\",",
-									"                \"additionalInformation\": {",
-									"                    \"profilePicture\": \"http://example.com/avatar.jpg\",",
-									"                    \"linkedinProfile\": \"http://linkedin.com\"",
-									"                }",
-									"            })",
-									"        }",
-									"    }, (error, response) => {",
-									"        pm.environment.set('userId', response.json().userId);",
-									"});"
-								]
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.sendRequest({",
-									"    url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/profiles'),",
-									"    method: 'POST',",
-									"    header: {",
-									"        'Content-Type': 'application/json',",
-									"        'Authorization': `Bearer ${pm.environment.get('authToken')}`",
-									"    },",
-									"    body: {",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify({",
-									"            \"isListed\": false,",
-									"            \"state\": \"confirmed\",",
-									"            \"addresses\": [",
-									"                \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"",
-									"            ],",
-									"            \"nickname\": \"nevermined\",",
-									"            \"name\": \"est tempor ut officia\",",
-									"            \"email\": \"test@nevermined.io\",",
-									"            \"additionalInformation\": {",
-									"                \"profilePicture\": \"http://example.com/avatar.jpg\",",
-									"                \"linkedinProfile\": \"http://linkedin.com\"",
-									"            }",
-									"        })",
-									"    }",
-									"}, (error, response) => {",
-									"    pm.sendRequest({",
-									"        url: pm.environment.replaceIn(`{{baseUrl}}/api/v1/metadata/profiles/${response.json().userId}`),",
-									"        method: 'DELETE',",
-									"        header: {",
-									"            'Content-Type': 'application/json',",
-									"            'Authorization': `Bearer ${pm.environment.get('authToken')}`",
-									"        }",
-									"    }, (error, response) => {",
-									"        pm.test(\"should delete user profile by passing userId\", () => {",
-									"            pm.expect(response).to.have.property('code', 200);",
-									"        });",
-									"    });",
-									"});"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}"
-							}
-						],
-						"url": {
-							"raw": "{{baseUrl}}/api/v1/metadata/profiles/:userId",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"metadata",
-								"profiles",
-								":userId"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": "{{userId}}",
-									"description": "(Required) "
-								}
-							]
-						},
-						"description": "Disable the user profile"
-					},
-					"response": [
-						{
-							"name": "Delete user profile",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/api/v1/metadata/profiles/:userId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"metadata",
-										"profiles",
-										":userId"
-									],
-									"variable": [
-										{
-											"key": "userId",
-											"value": "u-12345",
-											"description": "(Required) "
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "Text",
-							"header": [],
-							"cookie": [],
-							"body": null
-						},
-						{
-							"name": "Not Found",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/api/v1/metadata/profiles/:userId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"metadata",
-										"profiles",
-										":userId"
-									],
-									"variable": [
-										{
-											"key": "userId",
-											"value": "{{userId}}",
-											"description": "(Required) "
-										}
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "Text",
-							"header": [],
-							"cookie": [],
-							"body": null
-						},
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{authToken}}"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/api/v1/metadata/profiles/:userId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"metadata",
-										"profiles",
-										":userId"
-									],
-									"variable": [
-										{
-											"key": "userId",
-											"value": "a-12345",
-											"description": "(Required) "
-										}
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "Text",
-							"header": [],
-							"cookie": [],
-							"body": null
-						}
-					]
-				},
-				{
-					"name": "User Profile Controller get User Profile By Address",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.sendRequest({",
-									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/profiles'),",
-									"        method: 'POST',",
-									"        header: {",
-									"            'Content-Type': 'application/json',",
-									"            'Authorization': `Bearer ${pm.environment.get('authToken')}`",
-									"        },",
-									"        body: {",
-									"            mode: 'raw',",
-									"            raw: JSON.stringify({",
-									"                \"isListed\": false,",
-									"                \"state\": \"confirmed\",",
-									"                \"addresses\": [",
-									"                    pm.environment.get('publicAddress')",
-									"                ],",
-									"                \"nickname\": \"nevermined\",",
-									"                \"name\": \"est tempor ut officia\",",
-									"                \"email\": \"test@nevermined.io\",",
-									"                \"additionalInformation\": {",
-									"                    \"profilePicture\": \"http://example.com/avatar.jpg\",",
-									"                    \"linkedinProfile\": \"http://linkedin.com\"",
-									"                }",
-									"            })",
-									"        }",
-									"    }, (error, response) => {",
-									"        pm.environment.set('userId', response.json().userId);",
-									"",
-									"        pm.sendRequest({",
-									"            url: pm.collectionVariables.replaceIn('{{elsUrl}}/user_profile/_refresh'),",
-									"            method: 'POST',",
-									"            header: {",
-									"                'Content-Type': 'application/json',",
-									"                'Authorization': `Bearer ${pm.environment.get('authToken')}`",
-									"            },",
-									"        });",
-									"});"
-								]
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.sendRequest({",
-									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/profiles/address/{{publicAddress}}'),",
-									"        method: 'GET',",
-									"        header: {",
-									"            'Content-Type': 'application/json',",
-									"        }",
-									"    }, (error, response) => {",
-									"        pm.test(\"should get a user profile\", () => {",
-									"            pm.expect(response).to.have.property('code', 200);",
-									"            pm.expect(response).to.have.property('status', 'OK');",
-									"            pm.expect(response.json().addresses.some(a => pm.environment.get('publicAddress'))).to.be.true;",
-									"        })",
-									"});"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "{{baseUrl}}/api/v1/metadata/profiles/address/:publicAddress",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"metadata",
-								"profiles",
-								"address",
-								":publicAddress"
-							],
-							"variable": [
-								{
-									"key": "publicAddress",
-									"value": "{{publicAddress}}",
-									"description": "(Required) "
-								}
-							]
-						},
-						"description": "Get the metadata of a user profile given an address"
-					},
-					"response": [
-						{
-							"name": "Get user profile",
-							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/api/v1/metadata/profiles/address/:publicAddress",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"metadata",
-										"profiles",
-										"address",
-										":publicAddress"
-									],
-									"variable": [
-										{
-											"key": "publicAddress",
-											"value": "0xe2DD09d719Da89e5a3D0F2549c7E24566e947260",
-											"description": "(Required) "
-										}
-									]
-								}
-							},
-							"_postman_previewlanguage": "Text",
-							"header": [],
-							"cookie": [],
-							"body": "{\n    \"userId\": \"u-c93116f6-219a-4cf7-bee7-c43ac26f03ff\",\n    \"isListed\": false,\n    \"state\": \"confirmed\",\n    \"addresses\": [\n        \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"\n    ],\n    \"nickname\": \"nevermined\",\n    \"name\": \"est tempor ut officia\",\n    \"email\": \"test@nevermined.io\",\n    \"creationDate\": \"2022-04-22T12:09:26.620Z\",\n    \"updateDate\": \"2022-04-22T12:09:26.620Z\",\n    \"additionalInformation\": {\n        \"profilePicture\": \"http://example.com/avatar.jpg\",\n        \"linkedinProfile\": \"http://linkedin.com\"\n    }\n}"
-						},
-						{
-							"name": "Not Found",
-							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/api/v1/metadata/profiles/address/:publicAddress",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"metadata",
-										"profiles",
-										"address",
-										":publicAddress"
-									],
-									"variable": [
-										{
-											"key": "publicAddress",
-											"value": "0xe2DD09d719Da89e5a3D0F2549c7E24566e947260",
-											"description": "(Required) "
-										}
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "Text",
-							"header": [],
-							"cookie": [],
-							"body": ""
 						}
 					]
 				}
@@ -3692,7 +2520,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"@context\": \"https://w3id.org/did/v1\",\n  \"updated\": \"2019-02-08T08:13:49Z\",\n  \"authentication\": [\n    {\n      \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"RsaSignatureAuthentication2018\"\n    }\n  ],\n  \"proof\": {\n    \"created\": \"2022-01-08T16:02:20Z\",\n    \"creator\": \"2022-01-08T16:02:20Z\",\n    \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n    \"type\": \"DDOIntegritySignature\"\n  },\n  \"publicKey\": [\n    {\n      \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n      \"type\": \"EthereumECDSAKey\"\n    }\n  ],\n  \"service\": [\n    {\n      \"index\": 0,\n      \"service\": \"SecretStore\",\n      \"serviceEndpoint\": \"http://localhost:12001\",\n      \"type\": \"authorization\"\n    },\n    {\n      \"index\": 1,\n      \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n      \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n      \"type\": \"access\"\n    },\n    {\n      \"attributes\": {\n        \"additionalInformation\": {\n          \"copyrightHolder\": \"Met Office\",\n          \"description\": \"Weather information of UK including temperature and humidity\",\n          \"inLanguage\": \"en\",\n          \"links\": [\n            {\n              \"name\": \"Sample of Asset Data\",\n              \"type\": \"sample\",\n              \"url\": \"https://foo.com/sample.csv\"\n            }\n          ],\n          \"tags\": [\n            \"weather\",\n            \"uk\",\n            \"2011\",\n            \"temperature\",\n            \"humidity\"\n          ],\n          \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n          \"numVotes\": 123,\n          \"rating\": 0.93,\n          \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n          \"author\": \"Met Office\",\n          \"dateCreated\": \"2012-02-01T10:55:11Z\",\n          \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n          \"files\": [\n            {\n              \"compression\": \"zip\",\n              \"contentLength\": \"4535431\",\n              \"contentType\": \"text/csv\",\n              \"encoding\": \"UTF-8\",\n              \"index\": 0,\n              \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n            }\n          ],\n          \"license\": \"CC-BY\",\n          \"name\": \"UK Weather information 2011\",\n          \"price\": \"10\",\n          \"type\": \"dataset\"\n        }\n      },\n      \"index\": 2,\n      \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"metadata\"\n    }\n  ]\n}",
+							"raw": "{\n  \"@context\": \"https://w3id.org/did/v1\",\n  \"updated\": \"2019-02-08T08:13:49Z\",\n  \"userId\": \"{{userId}}\",\n  \"authentication\": [\n    {\n      \"publicKey\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"RsaSignatureAuthentication2018\"\n    }\n  ],\n  \"proof\": {\n    \"created\": \"2022-01-08T16:02:20Z\",\n    \"creator\": \"2022-01-08T16:02:20Z\",\n    \"signatureValue\": \"0xbd7b46b3ac664167bc70ac211b1a1da0baed9ead91613a5f02dfc25c1bb6e3ff40861b455017e8a587fd4e37b703436072598c3a81ec88be28bfe33b61554a471b\",\n    \"type\": \"DDOIntegritySignature\"\n  },\n  \"publicKey\": [\n    {\n      \"id\": \"did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"owner\": \"0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e\",\n      \"type\": \"EthereumECDSAKey\"\n    }\n  ],\n  \"service\": [\n    {\n      \"index\": 0,\n      \"service\": \"SecretStore\",\n      \"serviceEndpoint\": \"http://localhost:12001\",\n      \"type\": \"authorization\"\n    },\n    {\n      \"index\": 1,\n      \"purchaseEndpoint\": \"http://localhost:8030/api/v1/gateway/services/access/initialize\",\n      \"serviceEndpoint\": \"http://localhost:8030/api/v1/gateway/services/consume\",\n      \"type\": \"access\"\n    },\n    {\n      \"attributes\": {\n        \"additionalInformation\": {\n          \"copyrightHolder\": \"Met Office\",\n          \"description\": \"Weather information of UK including temperature and humidity\",\n          \"inLanguage\": \"en\",\n          \"links\": [\n            {\n              \"name\": \"Sample of Asset Data\",\n              \"type\": \"sample\",\n              \"url\": \"https://foo.com/sample.csv\"\n            }\n          ],\n          \"tags\": [\n            \"weather\",\n            \"uk\",\n            \"2011\",\n            \"temperature\",\n            \"humidity\"\n          ],\n          \"workExample\": \"stationId,latitude,longitude,datetime, temperature,humidity/n423432fsd,51.509865,-0.118092, 2011-01-01T10:55:11+00:00,7.2,68\"\n        },\n        \"curation\": {\n          \"numVotes\": 123,\n          \"rating\": 0.93,\n          \"schema\": \"Binary Voting\"\n        },\n        \"main\": {\n          \"author\": \"Met Office\",\n          \"dateCreated\": \"2012-02-01T10:55:11Z\",\n          \"encryptedFiles\": \"0x098213xzckasdf089723hjgdasfkjgasfv\",\n          \"files\": [\n            {\n              \"compression\": \"zip\",\n              \"contentLength\": \"4535431\",\n              \"contentType\": \"text/csv\",\n              \"encoding\": \"UTF-8\",\n              \"index\": 0,\n              \"resourceId\": \"access-log2018-02-13-15-17-29-18386C502CAEA932\"\n            }\n          ],\n          \"license\": \"CC-BY\",\n          \"name\": \"UK Weather information 2011\",\n          \"price\": \"10\",\n          \"type\": \"dataset\"\n        }\n      },\n      \"index\": 2,\n      \"serviceEndpoint\": \"http://mymetadata.org/api/v1/provider/assets/metadata/did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430\",\n      \"type\": \"metadata\"\n    }\n  ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -9067,6 +7895,1043 @@
 							],
 							"cookie": [],
 							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "api/v1/metadata/profiles",
+			"item": [
+				{
+					"name": "User Profile Controller create User Profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/profiles'),",
+									"        method: 'POST',",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"            'Authorization': `Bearer ${pm.environment.get('authToken')}`",
+									"        },",
+									"        body: {",
+									"            mode: 'raw',",
+									"            raw: JSON.stringify({",
+									"                \"isListed\": false,",
+									"                \"state\": \"confirmed\",",
+									"                \"addresses\": [",
+									"                    pm.environment.get('publicAddress')",
+									"                ],",
+									"                \"nickname\": \"nevermined\",",
+									"                \"name\": \"est tempor ut officia\",",
+									"                \"email\": \"test@nevermined.io\",",
+									"                \"additionalInformation\": {",
+									"                    \"profilePicture\": \"http://example.com/avatar.jpg\",",
+									"                    \"linkedinProfile\": \"http://linkedin.com\"",
+									"                }",
+									"            })",
+									"        }",
+									"    }, (error, response) => {",
+									"        pm.test(\"should create a user profile\", () => {",
+									"            pm.expect(response).to.have.property('code', 201);",
+									"            pm.expect(response).to.have.property('status', 'Created');",
+									"            pm.expect(response.json()).to.have.property('nickname', 'nevermined');",
+									"        })",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isListed\": false,\n    \"state\": \"confirmed\",\n    \"addresses\": [\n        \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"\n    ],\n    \"nickname\": \"dolor irure\",\n    \"name\": \"est tempor ut officia\",\n    \"email\": \"test@nevermined.io\",\n    \"additionalInformation\": {\n        \"profilePicture\": \"http://example.com/avatar.jpg\",\n        \"linkedinProfile\": \"http://linkedin.com\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/metadata/profiles",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"metadata",
+								"profiles"
+							]
+						},
+						"description": "Create a user profile entry"
+					},
+					"response": [
+						{
+							"name": "Create user profile",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIweGUyREQwOWQ3MTlEYTg5ZTVhM0QwRjI1NDljN0UyNDU2NmU5NDcyNjAiLCJpYXQiOjE2NTA2MzczNTIsImV4cCI6MTY1MDY0MDk1Mn0.CXLmOVBA_i5mcgaHWAnmXOy6HEB7Lr_5gEjGSb36VDQ"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"isListed\": false,\n    \"state\": \"confirmed\",\n    \"addresses\": [\n        \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"\n    ],\n    \"nickname\": \"dolor irure\",\n    \"name\": \"est tempor ut officia\",\n    \"email\": \"test@nevermined.io\",\n    \"additionalInformation\": {\n        \"profilePicture\": \"http://example.com/avatar.jpg\",\n        \"linkedinProfile\": \"http://linkedin.com\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/metadata/profiles",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"metadata",
+										"profiles"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"userId\": \"u-0c63ac3f-f092-4951-9e21-a5a010dd7d94\",\n    \"isListed\": false,\n    \"state\": \"confirmed\",\n    \"addresses\": [\n        \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"\n    ],\n    \"nickname\": \"nevermined\",\n    \"name\": \"est tempor ut officia\",\n    \"email\": \"test@nevermined.io\",\n    \"creationDate\": \"2022-04-22T09:54:14.415Z\",\n    \"updateDate\": \"2022-04-22T09:54:14.415Z\",\n    \"additionalInformation\": {\n        \"profilePicture\": \"http://example.com/avatar.jpg\",\n        \"linkedinProfile\": \"http://linkedin.com\"\n    }\n}"
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIweGUyREQwOWQ3MTlEYTg5ZTVhM0QwRjI1NDljN0UyNDU2NmU5NDcyNjAiLCJpYXQiOjE2NTA2MzczNTIsImV4cCI6MTY1MDY0MDk1Mn0.CXLmOVBA_i5mcgaHWAnmXOy6HEB7Lr_5gEjGSb36VDQ"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"isListed\": false,\n    \"state\": \"confirmed\",\n    \"addresses\": [\n        \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"\n    ],\n    \"nickname\": \"dolor irure\",\n    \"name\": \"est tempor ut officia\",\n    \"email\": \"test@nevermined.io\",\n    \"additionalInformation\": {\n        \"profilePicture\": \"http://example.com/avatar.jpg\",\n        \"linkedinProfile\": \"http://linkedin.com\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/metadata/profiles",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"metadata",
+										"profiles"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"isListed\": false,\n    \"state\": \"confirmed\",\n    \"addresses\": [\n        \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"\n    ],\n    \"nickname\": \"dolor irure\",\n    \"name\": \"est tempor ut officia\",\n    \"email\": \"test@nevermined.io\",\n    \"additionalInformation\": {\n        \"profilePicture\": \"http://example.com/avatar.jpg\",\n        \"linkedinProfile\": \"http://linkedin.com\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/metadata/profiles",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"metadata",
+										"profiles"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "User Profile Controller get User Profile By User Id",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/profiles/{{userId}}'),",
+									"        method: 'GET',",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"        }",
+									"    }, (error, response) => {",
+									"        pm.test(\"should get a user profile\", () => {",
+									"            pm.expect(response).to.have.property('code', 200);",
+									"            pm.expect(response).to.have.property('status', 'OK');",
+									"            pm.expect(response.json()).to.have.property('userId', pm.environment.get('userId'));",
+									"        })",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/metadata/profiles/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"metadata",
+								"profiles",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{userId}}",
+									"description": "(Required) "
+								}
+							]
+						},
+						"description": "Get the metadata of a user profile "
+					},
+					"response": [
+						{
+							"name": "Get user profile",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"name": "Content-Type",
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/metadata/profiles/:userId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"metadata",
+										"profiles",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "u-12345",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"userId\": \"u-0c63ac3f-f092-4951-9e21-a5a010dd7d94\",\n    \"isListed\": false,\n    \"state\": \"confirmed\",\n    \"addresses\": [\n        \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"\n    ],\n    \"nickname\": \"nevermined\",\n    \"name\": \"est tempor ut officia\",\n    \"email\": \"test@nevermined.io\",\n    \"creationDate\": \"2022-04-22T09:54:14.415Z\",\n    \"updateDate\": \"2022-04-22T09:54:14.415Z\",\n    \"additionalInformation\": {\n        \"profilePicture\": \"http://example.com/avatar.jpg\",\n        \"linkedinProfile\": \"http://linkedin.com\"\n    }\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"name": "Content-Type",
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/metadata/profiles/:userId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"metadata",
+										"profiles",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "u-12345",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "User Profile Controller update User Profile By User Id",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/profiles/{{userId}}'),",
+									"    method: 'PUT',",
+									"    header: {",
+									"        'Content-Type': 'application/json',",
+									"        'Authorization': `Bearer ${pm.environment.get('authToken')}`",
+									"    },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            email: \"test2@nevermined.io\",",
+									"        }),",
+									"    }",
+									"}, (error, response) => {",
+									"    pm.test(\"should update user profile by passing userId\", () => {",
+									"        pm.expect(response).to.have.property('code', 200);",
+									"        pm.expect(response.json()).to.have.property('email', 'test2@nevermined.io');",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isListed\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/metadata/profiles/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"metadata",
+								"profiles",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{userId}}",
+									"description": "(Required) "
+								}
+							]
+						},
+						"description": "Update the user profile"
+					},
+					"response": [
+						{
+							"name": "Update user profile",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIweGUyREQwOWQ3MTlEYTg5ZTVhM0QwRjI1NDljN0UyNDU2NmU5NDcyNjAiLCJpYXQiOjE2NTA2MzczNTIsImV4cCI6MTY1MDY0MDk1Mn0.CXLmOVBA_i5mcgaHWAnmXOy6HEB7Lr_5gEjGSb36VDQ"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"isListed\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/metadata/profiles/:userId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"metadata",
+										"profiles",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "u-12345",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"userId\": \"u-5f94bc38-1178-435d-80bd-518eb1a0986d\",\n    \"isListed\": true,\n    \"state\": \"confirmed\",\n    \"addresses\": [\n        \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"\n    ],\n    \"nickname\": \"nevermined\",\n    \"name\": \"est tempor ut officia\",\n    \"email\": \"test@nevermined.io\",\n    \"creationDate\": \"2022-04-22T10:10:45.529Z\",\n    \"updateDate\": \"2022-04-22T10:10:45.529Z\",\n    \"additionalInformation\": {\n        \"profilePicture\": \"http://example.com/avatar.jpg\",\n        \"linkedinProfile\": \"http://linkedin.com\"\n    }\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIweGUyREQwOWQ3MTlEYTg5ZTVhM0QwRjI1NDljN0UyNDU2NmU5NDcyNjAiLCJpYXQiOjE2NTA2MzczNTIsImV4cCI6MTY1MDY0MDk1Mn0.CXLmOVBA_i5mcgaHWAnmXOy6HEB7Lr_5gEjGSb36VDQ"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"isListed\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/metadata/profiles/:userId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"metadata",
+										"profiles",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "u-12345",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIweGUyREQwOWQ3MTlEYTg5ZTVhM0QwRjI1NDljN0UyNDU2NmU5NDcyNjAiLCJpYXQiOjE2NTA2MzczNTIsImV4cCI6MTY1MDY0MDk1Mn0.CXLmOVBA_i5mcgaHWAnmXOy6HEB7Lr_5gEjGSb36VDQ"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"isListed\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/metadata/profiles/:userId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"metadata",
+										"profiles",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "u-12345",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"isListed\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/metadata/profiles/:userId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"metadata",
+										"profiles",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "u-12345",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "User Profile Controller get User Profile By Address",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/profiles/address/{{publicAddress}}'),",
+									"        method: 'GET',",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"        }",
+									"    }, (error, response) => {",
+									"        pm.test(\"should get a user profile\", () => {",
+									"            pm.expect(response).to.have.property('code', 200);",
+									"            pm.expect(response).to.have.property('status', 'OK');",
+									"            pm.expect(response.json().addresses.some(a => pm.environment.get('publicAddress'))).to.be.true;",
+									"        })",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/metadata/profiles/address/:publicAddress",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"metadata",
+								"profiles",
+								"address",
+								":publicAddress"
+							],
+							"variable": [
+								{
+									"key": "publicAddress",
+									"value": "{{publicAddress}}",
+									"description": "(Required) "
+								}
+							]
+						},
+						"description": "Get the metadata of a user profile given an address"
+					},
+					"response": [
+						{
+							"name": "Get user profile",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/metadata/profiles/address/:publicAddress",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"metadata",
+										"profiles",
+										"address",
+										":publicAddress"
+									],
+									"variable": [
+										{
+											"key": "publicAddress",
+											"value": "0xe2DD09d719Da89e5a3D0F2549c7E24566e947260",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"userId\": \"u-c93116f6-219a-4cf7-bee7-c43ac26f03ff\",\n    \"isListed\": false,\n    \"state\": \"confirmed\",\n    \"addresses\": [\n        \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"\n    ],\n    \"nickname\": \"nevermined\",\n    \"name\": \"est tempor ut officia\",\n    \"email\": \"test@nevermined.io\",\n    \"creationDate\": \"2022-04-22T12:09:26.620Z\",\n    \"updateDate\": \"2022-04-22T12:09:26.620Z\",\n    \"additionalInformation\": {\n        \"profilePicture\": \"http://example.com/avatar.jpg\",\n        \"linkedinProfile\": \"http://linkedin.com\"\n    }\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/metadata/profiles/address/:publicAddress",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"metadata",
+										"profiles",
+										"address",
+										":publicAddress"
+									],
+									"variable": [
+										{
+											"key": "publicAddress",
+											"value": "0xe2DD09d719Da89e5a3D0F2549c7E24566e947260",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "User Profile Controller disable User Profile By User Id",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: pm.environment.replaceIn(`{{baseUrl}}/api/v1/metadata/profiles/{{userId}}`),",
+									"    method: 'DELETE',",
+									"    header: {",
+									"        'Content-Type': 'application/json',",
+									"        'Authorization': `Bearer ${pm.environment.get('authToken')}`",
+									"    }",
+									"}, (error, response) => {",
+									"    pm.test(\"should delete user profile by passing userId\", () => {",
+									"        pm.expect(response).to.have.property('code', 200);",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/metadata/profiles/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"metadata",
+								"profiles",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{userId}}",
+									"description": "(Required) "
+								}
+							]
+						},
+						"description": "Disable the user profile"
+					},
+					"response": [
+						{
+							"name": "Delete user profile",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/metadata/profiles/:userId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"metadata",
+										"profiles",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "u-12345",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/metadata/profiles/:userId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"metadata",
+										"profiles",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "{{userId}}",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/metadata/profiles/:userId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"metadata",
+										"profiles",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "a-12345",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": null
 						}
 					]
 				}
