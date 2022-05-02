@@ -5,19 +5,11 @@ import { Logger } from '../shared/logger/logger.service';
 import { PermissionController } from './permission.controller';
 import { PermissionService } from './permission.service';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
-import { Permission } from './permission.entity';
-import { MarketplaceIndex } from '../common/type';
 import { permission } from './permission.mockup';
 
 describe('UserProfileController', () => {
   let permissionController: PermissionController;
   let permissionService: PermissionService;
-
-  const permissionSource = {
-    _source: Permission,
-    _index: MarketplaceIndex.UserProfile,
-    _id: permission.userId,
-  };
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
