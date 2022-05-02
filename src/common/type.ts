@@ -29,5 +29,6 @@ export enum AuthRoles {
 export enum PermissionType {
   Read = 'read',
   Update = 'update',
-  Delete = 'Delete',
+  Delete = 'delete',
+  Admin = 'admin',
 }
