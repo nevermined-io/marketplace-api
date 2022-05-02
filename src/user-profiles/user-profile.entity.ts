@@ -17,6 +17,6 @@ export class UserProfile {
   constructor() {
     this.creationDate = new Date();
     this.updateDate = new Date();
-    this.userId = `u-${uuidv4()}`;
+    this.userId = `us-${uuidv4()}`;
   }
 }

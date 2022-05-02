@@ -6,6 +6,7 @@ import { readFileSync } from 'fs';
 import path from 'path';
 import { ApplicationModule } from './app.module';
 import { JwtAuthGuard } from './common/guards/auth/jwt-auth.guard';
+import { RolesGuard } from './common/guards/auth/roles.guards';
 import { ConfigService } from './shared/config/config.service';
 import { Logger } from './shared/logger/logger.service';
 
@@ -16,7 +17,7 @@ const bootstrap = async () => {
   app.enable('trust proxy');
   app.useGlobalPipes(new ValidationPipe());
   app.useLogger(app.get(Logger));
-  app.useGlobalGuards(new JwtAuthGuard(new Reflector()));
+  app.useGlobalGuards(new JwtAuthGuard(new Reflector()), new RolesGuard(new Reflector()));
 
   const PORT = app.get<ConfigService>(ConfigService).get<number>('server.port');
 

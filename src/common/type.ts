@@ -4,6 +4,7 @@ export enum MarketplaceIndex {
   DDOStatus = 'status',
   Service = 'service',
   UserProfile = 'user_profile',
+  Permission = 'permission',
 }
 
 export enum Status {
@@ -23,4 +24,10 @@ export enum State {
 
 export enum AuthRoles {
   Admin = 'admin',
+}
+
+export enum PermissionType {
+  Read = 'read',
+  Update = 'update',
+  Delete = 'Delete',
 }
