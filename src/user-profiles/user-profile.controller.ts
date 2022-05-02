@@ -1,4 +1,4 @@
-import { Post, Controller, Body, Get, Put, Delete, Param, UseGuards, NotFoundException } from '@nestjs/common';
+import { Post, Controller, Body, Get, Put, Delete, Param, Query, UseGuards, NotFoundException } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { UserProfileService } from './user-profile.service';
 import { CreateUserProfileDto } from './dto/create-user-profile.dto';
@@ -7,6 +7,8 @@ import { UpdateUserProfileDto } from './dto/update-user-profile.dto';
 import { DisableUserProfileDto } from './dto/disable-user-profile.dto';
 import { Public } from '../common/decorators/auth.decorator';
 import { Roles } from '../common/decorators/roles.decorators';
+import { SearchQueryDto } from '../common/helpers/search-query.dto';
+import { SearchResponse } from '../common/helpers/search-response.dto';
 import { UserMatchId } from '../common/guards/auth/user-match-id.guard';
 import { AuthRoles } from '../common/type';
 
@@ -37,6 +39,32 @@ export class UserProfileController {
   })
   async createUserProfile(@Body() createUserProfileDto: CreateUserProfileDto): Promise<GetUserProfileDto> {
     return this.userProfileService.createOne(createUserProfileDto);
+  }
+
+  @Get('query')
+  @Roles(AuthRoles.Admin)
+  @ApiOperation({
+    description: 'Get the metadata of a user profile ',
+    summary: 'Public',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'User profile returned',
+    schema: SearchResponse.toDocs(GetUserProfileDto),
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not found',
+  })
+  @Public()
+  async getAllUserProfiles(@Query() searchQueryDto: SearchQueryDto): Promise<SearchResponse<GetUserProfileDto[]>> {
+    const userProfileSource = await this.userProfileService.findMany(searchQueryDto);
+
+    return SearchResponse.fromSearchSources(
+      searchQueryDto,
+      userProfileSource,
+      userProfileSource.hits.map(GetUserProfileDto.fromSource)
+    );
   }
 
   @Get(':userId')
