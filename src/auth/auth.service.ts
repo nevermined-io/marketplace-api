@@ -33,7 +33,7 @@ export class AuthService {
       const address = payload.iss;
 
       const userProfileSource = await this.userProfileService.findOneByAddress(address);
-      console.log(`User Profile userProfileSource ${JSON.stringify(userProfileSource)}`);
+
       if (!userProfileSource) {
         const userProfileEntity = new UserProfile();
         userProfileEntity.nickname = address;
