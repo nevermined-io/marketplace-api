@@ -37,7 +37,6 @@ export class PermissionController {
   }
 
   @Get(':id')
-  @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Get permission by Id',
   })
