@@ -36,6 +36,13 @@ describe('Permission', () => {
 
   const permissionService = {
     createOne: (createPermissionDto) => createPermissionDto,
+    findOneById: () => {
+      return {
+        _source: permission,
+        _index: MarketplaceIndex.Permission,
+        _id: permission.id,
+      };
+    },
   };
 
   beforeAll(async () => {
@@ -86,6 +93,13 @@ describe('Permission', () => {
       .send(permission);
 
     expect(response.statusCode).toBe(201);
+    expect(response.body).toStrictEqual({ ...permission, issuanceDate: permission.issuanceDate.toISOString() });
+  });
+
+  it('/GET by id', async () => {
+    const response = await request(app.getHttpServer()).get(`/${permission.id}`);
+
+    expect(response.statusCode).toBe(200);
     expect(response.body).toStrictEqual({ ...permission, issuanceDate: permission.issuanceDate.toISOString() });
   });
 });

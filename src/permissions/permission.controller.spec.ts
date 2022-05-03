@@ -6,10 +6,18 @@ import { PermissionController } from './permission.controller';
 import { PermissionService } from './permission.service';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
 import { permission } from './permission.mockup';
+import { MarketplaceIndex } from '../common/type';
+import { GetPermissionDto } from './dto/get-permission.dto';
 
 describe('UserProfileController', () => {
   let permissionController: PermissionController;
   let permissionService: PermissionService;
+
+  const permisionSource = {
+    _source: permission,
+    _index: MarketplaceIndex.Permission,
+    _id: permission.id,
+  };
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
@@ -38,5 +46,13 @@ describe('UserProfileController', () => {
     jest.spyOn(permissionService, 'createOne').mockImplementation((createPermissionDto) => createPermissionDto as any);
 
     expect(await permissionController.createPermission(permission)).toStrictEqual(permission);
+  });
+
+  it('it should get a permission by passing Id', async () => {
+    jest.spyOn(permissionService, 'findOneById').mockResolvedValue(permisionSource);
+
+    expect(await permissionController.getPermissionById(permission.id)).toStrictEqual(
+      GetPermissionDto.fromSource(permisionSource)
+    );
   });
 });

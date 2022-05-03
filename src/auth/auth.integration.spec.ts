@@ -133,5 +133,5 @@ describe('AuthController', () => {
 
     expect(response.statusCode).toBe(201);
     expect(response.body).toHaveProperty('access_token');
-  });
+  }, 15000);
 });
