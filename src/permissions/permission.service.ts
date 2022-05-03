@@ -3,6 +3,7 @@ import { MarketplaceIndex } from '../common/type';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
 import { Permission } from './permission.entity';
 import { CreatePermissionDto } from './dto/create-permission.dto';
+import { SearchHit } from '@elastic/elasticsearch/api/types';
 
 @Injectable()
 export class PermissionService {
@@ -14,5 +15,11 @@ export class PermissionService {
     await this.elasticService.addDocumentToIndex(MarketplaceIndex.Permission, permission.id, permission);
 
     return permission;
+  }
+
+  async findOneById(id: string): Promise<SearchHit<Permission>> {
+    return this.elasticService.getDocumentByIndexAndId(MarketplaceIndex.Permission, id) as Promise<
+      SearchHit<Permission>
+    >;
   }
 }

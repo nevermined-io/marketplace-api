@@ -1,10 +1,11 @@
-import { Post, Controller, Body } from '@nestjs/common';
+import { Post, Controller, Body, Get, Param } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { PermissionService } from './permission.service';
 import { CreatePermissionDto } from './dto/create-permission.dto';
 import { GetPermissionDto } from './dto/get-permission.dto';
 import { Roles } from '../common/decorators/roles.decorators';
 import { AuthRoles } from '../common/type';
+import { Public } from '../common/decorators/auth.decorator';
 
 @ApiTags('User Profile')
 @Controller()
@@ -24,14 +25,31 @@ export class PermissionController {
     type: GetPermissionDto,
   })
   @ApiResponse({
-    status: 403,
+    status: 400,
     description: 'Bad Request',
   })
   @ApiResponse({
-    status: 401,
-    description: 'Unauthorized',
+    status: 403,
+    description: 'Forbidden',
   })
   async createPermission(@Body() createPermissionDto: CreatePermissionDto): Promise<GetPermissionDto> {
     return this.permissionService.createOne(createPermissionDto);
+  }
+
+  @Get(':id')
+  @ApiBearerAuth('Authorization')
+  @ApiOperation({
+    description: 'Get permission by Id',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Permission is returned',
+    type: GetPermissionDto,
+  })
+  @Public()
+  async getPermissionById(@Param() id: string): Promise<GetPermissionDto> {
+    const permissionSource = await this.permissionService.findOneById(id);
+
+    return GetPermissionDto.fromSource(permissionSource);
   }
 }

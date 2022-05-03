@@ -1,9 +1,22 @@
+import { SearchHit } from '@elastic/elasticsearch/api/types';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 import { v4 as uuidv4 } from 'uuid';
 import { PermissionType } from '../../common/type';
+import { Permission } from '../permission.entity';
 
 export class GetPermissionDto {
+  static fromSource(permisionSource: SearchHit<Permission>): GetPermissionDto {
+    return new GetPermissionDto(
+      permisionSource._source.id,
+      permisionSource._source.userId,
+      permisionSource._source.type,
+      permisionSource._source.issuer,
+      permisionSource._source.holder,
+      permisionSource._source.issuanceDate
+    );
+  }
+
   @ApiProperty({
     example: `pe-${uuidv4()}`,
     description: 'Unique identifier for the permissions entry',
@@ -44,4 +57,13 @@ export class GetPermissionDto {
     description: 'When the permissions entry was created',
   })
   issuanceDate: Date;
+
+  constructor(id: string, userId: string, type: PermissionType[], issuer: string, holder: string, issuranceDate: Date) {
+    this.id = id;
+    this.userId = userId;
+    this.type = type;
+    this.issuer = issuer;
+    this.holder = holder;
+    this.issuanceDate = issuranceDate;
+  }
 }
