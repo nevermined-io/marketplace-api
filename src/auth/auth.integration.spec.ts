@@ -15,6 +15,7 @@ import { UserProfileService } from '../user-profiles/user-profile.service';
 import { UserProfile } from '../user-profiles/user-profile.entity';
 import { State, MarketplaceIndex } from '../common/type';
 import { JwtAuthGuard } from '../common/guards/auth/jwt-auth.guard';
+import { PermissionService } from '../permissions/permission.service';
 
 describe('AuthController', () => {
   let app: INestApplication;
@@ -73,6 +74,16 @@ describe('AuthController', () => {
               _index: MarketplaceIndex.UserProfile,
               _id: userId,
             }),
+          },
+        },
+        {
+          provide: PermissionService,
+          useValue: {
+            findManyByUserId: () => {
+              return {
+                hits: [],
+              };
+            },
           },
         },
       ],
