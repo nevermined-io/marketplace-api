@@ -12,6 +12,7 @@ import { EthSignJWT, CLIENT_ASSERTION_TYPE } from '../common/guards/shared/jwt.u
 import { UserProfileService } from '../user-profiles/user-profile.service';
 import { UserProfile } from '../user-profiles/user-profile.entity';
 import { State, MarketplaceIndex } from '../common/type';
+import { PermissionService } from '../permissions/permission.service';
 
 describe('AuthController', () => {
   let authController: AuthController;
@@ -70,6 +71,16 @@ describe('AuthController', () => {
               _index: MarketplaceIndex.UserProfile,
               _id: userId,
             }),
+          },
+        },
+        {
+          provide: PermissionService,
+          useValue: {
+            findManyByUserId: () => {
+              return {
+                hits: [],
+              };
+            },
           },
         },
       ],

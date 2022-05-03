@@ -21,6 +21,7 @@ import { BookmarkModule } from './bookmark.module';
 import { BookmarkService } from './bookmark.service';
 import { Bookmark } from './bookmark.entity';
 import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
+import { PermissionService } from '../permissions/permission.service';
 
 describe('Bookmark', () => {
   let app: INestApplication;
@@ -88,6 +89,16 @@ describe('Bookmark', () => {
                 _source: userProfile,
                 _index: MarketplaceIndex.UserProfile,
                 _id: userProfile.userId,
+              };
+            },
+          },
+        },
+        {
+          provide: PermissionService,
+          useValue: {
+            findManyByUserId: () => {
+              return {
+                hits: [],
               };
             },
           },

@@ -8,6 +8,7 @@ import { ElasticService } from '../shared/elasticsearch/elastic.service';
 import { permission } from './permission.mockup';
 import { MarketplaceIndex } from '../common/type';
 import { GetPermissionDto } from './dto/get-permission.dto';
+import { SearchResponse } from '../common/helpers/search-response.dto';
 
 describe('UserProfileController', () => {
   let permissionController: PermissionController;
@@ -53,6 +54,25 @@ describe('UserProfileController', () => {
 
     expect(await permissionController.getPermissionById(permission.id)).toStrictEqual(
       GetPermissionDto.fromSource(permisionSource)
+    );
+  });
+
+  it('it should get permissions by passing userId', async () => {
+    jest.spyOn(permissionService, 'findManyByUserId').mockResolvedValue({
+      hits: [permisionSource],
+    });
+
+    const searchQueryDto = {
+      page: 1,
+      offset: 100,
+    };
+
+    expect(await permissionController.getPermissionByUserId(permission.userId, searchQueryDto)).toStrictEqual(
+      SearchResponse.fromSearchSources(
+        searchQueryDto,
+        { hits: [permisionSource] },
+        [permisionSource].map(GetPermissionDto.fromSource)
+      )
     );
   });
 });

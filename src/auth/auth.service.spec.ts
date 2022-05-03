@@ -13,6 +13,7 @@ import { ConfigModule } from '../shared/config/config.module';
 import { ConfigService } from '../shared/config/config.service';
 import { UserProfileService } from '../user-profiles/user-profile.service';
 import { UserProfile } from '../user-profiles/user-profile.entity';
+import { PermissionService } from '../permissions/permission.service';
 
 describe('AuthService', () => {
   let authService: AuthService;
@@ -66,6 +67,16 @@ describe('AuthService', () => {
               _index: MarketplaceIndex.UserProfile,
               _id: userId,
             }),
+          },
+        },
+        {
+          provide: PermissionService,
+          useValue: {
+            findManyByUserId: () => {
+              return {
+                hits: [],
+              };
+            },
           },
         },
       ],

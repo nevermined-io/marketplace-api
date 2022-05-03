@@ -1,4 +1,4 @@
-import { Post, Controller, Body, Get, Param } from '@nestjs/common';
+import { Post, Controller, Body, Get, Param, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { PermissionService } from './permission.service';
 import { CreatePermissionDto } from './dto/create-permission.dto';
@@ -6,6 +6,8 @@ import { GetPermissionDto } from './dto/get-permission.dto';
 import { Roles } from '../common/decorators/roles.decorators';
 import { AuthRoles } from '../common/type';
 import { Public } from '../common/decorators/auth.decorator';
+import { SearchQueryDto } from '../common/helpers/search-query.dto';
+import { SearchResponse } from '../common/helpers/search-response.dto';
 
 @ApiTags('User Profile')
 @Controller()
@@ -50,5 +52,33 @@ export class PermissionController {
     const permissionSource = await this.permissionService.findOneById(id);
 
     return GetPermissionDto.fromSource(permissionSource);
+  }
+
+  @Get('user/:userId')
+  @ApiOperation({
+    description: 'Get permissions by userId',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Permissions are returned',
+    schema: SearchResponse.toDocs(GetPermissionDto),
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
+  })
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @Public()
+  async getPermissionByUserId(
+    @Param('userId') userId: string,
+    @Query() searchQueryDto: SearchQueryDto
+  ): Promise<SearchResponse<GetPermissionDto[]>> {
+    const permissionSources = await this.permissionService.findManyByUserId(userId, searchQueryDto);
+
+    return SearchResponse.fromSearchSources(
+      searchQueryDto,
+      permissionSources,
+      permissionSources.hits.map(GetPermissionDto.fromSource)
+    );
   }
 }

@@ -5,12 +5,18 @@ import { LoginDto } from './dto/login.dto';
 import { CLIENT_ASSERTION_TYPE, jwtEthVerify } from '../common/guards/shared/jwt.utils';
 import { UserProfileService } from '../user-profiles/user-profile.service';
 import { UserProfile } from '../user-profiles/user-profile.entity';
+import { PermissionService } from '../permissions/permission.service';
 import { ClientAssertionDto } from './dto/clientAssertion.dto';
 import { State } from '../common/type';
+import { Permission } from '../permissions/permission.entity';
 
 @Injectable()
 export class AuthService {
-  constructor(private jwtService: JwtService, private userProfileService: UserProfileService) {}
+  constructor(
+    private jwtService: JwtService,
+    private userProfileService: UserProfileService,
+    private permissionService: PermissionService
+  ) {}
 
   /**
    * RFC-7523 Client Authentication https://datatracker.ietf.org/doc/html/rfc7523#section-2.2
@@ -45,11 +51,13 @@ export class AuthService {
         userProfile = userProfileSource._source;
       }
 
+      const permission = await this.getPermission(userProfile.userId, address);
+
       return {
         access_token: this.jwtService.sign({
           iss: address,
           sub: userProfile.userId,
-          roles: [],
+          roles: permission?.type || [],
         }),
       };
     } catch (error) {
@@ -76,15 +84,28 @@ export class AuthService {
 
       const userProfileUpdated = (await this.userProfileService.updateOneByEntryId(userId, userProfile))?._source;
 
+      const permission = await this.getPermission(userId, address);
+
       return {
         access_token: this.jwtService.sign({
           iss: address,
           sub: userProfileUpdated.userId,
-          roles: [],
+          roles: permission?.type || [],
         }),
       };
     } catch (error) {
       throw new UnauthorizedException(`The 'client_assertion' is invalid: ${(error as Error).message}`);
     }
+  }
+
+  private async getPermission(userId: string, address: string): Promise<Permission> {
+    return (
+      await this.permissionService.findManyByUserId(userId, {
+        page: 1,
+        offset: 100,
+      })
+    ).hits
+      .map((p) => p._source)
+      .find((p) => p.holder === address);
   }
 }

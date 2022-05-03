@@ -24,6 +24,7 @@ import { AssetModule } from './asset.module';
 import { asset, ddoStatus, service } from './asset.mockup';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
 import { Asset } from './asset.entity';
+import { PermissionService } from '../permissions/permission.service';
 
 describe('Asset', () => {
   let app: INestApplication;
@@ -134,6 +135,16 @@ describe('Asset', () => {
                 _source: userProfile,
                 _index: MarketplaceIndex.UserProfile,
                 _id: userProfile.userId,
+              };
+            },
+          },
+        },
+        {
+          provide: PermissionService,
+          useValue: {
+            findManyByUserId: () => {
+              return {
+                hits: [],
               };
             },
           },

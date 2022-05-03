@@ -25,6 +25,7 @@ describe('Permission', () => {
   let app: INestApplication;
   let token: LoginDto;
   let authService: AuthService;
+  let permissionService: PermissionService;
 
   const userProfile = new UserProfile();
   userProfile.addresses = ['0x37BB53e3d293494DE59fBe1FF78500423dcFd43B'];
@@ -34,13 +35,18 @@ describe('Permission', () => {
   userProfile.email = faker.internet.email();
   userProfile.state = State.Confirmed;
 
-  const permissionService = {
+  const permissionServiceMock = {
     createOne: (createPermissionDto) => createPermissionDto,
     findOneById: () => {
       return {
         _source: permission,
         _index: MarketplaceIndex.Permission,
         _id: permission.id,
+      };
+    },
+    findManyByUserId: () => {
+      return {
+        hits: [],
       };
     },
   };
@@ -75,10 +81,11 @@ describe('Permission', () => {
       ],
     })
       .overrideProvider(PermissionService)
-      .useValue(permissionService)
+      .useValue(permissionServiceMock)
       .compile();
 
     authService = moduleRef.get<AuthService>(AuthService);
+    permissionService = moduleRef.get<PermissionService>(PermissionService);
     app = moduleRef.createNestApplication();
     app.useGlobalGuards(new JwtAuthGuard(new Reflector()));
     await app.init();
@@ -101,5 +108,29 @@ describe('Permission', () => {
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toStrictEqual({ ...permission, issuanceDate: permission.issuanceDate.toISOString() });
+  });
+
+  it('/GET by userId', async () => {
+    const permisionHits = {
+      hits: [
+        {
+          _source: permission,
+          _index: MarketplaceIndex.Permission,
+          _id: permission.id,
+        },
+      ],
+      total: 1,
+    };
+
+    jest.spyOn(permissionService, 'findManyByUserId').mockResolvedValue(permisionHits);
+    const response = await request(app.getHttpServer()).get(`/user/${permission.userId}`);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toStrictEqual({
+      total_results: 1,
+      total_pages: 1,
+      page: 1,
+      results: [{ ...permission, issuanceDate: permission.issuanceDate.toISOString() }],
+    });
   });
 });

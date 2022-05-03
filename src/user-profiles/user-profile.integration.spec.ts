@@ -20,6 +20,7 @@ import { UserProfileModule } from './user-profile.module';
 import { UserProfileService } from './user-profile.service';
 import { CreateUserProfileDto } from './dto/create-user-profile.dto';
 import { UpdateUserProfileDto } from './dto/update-user-profile.dto';
+import { PermissionService } from '../permissions/permission.service';
 
 describe('User Profile', () => {
   let app: INestApplication;
@@ -88,7 +89,20 @@ describe('User Profile', () => {
           signOptions: { expiresIn: '60m' },
         }),
       ],
-      providers: [JwtStrategy, AuthService],
+      providers: [
+        JwtStrategy,
+        AuthService,
+        {
+          provide: PermissionService,
+          useValue: {
+            findManyByUserId: () => {
+              return {
+                hits: [],
+              };
+            },
+          },
+        },
+      ],
     })
       .overrideProvider(UserProfileService)
       .useValue(userProfileService)
