@@ -100,7 +100,7 @@ export class AuthService {
 
   private async getPermission(userId: string, address: string): Promise<Permission> {
     return (
-      await this.permissionService.findManyByUserId(userId, {
+      await this.permissionService.findManyByUserIdAndType(userId, undefined, {
         page: 1,
         offset: 100,
       })

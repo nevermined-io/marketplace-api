@@ -76,7 +76,7 @@ describe('AuthController', () => {
         {
           provide: PermissionService,
           useValue: {
-            findManyByUserId: () => {
+            findManyByUserIdAndType: () => {
               return {
                 hits: [],
               };

@@ -95,7 +95,7 @@ describe('User Profile', () => {
         {
           provide: PermissionService,
           useValue: {
-            findManyByUserId: () => {
+            findManyByUserIdAndType: () => {
               return {
                 hits: [],
               };

@@ -72,7 +72,7 @@ describe('AuthService', () => {
         {
           provide: PermissionService,
           useValue: {
-            findManyByUserId: () => {
+            findManyByUserIdAndType: () => {
               return {
                 hits: [],
               };
