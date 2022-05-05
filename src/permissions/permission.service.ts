@@ -33,18 +33,24 @@ export class PermissionService {
     return this.elasticService.searchByIndex(
       MarketplaceIndex.Permission,
       {
-        term: {
-          'userId.keyword': {
-            value: userId,
-          },
-        },
-        ...(type
-          ? {
-              match: {
-                type,
+        bool: {
+          must: {
+            term: {
+              'userId.keyword': {
+                value: userId,
               },
-            }
-          : undefined),
+            },
+          },
+          ...(type
+            ? {
+                filter: {
+                  match: {
+                    type,
+                  },
+                },
+              }
+            : undefined),
+        },
       },
       searchQueryDto
     ) as Promise<SearchHitsMetadata<Permission>>;
