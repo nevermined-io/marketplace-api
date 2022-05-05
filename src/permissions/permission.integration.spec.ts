@@ -58,6 +58,8 @@ describe('Permission', () => {
         _id: id,
       };
     },
+
+    deleteOneByEntryId: () => undefined,
   };
 
   beforeAll(async () => {
@@ -177,5 +179,12 @@ describe('Permission', () => {
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toStrictEqual({ ...newPermission, issuanceDate: newPermission.issuanceDate.toISOString() });
+  });
+
+  it('/DELETE by id', async () => {
+    await request(app.getHttpServer())
+      .del(`/${permission.id}`)
+      .set('Authorization', `Bearer ${token.access_token}`)
+      .expect(200);
   });
 });
