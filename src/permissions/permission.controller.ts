@@ -1,4 +1,4 @@
-import { Post, Controller, Body, Get, Put, Param, Query, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Post, Controller, Body, Get, Put, Delete, Param, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { PermissionService } from './permission.service';
 import { CreatePermissionDto } from './dto/create-permission.dto';
@@ -142,5 +142,31 @@ export class PermissionController {
     const permissionSource = await this.permissionService.updateOneByEntryId(id, updatePermissionDto);
 
     return GetPermissionDto.fromSource(permissionSource);
+  }
+
+  @Delete(':id')
+  @Roles(AuthRoles.Admin)
+  @ApiBearerAuth('Authorization')
+  @ApiOperation({
+    description: 'Delete a permission',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Permission deleted',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not found',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden',
+  })
+  async deletePermissionById(@Param('id') id: string): Promise<void> {
+    await this.permissionService.deleteOneByEntryId(id);
   }
 }

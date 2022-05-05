@@ -59,4 +59,8 @@ export class PermissionService {
       SearchHit<Permission>
     >;
   }
+
+  async deleteOneByEntryId(entryId: string): Promise<void> {
+    await this.elasticService.deleteDocumentByIndexAndId(MarketplaceIndex.Permission, entryId);
+  }
 }

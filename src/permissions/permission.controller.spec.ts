@@ -116,4 +116,14 @@ describe('UserProfileController', () => {
       })
     );
   });
+
+  it('should delete permission by passing id', async () => {
+    const permissionServiceSpy = jest.spyOn(permissionService, 'deleteOneByEntryId');
+
+    permissionServiceSpy.mockResolvedValue(undefined);
+
+    await permissionController.deletePermissionById(permission.id);
+
+    expect(permissionServiceSpy).toBeCalled();
+  });
 });
