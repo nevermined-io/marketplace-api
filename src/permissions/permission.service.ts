@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { MarketplaceIndex } from '../common/type';
+import { MarketplaceIndex, PermissionType } from '../common/type';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
 import { Permission } from './permission.entity';
 import { CreatePermissionDto } from './dto/create-permission.dto';
@@ -24,7 +24,11 @@ export class PermissionService {
     >;
   }
 
-  async findManyByUserId(userId: string, searchQueryDto: SearchQueryDto): Promise<SearchHitsMetadata<Permission>> {
+  async findManyByUserIdAndType(
+    userId: string,
+    type: PermissionType,
+    searchQueryDto: SearchQueryDto
+  ): Promise<SearchHitsMetadata<Permission>> {
     return this.elasticService.searchByIndex(
       MarketplaceIndex.Permission,
       {
@@ -33,6 +37,13 @@ export class PermissionService {
             value: userId,
           },
         },
+        ...(type
+          ? {
+              match: {
+                type,
+              },
+            }
+          : undefined),
       },
       searchQueryDto
     ) as Promise<SearchHitsMetadata<Permission>>;

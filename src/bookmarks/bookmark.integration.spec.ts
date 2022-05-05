@@ -96,7 +96,7 @@ describe('Bookmark', () => {
         {
           provide: PermissionService,
           useValue: {
-            findManyByUserId: () => {
+            findManyByUserIdAndType: () => {
               return {
                 hits: [],
               };

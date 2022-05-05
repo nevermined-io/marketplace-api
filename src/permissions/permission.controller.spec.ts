@@ -6,7 +6,7 @@ import { PermissionController } from './permission.controller';
 import { PermissionService } from './permission.service';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
 import { permission } from './permission.mockup';
-import { MarketplaceIndex } from '../common/type';
+import { MarketplaceIndex, PermissionType } from '../common/type';
 import { GetPermissionDto } from './dto/get-permission.dto';
 import { SearchResponse } from '../common/helpers/search-response.dto';
 
@@ -58,7 +58,7 @@ describe('UserProfileController', () => {
   });
 
   it('it should get permissions by passing userId', async () => {
-    jest.spyOn(permissionService, 'findManyByUserId').mockResolvedValue({
+    jest.spyOn(permissionService, 'findManyByUserIdAndType').mockResolvedValue({
       hits: [permisionSource],
     });
 
@@ -68,6 +68,27 @@ describe('UserProfileController', () => {
     };
 
     expect(await permissionController.getPermissionByUserId(permission.userId, searchQueryDto)).toStrictEqual(
+      SearchResponse.fromSearchSources(
+        searchQueryDto,
+        { hits: [permisionSource] },
+        [permisionSource].map(GetPermissionDto.fromSource)
+      )
+    );
+  });
+
+  it('It should get permission by passing userId and type', async () => {
+    jest.spyOn(permissionService, 'findManyByUserIdAndType').mockResolvedValue({
+      hits: [permisionSource],
+    });
+
+    const searchQueryDto = {
+      page: 1,
+      offset: 100,
+    };
+
+    expect(
+      await permissionController.getPermissionByUserIdAndType(permission.userId, PermissionType.Read, searchQueryDto)
+    ).toStrictEqual(
       SearchResponse.fromSearchSources(
         searchQueryDto,
         { hits: [permisionSource] },

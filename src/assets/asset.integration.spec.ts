@@ -142,7 +142,7 @@ describe('Asset', () => {
         {
           provide: PermissionService,
           useValue: {
-            findManyByUserId: () => {
+            findManyByUserIdAndType: () => {
               return {
                 hits: [],
               };

@@ -16,7 +16,7 @@ import { ConfigModule } from '../shared/config/config.module';
 import { UserProfileModule } from '../user-profiles/user-profile.module';
 import { UserProfile } from '../user-profiles/user-profile.entity';
 import { UserProfileService } from '../user-profiles/user-profile.service';
-import { MarketplaceIndex, State } from '../common/type';
+import { MarketplaceIndex, PermissionType, State } from '../common/type';
 import { PermissionModule } from './permission.module';
 import { PermissionService } from './permission.service';
 import { permission } from './permission.mockup';
@@ -44,7 +44,7 @@ describe('Permission', () => {
         _id: permission.id,
       };
     },
-    findManyByUserId: () => {
+    findManyByUserIdAndType: () => {
       return {
         hits: [],
       };
@@ -122,8 +122,32 @@ describe('Permission', () => {
       total: 1,
     };
 
-    jest.spyOn(permissionService, 'findManyByUserId').mockResolvedValue(permisionHits);
+    jest.spyOn(permissionService, 'findManyByUserIdAndType').mockResolvedValue(permisionHits);
     const response = await request(app.getHttpServer()).get(`/user/${permission.userId}`);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toStrictEqual({
+      total_results: 1,
+      total_pages: 1,
+      page: 1,
+      results: [{ ...permission, issuanceDate: permission.issuanceDate.toISOString() }],
+    });
+  });
+
+  it('/GET by userId and type', async () => {
+    const permisionHits = {
+      hits: [
+        {
+          _source: permission,
+          _index: MarketplaceIndex.Permission,
+          _id: permission.id,
+        },
+      ],
+      total: 1,
+    };
+
+    jest.spyOn(permissionService, 'findManyByUserIdAndType').mockResolvedValue(permisionHits);
+    const response = await request(app.getHttpServer()).get(`/user/${permission.userId}/${PermissionType.Read}`);
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toStrictEqual({

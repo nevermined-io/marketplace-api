@@ -4,7 +4,7 @@ import { PermissionService } from './permission.service';
 import { CreatePermissionDto } from './dto/create-permission.dto';
 import { GetPermissionDto } from './dto/get-permission.dto';
 import { Roles } from '../common/decorators/roles.decorators';
-import { AuthRoles } from '../common/type';
+import { AuthRoles, PermissionType } from '../common/type';
 import { Public } from '../common/decorators/auth.decorator';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
 import { SearchResponse } from '../common/helpers/search-response.dto';
@@ -73,7 +73,36 @@ export class PermissionController {
     @Param('userId') userId: string,
     @Query() searchQueryDto: SearchQueryDto
   ): Promise<SearchResponse<GetPermissionDto[]>> {
-    const permissionSources = await this.permissionService.findManyByUserId(userId, searchQueryDto);
+    const permissionSources = await this.permissionService.findManyByUserIdAndType(userId, undefined, searchQueryDto);
+
+    return SearchResponse.fromSearchSources(
+      searchQueryDto,
+      permissionSources,
+      permissionSources.hits.map(GetPermissionDto.fromSource)
+    );
+  }
+
+  @Get('user/:userId/:type')
+  @ApiOperation({
+    description: 'Get permissions by userId and type',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Permissions are returned',
+    schema: SearchResponse.toDocs(GetPermissionDto),
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
+  })
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @Public()
+  async getPermissionByUserIdAndType(
+    @Param('userId') userId: string,
+    @Param('type') type: PermissionType,
+    @Query() searchQueryDto: SearchQueryDto
+  ): Promise<SearchResponse<GetPermissionDto[]>> {
+    const permissionSources = await this.permissionService.findManyByUserIdAndType(userId, type, searchQueryDto);
 
     return SearchResponse.fromSearchSources(
       searchQueryDto,
