@@ -1,8 +1,9 @@
-import { Post, Controller, Body, Get, Param, Query, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Post, Controller, Body, Get, Put, Param, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { PermissionService } from './permission.service';
 import { CreatePermissionDto } from './dto/create-permission.dto';
 import { GetPermissionDto } from './dto/get-permission.dto';
+import { UpdatePermissionDto } from './dto/update-permission.dto';
 import { Roles } from '../common/decorators/roles.decorators';
 import { AuthRoles, PermissionType } from '../common/type';
 import { Public } from '../common/decorators/auth.decorator';
@@ -109,5 +110,37 @@ export class PermissionController {
       permissionSources,
       permissionSources.hits.map(GetPermissionDto.fromSource)
     );
+  }
+
+  @Put(':id')
+  @Roles(AuthRoles.Admin)
+  @ApiBearerAuth('Authorization')
+  @ApiOperation({
+    description: 'Update the user profile',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Return a updated permission',
+    type: GetPermissionDto,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not found',
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Bad Request',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
+  async updatePermissionById(
+    @Param('id') id: string,
+    @Body() updatePermissionDto: UpdatePermissionDto
+  ): Promise<GetPermissionDto> {
+    const permissionSource = await this.permissionService.updateOneByEntryId(id, updatePermissionDto);
+
+    return GetPermissionDto.fromSource(permissionSource);
   }
 }

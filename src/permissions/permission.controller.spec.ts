@@ -5,7 +5,7 @@ import { Logger } from '../shared/logger/logger.service';
 import { PermissionController } from './permission.controller';
 import { PermissionService } from './permission.service';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
-import { permission } from './permission.mockup';
+import { permission, newPermission } from './permission.mockup';
 import { MarketplaceIndex, PermissionType } from '../common/type';
 import { GetPermissionDto } from './dto/get-permission.dto';
 import { SearchResponse } from '../common/helpers/search-response.dto';
@@ -94,6 +94,26 @@ describe('UserProfileController', () => {
         { hits: [permisionSource] },
         [permisionSource].map(GetPermissionDto.fromSource)
       )
+    );
+  });
+
+  it('should update permission by passing id', async () => {
+    jest.spyOn(permissionService, 'updateOneByEntryId').mockResolvedValue({
+      _source: newPermission,
+      _index: MarketplaceIndex.Permission,
+      _id: newPermission.id,
+    });
+
+    expect(
+      await permissionController.updatePermissionById(permission.id, {
+        type: newPermission.type,
+      })
+    ).toStrictEqual(
+      GetPermissionDto.fromSource({
+        _source: newPermission,
+        _index: MarketplaceIndex.Permission,
+        _id: newPermission.id,
+      })
     );
   });
 });
