@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { IsEnum, IsString } from 'class-validator';
 import { PermissionType } from '../../common/type';
 
 export class CreatePermissionDto {
@@ -14,7 +14,9 @@ export class CreatePermissionDto {
     example: [PermissionType.Read, PermissionType.Update, PermissionType.Delete],
     description: 'The list of permissions owned hold by the user',
   })
-  @IsString()
+  @IsEnum(PermissionType, {
+    each: true,
+  })
   type: PermissionType[];
 
   @ApiProperty({

@@ -10,7 +10,7 @@ import { Public } from '../common/decorators/auth.decorator';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
 import { SearchResponse } from '../common/helpers/search-response.dto';
 
-@ApiTags('User Profile')
+@ApiTags('Permission')
 @Controller()
 export class PermissionController {
   constructor(private readonly permissionService: PermissionService) {}
@@ -49,7 +49,7 @@ export class PermissionController {
     type: GetPermissionDto,
   })
   @Public()
-  async getPermissionById(@Param() id: string): Promise<GetPermissionDto> {
+  async getPermissionById(@Param('id') id: string): Promise<GetPermissionDto> {
     const permissionSource = await this.permissionService.findOneById(id);
 
     return GetPermissionDto.fromSource(permissionSource);
@@ -117,6 +117,7 @@ export class PermissionController {
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Update the user profile',
+    summary: 'Admin',
   })
   @ApiResponse({
     status: 200,
@@ -149,6 +150,7 @@ export class PermissionController {
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Delete a permission',
+    summary: 'Admin',
   })
   @ApiResponse({
     status: 200,
