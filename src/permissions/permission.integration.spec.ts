@@ -19,7 +19,8 @@ import { UserProfileService } from '../user-profiles/user-profile.service';
 import { MarketplaceIndex, PermissionType, State } from '../common/type';
 import { PermissionModule } from './permission.module';
 import { PermissionService } from './permission.service';
-import { permission } from './permission.mockup';
+import { newPermission, permission } from './permission.mockup';
+import { UpdatePermissionDto } from './dto/update-permission.dto';
 
 describe('Permission', () => {
   let app: INestApplication;
@@ -47,6 +48,14 @@ describe('Permission', () => {
     findManyByUserIdAndType: () => {
       return {
         hits: [],
+      };
+    },
+
+    updateOneByEntryId: (id: string, updatePermissionDto: UpdatePermissionDto) => {
+      return {
+        _source: { ...permission, ...updatePermissionDto },
+        _index: MarketplaceIndex.Permission,
+        _id: id,
       };
     },
   };
@@ -156,5 +165,17 @@ describe('Permission', () => {
       page: 1,
       results: [{ ...permission, issuanceDate: permission.issuanceDate.toISOString() }],
     });
+  });
+
+  it('/PUT by id', async () => {
+    const response = await request(app.getHttpServer())
+      .put(`/${newPermission.id}`)
+      .set('Authorization', `Bearer ${token.access_token}`)
+      .send({
+        type: newPermission.type,
+      });
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toStrictEqual({ ...newPermission, issuanceDate: newPermission.issuanceDate.toISOString() });
   });
 });

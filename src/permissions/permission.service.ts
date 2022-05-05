@@ -5,6 +5,7 @@ import { Permission } from './permission.entity';
 import { CreatePermissionDto } from './dto/create-permission.dto';
 import { SearchHit, SearchHitsMetadata } from '@elastic/elasticsearch/api/types';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
+import { UpdatePermissionDto } from './dto/update-permission.dto';
 
 @Injectable()
 export class PermissionService {
@@ -47,5 +48,15 @@ export class PermissionService {
       },
       searchQueryDto
     ) as Promise<SearchHitsMetadata<Permission>>;
+  }
+
+  async updateOneByEntryId(entryId: string, updatePermissionDto: UpdatePermissionDto): Promise<SearchHit<Permission>> {
+    await this.elasticService.updateDocumentByIndexAndId(MarketplaceIndex.UserProfile, entryId, {
+      doc: updatePermissionDto,
+    });
+
+    return this.elasticService.getDocumentByIndexAndId(MarketplaceIndex.Permission, entryId) as Promise<
+      SearchHit<Permission>
+    >;
   }
 }
