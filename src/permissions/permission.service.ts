@@ -51,7 +51,7 @@ export class PermissionService {
   }
 
   async updateOneByEntryId(entryId: string, updatePermissionDto: UpdatePermissionDto): Promise<SearchHit<Permission>> {
-    await this.elasticService.updateDocumentByIndexAndId(MarketplaceIndex.UserProfile, entryId, {
+    await this.elasticService.updateDocumentByIndexAndId(MarketplaceIndex.Permission, entryId, {
       doc: updatePermissionDto,
     });
 
