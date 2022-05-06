@@ -11,7 +11,6 @@ COPY src ./src
 COPY config ./config
 COPY package*.json ./
 COPY tsconfig* ./
-COPY ormconfig.js ./
 
 RUN npm run build
 
