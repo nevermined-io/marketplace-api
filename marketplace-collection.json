@@ -14,6 +14,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const util = require(\"util\");",
 									"const ether_code = pm.environment.get('etherCode');",
@@ -92,13 +93,13 @@
 									"})",
 									"",
 									"setTimeout(()=> {}, 1000);"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.collectionVariables.replaceIn('{{elsUrl}}/user_profile/_refresh'),",
@@ -150,8 +151,7 @@
 									"        });",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -277,6 +277,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const util = require(\"util\");",
 									"const ether_code = pm.environment.get('etherCode');",
@@ -325,13 +326,13 @@
 									"});",
 									"",
 									"setTimeout(()=> {}, 1000);"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"",
 									"pm.sendRequest({",
@@ -355,8 +356,7 @@
 									"        });",
 									"    });",
 									"})"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -376,8 +376,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
+								"value": "Bearer {{authToken}}"
 							}
 						],
 						"body": {
@@ -416,8 +415,7 @@
 									},
 									{
 										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
+										"value": "application/json"
 									}
 								],
 								"body": {
@@ -466,8 +464,7 @@
 									},
 									{
 										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
+										"value": "application/json"
 									}
 								],
 								"body": {
@@ -516,8 +513,7 @@
 									},
 									{
 										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
+										"value": "application/json"
 									}
 								],
 								"body": {
@@ -570,6 +566,7 @@
 								{
 									"listen": "test",
 									"script": {
+										"type": "text/javascript",
 										"exec": [
 											"pm.sendRequest({",
 											"    url: pm.environment.replaceIn('{{baseUrl}}/api/v1/ugc/bookmarks/{{id}}'),",
@@ -585,13 +582,13 @@
 											"});",
 											"",
 											""
-										],
-										"type": "text/javascript"
+										]
 									}
 								},
 								{
 									"listen": "prerequest",
 									"script": {
+										"type": "text/javascript",
 										"exec": [
 											"pm.sendRequest({",
 											"    url: pm.environment.replaceIn('{{baseUrl}}/api/v1/ugc/bookmarks'),",
@@ -607,8 +604,7 @@
 											"}, (error, response) => {",
 											"    pm.environment.set(\"id\", response.json().id);",
 											"});"
-										],
-										"type": "text/javascript"
+										]
 									}
 								}
 							],
@@ -726,6 +722,7 @@
 								{
 									"listen": "prerequest",
 									"script": {
+										"type": "text/javascript",
 										"exec": [
 											"pm.sendRequest({",
 											"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/ugc/bookmarks'),",
@@ -741,13 +738,13 @@
 											"}, (error, response) => {",
 											"    pm.environment.set(\"id\", response.json().id);",
 											"});"
-										],
-										"type": "text/javascript"
+										]
 									}
 								},
 								{
 									"listen": "test",
 									"script": {
+										"type": "text/javascript",
 										"exec": [
 											"pm.sendRequest({",
 											"    url: pm.environment.replaceIn('{{baseUrl}}/api/v1/ugc/bookmarks/{{id}}'),",
@@ -769,8 +766,7 @@
 											"        pm.expect(response.json()).to.have.property('description', 'This assets is the best');",
 											"    });",
 											"});"
-										],
-										"type": "text/javascript"
+										]
 									}
 								}
 							],
@@ -1049,6 +1045,7 @@
 								{
 									"listen": "prerequest",
 									"script": {
+										"type": "text/javascript",
 										"exec": [
 											"pm.sendRequest({",
 											"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/ugc/bookmarks'),",
@@ -1064,13 +1061,13 @@
 											"}, (error, response) => {",
 											"    pm.environment.set(\"id\", response.json().id);",
 											"});"
-										],
-										"type": "text/javascript"
+										]
 									}
 								},
 								{
 									"listen": "test",
 									"script": {
+										"type": "text/javascript",
 										"exec": [
 											"pm.sendRequest({",
 											"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/ugc/bookmarks'),",
@@ -1097,8 +1094,7 @@
 											"        });",
 											"    });",
 											"});"
-										],
-										"type": "text/javascript"
+										]
 									}
 								}
 							],
@@ -1270,6 +1266,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/ugc/bookmarks'),",
@@ -1294,8 +1291,7 @@
 									"        })",
 									"});",
 									""
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -1483,6 +1479,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"    url: pm.collectionVariables.replaceIn('{{elsUrl}}/bookmark/_refresh'),",
@@ -1504,13 +1501,13 @@
 									"        });",
 									"    });",
 									"})"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/ugc/bookmarks'),",
@@ -1526,8 +1523,7 @@
 									"}, (error, response) => {",
 									"    pm.environment.set(\"userId\", response.json().userId);",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -1657,6 +1653,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -1763,13 +1760,13 @@
 									"}, (error, response) => {",
 									"    pm.environment.set('did', response.json().id);",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/metadata/{{did}}'),",
@@ -1784,8 +1781,7 @@
 									"        pm.expect(response.json()).to.have.property('curation');",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -1944,6 +1940,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -2059,13 +2056,13 @@
 									"        },",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -2193,8 +2190,7 @@
 									"        });",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -2287,6 +2283,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -2402,13 +2399,13 @@
 									"        },",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const assetToUpdate = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -2519,8 +2516,7 @@
 									"        pm.expect(response.json()).to.have.property('updated', '2020-02-08T08:13:49Z');",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -2800,6 +2796,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -2915,13 +2912,13 @@
 									"        },",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -3051,8 +3048,7 @@
 									"        });",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -3203,6 +3199,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -3318,13 +3315,13 @@
 									"        },",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const query = {",
 									"  \"query\": {",
@@ -3355,8 +3352,7 @@
 									"        pm.expect(response.json().results[0]).to.have.property('id', pm.environment.get('did'));",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -3496,6 +3492,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -5224,17 +5221,16 @@
 									"            pm.expect(response).to.have.property('status', 'Created');",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									""
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -5427,6 +5423,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -5542,13 +5539,13 @@
 									"        },",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/ddo?query={\"match_all\": {}}&offset=100&page=1&sort={ \"created\": \"asc\" }'),",
@@ -5563,8 +5560,7 @@
 									"        pm.expect(response.json().results.some(a => a.id === pm.environment.get('did'))).to.be.true;",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -5732,6 +5728,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -5846,13 +5843,13 @@
 									"        },",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets?query={\"match_all\": {}}&offset=100&page=1&sort={ \"created\": \"asc\" }'),",
@@ -5868,8 +5865,7 @@
 									"        pm.expect(response.json().some(a => a === pm.environment.get('did'))).to.be.true;",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -6038,6 +6034,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -6152,13 +6149,13 @@
 									"        },",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/ddo/query?query={\"match_all\": {}}&offset=100&page=1&sort={ \"created\": \"asc\" }'),",
@@ -6173,8 +6170,7 @@
 									"        pm.expect(response.json().results.some(a => a.id === pm.environment.get('did'))).to.be.true;",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -6346,6 +6342,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -6460,13 +6457,13 @@
 									"        },",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/ddo/{{did}}'),",
@@ -6481,8 +6478,7 @@
 									"        pm.expect(response.json()).to.have.property('id', pm.environment.get('did'));",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -6639,6 +6635,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/ddo/{{did}}/status'),",
@@ -6653,13 +6650,13 @@
 									"        pm.expect(response.json()).to.have.property('did', pm.environment.get('did'));",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -6774,8 +6771,7 @@
 									"        },",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -6900,6 +6896,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const uuid = require('uuid');",
 									"",
@@ -6976,8 +6973,7 @@
 									"        pm.expect(response.json()).to.have.property('agreementId', service.agreementId);",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -7169,6 +7165,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const uuid = require('uuid');",
 									"",
@@ -7241,13 +7238,13 @@
 									"}, (error, response) => {",
 									"    pm.environment.set('agreementId', response.json().agreementId);",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const query = {",
 									"  \"offset\": \"100\",",
@@ -7280,8 +7277,7 @@
 									"        });",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -7421,6 +7417,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"const uuid = require('uuid');",
 									"",
@@ -7501,13 +7498,13 @@
 									"        },",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/service/{{agreementId}}'),",
@@ -7522,8 +7519,7 @@
 									"        pm.expect(response.json()).to.have.property('agreementId', pm.environment.get('agreementId'));",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -7832,7 +7828,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer {{authToken}}"
+								"value": "Bearer {{authAdmin}}"
 							}
 						],
 						"url": {
@@ -7931,6 +7927,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/profiles'),",
@@ -7963,17 +7960,16 @@
 									"            pm.expect(response.json()).to.have.property('nickname', 'nevermined');",
 									"        })",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									""
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -7990,8 +7986,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
+								"value": "Bearer {{authToken}}"
 							}
 						],
 						"body": {
@@ -8163,15 +8158,16 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									""
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/profiles/{{userId}}'),",
@@ -8186,8 +8182,7 @@
 									"            pm.expect(response.json()).to.have.property('userId', pm.environment.get('userId'));",
 									"        })",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -8316,15 +8311,16 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									""
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"    url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/profiles/{{userId}}'),",
@@ -8345,8 +8341,7 @@
 									"        pm.expect(response.json()).to.have.property('email', 'test2@nevermined.io');",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -8363,8 +8358,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
+								"value": "Bearer {{authToken}}"
 							}
 						],
 						"body": {
@@ -8623,15 +8617,16 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									""
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/profiles/address/{{publicAddress}}'),",
@@ -8646,8 +8641,7 @@
 									"            pm.expect(response.json().addresses.some(a => pm.environment.get('publicAddress'))).to.be.true;",
 									"        })",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -8767,15 +8761,16 @@
 						{
 							"listen": "prerequest",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									""
-								],
-								"type": "text/javascript"
+								]
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
+								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"    url: pm.environment.replaceIn(`{{baseUrl}}/api/v1/metadata/profiles/{{userId}}`),",
@@ -8789,8 +8784,7 @@
 									"        pm.expect(response).to.have.property('code', 200);",
 									"    });",
 									"});"
-								],
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -8803,8 +8797,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
+								"value": "Bearer {{authToken}}"
 							}
 						],
 						"url": {
@@ -8953,6 +8946,1417 @@
 							"code": 404,
 							"_postman_previewlanguage": "Text",
 							"header": [],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "api/v1/permissions",
+			"item": [
+				{
+					"name": "Permission Controller create Permission",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/permissions'),",
+									"        method: 'POST',",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"            'Authorization': `Bearer ${pm.environment.get('authAdmin')}`",
+									"        },",
+									"        body: {",
+									"            mode: 'raw',",
+									"            raw: JSON.stringify({",
+									"                \"userId\": pm.environment.get('userId'),",
+									"                \"type\": [",
+									"                    \"read\",",
+									"                    \"update\",",
+									"                    \"delete\"",
+									"                ],",
+									"                \"issuer\": \"0x610D9314EDF2ced7681BA1633C33fdb8cF365a12\",",
+									"                \"holder\": pm.environment.get('publicAddress')",
+									"            })",
+									"        }",
+									"    }, (error, response) => {",
+									"        pm.test(\"should create a permission\", () => {",
+									"            pm.expect(response).to.have.property('code', 201);",
+									"            pm.expect(response).to.have.property('status', 'Created');",
+									"            pm.expect(response.json()).to.have.property('userId', pm.environment.get('userId'));",
+									"            pm.environment.set('id', response.json().id);",
+									"        });",
+									"        ",
+									"        pm.sendRequest({",
+									"            url: pm.collectionVariables.replaceIn('{{elsUrl}}/permission/_refresh'),",
+									"            method: 'POST',",
+									"            header: {",
+									"                'Content-Type': 'application/json',",
+									"            },",
+									"        });",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authAdmin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"{{userId}}\",\n  \"type\": [\n    \"read\",\n    \"update\",\n    \"delete\"\n  ],\n  \"issuer\": \"0x610D9314EDF2ced7681BA1633C33fdb8cF365a12\",\n  \"holder\": \"{{publicAddress}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/permissions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"permissions"
+							]
+						},
+						"description": "Create a permission entry"
+					},
+					"response": [
+						{
+							"name": "Permission is created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIweGUyREQwOWQ3MTlEYTg5ZTVhM0QwRjI1NDljN0UyNDU2NmU5NDcyNjAiLCJpYXQiOjE2NTA2MzczNTIsImV4cCI6MTY1MDY0MDk1Mn0.CXLmOVBA_i5mcgaHWAnmXOy6HEB7Lr_5gEjGSb36VDQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"userId\": \"us-12345\",\n  \"type\": [\n    \"read\",\n    \"update\",\n    \"delete\"\n  ],\n  \"issuer\": \"0x610D9314EDF2ced7681BA1633C33fdb8cF365a12\",\n  \"holder\": \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/permissions",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n  \"id\": \"pe-2e83acb9-441d-41c8-97ab-552b4b52452d\",\n  \"userId\": \"us-12345\",\n  \"type\": [\n    \"read\",\n    \"update\",\n    \"delete\"\n  ],\n  \"issuer\": \"0x610D9314EDF2ced7681BA1633C33fdb8cF365a12\",\n  \"holder\": \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\",\n  \"issuanceDate\": \"2019-01-01T19:73:24Z\"\n}"
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIweGUyREQwOWQ3MTlEYTg5ZTVhM0QwRjI1NDljN0UyNDU2NmU5NDcyNjAiLCJpYXQiOjE2NTA2MzczNTIsImV4cCI6MTY1MDY0MDk1Mn0.CXLmOVBA_i5mcgaHWAnmXOy6HEB7Lr_5gEjGSb36VDQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"userId\": \"us-12345\",\n  \"type\": [\n    \"read\",\n    \"update\",\n    \"delete\"\n  ],\n  \"issuer\": \"0x610D9314EDF2ced7681BA1633C33fdb8cF365a12\",\n  \"holder\": \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/permissions",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIweGUyREQwOWQ3MTlEYTg5ZTVhM0QwRjI1NDljN0UyNDU2NmU5NDcyNjAiLCJpYXQiOjE2NTA2MzczNTIsImV4cCI6MTY1MDY0MDk1Mn0.CXLmOVBA_i5mcgaHWAnmXOy6HEB7Lr_5gEjGSb36VDQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"userId\": \"us-12345\",\n  \"type\": [\n    \"read\",\n    \"update\",\n    \"delete\"\n  ],\n  \"issuer\": \"0x610D9314EDF2ced7681BA1633C33fdb8cF365a12\",\n  \"holder\": \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/permissions",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIweGUyREQwOWQ3MTlEYTg5ZTVhM0QwRjI1NDljN0UyNDU2NmU5NDcyNjAiLCJpYXQiOjE2NTA2MzczNTIsImV4cCI6MTY1MDY0MDk1Mn0.CXLmOVBA_i5mcgaHWAnmXOy6HEB7Lr_5gEjGSb36VDQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"userId\": \"us-12345\",\n  \"type\": [\n    \"read\",\n    \"update\",\n    \"delete\"\n  ],\n  \"issuer\": \"0x610D9314EDF2ced7681BA1633C33fdb8cF365a12\",\n  \"holder\": \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/permissions",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Permission Controller get Permission by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/permissions/{{id}}'),",
+									"        method: 'GET',",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"        },",
+									"    }, (error, response) => {",
+									"        pm.test(\"should get a permission by passing id\", () => {",
+									"            pm.expect(response).to.have.property('code', 200);",
+									"            pm.expect(response).to.have.property('status', 'OK');",
+									"            pm.expect(response.json()).to.have.property('userId', pm.environment.get('userId'));",
+									"        });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/permissions/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"permissions",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{id}}"
+								}
+							]
+						},
+						"description": "Get permission by Id"
+					},
+					"response": [
+						{
+							"name": "Permission returned",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/permissions/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "pe-2e83acb9-441d-41c8-97ab-552b4b52452d"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n  \"id\": \"pe-2e83acb9-441d-41c8-97ab-552b4b52452d\",\n  \"userId\": \"us-12345\",\n  \"type\": [\n    \"read\",\n    \"update\",\n    \"delete\"\n  ],\n  \"issuer\": \"0x610D9314EDF2ced7681BA1633C33fdb8cF365a12\",\n  \"holder\": \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\",\n  \"issuanceDate\": \"2019-01-01T19:73:24Z\"\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/permissions/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "pe-2e83acb9-441d-41c8-97ab-552b4b52452d"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Permission Controller get Permission By User Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/permissions/user/{{userId}}'),",
+									"        method: 'GET',",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"        },",
+									"    }, (error, response) => {",
+									"        pm.test(\"should get permissions by passing userId\", () => {",
+									"            pm.expect(response).to.have.property('code', 200);",
+									"            pm.expect(response).to.have.property('status', 'OK');",
+									"            pm.expect(response.json().results.some(r => r.userId === pm.environment.get('userId'))).to.be.true;",
+									"        });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/permissions/user/:userId?query={\"match_all\": {}}&page=1&sort={ \"issuanceDate\": \"asc\" }",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"permissions",
+								"user",
+								":userId"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "{\"match_all\": {}}"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "sort",
+									"value": "{ \"issuanceDate\": \"asc\" }"
+								}
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{userId}}",
+									"description": "(Required) "
+								}
+							]
+						},
+						"description": "Get permissions by userId"
+					},
+					"response": [
+						{
+							"name": "Permission Controller get Permission By User Id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/permissions/user/:userId?query={\"match_all\": {}}&page=1&sort={ \"issuanceDate\": \"asc\" }",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions",
+										"user",
+										":userId"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "{\"match_all\": {}}"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "sort",
+											"value": "{ \"issuanceDate\": \"asc\" }"
+										}
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "us-12345",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n  \"page\": 1,\n  \"results\": [\n    {\n      \"id\": \"pe-f2b43439-61dc-4418-b6ad-87ffddf85efb\",\n      \"userId\": \"us-12345\",\n      \"type\": [\n        \"quis\",\n        \"Excepteur Ut nisi laborum aute\"\n      ],\n      \"issuer\": \"0x610D9314EDF2ced7681BA1633C33fdb8cF365a12\",\n      \"holder\": \"0x37BB53e3d293494DE59fBe1FF78500423dcFd43B\",\n      \"issuanceDate\": \"1995-04-12T00:01:48.964Z\"\n    },\n    {\n      \"id\": \"pe-f2b43439-61dc-4418-b6ad-87ffddf85efb\",\n      \"userId\": \"us-12345\",\n      \"type\": [\n        \"ut consequat ad amet sunt\",\n        \"ad adipisicing Lorem cillum\"\n      ],\n      \"issuer\": \"0x610D9314EDF2ced7681BA1633C33fdb8cF365a12\",\n      \"holder\": \"0x37BB53e3d293494DE59fBe1FF78500423dcFd43B\",\n      \"issuanceDate\": \"1995-01-27T08:43:21.521Z\"\n    }\n  ],\n  \"total_pages\": 10,\n  \"total_results\": 220\n}"
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/permissions/user/:userId?query={\"match_all\": {}}&page=1&sort={ \"issuanceDate\": \"asc\" }",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions",
+										"user",
+										":userId"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "{\"match_all\": {}}"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "sort",
+											"value": "{ \"issuanceDate\": \"asc\" }"
+										}
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "us-12345",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Permission Controller get Permission By User Id And Type",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/permissions/user/{{userId}}/read'),",
+									"        method: 'GET',",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"        },",
+									"    }, (error, response) => {",
+									"        pm.test(\"should get permissions by passing userId and type\", () => {",
+									"            pm.expect(response).to.have.property('code', 200);",
+									"            pm.expect(response).to.have.property('status', 'OK');",
+									"            pm.expect(response.json().results.some(r => r.userId === pm.environment.get('userId'))).to.be.true;",
+									"        });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/permissions/user/:userId/:type?query={\"match_all\": {}}&page=1&sort={ \"issuanceDate\": \"asc\" }",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"permissions",
+								"user",
+								":userId",
+								":type"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "{\"match_all\": {}}"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "sort",
+									"value": "{ \"issuanceDate\": \"asc\" }"
+								}
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{userId}}",
+									"description": "(Required) "
+								},
+								{
+									"key": "type",
+									"value": "read",
+									"description": "(Required) "
+								}
+							]
+						},
+						"description": "Get permissions by userId and type"
+					},
+					"response": [
+						{
+							"name": "Permissions are returned",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/permissions/user/:userId/:type?query={\"match_all\": {}}&text=Quibusdam doloremque iure qui odit quo ipsam id.&offset=et laboris ullamco esse&page=pariatur veniam&sort={ \"createdAt\": \"asc\" }",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions",
+										"user",
+										":userId",
+										":type"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "{\"match_all\": {}}"
+										},
+										{
+											"key": "text",
+											"value": "Quibusdam doloremque iure qui odit quo ipsam id."
+										},
+										{
+											"key": "offset",
+											"value": "et laboris ullamco esse"
+										},
+										{
+											"key": "page",
+											"value": "pariatur veniam"
+										},
+										{
+											"key": "sort",
+											"value": "{ \"createdAt\": \"asc\" }"
+										}
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "dolore proident",
+											"description": "(Required) "
+										},
+										{
+											"key": "type",
+											"value": "dolore proident",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"page\": 1,\n  \"results\": [\n    {\n      \"id\": \"pe-f2b43439-61dc-4418-b6ad-87ffddf85efb\",\n      \"userId\": \"us-12345\",\n      \"type\": [\n        \"quis\",\n        \"Excepteur Ut nisi laborum aute\"\n      ],\n      \"issuer\": \"0x610D9314EDF2ced7681BA1633C33fdb8cF365a12\",\n      \"holder\": \"0x37BB53e3d293494DE59fBe1FF78500423dcFd43B\",\n      \"issuanceDate\": \"1995-04-12T00:01:48.964Z\"\n    },\n    {\n      \"id\": \"pe-f2b43439-61dc-4418-b6ad-87ffddf85efb\",\n      \"userId\": \"us-12345\",\n      \"type\": [\n        \"ut consequat ad amet sunt\",\n        \"ad adipisicing Lorem cillum\"\n      ],\n      \"issuer\": \"0x610D9314EDF2ced7681BA1633C33fdb8cF365a12\",\n      \"holder\": \"0x37BB53e3d293494DE59fBe1FF78500423dcFd43B\",\n      \"issuanceDate\": \"1995-01-27T08:43:21.521Z\"\n    }\n  ],\n  \"total_pages\": 10,\n  \"total_results\": 220\n}"
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/permissions/user/:userId/:type?query={\"match_all\": {}}&text=Quibusdam doloremque iure qui odit quo ipsam id.&offset=et laboris ullamco esse&page=pariatur veniam&sort={ \"createdAt\": \"asc\" }",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions",
+										"user",
+										":userId",
+										":type"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "{\"match_all\": {}}"
+										},
+										{
+											"key": "text",
+											"value": "Quibusdam doloremque iure qui odit quo ipsam id."
+										},
+										{
+											"key": "offset",
+											"value": "et laboris ullamco esse"
+										},
+										{
+											"key": "page",
+											"value": "pariatur veniam"
+										},
+										{
+											"key": "sort",
+											"value": "{ \"createdAt\": \"asc\" }"
+										}
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "dolore proident",
+											"description": "(Required) "
+										},
+										{
+											"key": "type",
+											"value": "dolore proident",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Permission Controller update Permission",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: pm.environment.replaceIn('{{baseUrl}}/api/v1/permissions/{{id}}'),",
+									"    method: 'PUT',",
+									"    header: {",
+									"        'Content-Type': 'application/json',",
+									"        'Authorization': `Bearer ${pm.environment.get('authAdmin')}`",
+									"    },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            type: ['admin'],",
+									"        }),",
+									"    }",
+									"}, (error, response) => {",
+									"    pm.test(\"should update permission by passing id\", () => {",
+									"        pm.expect(response).to.have.property('code', 200);",
+									"        pm.expect(response.json().type[0]).to.have.eq('admin');",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authAdmin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": [\n    \"read\"\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/permissions/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"permissions",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{id}}",
+									"description": "(Required) "
+								}
+							]
+						},
+						"description": "Update the user profile"
+					},
+					"response": [
+						{
+							"name": "Permission Updated",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authAdmin}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": [\n    \"update\"\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/permissions/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "pe-2e83acb9-441d-41c8-97ab-552b4b52452d",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n  \"id\": \"pe-2e83acb9-441d-41c8-97ab-552b4b52452d\",\n  \"userId\": \"us-12345\",\n  \"type\": [\n    \"update\"\n  ],\n  \"issuer\": \"0x610D9314EDF2ced7681BA1633C33fdb8cF365a12\",\n  \"holder\": \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\",\n  \"issuanceDate\": \"2019-01-01T19:73:24Z\"\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authAdmin}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": [\n    \"update\"\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/permissions/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "pe-2e83acb9-441d-41c8-97ab-552b4b52452d",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad request",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authAdmin}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": [\n    \"update\"\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/permissions/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "pe-2e83acb9-441d-41c8-97ab-552b4b52452d",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n  \"id\": \"pe-2e83acb9-441d-41c8-97ab-552b4b52452d\",\n  \"userId\": \"us-12345\",\n  \"type\": [\n    \"update\"\n  ],\n  \"issuer\": \"0x610D9314EDF2ced7681BA1633C33fdb8cF365a12\",\n  \"holder\": \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\",\n  \"issuanceDate\": \"2019-01-01T19:73:24Z\"\n}"
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authAdmin}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": [\n    \"update\"\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/permissions/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "pe-2e83acb9-441d-41c8-97ab-552b4b52452d",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authAdmin}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": [\n    \"read\"\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/permissions/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{id}}",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Permission Controller delete permission",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/permissions'),",
+									"        method: 'POST',",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"            'Authorization': `Bearer ${pm.environment.get('authAdmin')}`",
+									"        },",
+									"        body: {",
+									"            mode: 'raw',",
+									"            raw: JSON.stringify({",
+									"                \"userId\": pm.environment.get('userId'),",
+									"                \"type\": [",
+									"                    \"read\",",
+									"                    \"update\",",
+									"                    \"delete\"",
+									"                ],",
+									"                \"issuer\": \"0x610D9314EDF2ced7681BA1633C33fdb8cF365a12\",",
+									"                \"holder\": pm.environment.get('publicAddress')",
+									"            })",
+									"        }",
+									"    }, (permissionError, permissionResponse) => {        ",
+									"        pm.sendRequest({",
+									"            url: pm.collectionVariables.replaceIn('{{elsUrl}}/permission/_refresh'),",
+									"            method: 'POST',",
+									"            header: {",
+									"                'Content-Type': 'application/json',",
+									"            },",
+									"        }, (error, response) => {",
+									"            pm.sendRequest({",
+									"                url: pm.environment.replaceIn(`{{baseUrl}}/api/v1/permissions/${permissionResponse.json().id}`),",
+									"                method: 'DELETE',",
+									"                header: {",
+									"                    'Content-Type': 'application/json',",
+									"                    'Authorization': `Bearer ${pm.environment.get('authAdmin')}`",
+									"                }",
+									"            }, (error, response) => {",
+									"                pm.test(\"should delete permission by passing id\", () => {",
+									"                    pm.expect(response).to.have.property('code', 200);",
+									"                });",
+									"            });",
+									"        });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authAdmin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/permissions/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"permissions",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{id}}",
+									"description": "(Required) "
+								}
+							]
+						},
+						"description": "Delete a permission"
+					},
+					"response": [
+						{
+							"name": "Permission deleted",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authAdmin}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/permissions/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "pe-2e83acb9-441d-41c8-97ab-552b4b52452d",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authAdmin}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/permissions/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "pe-2e83acb9-441d-41c8-97ab-552b4b52452d",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authAdmin}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/permissions/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "pe-2e83acb9-441d-41c8-97ab-552b4b52452d",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{authAdmin}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/permissions/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"permissions",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{id}}",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": null,
+							"header": null,
 							"cookie": [],
 							"body": null
 						}

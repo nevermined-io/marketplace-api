@@ -35,6 +35,10 @@ export class PermissionController {
     status: 403,
     description: 'Forbidden',
   })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
   async createPermission(@Body() createPermissionDto: CreatePermissionDto): Promise<GetPermissionDto> {
     return this.permissionService.createOne(createPermissionDto);
   }
@@ -47,6 +51,10 @@ export class PermissionController {
     status: 200,
     description: 'Permission is returned',
     type: GetPermissionDto,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not found',
   })
   @Public()
   async getPermissionById(@Param('id') id: string): Promise<GetPermissionDto> {
@@ -129,12 +137,16 @@ export class PermissionController {
     description: 'Not found',
   })
   @ApiResponse({
-    status: 403,
+    status: 400,
     description: 'Bad Request',
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized',
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden',
   })
   async updatePermissionById(
     @Param('id') id: string,
