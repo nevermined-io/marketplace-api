@@ -10,6 +10,14 @@ import { UpdateUserProfileDto } from './dto/update-user-profile.dto';
 export class UserProfileService {
   constructor(private readonly elasticService: ElasticService) {}
 
+  async createIndex() {
+    await this.elasticService.createIndex(MarketplaceIndex.UserProfile);
+  }
+
+  async checkIndex(): Promise<boolean> {
+    return (await this.elasticService.checkExistingIndex(MarketplaceIndex.UserProfile)).body;
+  }
+
   async createOne(createUserProfileDto: CreateUserProfileDto): Promise<UserProfile> {
     const userProfile = { ...new UserProfile(), ...createUserProfileDto };
 

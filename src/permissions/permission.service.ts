@@ -11,6 +11,14 @@ import { UpdatePermissionDto } from './dto/update-permission.dto';
 export class PermissionService {
   constructor(private readonly elasticService: ElasticService) {}
 
+  async createIndex() {
+    await this.elasticService.createIndex(MarketplaceIndex.Permission);
+  }
+
+  async checkIndex(): Promise<boolean> {
+    return (await this.elasticService.checkExistingIndex(MarketplaceIndex.Permission)).body;
+  }
+
   async createOne(createPermissionDto: CreatePermissionDto): Promise<Permission> {
     const permission = { ...new Permission(), ...createPermissionDto };
 

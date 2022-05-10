@@ -1,3 +1,4 @@
+import { ApiResponse } from '@elastic/elasticsearch';
 import { SearchHitsMetadata, QueryDslQueryContainer } from '@elastic/elasticsearch/api/types';
 import { Injectable } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
@@ -71,6 +72,18 @@ export class ElasticService {
       body: {
         query,
       },
+    });
+  }
+
+  async createIndex(index: string): Promise<void> {
+    await this.elasticsearchService.indices.create({
+      index,
+    });
+  }
+
+  async checkExistingIndex(index: string): Promise<ApiResponse<boolean, unknown>> {
+    return this.elasticsearchService.indices.exists({
+      index,
     });
   }
 }
