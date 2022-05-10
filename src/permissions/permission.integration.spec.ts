@@ -60,6 +60,7 @@ describe('Permission', () => {
     },
 
     deleteOneByEntryId: () => undefined,
+    checkIndex: () => true,
   };
 
   beforeAll(async () => {
@@ -87,6 +88,7 @@ describe('Permission', () => {
                 _id: userProfile.userId,
               };
             },
+            checkIndex: () => true,
           },
         },
       ],

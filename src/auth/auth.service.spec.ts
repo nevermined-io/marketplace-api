@@ -67,6 +67,8 @@ describe('AuthService', () => {
               _index: MarketplaceIndex.UserProfile,
               _id: userId,
             }),
+
+            checkIndex: () => true,
           },
         },
         {
@@ -77,6 +79,7 @@ describe('AuthService', () => {
                 hits: [],
               };
             },
+            checkIndex: () => true,
           },
         },
       ],

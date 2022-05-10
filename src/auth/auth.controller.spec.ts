@@ -71,6 +71,8 @@ describe('AuthController', () => {
               _index: MarketplaceIndex.UserProfile,
               _id: userId,
             }),
+
+            checkIndex: () => true,
           },
         },
         {
@@ -81,6 +83,7 @@ describe('AuthController', () => {
                 hits: [],
               };
             },
+            checkIndex: () => true,
           },
         },
       ],
