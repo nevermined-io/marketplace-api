@@ -41,7 +41,7 @@ export class AssetController {
     private readonly assetService: AssetService,
     private readonly ddosStatusService: DDOStatusService,
     private readonly serviceDDOService: ServiceDDOService
-  ) {}
+  ) { }
 
   @Post('/ddo')
   @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
@@ -65,6 +65,10 @@ export class AssetController {
   @ApiResponse({
     status: 403,
     description: 'Forbidden',
+  })
+  @ApiResponse({
+    status: 409,
+    description: 'DID already exists'
   })
   async createAsset(@Req() req: Request<unknown>, @Body() createAssetDto: CreateAssetDto): Promise<GetAssetDto> {
     const url = `${req.protocol}://${req.hostname}${req.client.localPort ? `:${req.client.localPort}` : ''}${req.url}`;
@@ -338,7 +342,7 @@ export class AssetController {
     summary: 'Public',
   })
   @ApiResponse({
-    status: 200,
+    status: 201,
     description: 'list of services',
     schema: SearchResponse.toDocs(GetServiceDto),
   })

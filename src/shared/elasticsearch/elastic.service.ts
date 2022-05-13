@@ -6,13 +6,14 @@ import { SearchQueryDto } from '../../common/helpers/search-query.dto';
 
 @Injectable()
 export class ElasticService {
-  constructor(private readonly elasticsearchService: ElasticsearchService) {}
+  constructor(private readonly elasticsearchService: ElasticsearchService) { }
 
   async addDocumentToIndex(index: string, id: string, document: unknown) {
     return this.elasticsearchService.index({
       index,
       id,
       body: document,
+      op_type: 'create',
     });
   }
 
