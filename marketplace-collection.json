@@ -1653,16 +1653,15 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
 									"  userId: pm.environment.get('userId'),",
-									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429',",
+									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e465',",
 									"  created: \"2019-02-08T08:13:49Z\",",
 									"  authentication: [",
 									"    {",
-									"      publicKey: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430',",
+									"      publicKey: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e465',",
 									"      type: 'RsaSignatureAuthentication2018',",
 									"    },",
 									"  ],",
@@ -1760,13 +1759,13 @@
 									"}, (error, response) => {",
 									"    pm.environment.set('did', response.json().id);",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/metadata/{{did}}'),",
@@ -1781,7 +1780,8 @@
 									"        pm.expect(response.json()).to.have.property('curation');",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1940,16 +1940,15 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
 									"  userId: pm.environment.get('userId'),",
-									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429',",
+									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e460',",
 									"  created: \"2019-02-08T08:13:49Z\",",
 									"  authentication: [",
 									"    {",
-									"      publicKey: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430',",
+									"      publicKey: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e460',",
 									"      type: 'RsaSignatureAuthentication2018',",
 									"    },",
 									"  ],",
@@ -2056,21 +2055,21 @@
 									"        },",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
-									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429',",
+									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e460',",
 									"  created: \"2019-02-08T08:13:49Z\",",
 									"  authentication: [",
 									"    {",
-									"      publicKey: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430',",
+									"      publicKey: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e460',",
 									"      type: 'RsaSignatureAuthentication2018',",
 									"    },",
 									"  ],",
@@ -2190,7 +2189,8 @@
 									"        });",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -2283,12 +2283,11 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
 									"  userId: pm.environment.get('userId'),",
-									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429',",
+									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e449',",
 									"  created: \"2019-02-08T08:13:49Z\",",
 									"  authentication: [",
 									"    {",
@@ -2399,13 +2398,13 @@
 									"        },",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"const assetToUpdate = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -2428,7 +2427,7 @@
 									"  },",
 									"  publicKey: [",
 									"    {",
-									"      id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430',",
+									"      id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e449',",
 									"      owner: '0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e',",
 									"      type: 'EthereumECDSAKey',",
 									"    },",
@@ -2516,7 +2515,8 @@
 									"        pm.expect(response.json()).to.have.property('updated', '2020-02-08T08:13:49Z');",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -2796,16 +2796,15 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
 									"  userId: pm.environment.get('userId'),",
-									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429',",
+									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e457',",
 									"  created: \"2019-02-08T08:13:49Z\",",
 									"  authentication: [",
 									"    {",
-									"      publicKey: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430',",
+									"      publicKey: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e457',",
 									"      type: 'RsaSignatureAuthentication2018',",
 									"    },",
 									"  ],",
@@ -2912,22 +2911,22 @@
 									"        },",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
 									"  userId: pm.environment.get('userId'),",
-									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429',",
+									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e458',",
 									"  created: \"2019-02-08T08:13:49Z\",",
 									"  authentication: [",
 									"    {",
-									"      publicKey: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430',",
+									"      publicKey: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e458',",
 									"      type: 'RsaSignatureAuthentication2018',",
 									"    },",
 									"  ],",
@@ -3048,7 +3047,8 @@
 									"        });",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -3199,16 +3199,15 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
 									"  userId: pm.environment.get('userId'),",
-									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429',",
+									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e472',",
 									"  created: \"2019-02-08T08:13:49Z\",",
 									"  authentication: [",
 									"    {",
-									"      publicKey: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430',",
+									"      publicKey: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e472',",
 									"      type: 'RsaSignatureAuthentication2018',",
 									"    },",
 									"  ],",
@@ -3315,13 +3314,13 @@
 									"        },",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"const query = {",
 									"  \"query\": {",
@@ -3349,10 +3348,11 @@
 									"    pm.test(\"should get a list of ddos by passing a query\", () => {",
 									"        pm.expect(response).to.have.property('code', 201);",
 									"        pm.expect(response).to.have.property('status', 'Created')",
-									"        pm.expect(response.json().results[0]).to.have.property('id', pm.environment.get('did'));",
+									"        pm.expect(response.json().results.some(r => r.id === pm.environment.get(\"did\"))).to.be.true;",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -3492,7 +3492,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
@@ -4007,11 +4006,11 @@
 									"    },",
 									"  ],",
 									"  created: '2019-02-08T08:13:49Z',",
-									"  id: 'did:nv:0bc278fee025464f8012b811d1bce8e22094d0984e4e49139df5d5ff7a028bdf',",
+									"  id: 'did:nv:0bc278fee025464f8012b811d1bce8e22094d0984e4e49139df5d5ff7a028btr',",
 									"  proof: {",
 									"    created: '2019-02-08T08:13:41Z',",
 									"    creator: '0x37BB53e3d293494DE59fBe1FF78500423dcFd43B',",
-									"    signatureValue: 'did:nv:0bc278fee025464f8012b811d1bce8e22094d0984e4e49139df5d5ff7a028bdf',",
+									"    signatureValue: 'did:nv:0bc278fee025464f8012b811d1bce8e22094d0984e4e49139df5d5ff7a028btr',",
 									"    type: 'DDOIntegritySignature',",
 									"    checksum: {",
 									"      '0': '0x52b5c93b82dd9e7ecc3d9fdf4755f7f69a54484941897dc517b4adfe3bbc3377',",
@@ -4677,11 +4676,11 @@
 									"    },",
 									"  ],",
 									"  created: '2019-02-08T08:13:49Z',",
-									"  id: 'did:nv:0bc278fee025464f8012b811d1bce8e22094d0984e4e49139df5d5ff7a028bdf',",
+									"  id: 'did:nv:0bc278fee025464f8012b811d1bce8e22094d0984e4e49139df5d5ff7a028brd',",
 									"  proof: {",
 									"    created: '2019-02-08T08:13:41Z',",
 									"    creator: '0x37BB53e3d293494DE59fBe1FF78500423dcFd43B',",
-									"    signatureValue: 'did:nv:0bc278fee025464f8012b811d1bce8e22094d0984e4e49139df5d5ff7a028bdf',",
+									"    signatureValue: 'did:nv:0bc278fee025464f8012b811d1bce8e22094d0984e4e49139df5d5ff7a028brd',",
 									"    type: 'DDOIntegritySignature',",
 									"    checksum: {",
 									"      '0': '0x52b5c93b82dd9e7ecc3d9fdf4755f7f69a54484941897dc517b4adfe3bbc3377',",
@@ -5221,16 +5220,17 @@
 									"            pm.expect(response).to.have.property('status', 'Created');",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "prerequest",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -5423,16 +5423,15 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
 									"  userId: pm.environment.get('userId'),",
-									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429',",
+									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e431',",
 									"  created: \"2019-02-08T08:13:49Z\",",
 									"  authentication: [",
 									"    {",
-									"      publicKey: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430',",
+									"      publicKey: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e431',",
 									"      type: 'RsaSignatureAuthentication2018',",
 									"    },",
 									"  ],",
@@ -5539,13 +5538,13 @@
 									"        },",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/ddo?query={\"match_all\": {}}&offset=100&page=1&sort={ \"created\": \"asc\" }'),",
@@ -5560,7 +5559,8 @@
 									"        pm.expect(response.json().results.some(a => a.id === pm.environment.get('did'))).to.be.true;",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -5728,16 +5728,15 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
 									"  userId: pm.environment.get('userId'),",
-									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429',",
+									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e488',",
 									"  created: \"2019-02-08T08:13:49Z\",",
 									"  authentication: [",
 									"    {",
-									"      publicKey: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430',",
+									"      publicKey: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e488',",
 									"      type: 'RsaSignatureAuthentication2018',",
 									"    },",
 									"  ],",
@@ -5843,29 +5842,29 @@
 									"        },",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets?query={\"match_all\": {}}&offset=100&page=1&sort={ \"created\": \"asc\" }'),",
 									"        method: 'GET',",
 									"        header: {",
 									"            'Content-Type': 'application/json',",
-									"            'Authorization': `Bearer ${pm.environment.get('authToken')}`",
 									"        },",
 									"}, (error, response) => {",
 									"    pm.test(\"should get a list of ddos ids\", () => {",
 									"        pm.expect(response).to.have.property('code', 200);",
-									"        pm.expect(response).to.have.property('status', 'OK')",
+									"        pm.expect(response).to.have.property('status', 'OK');",
 									"        pm.expect(response.json().some(a => a === pm.environment.get('did'))).to.be.true;",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -6034,16 +6033,15 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
 									"  userId: pm.environment.get('userId'),",
-									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429',",
+									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e445',",
 									"  created: \"2019-02-08T08:13:49Z\",",
 									"  authentication: [",
 									"    {",
-									"      publicKey: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430',",
+									"      publicKey: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e445',",
 									"      type: 'RsaSignatureAuthentication2018',",
 									"    },",
 									"  ],",
@@ -6149,13 +6147,13 @@
 									"        },",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/ddo/query?query={\"match_all\": {}}&offset=100&page=1&sort={ \"created\": \"asc\" }'),",
@@ -6170,7 +6168,8 @@
 									"        pm.expect(response.json().results.some(a => a.id === pm.environment.get('did'))).to.be.true;",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -6342,16 +6341,15 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
 									"  userId: pm.environment.get('userId'),",
-									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429',",
+									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e450',",
 									"  created: \"2019-02-08T08:13:49Z\",",
 									"  authentication: [",
 									"    {",
-									"      publicKey: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430',",
+									"      publicKey: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e450',",
 									"      type: 'RsaSignatureAuthentication2018',",
 									"    },",
 									"  ],",
@@ -6457,13 +6455,13 @@
 									"        },",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/ddo/{{did}}'),",
@@ -6478,7 +6476,8 @@
 									"        pm.expect(response.json()).to.have.property('id', pm.environment.get('did'));",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -6635,7 +6634,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/assets/ddo/{{did}}/status'),",
@@ -6650,22 +6648,22 @@
 									"        pm.expect(response.json()).to.have.property('did', pm.environment.get('did'));",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "prerequest",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"const asset = {",
 									"  '@context': 'https://w3id.org/did/v1',",
 									"  userId: pm.environment.get('userId'),",
-									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429',",
+									"  id: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e451',",
 									"  created: \"2019-02-08T08:13:49Z\",",
 									"  authentication: [",
 									"    {",
-									"      publicKey: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e430',",
+									"      publicKey: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e451',",
 									"      type: 'RsaSignatureAuthentication2018',",
 									"    },",
 									"  ],",
@@ -6771,7 +6769,8 @@
 									"        },",
 									"    });",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
