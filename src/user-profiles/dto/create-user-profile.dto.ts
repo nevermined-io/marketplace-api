@@ -38,6 +38,7 @@ export class CreateUserProfileDto {
   @ApiProperty({
     example: 'John Doe',
     description: 'The name of the user',
+    required: false,
   })
   @IsOptional()
   @IsString()
@@ -46,6 +47,7 @@ export class CreateUserProfileDto {
   @ApiProperty({
     example: 'john.doe@example.com',
     description: 'The email of the user',
+    required: false,
   })
   @IsOptional()
   @IsEmail()
@@ -54,6 +56,7 @@ export class CreateUserProfileDto {
   @ApiProperty({
     example: AdditionalInformation,
     description: 'List of additional key-value attributes with additional information',
+    required: false,
   })
   @IsOptional()
   @ValidateNested()

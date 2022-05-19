@@ -25,6 +25,7 @@ import { PermissionService } from '../permissions/permission.service';
 describe('User Profile', () => {
   let app: INestApplication;
   let authService: AuthService;
+  let userProfileServiceMock: UserProfileService;
   let token: LoginDto;
   let userIdAuth: string;
   const userProfile = new UserProfile();
@@ -112,6 +113,7 @@ describe('User Profile', () => {
       .compile();
 
     authService = moduleRef.get<AuthService>(AuthService);
+    userProfileServiceMock = moduleRef.get<UserProfileService>(UserProfileService);
     app = moduleRef.createNestApplication();
     app.useGlobalGuards(new JwtAuthGuard(new Reflector()));
     await app.init();
@@ -121,6 +123,8 @@ describe('User Profile', () => {
   });
 
   it('POST', async () => {
+    jest.spyOn(userProfileServiceMock, 'findOneByAddress').mockResolvedValue(undefined);
+
     const response = await request(app.getHttpServer())
       .post('/')
       .set('Authorization', `Bearer ${token.access_token}`)
@@ -146,6 +150,19 @@ describe('User Profile', () => {
   });
 
   it('GET by address', async () => {
+    jest.spyOn(userProfileServiceMock, 'findOneByAddress').mockImplementation((address: string) => {
+      const source = [userProfile, userProfileTwo].find((u) => u.addresses.some((a) => a === address));
+
+      if (source) {
+        return {
+          _source: source,
+          _index: MarketplaceIndex.UserProfile,
+          _id: source.userId,
+        };
+      }
+
+      return undefined as any;
+    });
     const response = await request(app.getHttpServer()).get(`/address/${userProfileTwo.addresses[0]}`);
 
     expect(response.statusCode).toBe(200);
