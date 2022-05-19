@@ -7926,7 +7926,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
 									"        url: pm.environment.replaceIn('{{baseUrl}}/api/v1/metadata/profiles'),",
@@ -7941,7 +7940,7 @@
 									"                \"isListed\": false,",
 									"                \"state\": \"confirmed\",",
 									"                \"addresses\": [",
-									"                    pm.environment.get('publicAddress')",
+									"                    \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947265\"",
 									"                ],",
 									"                \"nickname\": \"nevermined\",",
 									"                \"name\": \"est tempor ut officia\",",
@@ -7959,16 +7958,17 @@
 									"            pm.expect(response.json()).to.have.property('nickname', 'nevermined');",
 									"        })",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "prerequest",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -7985,12 +7985,12 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Bearer {{authToken}}"
+								"value": "Bearer {{authAdmin}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"isListed\": false,\n    \"state\": \"confirmed\",\n    \"addresses\": [\n        \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\"\n    ],\n    \"nickname\": \"dolor irure\",\n    \"name\": \"est tempor ut officia\",\n    \"email\": \"test@nevermined.io\",\n    \"additionalInformation\": {\n        \"profilePicture\": \"http://example.com/avatar.jpg\",\n        \"linkedinProfile\": \"http://linkedin.com\"\n    }\n}",
+							"raw": "{\n    \"isListed\": false,\n    \"state\": \"confirmed\",\n    \"addresses\": [\n        \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947264\"\n    ],\n    \"nickname\": \"dolor irure\",\n    \"name\": \"est tempor ut officia\",\n    \"email\": \"test@nevermined.io\",\n    \"additionalInformation\": {\n        \"profilePicture\": \"http://example.com/avatar.jpg\",\n        \"linkedinProfile\": \"http://linkedin.com\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
