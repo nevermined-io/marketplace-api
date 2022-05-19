@@ -59,7 +59,19 @@ describe('UserProfileController', () => {
   it('should create an user profile', async () => {
     jest.spyOn(userProfileService, 'createOne').mockResolvedValue(userProfile);
 
+    jest.spyOn(userProfileService, 'findOneByAddress').mockResolvedValue(undefined);
+
     expect(await userProfileController.createUserProfile(userProfile)).toStrictEqual(userProfile);
+  });
+
+  it('should fail if some profile has already this address', async () => {
+    jest.spyOn(userProfileService, 'findOneByAddress').mockResolvedValue(userProfileSource);
+
+    await expect(userProfileController.createUserProfile(userProfile)).rejects.toEqual(
+      new NotFoundException(
+        `User profile with theses addresses [${userProfileSource._source.addresses[0]}] already exists`
+      )
+    );
   });
 
   it('should get a user profile passing user id', async () => {

@@ -1,4 +1,15 @@
-import { Post, Controller, Body, Get, Put, Delete, Param, UseGuards, NotFoundException } from '@nestjs/common';
+import {
+  Post,
+  Controller,
+  Body,
+  Get,
+  Put,
+  Delete,
+  Param,
+  UseGuards,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { UserProfileService } from './user-profile.service';
 import { CreateUserProfileDto } from './dto/create-user-profile.dto';
@@ -36,6 +47,25 @@ export class UserProfileController {
     description: 'Unauthorized',
   })
   async createUserProfile(@Body() createUserProfileDto: CreateUserProfileDto): Promise<GetUserProfileDto> {
+    const userProfile = (
+      await Promise.all(
+        createUserProfileDto.addresses.map(async (a) => {
+          const userProfileSource = await this.userProfileService.findOneByAddress(a);
+          return userProfileSource?._source;
+        })
+      )
+    ).filter((u) => u?.addresses);
+
+    if (userProfile?.length) {
+      const addresses: string[] = [];
+      userProfile.forEach((up) => {
+        addresses.push(...createUserProfileDto.addresses.filter((a) => up.addresses.some((aup) => aup === a)));
+      });
+      throw new BadRequestException(
+        `User profile with theses addresses [${addresses.map((a) => a).join(',')}] already exists`
+      );
+    }
+
     return this.userProfileService.createOne(createUserProfileDto);
   }
 
