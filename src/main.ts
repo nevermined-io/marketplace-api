@@ -16,19 +16,34 @@ import { AssetService } from './assets/asset.service';
 import { ServiceDDOService } from './assets/ddo-service.service';
 import { DDOStatusService } from './assets/ddo-status.service';
 
-const createIndexes = async (app: NestExpressApplication) => {
-  await Promise.all(
-    [PermissionService, UserProfileService, BookmarkService, AssetService, ServiceDDOService, DDOStatusService].map(
-      async (service) => {
-        const serviceInstance = app.get(service);
-        const serviceIndexExits = await serviceInstance.checkIndex();
+const createIndexes = (app: NestExpressApplication) => {
+  let connectionTries = 0;
 
-        if (!serviceIndexExits) {
-          await serviceInstance.createIndex();
-        }
+  /* eslint @typescript-eslint/no-misused-promises: 0 */
+  const tryConnectionInterval = setInterval(async () => {
+    try {
+      await Promise.all(
+        [PermissionService, UserProfileService, BookmarkService, AssetService, ServiceDDOService, DDOStatusService].map(
+          async (service) => {
+            const serviceInstance = app.get(service);
+            const serviceIndexExits = await serviceInstance.checkIndex();
+
+            if (!serviceIndexExits) {
+              await serviceInstance.createIndex();
+            }
+          }
+        )
+      );
+      Logger.log('Marketplace API is connected to ElasticSearch');
+      clearInterval(tryConnectionInterval);
+    } catch {
+      Logger.log('Error to connect to ElasticSearch. Trying in 10s');
+      connectionTries += 1;
+      if (connectionTries >= 50) {
+        clearInterval(tryConnectionInterval);
       }
-    )
-  );
+    }
+  }, 10000);
 };
 
 const bootstrap = async () => {
