@@ -77,8 +77,6 @@ describe('User Profile', () => {
       userId,
       state: State.Disabled,
     }),
-
-    checkIndex: () => true,
   };
 
   beforeAll(async () => {

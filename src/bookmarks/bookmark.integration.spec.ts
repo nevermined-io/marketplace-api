@@ -91,7 +91,6 @@ describe('Bookmark', () => {
                 _id: userProfile.userId,
               };
             },
-            checkIndex: () => true,
           },
         },
         {
@@ -102,7 +101,6 @@ describe('Bookmark', () => {
                 hits: [],
               };
             },
-            checkIndex: () => true,
           },
         },
       ],

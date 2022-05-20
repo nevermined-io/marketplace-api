@@ -6,7 +6,7 @@ import { SearchQueryDto } from '../../common/helpers/search-query.dto';
 
 @Injectable()
 export class ElasticService {
-  constructor(private readonly elasticsearchService: ElasticsearchService) { }
+  constructor(private readonly elasticsearchService: ElasticsearchService) {}
 
   async addDocumentToIndex(index: string, id: string, document: unknown) {
     return this.elasticsearchService.index({
@@ -76,9 +76,10 @@ export class ElasticService {
     });
   }
 
-  async createIndex(index: string): Promise<void> {
+  async createIndex(index: string, body: unknown): Promise<void> {
     await this.elasticsearchService.indices.create({
       index,
+      body,
     });
   }
 

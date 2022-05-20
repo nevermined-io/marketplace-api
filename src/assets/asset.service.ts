@@ -6,10 +6,21 @@ import { Asset } from './asset.entity';
 import { MarketplaceIndex } from '../common/type';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
 import { SearchHitsMetadata, SearchHit } from '@elastic/elasticsearch/api/types';
+import { AssetMappings } from './asset.mappings';
 
 @Injectable()
 export class AssetService {
   constructor(private readonly elasticService: ElasticService) {}
+
+  async createIndex() {
+    await this.elasticService.createIndex(MarketplaceIndex.Asset, {
+      mappings: AssetMappings,
+    });
+  }
+
+  async checkIndex(): Promise<boolean> {
+    return (await this.elasticService.checkExistingIndex(MarketplaceIndex.Asset)).body;
+  }
 
   async createOne(createAssetDto: CreateAssetDto): Promise<Asset> {
     const asset = { ...new Asset(), ...createAssetDto };

@@ -9,6 +9,27 @@ import { JwtAuthGuard } from './common/guards/auth/jwt-auth.guard';
 import { RolesGuard } from './common/guards/auth/roles.guards';
 import { ConfigService } from './shared/config/config.service';
 import { Logger } from './shared/logger/logger.service';
+import { BookmarkService } from './bookmarks/bookmark.service';
+import { UserProfileService } from './user-profiles/user-profile.service';
+import { PermissionService } from './permissions/permission.service';
+import { AssetService } from './assets/asset.service';
+import { ServiceDDOService } from './assets/ddo-service.service';
+import { DDOStatusService } from './assets/ddo-status.service';
+
+const createIndexes = async (app: NestExpressApplication) => {
+  await Promise.all(
+    [PermissionService, UserProfileService, BookmarkService, AssetService, ServiceDDOService, DDOStatusService].map(
+      async (service) => {
+        const serviceInstance = app.get(service);
+        const serviceIndexExits = await serviceInstance.checkIndex();
+
+        if (!serviceIndexExits) {
+          await serviceInstance.createIndex();
+        }
+      }
+    )
+  );
+};
 
 const bootstrap = async () => {
   const logger = new Logger(bootstrap.name);
@@ -24,6 +45,8 @@ const bootstrap = async () => {
   const packageJsonPath = path.join(__dirname, '..', 'package.json');
   const packageJsonString = readFileSync(packageJsonPath, 'utf8');
   const packageJson = JSON.parse(packageJsonString) as { version: string };
+
+  await createIndexes(app);
 
   const options = new DocumentBuilder()
     .setTitle('Marketplace API')

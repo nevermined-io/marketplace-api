@@ -137,7 +137,6 @@ describe('Asset', () => {
                 _id: userProfile.userId,
               };
             },
-            checkIndex: () => true,
           },
         },
         {
@@ -148,7 +147,6 @@ describe('Asset', () => {
                 hits: [],
               };
             },
-            checkIndex: () => true,
           },
         },
       ],
