@@ -5,13 +5,16 @@ import { ElasticService } from '../shared/elasticsearch/elastic.service';
 import { UserProfile } from './user-profile.entity';
 import { CreateUserProfileDto } from './dto/create-user-profile.dto';
 import { UpdateUserProfileDto } from './dto/update-user-profile.dto';
+import { UserProfileMappings } from './user-profile.mappings';
 
 @Injectable()
 export class UserProfileService {
   constructor(private readonly elasticService: ElasticService) {}
 
   async createIndex() {
-    await this.elasticService.createIndex(MarketplaceIndex.UserProfile);
+    await this.elasticService.createIndex(MarketplaceIndex.UserProfile, {
+      mappings: UserProfileMappings,
+    });
   }
 
   async checkIndex(): Promise<boolean> {

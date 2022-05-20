@@ -5,10 +5,21 @@ import { DDOStatus } from './ddo-status.entity';
 import { Status, SourceType } from '../common/type';
 import { MarketplaceIndex } from '../common/type';
 import { SearchHit } from '@elastic/elasticsearch/api/types';
+import { StatusMappings } from './ddo-status.mappings';
 
 @Injectable()
 export class DDOStatusService {
   constructor(private readonly elasticService: ElasticService) {}
+
+  async createIndex() {
+    await this.elasticService.createIndex(MarketplaceIndex.DDOStatus, {
+      mappings: StatusMappings,
+    });
+  }
+
+  async checkIndex(): Promise<boolean> {
+    return (await this.elasticService.checkExistingIndex(MarketplaceIndex.DDOStatus)).body;
+  }
 
   async createOne(createAssetDto: CreateAssetDto, url: string) {
     const ddoStatus = new DDOStatus();

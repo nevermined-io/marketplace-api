@@ -38,12 +38,6 @@ export class AuthService {
       payload = jwtEthVerify(clientAssertion);
       const address = payload.iss;
 
-      const userProfileIndexExits = await this.userProfileService.checkIndex();
-
-      if (!userProfileIndexExits) {
-        await this.userProfileService.createIndex();
-      }
-
       const userProfileSource = await this.userProfileService.findOneByAddress(address);
 
       if (!userProfileSource) {
@@ -55,12 +49,6 @@ export class AuthService {
         userProfile = await this.userProfileService.createOne(userProfileEntity);
       } else {
         userProfile = userProfileSource._source;
-      }
-
-      const permissionIndexExits = await this.permissionService.checkIndex();
-
-      if (!permissionIndexExits) {
-        await this.permissionService.createIndex();
       }
 
       const permission = await this.getPermission(userProfile.userId, address);

@@ -6,13 +6,16 @@ import { CreatePermissionDto } from './dto/create-permission.dto';
 import { SearchHit, SearchHitsMetadata } from '@elastic/elasticsearch/api/types';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
 import { UpdatePermissionDto } from './dto/update-permission.dto';
+import { PermissionMappings } from './permission.mappings';
 
 @Injectable()
 export class PermissionService {
   constructor(private readonly elasticService: ElasticService) {}
 
   async createIndex() {
-    await this.elasticService.createIndex(MarketplaceIndex.Permission);
+    await this.elasticService.createIndex(MarketplaceIndex.Permission, {
+      mappings: PermissionMappings,
+    });
   }
 
   async checkIndex(): Promise<boolean> {
@@ -44,7 +47,7 @@ export class PermissionService {
         bool: {
           must: {
             term: {
-              'userId.keyword': {
+              userId: {
                 value: userId,
               },
             },

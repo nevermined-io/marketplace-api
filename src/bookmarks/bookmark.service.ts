@@ -6,10 +6,21 @@ import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
 import { Bookmark } from './bookmark.entity';
 import { MarketplaceIndex } from '../common/type';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
+import { BookmarkMappings } from './bookmark.mappings';
 
 @Injectable()
 export class BookmarkService {
   constructor(private readonly elasticService: ElasticService) {}
+
+  async createIndex() {
+    await this.elasticService.createIndex(MarketplaceIndex.Bookmark, {
+      mappings: BookmarkMappings,
+    });
+  }
+
+  async checkIndex(): Promise<boolean> {
+    return (await this.elasticService.checkExistingIndex(MarketplaceIndex.Bookmark)).body;
+  }
 
   async createOne(createBookmarkDto: CreateBookmarkDto): Promise<Bookmark> {
     const bookmark = { ...new Bookmark(), ...createBookmarkDto };
@@ -28,7 +39,7 @@ export class BookmarkService {
       MarketplaceIndex.Bookmark,
       {
         term: {
-          'userId.keyword': {
+          userId: {
             value: userId,
           },
         },

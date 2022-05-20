@@ -88,7 +88,6 @@ describe('Permission', () => {
                 _id: userProfile.userId,
               };
             },
-            checkIndex: () => true,
           },
         },
       ],
