@@ -6,7 +6,21 @@ export const StatusMappings: MappingProperty = {
       type: 'keyword',
     },
     internal: {
-      type: 'object',
+      properties: {
+        id: {
+          type: 'keyword',
+          index: false,
+        },
+        type: {
+          type: 'text',
+        },
+        status: {
+          type: 'text',
+        },
+        url: {
+          type: 'text',
+        },
+      },
     },
   },
 };
