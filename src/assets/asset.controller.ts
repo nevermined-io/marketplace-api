@@ -346,7 +346,9 @@ export class AssetController {
   async createService(@Body() serviceDto: CreateServiceDto, @Req() request: Request<unknown>): Promise<GetServiceDto> {
     const { userId, roles } = request.user;
 
-    if (!roles.some((r) => r === AuthRoles.Admin)) {
+    const isAdmin = !roles.some((r) => r === AuthRoles.Admin);
+
+    if (!isAdmin || (isAdmin && !serviceDto.userId)) {
       serviceDto.userId = userId;
     }
 
