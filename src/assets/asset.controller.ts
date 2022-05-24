@@ -346,11 +346,11 @@ export class AssetController {
   async createService(@Body() serviceDto: CreateServiceDto, @Req() request: Request<unknown>): Promise<GetServiceDto> {
     const { userId, roles } = request.user;
 
-    const service = await this.serviceDDOService.createOne(serviceDto);
-
     if (!roles.some((r) => r === AuthRoles.Admin)) {
-      service.userId = userId;
+      serviceDto.userId = userId;
     }
+
+    const service = await this.serviceDDOService.createOne(serviceDto);
 
     return service;
   }
