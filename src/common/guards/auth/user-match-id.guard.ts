@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable, BadRequestException } from '@nestjs/common';
 import { Request } from '../../helpers/request.interface';
 import { AuthRoles } from '../../type';
 
@@ -19,6 +19,10 @@ export class UserMatchId implements CanActivate {
   canActivate(context: ExecutionContext) {
     const { user, body, query, params } = context.switchToHttp().getRequest<Request<{ userId: string }>>();
     const userRoles = user.roles.map((role) => role.toLowerCase());
+
+    if (!body[this.param]) {
+      throw new BadRequestException(`${this.param} is missing in the payload`);
+    }
 
     return (
       user.userId === body[this.param] ||
