@@ -89,6 +89,7 @@ describe('Asset', () => {
           client: { localPort: 3100 },
           hostname: 'localhost',
           body: asset,
+          method: 'POST',
           params: undefined,
           query: undefined,
         },

@@ -11,6 +11,7 @@ export interface Request<G> {
   body: G;
   query: G;
   params: G;
+  method: string;
   client: { localPort: number };
   protocol: string;
   url: string;

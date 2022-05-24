@@ -17,10 +17,10 @@ export class UserMatchId implements CanActivate {
   }
 
   canActivate(context: ExecutionContext) {
-    const { user, body, query, params } = context.switchToHttp().getRequest<Request<{ userId: string }>>();
+    const { user, body, query, params, method } = context.switchToHttp().getRequest<Request<{ userId: string }>>();
     const userRoles = user.roles.map((role) => role.toLowerCase());
 
-    if (!body[this.param]) {
+    if (!body[this.param] && method === 'POST') {
       throw new BadRequestException(`${this.param} is missing in the payload`);
     }
 

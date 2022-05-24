@@ -61,7 +61,7 @@ const bootstrap = async () => {
   const packageJsonString = readFileSync(packageJsonPath, 'utf8');
   const packageJson = JSON.parse(packageJsonString) as { version: string };
 
-  await createIndexes(app);
+  createIndexes(app);
 
   const options = new DocumentBuilder()
     .setTitle('Marketplace API')
