@@ -56,8 +56,9 @@ export class BookmarkController {
     @Req() req: Request<unknown>
   ): Promise<GetBookmarkDto> {
     const { userId, roles } = req.user;
+    const isAdmin = !roles.some((r) => r === AuthRoles.Admin);
 
-    if (!roles.some((r) => r === AuthRoles.Admin)) {
+    if (!isAdmin || (isAdmin && !createBookmark.userId)) {
       createBookmark.userId = userId;
     }
 
