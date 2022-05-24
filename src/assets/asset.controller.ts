@@ -350,9 +350,7 @@ export class AssetController {
       serviceDto.userId = userId;
     }
 
-    const service = await this.serviceDDOService.createOne(serviceDto);
-
-    return service;
+    return this.serviceDDOService.createOne(serviceDto);
   }
 
   @Post('service/query')
