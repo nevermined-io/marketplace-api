@@ -41,10 +41,10 @@ export class AssetController {
     private readonly assetService: AssetService,
     private readonly ddosStatusService: DDOStatusService,
     private readonly serviceDDOService: ServiceDDOService
-  ) { }
+  ) {}
 
   @Post('/ddo')
-  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
+  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin], true))
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Create a asset entry',
@@ -68,7 +68,7 @@ export class AssetController {
   })
   @ApiResponse({
     status: 409,
-    description: 'DID already exists'
+    description: 'DID already exists',
   })
   async createAsset(@Req() req: Request<unknown>, @Body() createAssetDto: CreateAssetDto): Promise<GetAssetDto> {
     const url = `${req.protocol}://${req.hostname}${req.client.localPort ? `:${req.client.localPort}` : ''}${req.url}`;
@@ -222,7 +222,7 @@ export class AssetController {
   }
 
   @Put('ddo/:did')
-  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
+  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin], true))
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Update DDO of an existing asset',
@@ -314,7 +314,7 @@ export class AssetController {
   }
 
   @Post('service')
-  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
+  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin], true))
   @ApiBearerAuth('Authorization')
   @ApiResponse({
     description: 'Create a service',

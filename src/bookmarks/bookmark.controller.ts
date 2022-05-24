@@ -31,7 +31,7 @@ export class BookmarkController {
   constructor(private readonly bookmarkService: BookmarkService) {}
 
   @Post()
-  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
+  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin], true))
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Create a bookmark entry',
@@ -104,7 +104,7 @@ export class BookmarkController {
   }
 
   @Put(':id')
-  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
+  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin], true))
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Update an existing bookmark',
