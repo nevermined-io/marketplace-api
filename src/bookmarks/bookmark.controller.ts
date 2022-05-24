@@ -9,7 +9,6 @@ import {
   Query,
   ValidationPipe,
   UsePipes,
-  UseGuards,
   Req,
   ForbiddenException,
 } from '@nestjs/common';
@@ -20,8 +19,8 @@ import { GetBookmarkDto } from './dto/get-bookmark.dto';
 import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
 import { SearchResponse } from '../common/helpers/search-response.dto';
+import { checkOwnership } from '../common/helpers/utils';
 import { Public } from '../common/decorators/auth.decorator';
-import { UserMatchId } from '../common/guards/auth/user-match-id.guard';
 import { AuthRoles } from '../common/type';
 import { Request } from '../common/helpers/request.interface';
 
@@ -31,7 +30,6 @@ export class BookmarkController {
   constructor(private readonly bookmarkService: BookmarkService) {}
 
   @Post()
-  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Create a bookmark entry',
@@ -53,8 +51,19 @@ export class BookmarkController {
     status: 403,
     description: 'Forbidden',
   })
-  async createBookmark(@Body() createBookmark: CreateBookmarkDto): Promise<GetBookmarkDto> {
-    return this.bookmarkService.createOne(createBookmark);
+  async createBookmark(
+    @Body() createBookmark: CreateBookmarkDto,
+    @Req() req: Request<unknown>
+  ): Promise<GetBookmarkDto> {
+    const { userId, roles } = req.user;
+
+    if (!roles.some((r) => r === AuthRoles.Admin)) {
+      createBookmark.userId = userId;
+    }
+
+    const bookmark = await this.bookmarkService.createOne(createBookmark);
+
+    return bookmark;
   }
 
   @Get(':id')
@@ -104,7 +113,6 @@ export class BookmarkController {
   }
 
   @Put(':id')
-  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Update an existing bookmark',
@@ -132,11 +140,17 @@ export class BookmarkController {
   })
   async updateBookmarkById(
     @Param('id') id: string,
-    @Body() updateBookmarkDto: UpdateBookmarkDto
+    @Body() updateBookmarkDto: UpdateBookmarkDto,
+    @Req() req: Request<unknown>
   ): Promise<GetBookmarkDto> {
-    const bookmark = await this.bookmarkService.updateOneByEntryId(id, updateBookmarkDto);
+    const { userId, roles } = req.user;
+    const bookmark = (await this.bookmarkService.findOneById(id))._source;
 
-    return GetBookmarkDto.fromSource(bookmark);
+    checkOwnership(userId, bookmark.userId, roles);
+
+    const bookmarkSource = await this.bookmarkService.updateOneByEntryId(id, updateBookmarkDto);
+
+    return GetBookmarkDto.fromSource(bookmarkSource);
   }
 
   @Delete(':id')
@@ -160,10 +174,7 @@ export class BookmarkController {
     status: 403,
     description: 'Forbidden',
   })
-  async deleteBookmarkById(
-    @Param('id') id: string,
-    @Req() request: Pick<Request<{ id: string }>, 'user'>
-  ): Promise<void> {
+  async deleteBookmarkById(@Param('id') id: string, @Req() request: Pick<Request<unknown>, 'user'>): Promise<void> {
     const bookmarkSource = await this.bookmarkService.findOneById(id);
 
     if (bookmarkSource._source.userId !== request.user.userId) {

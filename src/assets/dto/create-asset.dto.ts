@@ -21,7 +21,9 @@ export class CreateAssetDto {
   @ApiProperty({
     example: 'u-12345',
     description: 'The userId who created the asset',
+    required: false,
   })
+  @IsOptional()
   @IsString()
   userId: string;
 

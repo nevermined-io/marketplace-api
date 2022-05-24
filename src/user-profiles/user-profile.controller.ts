@@ -6,7 +6,7 @@ import {
   Put,
   Delete,
   Param,
-  UseGuards,
+  Req,
   NotFoundException,
   BadRequestException,
 } from '@nestjs/common';
@@ -18,8 +18,9 @@ import { UpdateUserProfileDto } from './dto/update-user-profile.dto';
 import { DisableUserProfileDto } from './dto/disable-user-profile.dto';
 import { Public } from '../common/decorators/auth.decorator';
 import { Roles } from '../common/decorators/roles.decorators';
-import { UserMatchId } from '../common/guards/auth/user-match-id.guard';
 import { AuthRoles } from '../common/type';
+import { Request } from '../common/helpers/request.interface';
+import { checkOwnership } from '../common/helpers/utils';
 
 @ApiTags('User Profile')
 @Controller()
@@ -116,7 +117,6 @@ export class UserProfileController {
   }
 
   @Put(':userId')
-  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Update the user profile',
@@ -139,11 +139,16 @@ export class UserProfileController {
     description: 'Unauthorized',
   })
   async updateUserProfileByUserId(
-    @Param('userId') userId: string,
-    @Body() updateUserProfileDto: UpdateUserProfileDto
+    @Param('userId') userIdEntity: string,
+    @Body() updateUserProfileDto: UpdateUserProfileDto,
+    @Req() req: Request<unknown>
   ): Promise<GetUserProfileDto> {
+    const { userId, roles } = req.user;
+
+    checkOwnership(userId, userIdEntity, roles);
+
     const userProfileSource = await this.userProfileService.updateOneByEntryId(
-      userId,
+      userIdEntity,
       UpdateUserProfileDto.fromPayload(updateUserProfileDto)
     );
 
@@ -151,7 +156,6 @@ export class UserProfileController {
   }
 
   @Delete(':userId')
-  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Disable the user profile',
@@ -169,7 +173,14 @@ export class UserProfileController {
     status: 401,
     description: 'Unauthorized',
   })
-  async disableUserProfileByUserId(@Param('userId') userId: string): Promise<DisableUserProfileDto> {
-    return this.userProfileService.disableOneByEntryId(userId);
+  async disableUserProfileByUserId(
+    @Param('userId') userIdEntity: string,
+    @Req() req: Request<undefined>
+  ): Promise<DisableUserProfileDto> {
+    const { userId, roles } = req.user;
+
+    checkOwnership(userId, userIdEntity, roles);
+
+    return this.userProfileService.disableOneByEntryId(userIdEntity);
   }
 }

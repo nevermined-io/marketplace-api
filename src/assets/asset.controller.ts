@@ -12,7 +12,6 @@ import {
   Req,
   NotFoundException,
   ForbiddenException,
-  UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { GetAssetDto } from './dto/get-asset-dto';
@@ -22,6 +21,7 @@ import { DDOStatusService } from './ddo-status.service';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
 import { SearchResponse } from '../common/helpers/search-response.dto';
 import { Request } from '../common/helpers/request.interface';
+import { checkOwnership } from '../common/helpers/utils';
 import { QueryBodyDDOdto } from './dto/query-body-ddo.dto';
 import { UpdateAssetDto } from './dto/update-asset.dto';
 import { AttributesDto } from './dto/attributes.dto';
@@ -30,7 +30,6 @@ import { CreateServiceDto } from './dto/create-service.dto';
 import { GetServiceDto } from './dto/get-service.dto';
 import { ServiceDDOService } from './ddo-service.service';
 import { Public } from '../common/decorators/auth.decorator';
-import { UserMatchId } from '../common/guards/auth/user-match-id.guard';
 import { AuthRoles } from '../common/type';
 import { Roles } from '../common/decorators/roles.decorators';
 
@@ -41,10 +40,9 @@ export class AssetController {
     private readonly assetService: AssetService,
     private readonly ddosStatusService: DDOStatusService,
     private readonly serviceDDOService: ServiceDDOService
-  ) { }
+  ) {}
 
   @Post('/ddo')
-  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Create a asset entry',
@@ -68,10 +66,15 @@ export class AssetController {
   })
   @ApiResponse({
     status: 409,
-    description: 'DID already exists'
+    description: 'DID already exists',
   })
   async createAsset(@Req() req: Request<unknown>, @Body() createAssetDto: CreateAssetDto): Promise<GetAssetDto> {
     const url = `${req.protocol}://${req.hostname}${req.client.localPort ? `:${req.client.localPort}` : ''}${req.url}`;
+
+    if (!req.user.roles.some((r) => r === AuthRoles.Admin)) {
+      createAssetDto.userId = req.user.userId;
+    }
+
     const assetDto = await this.assetService.createOne(createAssetDto);
     await this.ddosStatusService.createOne(createAssetDto, url);
 
@@ -222,7 +225,6 @@ export class AssetController {
   }
 
   @Put('ddo/:did')
-  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
   @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Update DDO of an existing asset',
@@ -248,7 +250,17 @@ export class AssetController {
     status: 403,
     description: 'Forbidden',
   })
-  async updateDDO(@Param('did') did: string, @Body() updateAssetDto: UpdateAssetDto): Promise<GetAssetDto> {
+  async updateDDO(
+    @Param('did') did: string,
+    @Body() updateAssetDto: UpdateAssetDto,
+    @Req() request: Request<unknown>
+  ): Promise<GetAssetDto> {
+    const { userId, roles } = request.user;
+
+    const asset = (await this.assetService.findOneById(did))._source;
+
+    checkOwnership(userId, asset.userId, roles);
+
     const assetSource = await this.assetService.updateOneByEntryId(did, updateAssetDto);
 
     return GetAssetDto.fromSource(assetSource);
@@ -276,7 +288,7 @@ export class AssetController {
     status: 403,
     description: 'Forbidden',
   })
-  async deleteDDO(@Param('did') did: string, @Req() request: Pick<Request<{ did: string }>, 'user'>): Promise<void> {
+  async deleteDDO(@Param('did') did: string, @Req() request: Pick<Request<unknown>, 'user'>): Promise<void> {
     const assetSource = await this.assetService.findOneById(did);
 
     if (assetSource._source.userId !== request.user.userId) {
@@ -314,7 +326,6 @@ export class AssetController {
   }
 
   @Post('service')
-  @UseGuards(UserMatchId.fromParam('userId', [AuthRoles.Admin]))
   @ApiBearerAuth('Authorization')
   @ApiResponse({
     description: 'Create a service',
@@ -332,8 +343,16 @@ export class AssetController {
     status: 401,
     description: 'Unauthorized',
   })
-  async createService(@Body() serviceDto: CreateServiceDto): Promise<GetServiceDto> {
-    return this.serviceDDOService.createOne(serviceDto);
+  async createService(@Body() serviceDto: CreateServiceDto, @Req() request: Request<unknown>): Promise<GetServiceDto> {
+    const { userId, roles } = request.user;
+
+    const service = await this.serviceDDOService.createOne(serviceDto);
+
+    if (!roles.some((r) => r === AuthRoles.Admin)) {
+      service.userId = userId;
+    }
+
+    return service;
   }
 
   @Post('service/query')
