@@ -27,6 +27,18 @@ describe('UserProfileController', () => {
   userProfile.email = faker.internet.email();
   userProfile.state = State.Confirmed;
 
+  const req = {
+    url: '/api/v1/ugc/bookmarks',
+    protocol: 'http',
+    client: { localPort: 3100 },
+    hostname: 'localhost',
+    user: {
+      roles: [],
+      userId: userProfile.userId,
+      address: undefined,
+    },
+  };
+
   const userProfileSource = {
     _source: userProfile,
     _index: MarketplaceIndex.UserProfile,
@@ -120,9 +132,9 @@ describe('UserProfileController', () => {
 
     jest.spyOn(userProfileService, 'updateOneByEntryId').mockResolvedValue(newUserProfileSource);
 
-    expect(await userProfileController.updateUserProfileByUserId(userProfile.userId, newUserProfile)).toStrictEqual(
-      GetUserProfileDto.fromSource(newUserProfileSource)
-    );
+    expect(
+      await userProfileController.updateUserProfileByUserId(userProfile.userId, newUserProfile, req)
+    ).toStrictEqual(GetUserProfileDto.fromSource(newUserProfileSource));
   });
 
   it('should disable user profile', async () => {
@@ -130,7 +142,7 @@ describe('UserProfileController', () => {
 
     jest.spyOn(userProfileService, 'disableOneByEntryId').mockResolvedValue(disabledUserProfile);
 
-    expect(await userProfileController.disableUserProfileByUserId(userProfile.userId)).toStrictEqual(
+    expect(await userProfileController.disableUserProfileByUserId(userProfile.userId, req)).toStrictEqual(
       disabledUserProfile
     );
   });

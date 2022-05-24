@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsInt, IsUrl, ValidateNested } from 'class-validator';
+import { IsString, IsInt, IsUrl, ValidateNested, IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
 import { AttributesDto } from './attributes.dto';
 
@@ -14,7 +14,9 @@ export class CreateServiceDto {
   @ApiProperty({
     example: 'u-12345',
     description: 'The userId who created the service',
+    required: false,
   })
+  @IsOptional()
   @IsString()
   userId: string;
 

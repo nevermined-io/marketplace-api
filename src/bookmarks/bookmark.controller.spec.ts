@@ -20,6 +20,18 @@ describe('BookmarkController', () => {
   bookmark.did = `did:${faker.datatype.uuid()}`;
   bookmark.description = faker.lorem.sentence();
 
+  const req = {
+    url: '/api/v1/ugc/bookmarks',
+    protocol: 'http',
+    client: { localPort: 3100 },
+    hostname: 'localhost',
+    user: {
+      roles: [],
+      userId: bookmark.userId,
+      address: undefined,
+    },
+  };
+
   const newBookmark = { ...bookmark, description: faker.lorem.sentence() };
 
   beforeEach(async () => {
@@ -49,11 +61,14 @@ describe('BookmarkController', () => {
     jest.spyOn(bookmarkService, 'createOne').mockResolvedValue(bookmark);
 
     expect(
-      await bookmarkController.createBookmark({
-        userId: bookmark.userId,
-        did: bookmark.did,
-        description: bookmark.description,
-      })
+      await bookmarkController.createBookmark(
+        {
+          userId: bookmark.userId,
+          did: bookmark.did,
+          description: bookmark.description,
+        },
+        req
+      )
     ).toStrictEqual(bookmark);
   });
 
@@ -97,6 +112,12 @@ describe('BookmarkController', () => {
   });
 
   it('should update bookmark by passing id', async () => {
+    jest.spyOn(bookmarkService, 'findOneById').mockResolvedValue({
+      _source: bookmark,
+      _index: MarketplaceIndex.Bookmark,
+      _id: faker.datatype.uuid(),
+    });
+
     jest.spyOn(bookmarkService, 'updateOneByEntryId').mockResolvedValue({
       _source: newBookmark,
       _index: MarketplaceIndex.Bookmark,
@@ -104,10 +125,14 @@ describe('BookmarkController', () => {
     });
 
     expect(
-      await bookmarkController.updateBookmarkById(bookmark.id, {
-        description: newBookmark.description,
-        userId: newBookmark.userId,
-      })
+      await bookmarkController.updateBookmarkById(
+        bookmark.id,
+        {
+          description: newBookmark.description,
+          userId: newBookmark.userId,
+        },
+        req
+      )
     ).toStrictEqual(
       GetBookmarkDto.fromSource({
         _source: newBookmark,

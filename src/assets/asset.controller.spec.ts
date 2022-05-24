@@ -88,9 +88,11 @@ describe('Asset', () => {
           protocol: 'http',
           client: { localPort: 3100 },
           hostname: 'localhost',
-          body: asset,
-          params: undefined,
-          query: undefined,
+          user: {
+            roles: [],
+            userId: asset.userId,
+            address: undefined,
+          },
         },
         asset
       )
@@ -262,6 +264,12 @@ describe('Asset', () => {
   it('should update one ddo passing the did', async () => {
     const updateAsset = { ...asset, updated: new Date().toDateString() };
 
+    jest.spyOn(assetService, 'findOneById').mockResolvedValue({
+      _source: asset,
+      _index: MarketplaceIndex.Asset,
+      _id: asset.id,
+    });
+
     jest.spyOn(assetService, 'updateOneByEntryId').mockImplementation((id, assetToUpdate) => {
       const assetUpdated = { ...asset, ...assetToUpdate };
       return {
@@ -271,7 +279,19 @@ describe('Asset', () => {
       } as any;
     });
 
-    expect(await assetController.updateDDO(asset.id, updateAsset)).toStrictEqual(
+    expect(
+      await assetController.updateDDO(asset.id, updateAsset, {
+        url: '/api/v1/metadata/assets/ddo/',
+        protocol: 'http',
+        client: { localPort: 3100 },
+        hostname: 'localhost',
+        user: {
+          roles: [],
+          userId: asset.userId,
+          address: undefined,
+        },
+      })
+    ).toStrictEqual(
       GetAssetDto.fromSource({
         _source: updateAsset,
         _index: MarketplaceIndex.Asset,
@@ -359,7 +379,19 @@ describe('Asset', () => {
   it('should create a service', async () => {
     jest.spyOn(serviceDDOService, 'createOne').mockResolvedValue(service);
 
-    expect(await assetController.createService(service)).toStrictEqual(service);
+    expect(
+      await assetController.createService(service, {
+        url: '/api/v1/metadata/assets/ddo/',
+        protocol: 'http',
+        client: { localPort: 3100 },
+        hostname: 'localhost',
+        user: {
+          roles: [],
+          userId: asset.userId,
+          address: undefined,
+        },
+      })
+    ).toStrictEqual(service);
   });
 
   it('should get a service', async () => {
