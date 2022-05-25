@@ -69,11 +69,14 @@ export class AssetController {
     description: 'DID already exists',
   })
   async createAsset(@Req() req: Request<unknown>, @Body() createAssetDto: CreateAssetDto): Promise<GetAssetDto> {
+    const { userId, roles } = req.user;
     const url = `${req.protocol}://${req.hostname}${req.client.localPort ? `:${req.client.localPort}` : ''}${req.url}`;
 
-    if (!req.user.roles.some((r) => r === AuthRoles.Admin)) {
+    if (!createAssetDto.userId) {
       createAssetDto.userId = req.user.userId;
     }
+
+    checkOwnership(userId, createAssetDto.userId, roles);
 
     const assetDto = await this.assetService.createOne(createAssetDto);
     await this.ddosStatusService.createOne(createAssetDto, url);
@@ -346,11 +349,11 @@ export class AssetController {
   async createService(@Body() serviceDto: CreateServiceDto, @Req() request: Request<unknown>): Promise<GetServiceDto> {
     const { userId, roles } = request.user;
 
-    const isAdmin = !roles.some((r) => r === AuthRoles.Admin);
-
-    if (!isAdmin || (isAdmin && !serviceDto.userId)) {
+    if (!serviceDto.userId) {
       serviceDto.userId = userId;
     }
+
+    checkOwnership(userId, serviceDto.userId, roles);
 
     return this.serviceDDOService.createOne(serviceDto);
   }

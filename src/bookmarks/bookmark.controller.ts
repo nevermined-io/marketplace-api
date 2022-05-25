@@ -21,7 +21,6 @@ import { SearchQueryDto } from '../common/helpers/search-query.dto';
 import { SearchResponse } from '../common/helpers/search-response.dto';
 import { checkOwnership } from '../common/helpers/utils';
 import { Public } from '../common/decorators/auth.decorator';
-import { AuthRoles } from '../common/type';
 import { Request } from '../common/helpers/request.interface';
 
 @ApiTags('Bookmark')
@@ -56,11 +55,12 @@ export class BookmarkController {
     @Req() req: Request<unknown>
   ): Promise<GetBookmarkDto> {
     const { userId, roles } = req.user;
-    const isAdmin = !roles.some((r) => r === AuthRoles.Admin);
 
-    if (!isAdmin || (isAdmin && !createBookmark.userId)) {
+    if (!createBookmark.userId) {
       createBookmark.userId = userId;
     }
+
+    checkOwnership(userId, createBookmark.userId, roles);
 
     const bookmark = await this.bookmarkService.createOne(createBookmark);
 
