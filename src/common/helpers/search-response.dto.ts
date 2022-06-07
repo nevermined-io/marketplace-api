@@ -36,8 +36,8 @@ export class SearchResponse<G> {
           example: 10,
         },
         total_results: {
-          type: 'number',
-          example: 220,
+          type: 'object',
+          example: { value: 220, relation: 'eq' },
         },
       },
     };
