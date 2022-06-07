@@ -60,6 +60,10 @@ describe('UserProfileController', () => {
   it('it should get permissions by passing userId', async () => {
     jest.spyOn(permissionService, 'findManyByUserIdAndType').mockResolvedValue({
       hits: [permisionSource],
+      total: {
+        value: 1,
+        relation: 'eq',
+      },
     });
 
     const searchQueryDto = {
@@ -70,7 +74,13 @@ describe('UserProfileController', () => {
     expect(await permissionController.getPermissionByUserId(permission.userId, searchQueryDto)).toStrictEqual(
       SearchResponse.fromSearchSources(
         searchQueryDto,
-        { hits: [permisionSource] },
+        {
+          hits: [permisionSource],
+          total: {
+            value: 1,
+            relation: 'eq',
+          },
+        },
         [permisionSource].map(GetPermissionDto.fromSource)
       )
     );
@@ -79,6 +89,10 @@ describe('UserProfileController', () => {
   it('It should get permission by passing userId and type', async () => {
     jest.spyOn(permissionService, 'findManyByUserIdAndType').mockResolvedValue({
       hits: [permisionSource],
+      total: {
+        value: 1,
+        relation: 'eq',
+      },
     });
 
     const searchQueryDto = {
@@ -91,7 +105,13 @@ describe('UserProfileController', () => {
     ).toStrictEqual(
       SearchResponse.fromSearchSources(
         searchQueryDto,
-        { hits: [permisionSource] },
+        {
+          hits: [permisionSource],
+          total: {
+            value: 1,
+            relation: 'eq',
+          },
+        },
         [permisionSource].map(GetPermissionDto.fromSource)
       )
     );

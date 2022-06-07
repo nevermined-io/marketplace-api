@@ -21,6 +21,7 @@ import { PermissionModule } from './permission.module';
 import { PermissionService } from './permission.service';
 import { newPermission, permission } from './permission.mockup';
 import { UpdatePermissionDto } from './dto/update-permission.dto';
+import { SearchResults } from '../common/helpers/search-query.interface';
 
 describe('Permission', () => {
   let app: INestApplication;
@@ -48,6 +49,7 @@ describe('Permission', () => {
     findManyByUserIdAndType: () => {
       return {
         hits: [],
+        total: { value: 0, relation: 'eq' },
       };
     },
 
@@ -131,7 +133,7 @@ describe('Permission', () => {
           _id: permission.id,
         },
       ],
-      total: 1,
+      total: { value: 1, relation: 'eq' } as SearchResults,
     };
 
     jest.spyOn(permissionService, 'findManyByUserIdAndType').mockResolvedValue(permisionHits);
@@ -139,7 +141,7 @@ describe('Permission', () => {
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toStrictEqual({
-      total_results: 1,
+      total_results: { value: 1, relation: 'eq' },
       total_pages: 1,
       page: 1,
       results: [{ ...permission, issuanceDate: permission.issuanceDate.toISOString() }],
@@ -155,7 +157,7 @@ describe('Permission', () => {
           _id: permission.id,
         },
       ],
-      total: 1,
+      total: { value: 1, relation: 'eq' } as SearchResults,
     };
 
     jest.spyOn(permissionService, 'findManyByUserIdAndType').mockResolvedValue(permisionHits);
@@ -163,7 +165,7 @@ describe('Permission', () => {
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toStrictEqual({
-      total_results: 1,
+      total_results: { value: 1, relation: 'eq' },
       total_pages: 1,
       page: 1,
       results: [{ ...permission, issuanceDate: permission.issuanceDate.toISOString() }],
