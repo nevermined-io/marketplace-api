@@ -1,4 +1,5 @@
 import { SearchQueryDto } from './search-query.dto';
+import { SearchResults } from './search-query.interface';
 import { SearchHitsMetadata } from '@elastic/elasticsearch/api/types';
 import { ApiProperty, getSchemaPath } from '@nestjs/swagger';
 import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
@@ -12,8 +13,8 @@ export class SearchResponse<G> {
     return {
       page: searchQueryDto.page,
       results: dto,
-      total_pages: Math.ceil((hits.total as number) / searchQueryDto.offset),
-      total_results: hits.total as number,
+      total_pages: Math.ceil((hits.total as SearchResults).value / searchQueryDto.offset),
+      total_results: hits.total as SearchResults,
     };
   }
 
@@ -60,12 +61,12 @@ export class SearchResponse<G> {
   total_pages: number;
 
   @ApiProperty({
-    example: 220,
-    description: 'total of the entries found',
+    example: { value: 1, relation: 'eq' },
+    description: 'total of the entries found and relation used',
   })
-  total_results: number;
+  total_results: SearchResults;
 
-  constructor(page: number, results: G, total_pages: number, total_results: number) {
+  constructor(page: number, results: G, total_pages: number, total_results: SearchResults) {
     this.page = page;
     this.results = results;
     this.total_pages = total_pages;

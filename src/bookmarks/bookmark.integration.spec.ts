@@ -53,7 +53,7 @@ describe('Bookmark', () => {
     },
     findManyByUserId: (userId: string) => {
       return {
-        total: 1,
+        total: { value: 1, relation: 'eq' },
         hits: [{ _source: bookmark }].filter((b) => b._source.userId === userId),
       };
     },
@@ -143,7 +143,7 @@ describe('Bookmark', () => {
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toStrictEqual({
-      total_results: 1,
+      total_results: { value: 1, relation: 'eq' },
       total_pages: 1,
       page: 1,
       results: [{ ...bookmark, createdAt: bookmark.createdAt.toISOString() }],

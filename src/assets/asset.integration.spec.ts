@@ -61,7 +61,7 @@ describe('Asset', () => {
           _index: MarketplaceIndex.Asset,
           _id: a.id,
         })),
-      total: 2,
+      total: { value: 2, relation: 'eq' },
     }),
     findOneById: (id: string) =>
       [asset, assetCopy]
@@ -107,7 +107,7 @@ describe('Asset', () => {
           _id: service.agreementId,
         },
       ],
-      total: 1,
+      total: { value: 1, relation: 'eq' },
     }),
     deleteAll: () => undefined,
   };
@@ -191,7 +191,7 @@ describe('Asset', () => {
     expect(response.body).toStrictEqual({
       page: 1,
       total_pages: 1,
-      total_results: 2,
+      total_results: { value: 2, relation: 'eq' },
       results: [asset, assetCopy],
     });
   });
@@ -203,7 +203,7 @@ describe('Asset', () => {
     expect(response.body).toStrictEqual({
       page: 1,
       total_pages: 1,
-      total_results: 2,
+      total_results: { value: 2, relation: 'eq' },
       results: [asset, assetCopy],
     });
   });
@@ -223,7 +223,7 @@ describe('Asset', () => {
     expect(response.body).toStrictEqual({
       page: 1,
       total_pages: 1,
-      total_results: 2,
+      total_results: { value: 2, relation: 'eq' },
       results: [assetCopy, asset],
     });
   });
@@ -309,7 +309,7 @@ describe('Asset', () => {
     expect(response.body).toStrictEqual({
       page: 1,
       total_pages: 1,
-      total_results: 1,
+      total_results: { value: 1, relation: 'eq' },
       results: [service],
     });
   });
