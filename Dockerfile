@@ -5,7 +5,7 @@ RUN apk add --no-cache autoconf automake alpine-sdk
 
 COPY package*.json ./
 
-RUN npm install --legacy-peer-deps
+RUN npm install
 
 COPY src ./src
 COPY config ./config
