@@ -3,6 +3,7 @@ import { RouterModule } from 'nest-router';
 import { routes } from './routes';
 import { ConfigModule } from './shared/config/config.module';
 import { LoggerModule } from './shared/logger/logger.module';
+import { InfoModule } from './info/info.module';
 import { BookmarkModule } from './bookmarks/bookmark.module';
 import { PermissionModule } from './permissions/permission.module';
 import { AssetModule } from './assets/asset.module';
@@ -16,6 +17,7 @@ import { AuthModule } from './auth/auth.module';
     AssetModule,
     LoggerModule,
     ConfigModule,
+    InfoModule,
     BookmarkModule,
     UserProfileModule,
     AuthModule,
