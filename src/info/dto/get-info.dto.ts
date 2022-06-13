@@ -11,14 +11,14 @@ export class GetInfoDto {
 
   @ApiProperty({
     example: '1.0.4',
-    description: 'Matching API Version',
+    description: 'Marketplace API Version',
   })
   @IsString()
   APIversion: string;
 
   @ApiProperty({
-    example: '1.0.4',
-    description: 'Matching API Version',
+    example: 'http://localhost:3100/api/v1/docs',
+    description: 'API docs url',
   })
   @IsUrl({
     require_tld: false,
