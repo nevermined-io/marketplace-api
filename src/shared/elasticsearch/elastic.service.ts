@@ -88,4 +88,8 @@ export class ElasticService {
       index,
     });
   }
+
+  async getInfo() {
+    return this.elasticsearchService.info();
+  }
 }
