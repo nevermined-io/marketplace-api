@@ -20,6 +20,7 @@ export class InfoController {
   @ApiResponse({
     status: 200,
     description: 'Return API Info',
+    type: GetInfoDto,
   })
   @Public()
   async getInfo(@Req() req: Request<unknown>): Promise<GetInfoDto> {
