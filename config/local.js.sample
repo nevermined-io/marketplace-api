@@ -4,7 +4,7 @@ process.env.NODE_ENV = 'development';
 module.exports = {
   NODE_ENV: process.env.NODE_ENV,
   JWT_SECRET_KEY: 'secret',
-  JWT_EXPIREY_KEY: '60m',
+  JWT_EXPIRY_KEY: '60m',
   server: {
     port: 3100,
   },
