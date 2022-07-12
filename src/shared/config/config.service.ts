@@ -14,6 +14,7 @@ const configProfile = require('../../../config');
 const DOTENV_SCHEMA = Joi.object({
   NODE_ENV: Joi.string().valid('development', 'production', 'test', 'staging').default('development'),
   JWT_SECRET_KEY: Joi.string().required().error(new Error('JWT_SECRET_KEY is required!')),
+  JWT_EXPIRY_KEY: Joi.string().default('60m'),
   server: Joi.object({
     port: Joi.number().default(3000),
   }),
@@ -38,6 +39,7 @@ type DotenvSchemaKeys =
   | 'server.port'
   | 'database.url'
   | 'JWT_SECRET_KEY'
+  | 'JWT_EXPIRY_KEY'
   | 'security.enableHttpsRedirect'
   | 'elasticsearch.node'
   | 'elasticsearch.auth.username'
