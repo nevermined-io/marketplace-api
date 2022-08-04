@@ -19,7 +19,7 @@ jobs:
           node-version: '14.x'
       - run: npm install -g widdershins
       - name: Convert openapi JSON to MD
-        run:
+        run: |
           widdershins docs/openapi.json -o docs/openapi.md
           rm -f docs/openapi.json
       - name: Install envsubst
