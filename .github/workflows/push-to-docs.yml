@@ -7,13 +7,21 @@ on:
       - v*
 
 jobs:
-  push-to-docs:
+  build-and-push-to-docs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           token: ${{ secrets.API_TOKEN_GITHUB }}
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+      - run: npm install -g widdershins
+      - name: Convert openapi JSON to MD
+        run:
+          widdershins docs/openapi.json -o docs/openapi.md
+          rm -f docs/openapi.json
       - name: Install envsubst
         run: |
           sudo apt update
