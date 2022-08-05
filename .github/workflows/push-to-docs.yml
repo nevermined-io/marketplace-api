@@ -20,7 +20,10 @@ jobs:
       - run: npm install -g widdershins
       - name: Convert openapi JSON to MD
         run: |
+          # Convert json to md
           widdershins docs/openapi.json -o docs/openapi.md
+          # Remove lines with pattern '*backwards compatibility*' (problematic with Docusaurus)
+          sed -i '/backwards compatibility/d' docs/openapi.md
           rm -f docs/openapi.json
       - name: Install envsubst
         run: |
