@@ -21,7 +21,7 @@ import { PermissionModule } from '../permissions/permission.module';
       useFactory: (config: ConfigService) => {
         return {
           secret: config.get('JWT_SECRET_KEY'),
-          signOptions: { expiresIn: '60m' },
+          signOptions: { expiresIn: config.get('JWT_EXPIRY_KEY') },
         };
       },
     }),
