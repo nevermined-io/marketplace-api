@@ -35,6 +35,17 @@ npm run setup:dev
 
 This will leave you with a `local.js` file within the `config` folder that will be used as the profile configuration.
 
+### Download network artifacts
+
+Download the required artifats for running locally with:
+
+```bash
+npm run artifacts:download -- v2.0.0 mumbai common
+```
+
+Replace the version, network and tag as required. This commad will download and unpack the artifacts
+in `public/artifact`.
+
 ### Setting up the database
 
 There are few options while it comes to database setup.

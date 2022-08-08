@@ -4,6 +4,7 @@
   "description": "The API allowing to manage Nevermined Marketplace common functionalities",
   "main": "main.ts",
   "scripts": {
+    "artifacts:download": "./scripts/download-artifacts.sh",
     "build": "tsc -p tsconfig.build.json",
     "database": "docker-compose -f docker-compose.yml up",
     "database:clear": "docker-compose down -v",
