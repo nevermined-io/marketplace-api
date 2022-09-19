@@ -39,7 +39,7 @@ export class AssetService {
   async findMany(searchQueryDto: SearchQueryDto): Promise<SearchHitsMetadata<Asset>> {
     return this.elasticService.searchByIndex(
       MarketplaceIndex.Asset,
-      {
+      searchQueryDto.query || {
         match_all: {},
       },
       searchQueryDto
