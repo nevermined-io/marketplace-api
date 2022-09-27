@@ -14,13 +14,13 @@ jobs:
         node-version: '16.x'
     - name: Install dependencies
       run: |
-        npm i
+        yarn
     - name: Compile and lint
       run: |
-        npm run build
-        npm run lint
+        yarn build
+        yarn lint
     - name: Run tests
       run: |
-        npm run setup:dev
+        yarn setup:dev
         # HDWalletProvider keeps jest from exiting
-        npm run test:cov -- --forceExit
+        yarn test:cov --forceExit

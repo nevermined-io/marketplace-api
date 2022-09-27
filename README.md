@@ -13,16 +13,16 @@
 ### Pre-requisites
 
 - Make sure you've installed [docker](https://www.docker.com/products/docker-desktop)
-- Make sure you've installed NodeJS version. You can see the version in the `nvmrc` file
+- Make sure you're using NodeJS version 16
 - You can also install [nvm](https://github.com/nvm-sh/nvm) in order to switch between different node versions
-- Set npm to install internal packages. See guide [here](https://coachhub.atlassian.net/wiki/spaces/ENG/pages/21692438/github)
+- Make sure you're using yarn as the package manager
 
 ### Install dependencies
 
 Install all necessary dependencies via:
 
 ```bash
-npm install
+yarn
 ```
 
 ### Copy profile configuration
@@ -30,21 +30,10 @@ npm install
 Copy the local profile configuration via:
 
 ```bash
-npm run setup:dev
+yarn setup:dev
 ```
 
 This will leave you with a `local.js` file within the `config` folder that will be used as the profile configuration.
-
-### Download network artifacts
-
-Download the required artifats for running locally with:
-
-```bash
-npm run artifacts:download -- v2.0.0 mumbai common
-```
-
-Replace the version, network and tag as required. This commad will download and unpack the artifacts
-in `public/artifact`.
 
 ### Setting up the database
 
@@ -69,13 +58,6 @@ There are few options while it comes to database setup.
 
 2. <u>**Run from Docker**</u>:
 
-   - Create .env file:
-   ```
-   # Password for the 'elastic' user (at least 6 characters)
-   ELASTIC_PASSWORD=[YOUR PASSWORD]
-
-   ELASTIC_USERNAME=[YOUR USERNAME]
-   ```
    - Make sure you installed docker
    - From project root in terminal run
 
@@ -105,7 +87,31 @@ npm build
 - config          # Configuration per profile
 ```
 
+## Testing
 
+Make sure you have docker running with `docker-compose up`
+
+### Unit tests
+
+```bash
+yarn setup:dev
+yarn test:cov
+```
+
+### Postman tests
+
+Start the development server:
+
+```bash
+yarn setup:dev
+yarn dev
+```
+
+Once the development server is up and running run postman tests with:
+
+```bash
+yarn test:postman
+```
 
 ## License
 
