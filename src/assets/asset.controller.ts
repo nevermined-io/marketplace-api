@@ -32,6 +32,8 @@ import { ServiceDDOService } from './ddo-service.service';
 import { Public } from '../common/decorators/auth.decorator';
 import { AuthRoles } from '../common/type';
 import { Roles } from '../common/decorators/roles.decorators';
+import { Asset } from './asset.entity';
+import { NvmConfigDto } from './dto/nvmConfig.dto';
 
 @ApiTags('Asset')
 @Controller()
@@ -72,11 +74,15 @@ export class AssetController {
     const { userId, roles } = req.user;
     const url = `${req.protocol}://${req.hostname}${req.client.localPort ? `:${req.client.localPort}` : ''}${req.url}`;
 
-    if (!createAssetDto.userId) {
-      createAssetDto.userId = req.user.userId;
+    if (!createAssetDto._nvm) {
+      createAssetDto._nvm = new NvmConfigDto();
     }
 
-    checkOwnership(userId, createAssetDto.userId, roles);
+    if (!createAssetDto._nvm.userId) {
+      createAssetDto._nvm.userId = req.user.userId;
+    }
+
+    checkOwnership(userId, createAssetDto._nvm.userId, roles);
 
     const assetDto = await this.assetService.createOne(createAssetDto);
     await this.ddosStatusService.createOne(createAssetDto, url);
@@ -260,9 +266,9 @@ export class AssetController {
   ): Promise<GetAssetDto> {
     const { userId, roles } = request.user;
 
-    const asset = (await this.assetService.findOneById(did))._source;
+    const asset: Asset = (await this.assetService.findOneById(did))._source;
 
-    checkOwnership(userId, asset.userId, roles);
+    checkOwnership(userId, asset._nvm.userId, roles);
 
     const assetSource = await this.assetService.updateOneByEntryId(did, updateAssetDto);
 
@@ -294,7 +300,7 @@ export class AssetController {
   async deleteDDO(@Param('did') did: string, @Req() request: Pick<Request<unknown>, 'user'>): Promise<void> {
     const assetSource = await this.assetService.findOneById(did);
 
-    if (assetSource._source.userId !== request.user.userId) {
+    if (assetSource._source._nvm.userId !== request.user.userId) {
       throw new ForbiddenException(`This account does not own asset with did ${did}`);
     }
 

@@ -31,7 +31,11 @@ describe('Asset', () => {
   asset.id = `did:nv:${faker.datatype.uuid()}`;
   asset['@context'] = 'https://w3id.org/did/v1';
   asset.created = new Date().toDateString();
-  asset.userId = `u-${faker.datatype.uuid()}`;
+  asset._nvm = {
+    userId: `u-${faker.datatype.uuid()}`,
+    appId: '',
+    versions: [],
+  };
 
   const ddoStatus = new DDOStatus();
   ddoStatus.did = asset.id;
@@ -90,7 +94,7 @@ describe('Asset', () => {
           hostname: 'localhost',
           user: {
             roles: [],
-            userId: asset.userId,
+            userId: asset._nvm.userId,
             address: undefined,
           },
         },
@@ -287,7 +291,7 @@ describe('Asset', () => {
         hostname: 'localhost',
         user: {
           roles: [],
-          userId: asset.userId,
+          userId: asset._nvm.userId,
           address: undefined,
         },
       })
@@ -313,7 +317,7 @@ describe('Asset', () => {
 
     await assetController.deleteDDO(asset.id, {
       user: {
-        userId: asset.userId,
+        userId: asset._nvm.userId,
         address: faker.datatype.hexadecimal(18),
         roles: [],
       },
@@ -387,7 +391,7 @@ describe('Asset', () => {
         hostname: 'localhost',
         user: {
           roles: [],
-          userId: asset.userId,
+          userId: asset._nvm.userId,
           address: undefined,
         },
       })

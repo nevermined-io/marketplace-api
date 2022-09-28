@@ -1,6 +1,7 @@
 import { MappingProperty } from '@elastic/elasticsearch/api/types';
 
 export const AssetMappings: MappingProperty = {
+  dynamic: 'strict',
   properties: {
     '@context': {
       type: 'text',
@@ -39,11 +40,32 @@ export const AssetMappings: MappingProperty = {
     id: {
       type: 'keyword',
     },
-    userId: {
-      type: 'keyword',
-      index: false,
+    _nvm: {
+      properties: {
+        userId: {
+          type: 'keyword',
+        },
+        appId: {
+          type: 'keyword',
+        },
+        versions: {
+          properties: {
+            id: {
+              type: 'integer',
+            },
+            updated: {
+              type: 'date',
+            },
+            checksum: {
+              type: 'keyword',
+              ignore_above: 256,
+            },
+          },
+        },
+      },
     },
     proof: {
+      dynamic: true,
       properties: {
         created: {
           type: 'date',
@@ -127,6 +149,7 @@ export const AssetMappings: MappingProperty = {
       },
     },
     service: {
+      dynamic: true,
       properties: {
         creator: {
           type: 'text',
@@ -169,15 +192,6 @@ export const AssetMappings: MappingProperty = {
                           ignore_above: 256,
                         },
                       },
-                    },
-                  },
-                },
-                updateFrecuency: {
-                  type: 'text',
-                  fields: {
-                    keyword: {
-                      type: 'keyword',
-                      ignore_above: 256,
                     },
                   },
                 },
@@ -703,21 +717,11 @@ export const AssetMappings: MappingProperty = {
         },
       },
     },
-    text: {
-      type: 'text',
-      fields: {
-        keyword: {
-          type: 'keyword',
-        },
-      },
+    verifiableCredential: {
+      dynamic: true,
     },
-    value: {
-      type: 'text',
-      fields: {
-        keyword: {
-          type: 'keyword',
-        },
-      },
+    updated: {
+      dynamic: true,
     },
   },
 };

@@ -39,7 +39,7 @@ describe('Asset', () => {
   userProfile.email = faker.internet.email();
   userProfile.state = State.Confirmed;
 
-  asset.userId = userProfile.userId;
+  asset._nvm.userId = userProfile.userId;
   service.userId = userProfile.userId;
 
   const created = 'Tue Mar 29 2020';
