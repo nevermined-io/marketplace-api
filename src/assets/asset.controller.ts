@@ -33,7 +33,7 @@ import { Public } from '../common/decorators/auth.decorator';
 import { AuthRoles } from '../common/type';
 import { Roles } from '../common/decorators/roles.decorators';
 import { Asset } from './asset.entity';
-import { NvmDto } from './dto/nvm.dto';
+import { NvmConfigDto } from './dto/nvmConfig.dto';
 
 @ApiTags('Asset')
 @Controller()
@@ -75,7 +75,7 @@ export class AssetController {
     const url = `${req.protocol}://${req.hostname}${req.client.localPort ? `:${req.client.localPort}` : ''}${req.url}`;
 
     if (!createAssetDto._nvm) {
-      createAssetDto._nvm = new NvmDto();
+      createAssetDto._nvm = new NvmConfigDto();
     }
 
     if (!createAssetDto._nvm.userId) {

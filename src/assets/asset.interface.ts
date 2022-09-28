@@ -138,13 +138,13 @@ export interface Internal {
   url: string;
 }
 
-export interface NvmVersions {
+export interface NvmConfigVersions {
   id: number;
   updated: string;
   checksum: string;
 }
-export interface Nvm {
+export interface NvmConfig {
   userId: string;
   appId: string;
-  versions: NvmVersions[];
+  versions: NvmConfigVersions[];
 }

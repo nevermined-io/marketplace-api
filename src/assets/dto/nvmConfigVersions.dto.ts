@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsDateString, IsNumber } from 'class-validator';
 
-export class NvmVersionsDto {
+export class NvmConfigVersionsDto {
   @ApiProperty({
     example: '1',
     description: 'The id of the revision',

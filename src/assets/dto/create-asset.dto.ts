@@ -6,7 +6,7 @@ import { ProofDto } from './proof.dto';
 import { PublicKeyDto } from './publicKey.dto';
 import { ServiceDto } from './service.dto';
 import { serviceExample } from './service.example';
-import { NvmDto } from './nvm.dto';
+import { NvmConfigDto } from './nvmConfig.dto';
 
 export class CreateAssetDto {
   @ApiProperty({
@@ -22,10 +22,10 @@ export class CreateAssetDto {
   @ApiProperty({
     description: 'Nevermined config section',
     required: false,
-    type: NvmDto,
+    type: NvmConfigDto,
   })
   @IsOptional()
-  _nvm: NvmDto;
+  _nvm: NvmConfigDto;
 
   @ApiProperty({
     example: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429',

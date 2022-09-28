@@ -8,7 +8,7 @@ import { serviceExample } from './service.example';
 import { ServiceDto } from './service.dto';
 import { SearchHit } from '@elastic/elasticsearch/api/types';
 import { Asset } from '../asset.entity';
-import { NvmDto } from './nvm.dto';
+import { NvmConfigDto } from './nvmConfig.dto';
 
 export class GetAssetDto {
   static fromSource(assetSource: SearchHit<Asset>): GetAssetDto {
@@ -45,10 +45,10 @@ export class GetAssetDto {
 
   @ApiProperty({
     description: 'Nevermined config section',
-    type: NvmDto,
+    type: NvmConfigDto,
   })
   @ValidateNested()
-  _nvm: NvmDto;
+  _nvm: NvmConfigDto;
 
   @ApiProperty({
     example: '2021-02-01T10:55:11Z',
@@ -99,7 +99,7 @@ export class GetAssetDto {
   constructor(
     context: string,
     authentication: AuthenticationDto[],
-    _nvm: NvmDto,
+    _nvm: NvmConfigDto,
     created: string,
     updated: string,
     id: string,

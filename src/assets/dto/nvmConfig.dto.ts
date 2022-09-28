@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsString, IsOptional, ValidateNested } from 'class-validator';
-import { NvmVersionsDto } from './nvm-versions.dto';
+import { NvmConfigVersionsDto } from './nvmConfigVersions.dto';
 
-export class NvmDto {
+export class NvmConfigDto {
   @ApiProperty({
     example: 'u-12345',
     description: 'The userId who created the asset',
@@ -26,10 +26,10 @@ export class NvmDto {
     example: '12345',
     description: 'The application id that created the asset',
     required: false,
-    type: [NvmVersionsDto],
+    type: [NvmConfigVersionsDto],
   })
   @IsOptional()
   @ValidateNested({ each: true })
-  @Type(() => NvmVersionsDto)
-  versions: NvmVersionsDto[];
+  @Type(() => NvmConfigVersionsDto)
+  versions: NvmConfigVersionsDto[];
 }
