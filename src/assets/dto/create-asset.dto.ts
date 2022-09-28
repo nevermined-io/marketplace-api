@@ -6,6 +6,7 @@ import { ProofDto } from './proof.dto';
 import { PublicKeyDto } from './publicKey.dto';
 import { ServiceDto } from './service.dto';
 import { serviceExample } from './service.example';
+import { NvmDto } from './nvm.dto';
 
 export class CreateAssetDto {
   @ApiProperty({
@@ -19,13 +20,12 @@ export class CreateAssetDto {
   ['@context']: string;
 
   @ApiProperty({
-    example: 'u-12345',
-    description: 'The userId who created the asset',
+    description: 'Nevermined config section',
     required: false,
+    type: NvmDto,
   })
   @IsOptional()
-  @IsString()
-  userId: string;
+  _nvm: NvmDto;
 
   @ApiProperty({
     example: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429',

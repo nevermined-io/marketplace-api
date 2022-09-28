@@ -137,3 +137,14 @@ export interface Internal {
   status: Status;
   url: string;
 }
+
+export interface NvmVersions {
+  id: number;
+  updated: string;
+  checksum: string;
+}
+export interface Nvm {
+  userId: string;
+  appId: string;
+  versions: NvmVersions[];
+}

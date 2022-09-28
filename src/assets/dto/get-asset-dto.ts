@@ -8,13 +8,14 @@ import { serviceExample } from './service.example';
 import { ServiceDto } from './service.dto';
 import { SearchHit } from '@elastic/elasticsearch/api/types';
 import { Asset } from '../asset.entity';
+import { NvmDto } from './nvm.dto';
 
 export class GetAssetDto {
   static fromSource(assetSource: SearchHit<Asset>): GetAssetDto {
     return new GetAssetDto(
       assetSource._source['@context'],
       assetSource._source.authentication,
-      assetSource._source.userId,
+      assetSource._source._nvm,
       assetSource._source.created,
       assetSource._source.updated,
       assetSource._source.id,
@@ -43,11 +44,11 @@ export class GetAssetDto {
   authentication: AuthenticationDto[];
 
   @ApiProperty({
-    example: 'u-12345',
-    description: 'The userId who created the asset',
+    description: 'Nevermined config section',
+    type: NvmDto,
   })
-  @IsString()
-  userId: string;
+  @ValidateNested()
+  _nvm: NvmDto;
 
   @ApiProperty({
     example: '2021-02-01T10:55:11Z',
@@ -98,7 +99,7 @@ export class GetAssetDto {
   constructor(
     context: string,
     authentication: AuthenticationDto[],
-    userId: string,
+    _nvm: NvmDto,
     created: string,
     updated: string,
     id: string,
@@ -108,7 +109,7 @@ export class GetAssetDto {
   ) {
     this['@context'] = context;
     this.authentication = authentication;
-    this.userId = userId;
+    this._nvm = _nvm;
     this.created = created;
     this.updated = updated;
     this.id = id;

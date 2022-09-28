@@ -1,9 +1,9 @@
-import { Authentication, Proof, PublicKey, Service } from './asset.interface';
+import { Authentication, Nvm, Proof, PublicKey, Service } from './asset.interface';
 
 export class Asset {
   id: string;
   ['@context']: string;
-  userId: string;
+  _nvm: Nvm;
   authentication: Authentication[];
   created: string;
   updated: string;
