@@ -1,7 +1,6 @@
 import { MappingProperty } from '@elastic/elasticsearch/api/types';
 
 export const AssetMappings: MappingProperty = {
-  dynamic: 'strict',
   properties: {
     '@context': {
       type: 'text',
@@ -65,7 +64,6 @@ export const AssetMappings: MappingProperty = {
       },
     },
     proof: {
-      dynamic: true,
       properties: {
         created: {
           type: 'date',
@@ -149,7 +147,6 @@ export const AssetMappings: MappingProperty = {
       },
     },
     service: {
-      dynamic: true,
       properties: {
         creator: {
           type: 'text',
@@ -718,10 +715,10 @@ export const AssetMappings: MappingProperty = {
       },
     },
     verifiableCredential: {
-      dynamic: true,
+      type: 'object',
     },
     updated: {
-      dynamic: true,
+      type: 'date',
     },
   },
 };
