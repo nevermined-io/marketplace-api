@@ -35,7 +35,7 @@ describe('BookmarkController', () => {
   const newBookmark = { ...bookmark, description: faker.lorem.sentence() };
 
   beforeEach(async () => {
-    const module = await Test.createTestingModule({
+    const moduleMock = await Test.createTestingModule({
       controllers: [BookmarkController],
       providers: [
         {
@@ -53,8 +53,8 @@ describe('BookmarkController', () => {
       ],
     }).compile();
 
-    bookmarkService = module.get<BookmarkService>(BookmarkService);
-    bookmarkController = module.get<BookmarkController>(BookmarkController);
+    bookmarkService = moduleMock.get<BookmarkService>(BookmarkService);
+    bookmarkController = moduleMock.get<BookmarkController>(BookmarkController);
   });
 
   it('should create a bookmark', async () => {

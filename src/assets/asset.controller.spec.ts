@@ -55,7 +55,7 @@ describe('Asset', () => {
   service.attributes = new AttributesDto();
 
   beforeEach(async () => {
-    const module = await Test.createTestingModule({
+    const moduleMock = await Test.createTestingModule({
       controllers: [AssetController],
       providers: [
         {
@@ -75,10 +75,10 @@ describe('Asset', () => {
       ],
     }).compile();
 
-    assetService = module.get<AssetService>(AssetService);
-    ddosStatusService = module.get<DDOStatusService>(DDOStatusService);
-    assetController = module.get<AssetController>(AssetController);
-    serviceDDOService = module.get<ServiceDDOService>(ServiceDDOService);
+    assetService = moduleMock.get<AssetService>(AssetService);
+    ddosStatusService = moduleMock.get<DDOStatusService>(DDOStatusService);
+    assetController = moduleMock.get<AssetController>(AssetController);
+    serviceDDOService = moduleMock.get<ServiceDDOService>(ServiceDDOService);
   });
 
   it('should create a Asset', async () => {

@@ -30,7 +30,7 @@ describe('AuthService', () => {
   });
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    const moduleMock: TestingModule = await Test.createTestingModule({
       imports: [
         ConfigModule,
         PassportModule,
@@ -86,8 +86,8 @@ describe('AuthService', () => {
       controllers: [AuthController],
     }).compile();
 
-    authService = module.get<AuthService>(AuthService);
-    userProfileService = module.get<UserProfileService>(UserProfileService);
+    authService = moduleMock.get<AuthService>(AuthService);
+    userProfileService = moduleMock.get<UserProfileService>(UserProfileService);
   });
 
   it('should get an access token with an ethereum signed claim', async () => {
