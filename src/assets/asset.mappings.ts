@@ -1,8 +1,18 @@
 import { MappingProperty } from '@elastic/elasticsearch/api/types';
 
-export const AssetMappings: MappingProperty = {
+const context = {
+  type: 'text',
+  fields: {
+    keyword: {
+      type: 'keyword',
+      ignore_above: 256,
+    },
+  },
+} as MappingProperty;
+
+const authentication = {
   properties: {
-    '@context': {
+    publicKey: {
       type: 'text',
       fields: {
         keyword: {
@@ -11,714 +21,323 @@ export const AssetMappings: MappingProperty = {
         },
       },
     },
-    authentication: {
-      properties: {
-        publicKey: {
-          type: 'text',
-          fields: {
-            keyword: {
-              type: 'keyword',
-              ignore_above: 256,
-            },
-          },
-        },
-        type: {
-          type: 'text',
-          fields: {
-            keyword: {
-              type: 'keyword',
-              ignore_above: 256,
-            },
-          },
+    type: {
+      type: 'text',
+      fields: {
+        keyword: {
+          type: 'keyword',
+          ignore_above: 256,
         },
       },
     },
+  },
+} as MappingProperty;
+
+const created = {
+  type: 'date',
+} as MappingProperty;
+
+const id = {
+  type: 'keyword',
+} as MappingProperty;
+
+const _nvm = {
+  properties: {
+    userId: {
+      type: 'keyword',
+    },
+    appId: {
+      type: 'keyword',
+    },
+    versions: {
+      properties: {
+        id: {
+          type: 'integer',
+        },
+        updated: {
+          type: 'date',
+        },
+        checksum: {
+          type: 'keyword',
+          ignore_above: 256,
+        },
+      },
+    },
+  },
+} as MappingProperty;
+
+const proof = {
+  properties: {
     created: {
       type: 'date',
     },
+    creator: {
+      type: 'text',
+      fields: {
+        keyword: {
+          type: 'keyword',
+          ignore_above: 256,
+        },
+      },
+    },
+    signatureValue: {
+      type: 'text',
+      fields: {
+        keyword: {
+          type: 'keyword',
+          ignore_above: 256,
+        },
+      },
+    },
+    type: {
+      type: 'text',
+      fields: {
+        keyword: {
+          type: 'keyword',
+          ignore_above: 256,
+        },
+      },
+    },
+  },
+} as MappingProperty;
+
+const publicKey = {
+  properties: {
     id: {
+      type: 'text',
+      fields: {
+        keyword: {
+          type: 'keyword',
+          ignore_above: 256,
+        },
+      },
+    },
+    owner: {
+      type: 'text',
+      fields: {
+        keyword: {
+          type: 'keyword',
+          ignore_above: 256,
+        },
+      },
+    },
+    publicKeyBase58: {
+      type: 'text',
+      fields: {
+        keyword: {
+          type: 'keyword',
+          ignore_above: 256,
+        },
+      },
+    },
+    publicKeyPem: {
+      type: 'text',
+      fields: {
+        keyword: {
+          type: 'keyword',
+          ignore_above: 256,
+        },
+      },
+    },
+    type: {
+      type: 'text',
+      fields: {
+        keyword: {
+          type: 'keyword',
+          ignore_above: 256,
+        },
+      },
+    },
+  },
+} as MappingProperty;
+
+const verifiableCredential = {
+  type: 'object',
+} as MappingProperty;
+
+const updated = {
+  type: 'date',
+} as MappingProperty;
+
+const files = {
+  properties: {
+    name: {
+      type: 'text',
+    },
+    url: {
       type: 'keyword',
     },
-    _nvm: {
+    index: {
+      type: 'unsigned_long',
+    },
+    contentType: {
+      type: 'keyword',
+    },
+    checksum: {
+      type: 'keyword',
+    },
+    checksumType: {
+      type: 'keyword',
+    },
+    contentLength: {
+      type: 'keyword',
+    },
+    resourceId: {
+      type: 'keyword',
+    },
+    encoding: {
+      type: 'keyword',
+    },
+    compression: {
+      type: 'keyword',
+    },
+  },
+} as MappingProperty;
+
+const main = {
+  properties: {
+    price: {
+      type: 'keyword',
+    },
+    creator: {
+      type: 'keyword',
+    },
+    name: {
+      type: 'text',
+    },
+    datePublished: {
+      type: 'date',
+    },
+    dateCreated: {
+      type: 'date',
+    },
+    timeout: {
+      type: 'unsigned_long',
+    },
+    ercType: {
+      type: 'keyword',
+    },
+    nftType: {
+      type: 'keyword',
+    },
+    type: {
+      type: 'keyword',
+    },
+    author: {
+      type: 'text',
+    },
+    license: {
+      type: 'text',
+    },
+    files,
+    isDTP: {
+      type: 'boolean',
+    },
+  },
+} as MappingProperty;
+
+const additionalInformation = {
+  properties: {
+    priceHighestDenomination: {
+      type: 'double',
+    },
+    description: {
+      type: 'text',
+    },
+    copyrightHolder: {
+      type: 'text',
+    },
+    workExample: {
+      type: 'text',
+    },
+    links: {
+      type: 'object',
+    },
+    inLanguage: {
+      type: 'keyword',
+    },
+    categories: {
+      type: 'keyword',
+    },
+    tags: {
+      type: 'keyword',
+    },
+    updateFrequency: {
+      type: 'keyword',
+    },
+    structuredMarkup: {
       properties: {
-        userId: {
+        uri: {
           type: 'keyword',
         },
-        appId: {
+        mediaType: {
           type: 'keyword',
-        },
-        versions: {
-          properties: {
-            id: {
-              type: 'integer',
-            },
-            updated: {
-              type: 'date',
-            },
-            checksum: {
-              type: 'keyword',
-              ignore_above: 256,
-            },
-          },
         },
       },
     },
-    proof: {
+    customData: {
+      type: 'object',
+    },
+    poseidonHash: {
+      type: 'keyword',
+    },
+    providerKey: {
       properties: {
-        created: {
-          type: 'date',
+        x: {
+          type: 'keyword',
         },
-        creator: {
-          type: 'text',
-          fields: {
-            keyword: {
-              type: 'keyword',
-              ignore_above: 256,
-            },
-          },
-        },
-        signatureValue: {
-          type: 'text',
-          fields: {
-            keyword: {
-              type: 'keyword',
-              ignore_above: 256,
-            },
-          },
-        },
-        type: {
-          type: 'text',
-          fields: {
-            keyword: {
-              type: 'keyword',
-              ignore_above: 256,
-            },
-          },
+        y: {
+          type: 'keyword',
         },
       },
     },
-    publicKey: {
+  },
+} as MappingProperty;
+
+const service = {
+  type: 'nested',
+  properties: {
+    type: {
+      type: 'keyword',
+    },
+    index: {
+      type: 'unsigned_long',
+    },
+    serviceEndpoint: {
+      type: 'keyword',
+    },
+    templateId: {
+      type: 'keyword',
+    },
+    attributes: {
       properties: {
-        id: {
-          type: 'text',
-          fields: {
-            keyword: {
-              type: 'keyword',
-              ignore_above: 256,
-            },
-          },
+        main,
+        additionalInformation,
+        encryptedFiles: {
+          type: 'keyword',
         },
-        owner: {
-          type: 'text',
-          fields: {
-            keyword: {
-              type: 'keyword',
-              ignore_above: 256,
-            },
-          },
-        },
-        publicKeyBase58: {
-          type: 'text',
-          fields: {
-            keyword: {
-              type: 'keyword',
-              ignore_above: 256,
-            },
-          },
-        },
-        publicKeyPem: {
-          type: 'text',
-          fields: {
-            keyword: {
-              type: 'keyword',
-              ignore_above: 256,
-            },
-          },
-        },
-        type: {
-          type: 'text',
-          fields: {
-            keyword: {
-              type: 'keyword',
-              ignore_above: 256,
-            },
-          },
+        curation: {
+          type: 'object',
         },
       },
     },
     service: {
-      properties: {
-        creator: {
-          type: 'text',
-          fields: {
-            keyword: {
-              type: 'keyword',
-              ignore_above: 256,
-            },
-          },
-        },
-        description: {
-          type: 'text',
-          fields: {
-            keyword: {
-              type: 'keyword',
-              ignore_above: 256,
-            },
-          },
-        },
-        metadata: {
-          properties: {
-            additionalInformation: {
-              properties: {
-                structuredMarkup: {
-                  properties: {
-                    mediaType: {
-                      type: 'text',
-                      fields: {
-                        keyword: {
-                          type: 'keyword',
-                          ignore_above: 256,
-                        },
-                      },
-                    },
-                    uri: {
-                      type: 'text',
-                      fields: {
-                        keyword: {
-                          type: 'keyword',
-                          ignore_above: 256,
-                        },
-                      },
-                    },
-                  },
-                },
-                updateFrequency: {
-                  type: 'text',
-                  fields: {
-                    keyword: {
-                      type: 'keyword',
-                      ignore_above: 256,
-                    },
-                  },
-                },
-              },
-            },
-            main: {
-              properties: {
-                author: {
-                  type: 'text',
-                  fields: {
-                    keyword: {
-                      type: 'keyword',
-                      ignore_above: 256,
-                    },
-                  },
-                },
-                categories: {
-                  type: 'text',
-                  fields: {
-                    keyword: {
-                      type: 'keyword',
-                      ignore_above: 256,
-                    },
-                  },
-                },
-                checksum: {
-                  type: 'text',
-                  fields: {
-                    keyword: {
-                      type: 'keyword',
-                      ignore_above: 256,
-                    },
-                  },
-                },
-                copyrightHolder: {
-                  type: 'text',
-                  fields: {
-                    keyword: {
-                      type: 'keyword',
-                      ignore_above: 256,
-                    },
-                  },
-                },
-                dateCreated: {
-                  type: 'date',
-                },
-                datePublished: {
-                  type: 'date',
-                },
-                description: {
-                  type: 'text',
-                  fields: {
-                    keyword: {
-                      type: 'keyword',
-                      ignore_above: 256,
-                    },
-                  },
-                },
-                encryptedFiles: {
-                  type: 'text',
-                  fields: {
-                    keyword: {
-                      type: 'keyword',
-                      ignore_above: 256,
-                    },
-                  },
-                },
-                files: {
-                  properties: {
-                    checksum: {
-                      type: 'text',
-                      fields: {
-                        keyword: {
-                          type: 'keyword',
-                          ignore_above: 256,
-                        },
-                      },
-                    },
-                    checksumType: {
-                      type: 'text',
-                      fields: {
-                        keyword: {
-                          type: 'keyword',
-                          ignore_above: 256,
-                        },
-                      },
-                    },
-                    compression: {
-                      type: 'text',
-                      fields: {
-                        keyword: {
-                          type: 'keyword',
-                          ignore_above: 256,
-                        },
-                      },
-                    },
-                    contentLength: {
-                      type: 'long',
-                    },
-                    contentType: {
-                      type: 'text',
-                      fields: {
-                        keyword: {
-                          type: 'keyword',
-                          ignore_above: 256,
-                        },
-                      },
-                    },
-                    encoding: {
-                      type: 'text',
-                      fields: {
-                        keyword: {
-                          type: 'keyword',
-                          ignore_above: 256,
-                        },
-                      },
-                    },
-                    index: {
-                      type: 'long',
-                    },
-                    resourceId: {
-                      type: 'text',
-                      fields: {
-                        keyword: {
-                          type: 'keyword',
-                          ignore_above: 256,
-                        },
-                      },
-                    },
-                  },
-                },
-                inLanguage: {
-                  type: 'text',
-                  fields: {
-                    keyword: {
-                      type: 'keyword',
-                      ignore_above: 256,
-                    },
-                  },
-                },
-                license: {
-                  type: 'text',
-                  fields: {
-                    keyword: {
-                      type: 'keyword',
-                      ignore_above: 256,
-                    },
-                  },
-                },
-                links: {
-                  properties: {
-                    name: {
-                      type: 'text',
-                      fields: {
-                        keyword: {
-                          type: 'keyword',
-                          ignore_above: 256,
-                        },
-                      },
-                    },
-                    type: {
-                      type: 'text',
-                      fields: {
-                        keyword: {
-                          type: 'keyword',
-                          ignore_above: 256,
-                        },
-                      },
-                    },
-                    url: {
-                      type: 'text',
-                      fields: {
-                        keyword: {
-                          type: 'keyword',
-                          ignore_above: 256,
-                        },
-                      },
-                    },
-                  },
-                },
-                name: {
-                  type: 'text',
-                  fields: {
-                    keyword: {
-                      type: 'keyword',
-                      ignore_above: 256,
-                    },
-                  },
-                },
-                price: {
-                  type: 'text',
-                  fields: {
-                    keyword: {
-                      type: 'keyword',
-                      ignore_above: 256,
-                    },
-                  },
-                },
-                tags: {
-                  type: 'text',
-                  fields: {
-                    keyword: {
-                      type: 'keyword',
-                      ignore_above: 256,
-                    },
-                  },
-                },
-                type: {
-                  type: 'text',
-                  fields: {
-                    keyword: {
-                      type: 'keyword',
-                      ignore_above: 256,
-                    },
-                  },
-                },
-                workExample: {
-                  type: 'text',
-                  fields: {
-                    keyword: {
-                      type: 'keyword',
-                      ignore_above: 256,
-                    },
-                  },
-                },
-              },
-            },
-            curation: {
-              properties: {
-                isListed: {
-                  type: 'boolean',
-                },
-                numVotes: {
-                  type: 'long',
-                },
-                rating: {
-                  type: 'float',
-                },
-              },
-            },
-          },
-        },
-        name: {
-          type: 'text',
-          fields: {
-            keyword: {
-              type: 'keyword',
-              ignore_above: 256,
-            },
-          },
-        },
-        purchaseEndpoint: {
-          type: 'text',
-          fields: {
-            keyword: {
-              type: 'keyword',
-              ignore_above: 256,
-            },
-          },
-        },
-        service: {
-          type: 'text',
-          fields: {
-            keyword: {
-              type: 'keyword',
-              ignore_above: 256,
-            },
-          },
-        },
-        serviceAgreementTemplate: {
-          properties: {
-            conditionDependency: {
-              properties: {
-                escrowReward: {
-                  type: 'text',
-                  fields: {
-                    keyword: {
-                      type: 'keyword',
-                      ignore_above: 256,
-                    },
-                  },
-                },
-              },
-            },
-            conditions: {
-              properties: {
-                contractName: {
-                  type: 'text',
-                  fields: {
-                    keyword: {
-                      type: 'keyword',
-                      ignore_above: 256,
-                    },
-                  },
-                },
-                events: {
-                  properties: {
-                    actorType: {
-                      type: 'text',
-                      fields: {
-                        keyword: {
-                          type: 'keyword',
-                          ignore_above: 256,
-                        },
-                      },
-                    },
-                    handler: {
-                      properties: {
-                        functionName: {
-                          type: 'text',
-                          fields: {
-                            keyword: {
-                              type: 'keyword',
-                              ignore_above: 256,
-                            },
-                          },
-                        },
-                        moduleName: {
-                          type: 'text',
-                          fields: {
-                            keyword: {
-                              type: 'keyword',
-                              ignore_above: 256,
-                            },
-                          },
-                        },
-                        version: {
-                          type: 'text',
-                          fields: {
-                            keyword: {
-                              type: 'keyword',
-                              ignore_above: 256,
-                            },
-                          },
-                        },
-                      },
-                    },
-                    name: {
-                      type: 'text',
-                      fields: {
-                        keyword: {
-                          type: 'keyword',
-                          ignore_above: 256,
-                        },
-                      },
-                    },
-                  },
-                },
-                functionName: {
-                  type: 'text',
-                  fields: {
-                    keyword: {
-                      type: 'keyword',
-                      ignore_above: 256,
-                    },
-                  },
-                },
-                name: {
-                  type: 'text',
-                  fields: {
-                    keyword: {
-                      type: 'keyword',
-                      ignore_above: 256,
-                    },
-                  },
-                },
-                parameters: {
-                  properties: {
-                    name: {
-                      type: 'text',
-                      fields: {
-                        keyword: {
-                          type: 'keyword',
-                          ignore_above: 256,
-                        },
-                      },
-                    },
-                    type: {
-                      type: 'text',
-                      fields: {
-                        keyword: {
-                          type: 'keyword',
-                          ignore_above: 256,
-                        },
-                      },
-                    },
-                    value: {
-                      type: 'text',
-                      fields: {
-                        keyword: {
-                          type: 'keyword',
-                          ignore_above: 256,
-                        },
-                      },
-                    },
-                  },
-                },
-                timelock: {
-                  type: 'long',
-                },
-                timeout: {
-                  type: 'long',
-                },
-              },
-            },
-            contractName: {
-              type: 'text',
-              fields: {
-                keyword: {
-                  type: 'keyword',
-                  ignore_above: 256,
-                },
-              },
-            },
-            events: {
-              properties: {
-                actorType: {
-                  type: 'text',
-                  fields: {
-                    keyword: {
-                      type: 'keyword',
-                      ignore_above: 256,
-                    },
-                  },
-                },
-                handler: {
-                  properties: {
-                    functionName: {
-                      type: 'text',
-                      fields: {
-                        keyword: {
-                          type: 'keyword',
-                          ignore_above: 256,
-                        },
-                      },
-                    },
-                    moduleName: {
-                      type: 'text',
-                      fields: {
-                        keyword: {
-                          type: 'keyword',
-                          ignore_above: 256,
-                        },
-                      },
-                    },
-                    version: {
-                      type: 'text',
-                      fields: {
-                        keyword: {
-                          type: 'keyword',
-                          ignore_above: 256,
-                        },
-                      },
-                    },
-                  },
-                },
-                name: {
-                  type: 'text',
-                  fields: {
-                    keyword: {
-                      type: 'keyword',
-                      ignore_above: 256,
-                    },
-                  },
-                },
-              },
-            },
-            fulfillmentOrder: {
-              type: 'text',
-              fields: {
-                keyword: {
-                  type: 'keyword',
-                  ignore_above: 256,
-                },
-              },
-            },
-          },
-        },
-        serviceDefinitionId: {
-          type: 'text',
-          fields: {
-            keyword: {
-              type: 'keyword',
-              ignore_above: 256,
-            },
-          },
-        },
-        serviceEndpoint: {
-          type: 'text',
-          fields: {
-            keyword: {
-              type: 'keyword',
-              ignore_above: 256,
-            },
-          },
-        },
-        templateId: {
-          type: 'text',
-          fields: {
-            keyword: {
-              type: 'keyword',
-              ignore_above: 256,
-            },
-          },
-        },
-        type: {
-          type: 'text',
-          fields: {
-            keyword: {
-              type: 'keyword',
-              ignore_above: 256,
-            },
-          },
-        },
-      },
+      type: 'keyword',
     },
-    verifiableCredential: {
-      type: 'object',
-    },
-    updated: {
-      type: 'date',
-    },
+  },
+} as MappingProperty;
+
+export const AssetMappings: MappingProperty = {
+  properties: {
+    '@context': context,
+    authentication,
+    created,
+    id,
+    _nvm,
+    proof,
+    publicKey,
+    verifiableCredential,
+    updated,
+    service,
   },
 };
