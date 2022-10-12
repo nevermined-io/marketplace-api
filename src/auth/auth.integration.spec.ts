@@ -27,7 +27,7 @@ describe('AuthController', () => {
   });
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    const moduleMock: TestingModule = await Test.createTestingModule({
       imports: [
         ConfigModule,
         PassportModule,
@@ -92,8 +92,8 @@ describe('AuthController', () => {
       controllers: [AuthController],
     }).compile();
 
-    authService = module.get<AuthService>(AuthService);
-    app = module.createNestApplication();
+    authService = moduleMock.get<AuthService>(AuthService);
+    app = moduleMock.createNestApplication();
     app.useGlobalGuards(new JwtAuthGuard(new Reflector()));
     await app.init();
   });

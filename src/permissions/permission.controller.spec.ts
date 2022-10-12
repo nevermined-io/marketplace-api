@@ -21,7 +21,7 @@ describe('UserProfileController', () => {
   };
 
   beforeEach(async () => {
-    const module = await Test.createTestingModule({
+    const moduleMock = await Test.createTestingModule({
       controllers: [PermissionController],
       providers: [
         {
@@ -39,8 +39,8 @@ describe('UserProfileController', () => {
       ],
     }).compile();
 
-    permissionService = module.get<PermissionService>(PermissionService);
-    permissionController = module.get<PermissionController>(PermissionController);
+    permissionService = moduleMock.get<PermissionService>(PermissionService);
+    permissionController = moduleMock.get<PermissionController>(PermissionController);
   });
 
   it('It should create a permission', async () => {

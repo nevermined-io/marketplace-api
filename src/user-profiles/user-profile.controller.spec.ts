@@ -46,7 +46,7 @@ describe('UserProfileController', () => {
   };
 
   beforeEach(async () => {
-    const module = await Test.createTestingModule({
+    const moduleMock = await Test.createTestingModule({
       controllers: [UserProfileController],
       providers: [
         {
@@ -64,8 +64,8 @@ describe('UserProfileController', () => {
       ],
     }).compile();
 
-    userProfileService = module.get<UserProfileService>(UserProfileService);
-    userProfileController = module.get<UserProfileController>(UserProfileController);
+    userProfileService = moduleMock.get<UserProfileService>(UserProfileService);
+    userProfileController = moduleMock.get<UserProfileController>(UserProfileController);
   });
 
   it('should create an user profile', async () => {

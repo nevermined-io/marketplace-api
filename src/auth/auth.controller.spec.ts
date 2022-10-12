@@ -23,7 +23,7 @@ describe('AuthController', () => {
   });
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    const moduleMock: TestingModule = await Test.createTestingModule({
       imports: [
         ConfigModule,
         PassportModule,
@@ -90,7 +90,7 @@ describe('AuthController', () => {
       controllers: [AuthController],
     }).compile();
 
-    authController = module.get<AuthController>(AuthController);
+    authController = moduleMock.get<AuthController>(AuthController);
   });
 
   it('should get an access_token', async () => {
