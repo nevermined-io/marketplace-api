@@ -23,7 +23,7 @@ export class ElasticService {
     searchQuery: SearchQueryDto,
     _source_includes?: string | string[]
   ): Promise<SearchHitsMetadata<unknown>> {
-    const page = searchQuery?.page - 1;
+    const page = searchQuery?.page ? searchQuery.page - 1 : 0;
 
     /* eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access */
     return (

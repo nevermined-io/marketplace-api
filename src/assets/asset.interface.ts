@@ -90,7 +90,7 @@ export interface Main {
   datePublished: string;
   encryptedFiles: string;
   files: File[];
-  license: number;
+  license: string;
   name: string;
   price: string;
   type: string;

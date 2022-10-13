@@ -63,7 +63,7 @@ export class MainDto {
   })
   @IsOptional()
   @IsString()
-  license: number;
+  license: string;
 
   @ApiProperty({
     example: 'UK Weather information 2011',

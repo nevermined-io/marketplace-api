@@ -19,6 +19,19 @@ jobs:
       run: |
         yarn build
         yarn lint
+
+    - name: Running elasticsearch
+      run: |
+        docker run \
+          -p 9200:9200 \
+          -p 9300:9300 \
+          -e "discovery.type=single-node" \
+          -e "bootstrap.memory_lock=true" \
+          -d docker.elastic.co/elasticsearch/elasticsearch:7.13.2
+    - name: Elasticsearch Node is reachable
+      run: |
+        wget -q --waitretry=1 --retry-connrefused -T 180 -O - http://127.0.0.1:9200
+
     - name: Run tests
       run: |
         yarn setup:dev

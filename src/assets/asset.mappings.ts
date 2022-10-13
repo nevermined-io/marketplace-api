@@ -2,33 +2,18 @@ import { MappingProperty } from '@elastic/elasticsearch/api/types';
 
 const context = {
   type: 'text',
-  fields: {
-    keyword: {
-      type: 'keyword',
-      ignore_above: 256,
-    },
-  },
+  copy_to: 'fulltext',
 } as MappingProperty;
 
 const authentication = {
   properties: {
     publicKey: {
       type: 'text',
-      fields: {
-        keyword: {
-          type: 'keyword',
-          ignore_above: 256,
-        },
-      },
+      copy_to: 'fulltext',
     },
     type: {
       type: 'text',
-      fields: {
-        keyword: {
-          type: 'keyword',
-          ignore_above: 256,
-        },
-      },
+      copy_to: 'fulltext',
     },
   },
 } as MappingProperty;
@@ -73,30 +58,15 @@ const proof = {
     },
     creator: {
       type: 'text',
-      fields: {
-        keyword: {
-          type: 'keyword',
-          ignore_above: 256,
-        },
-      },
+      copy_to: 'fulltext',
     },
     signatureValue: {
       type: 'text',
-      fields: {
-        keyword: {
-          type: 'keyword',
-          ignore_above: 256,
-        },
-      },
+      copy_to: 'fulltext',
     },
     type: {
       type: 'text',
-      fields: {
-        keyword: {
-          type: 'keyword',
-          ignore_above: 256,
-        },
-      },
+      copy_to: 'fulltext',
     },
   },
 } as MappingProperty;
@@ -105,48 +75,23 @@ const publicKey = {
   properties: {
     id: {
       type: 'text',
-      fields: {
-        keyword: {
-          type: 'keyword',
-          ignore_above: 256,
-        },
-      },
+      copy_to: 'fulltext',
     },
     owner: {
       type: 'text',
-      fields: {
-        keyword: {
-          type: 'keyword',
-          ignore_above: 256,
-        },
-      },
+      copy_to: 'fulltext',
     },
     publicKeyBase58: {
       type: 'text',
-      fields: {
-        keyword: {
-          type: 'keyword',
-          ignore_above: 256,
-        },
-      },
+      copy_to: 'fulltext',
     },
     publicKeyPem: {
       type: 'text',
-      fields: {
-        keyword: {
-          type: 'keyword',
-          ignore_above: 256,
-        },
-      },
+      copy_to: 'fulltext',
     },
     type: {
       type: 'text',
-      fields: {
-        keyword: {
-          type: 'keyword',
-          ignore_above: 256,
-        },
-      },
+      copy_to: 'fulltext',
     },
   },
 } as MappingProperty;
@@ -163,6 +108,7 @@ const files = {
   properties: {
     name: {
       type: 'text',
+      copy_to: 'fulltext',
     },
     url: {
       type: 'keyword',
@@ -204,6 +150,7 @@ const main = {
     },
     name: {
       type: 'text',
+      copy_to: 'fulltext',
     },
     datePublished: {
       type: 'date',
@@ -225,9 +172,11 @@ const main = {
     },
     author: {
       type: 'text',
+      copy_to: 'fulltext',
     },
     license: {
       type: 'text',
+      copy_to: 'fulltext',
     },
     files,
     isDTP: {
@@ -243,12 +192,15 @@ const additionalInformation = {
     },
     description: {
       type: 'text',
+      copy_to: 'fulltext',
     },
     copyrightHolder: {
       type: 'text',
+      copy_to: 'fulltext',
     },
     workExample: {
       type: 'text',
+      copy_to: 'fulltext',
     },
     links: {
       type: 'object',
@@ -339,5 +291,11 @@ export const AssetMappings: MappingProperty = {
     verifiableCredential,
     updated,
     service,
+
+    // For full text search
+    // properties with type `text` should add `copy_to: 'fulltext'`
+    fulltext: {
+      type: 'text',
+    },
   },
 };
