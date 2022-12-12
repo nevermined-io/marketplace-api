@@ -20,6 +20,7 @@ import { AttributesDto } from './dto/attributes.dto';
 import { GetDDOStatusDto } from './dto/get-ddo-status.dto';
 import { ServiceDDOService } from './ddo-service.service';
 import { GetServiceDto } from './dto/get-service.dto';
+import { Request } from 'express';
 
 describe('Asset', () => {
   let assetController: AssetController;
@@ -90,13 +91,12 @@ describe('Asset', () => {
         {
           url: '/api/v1/metadata/assets/ddo/',
           protocol: 'http',
-          client: { localPort: 3100 },
-          hostname: 'localhost',
-          user: {
-            roles: [],
-            userId: asset._nvm.userId,
-            address: undefined,
-          },
+          headers: { host: 'localhost:3100' },
+        } as Request,
+        {
+          roles: [],
+          userId: asset._nvm.userId,
+          address: undefined,
         },
         asset
       )
@@ -285,15 +285,9 @@ describe('Asset', () => {
 
     expect(
       await assetController.updateDDO(asset.id, updateAsset, {
-        url: '/api/v1/metadata/assets/ddo/',
-        protocol: 'http',
-        client: { localPort: 3100 },
-        hostname: 'localhost',
-        user: {
-          roles: [],
-          userId: asset._nvm.userId,
-          address: undefined,
-        },
+        roles: [],
+        userId: asset._nvm.userId,
+        address: undefined,
       })
     ).toStrictEqual(
       GetAssetDto.fromSource({
@@ -316,11 +310,9 @@ describe('Asset', () => {
     deleteOneByEntryIdSpy.mockResolvedValue(undefined);
 
     await assetController.deleteDDO(asset.id, {
-      user: {
-        userId: asset._nvm.userId,
-        address: faker.datatype.hexadecimal(18),
-        roles: [],
-      },
+      userId: asset._nvm.userId,
+      address: faker.datatype.hexadecimal(18),
+      roles: [],
     });
 
     expect(deleteOneByEntryIdSpy).toBeCalled();
@@ -385,15 +377,9 @@ describe('Asset', () => {
 
     expect(
       await assetController.createService(service, {
-        url: '/api/v1/metadata/assets/ddo/',
-        protocol: 'http',
-        client: { localPort: 3100 },
-        hostname: 'localhost',
-        user: {
-          roles: [],
-          userId: asset._nvm.userId,
-          address: undefined,
-        },
+        roles: [],
+        userId: asset._nvm.userId,
+        address: undefined,
       })
     ).toStrictEqual(service);
   });
