@@ -1,9 +1,9 @@
 import { AuthRoles } from '../type';
 
-interface AuthUser {
+export interface AuthUser {
   userId: string;
   address: string;
-  roles: AuthRoles[];
+  roles?: AuthRoles[];
 }
 
 export interface Request<G> {

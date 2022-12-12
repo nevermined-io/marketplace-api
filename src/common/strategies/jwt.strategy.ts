@@ -3,6 +3,8 @@ import { PassportStrategy } from '@nestjs/passport';
 import { JWTPayload } from 'jose';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '../../shared/config/config.service';
+import { AuthUser } from '../helpers/request.interface';
+import { AuthRoles } from '../type';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -14,11 +16,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  validate(payload: JWTPayload) {
+  validate(payload: JWTPayload): AuthUser {
     return {
       userId: payload.sub,
       address: payload.iss,
-      roles: payload.roles,
+      roles: payload.roles as AuthRoles[],
     };
   }
 }
