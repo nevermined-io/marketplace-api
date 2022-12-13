@@ -1,5 +1,6 @@
 import faker from '@faker-js/faker';
 import { Test, TestingModule } from '@nestjs/testing';
+import { Request } from 'express';
 import { AssetController } from './asset.controller';
 import { Asset } from './asset.entity';
 import { AssetModule } from './asset.module';
@@ -57,13 +58,12 @@ describe('Asset Controller e2e', () => {
       {
         url: '/api/v1/metadata/assets/ddo/',
         protocol: 'http',
-        client: { localPort: 3100 },
-        hostname: 'localhost',
-        user: {
-          roles: [],
-          userId: asset._nvm.userId,
-          address: undefined,
-        },
+        headers: { host: 'localhost:3100' },
+      } as Request,
+      {
+        roles: [],
+        userId: asset._nvm.userId,
+        address: undefined,
       },
       newAsset
     );
@@ -78,13 +78,12 @@ describe('Asset Controller e2e', () => {
       {
         url: '/api/v1/metadata/assets/ddo/',
         protocol: 'http',
-        client: { localPort: 3100 },
-        hostname: 'localhost',
-        user: {
-          roles: [],
-          userId: asset._nvm.userId,
-          address: undefined,
-        },
+        headers: { host: 'localhost:3100' },
+      } as Request,
+      {
+        roles: [],
+        userId: asset._nvm.userId,
+        address: undefined,
       },
       newAsset
     );
@@ -98,13 +97,12 @@ describe('Asset Controller e2e', () => {
       {
         url: '/api/v1/metadata/assets/ddo/',
         protocol: 'http',
-        client: { localPort: 3100 },
-        hostname: 'localhost',
-        user: {
-          roles: [],
-          userId: asset._nvm.userId,
-          address: undefined,
-        },
+        headers: { host: 'localhost:3100' },
+      } as Request,
+      {
+        roles: [],
+        userId: asset._nvm.userId,
+        address: undefined,
       },
       newAsset
     );
@@ -119,13 +117,12 @@ describe('Asset Controller e2e', () => {
       {
         url: '/api/v1/metadata/assets/ddo/',
         protocol: 'http',
-        client: { localPort: 3100 },
-        hostname: 'localhost',
-        user: {
-          roles: [],
-          userId: asset._nvm.userId,
-          address: undefined,
-        },
+        headers: { host: 'localhost:3100' },
+      } as Request,
+      {
+        roles: [],
+        userId: asset._nvm.userId,
+        address: undefined,
       },
       newAsset
     );

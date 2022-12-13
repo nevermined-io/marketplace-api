@@ -4,8 +4,8 @@ import { readFileSync } from 'fs';
 import path from 'path';
 import { ElasticService } from '../shared/elasticsearch/elastic.service';
 import { Public } from '../common/decorators/auth.decorator';
-import { Request } from '../common/helpers/request.interface';
 import { GetInfoDto } from './dto/get-info.dto';
+import { Request } from 'express';
 
 @ApiTags('Info')
 @Controller()
@@ -23,10 +23,9 @@ export class InfoController {
     type: GetInfoDto,
   })
   @Public()
-  async getInfo(@Req() req: Request<unknown>): Promise<GetInfoDto> {
-    const pathEndpoint = `${req.protocol}://${req.hostname}${req.client.localPort ? `:${req.client.localPort}` : ''}${
-      req.url
-    }`;
+  async getInfo(@Req() req: Request): Promise<GetInfoDto> {
+    const hostname = req.headers['x-forwarded-host'] || req.headers['host'];
+    const pathEndpoint = `${req.protocol}://${hostname}${req.url}`;
     const packageJsonPath = path.join(__dirname, '../..', 'package.json');
     const packageJsonString = readFileSync(packageJsonPath, 'utf8');
     const packageJson = JSON.parse(packageJsonString) as { version: string };

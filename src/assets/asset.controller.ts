@@ -20,7 +20,6 @@ import { AssetService } from './asset.service';
 import { DDOStatusService } from './ddo-status.service';
 import { SearchQueryDto } from '../common/helpers/search-query.dto';
 import { SearchResponse } from '../common/helpers/search-response.dto';
-import { Request } from '../common/helpers/request.interface';
 import { checkOwnership } from '../common/helpers/utils';
 import { QueryBodyDDOdto } from './dto/query-body-ddo.dto';
 import { UpdateAssetDto } from './dto/update-asset.dto';
@@ -34,6 +33,9 @@ import { AuthRoles } from '../common/type';
 import { Roles } from '../common/decorators/roles.decorators';
 import { Asset } from './asset.entity';
 import { NvmConfigDto } from './dto/nvmConfig.dto';
+import { Request } from 'express';
+import { User } from '../common/decorators/user.decorator';
+import { AuthUser } from '../common/helpers/request.interface';
 
 @ApiTags('Asset')
 @Controller()
@@ -70,16 +72,21 @@ export class AssetController {
     status: 409,
     description: 'DID already exists',
   })
-  async createAsset(@Req() req: Request<unknown>, @Body() createAssetDto: CreateAssetDto): Promise<GetAssetDto> {
-    const { userId, roles } = req.user;
-    const url = `${req.protocol}://${req.hostname}${req.client.localPort ? `:${req.client.localPort}` : ''}${req.url}`;
+  async createAsset(
+    @Req() req: Request,
+    @User() user: AuthUser,
+    @Body() createAssetDto: CreateAssetDto
+  ): Promise<GetAssetDto> {
+    const { userId, roles } = user;
+    const hostname = req.headers['x-forwarded-host'] || req.headers['host'];
+    const url = `${req.protocol}://${hostname}${req.url}`;
 
     if (!createAssetDto._nvm) {
       createAssetDto._nvm = new NvmConfigDto();
     }
 
     if (!createAssetDto._nvm.userId) {
-      createAssetDto._nvm.userId = req.user.userId;
+      createAssetDto._nvm.userId = userId;
     }
 
     checkOwnership(userId, createAssetDto._nvm.userId, roles);
@@ -262,9 +269,9 @@ export class AssetController {
   async updateDDO(
     @Param('did') did: string,
     @Body() updateAssetDto: UpdateAssetDto,
-    @Req() request: Request<unknown>
+    @User() user: AuthUser
   ): Promise<GetAssetDto> {
-    const { userId, roles } = request.user;
+    const { userId, roles } = user;
 
     const asset: Asset = (await this.assetService.findOneById(did))._source;
 
@@ -297,10 +304,10 @@ export class AssetController {
     status: 403,
     description: 'Forbidden',
   })
-  async deleteDDO(@Param('did') did: string, @Req() request: Pick<Request<unknown>, 'user'>): Promise<void> {
+  async deleteDDO(@Param('did') did: string, @User() user: AuthUser): Promise<void> {
     const assetSource = await this.assetService.findOneById(did);
 
-    if (assetSource._source._nvm.userId !== request.user.userId) {
+    if (assetSource._source._nvm.userId !== user.userId) {
       throw new ForbiddenException(`This account does not own asset with did ${did}`);
     }
 
@@ -352,8 +359,8 @@ export class AssetController {
     status: 401,
     description: 'Unauthorized',
   })
-  async createService(@Body() serviceDto: CreateServiceDto, @Req() request: Request<unknown>): Promise<GetServiceDto> {
-    const { userId, roles } = request.user;
+  async createService(@Body() serviceDto: CreateServiceDto, @User() user: AuthUser): Promise<GetServiceDto> {
+    const { userId, roles } = user;
 
     if (!serviceDto.userId) {
       serviceDto.userId = userId;
