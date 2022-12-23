@@ -48,7 +48,7 @@
     "ethers": "^5.6.3",
     "joi": "^17.6.0",
     "jose": "^4.6.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.27",
