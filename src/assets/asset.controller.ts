@@ -137,26 +137,6 @@ export class AssetController {
     return this.listDDOs(searchQueryDto);
   }
 
-  @Get('/ddo/query')
-  @ApiOperation({
-    description: 'Get a list of DDOs that match with the given text',
-    summary: 'Public',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'list of DDOs',
-    schema: SearchResponse.toDocs(GetAssetDto),
-  })
-  @ApiResponse({
-    status: 400,
-    description: 'Bad Request',
-  })
-  @UsePipes(new ValidationPipe({ transform: true }))
-  @Public()
-  listDDObyQuery(@Query() searchQueryDto: SearchQueryDto): Promise<SearchResponse<GetAssetDto[]>> {
-    return this.listDDOs(searchQueryDto);
-  }
-
   @Post('/ddo/query')
   @ApiOperation({
     description: 'Get a list of DDOs that match with the executed query.',
