@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsOptional, ValidateNested, IsNumber } from 'class-validator';
+import { IsOptional, ValidateNested, IsNumber } from 'class-validator';
 import { Transform } from 'class-transformer';
-import { faker } from '@faker-js/faker';
+// import { faker } from '@faker-js/faker';
 import { Sort } from './search-query.interface';
 
 export class SearchQueryDto {
@@ -16,14 +16,14 @@ export class SearchQueryDto {
   @ValidateNested()
   query?: { [jsonPath: string]: any };
 
-  @ApiProperty({
-    example: faker.lorem.sentence(),
-    description: 'Text to search',
-    required: false,
-  })
-  @IsOptional()
-  @IsString()
-  text?: string;
+  // @ApiProperty({
+  //   example: faker.lorem.sentence(),
+  //   description: 'Text to search',
+  //   required: false,
+  // })
+  // @IsOptional()
+  // @IsString()
+  // text?: string;
 
   @ApiProperty({
     example: 100,
@@ -48,7 +48,7 @@ export class SearchQueryDto {
   page = 1;
 
   @ApiProperty({
-    example: '{ "createdAt": "asc" }',
+    example: '{ "created": "asc" }',
     description: 'sort the response by specified parameter',
     required: false,
     type: 'string',

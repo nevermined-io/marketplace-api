@@ -14,7 +14,6 @@ export class QueryBodyDDOdto {
   @ValidateNested()
   query?: { [jsonPath: string]: any };
 
-
   @ApiProperty({
     example: 100,
     description: 'Page Size',
