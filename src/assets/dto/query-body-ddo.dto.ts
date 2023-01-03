@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsOptional, ValidateNested, IsNumber } from 'class-validator';
+import { IsOptional, ValidateNested, IsNumber } from 'class-validator';
 import { Transform } from 'class-transformer';
-import { faker } from '@faker-js/faker';
 import { Sort } from '../../common/helpers/search-query.interface';
 
 export class QueryBodyDDOdto {
@@ -15,14 +14,6 @@ export class QueryBodyDDOdto {
   @ValidateNested()
   query?: { [jsonPath: string]: any };
 
-  @ApiProperty({
-    example: faker.lorem.sentence(),
-    description: 'Text to search',
-    required: false,
-  })
-  @IsOptional()
-  @IsString()
-  text?: string;
 
   @ApiProperty({
     example: 100,

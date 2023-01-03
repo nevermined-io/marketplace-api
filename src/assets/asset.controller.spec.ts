@@ -160,7 +160,7 @@ describe('Asset', () => {
 
     jest.spyOn(assetService, 'findMany').mockImplementation((querystring: SearchQueryDto) => hits(querystring) as any);
 
-    expect(await assetController.listDDObyQuery(query as SearchQueryDto)).toStrictEqual(
+    expect(await assetController.listDDObyQueryPost(query as SearchQueryDto)).toStrictEqual(
       SearchResponse.fromSearchSources(
         query as SearchQueryDto,
         hits(query as SearchQueryDto),
