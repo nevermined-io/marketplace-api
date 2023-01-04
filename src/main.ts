@@ -17,33 +17,35 @@ import { ServiceDDOService } from './assets/ddo-service.service';
 import { DDOStatusService } from './assets/ddo-status.service';
 
 const createIndexes = (app: NestExpressApplication) => {
-  let connectionTries = 0;
+  return new Promise<void>(resolve => {
+    let connectionTries = 0;
+    /* eslint @typescript-eslint/no-misused-promises: 0 */
+    const tryConnectionInterval = setInterval(async () => {
+      try {
+        await Promise.all(
+          [PermissionService, UserProfileService, BookmarkService, AssetService, ServiceDDOService, DDOStatusService].map(
+            async (service) => {
+              const serviceInstance = app.get(service);
+              const serviceIndexExits = await serviceInstance.checkIndex();
 
-  /* eslint @typescript-eslint/no-misused-promises: 0 */
-  const tryConnectionInterval = setInterval(async () => {
-    try {
-      await Promise.all(
-        [PermissionService, UserProfileService, BookmarkService, AssetService, ServiceDDOService, DDOStatusService].map(
-          async (service) => {
-            const serviceInstance = app.get(service);
-            const serviceIndexExits = await serviceInstance.checkIndex();
-
-            if (!serviceIndexExits) {
-              await serviceInstance.createIndex();
+              if (!serviceIndexExits) {
+                await serviceInstance.createIndex();
+              }
             }
-          }
-        )
-      );
-      Logger.log('Marketplace API is connected to ElasticSearch');
-      clearInterval(tryConnectionInterval);
-    } catch {
-      Logger.log('Error to connect to ElasticSearch. Trying in 10s');
-      connectionTries += 1;
-      if (connectionTries >= 50) {
+          )
+        );
+        Logger.log('Marketplace API is connected to ElasticSearch');
+        resolve()
         clearInterval(tryConnectionInterval);
+      } catch {
+        Logger.log('Error to connect to ElasticSearch. Trying in 10s');
+        connectionTries += 1;
+        if (connectionTries >= 50) {
+          clearInterval(tryConnectionInterval);
+        }
       }
-    }
-  }, 10000);
+    }, 10000);
+  });
 };
 
 const bootstrap = async () => {
@@ -61,7 +63,7 @@ const bootstrap = async () => {
   const packageJsonString = readFileSync(packageJsonPath, 'utf8');
   const packageJson = JSON.parse(packageJsonString) as { version: string };
 
-  createIndexes(app);
+  await createIndexes(app);
 
   const options = new DocumentBuilder()
     .setTitle('Marketplace API')
