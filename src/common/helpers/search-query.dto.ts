@@ -38,7 +38,7 @@ export class SearchQueryDto {
   page = 1;
 
   @ApiProperty({
-    example: '{ "created": "asc" }',
+    example: '{ "id": "asc" }',
     description: 'sort the response by specified parameter',
     required: false,
     type: 'string',
