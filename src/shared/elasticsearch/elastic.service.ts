@@ -37,7 +37,6 @@ export class ElasticService {
             match_all: {},
           },
         },
-        q: searchQuery?.text,
         _source_includes,
       })
     ).body.hits;

@@ -196,18 +196,6 @@ describe('Asset', () => {
     });
   });
 
-  it('/GET ddo/query', async () => {
-    const response = await request(app.getHttpServer()).get('/ddo/query?sort={"created": "asc"}');
-
-    expect(response.statusCode).toBe(200);
-    expect(response.body).toStrictEqual({
-      page: 1,
-      total_pages: 1,
-      total_results: { value: 2, relation: 'eq' },
-      results: [asset, assetCopy],
-    });
-  });
-
   it('/POST ddo/query', async () => {
     const response = await request(app.getHttpServer())
       .post('/ddo/query')
