@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsUrl } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsString, IsUrl } from 'class-validator'
 
 export class GetInfoDto {
   @ApiProperty({
@@ -7,14 +7,14 @@ export class GetInfoDto {
     description: 'Elasticsearch version',
   })
   @IsString()
-  elasticsearchVersion: string;
+  elasticsearchVersion: string
 
   @ApiProperty({
     example: '1.0.4',
     description: 'Marketplace API Version',
   })
   @IsString()
-  APIversion: string;
+  APIversion: string
 
   @ApiProperty({
     example: 'http://localhost:3100/api/v1/docs',
@@ -23,5 +23,5 @@ export class GetInfoDto {
   @IsUrl({
     require_tld: false,
   })
-  docs: string;
+  docs: string
 }

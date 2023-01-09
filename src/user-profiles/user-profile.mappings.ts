@@ -1,4 +1,4 @@
-import { MappingProperty } from '@elastic/elasticsearch/api/types';
+import { MappingProperty } from '@elastic/elasticsearch/api/types'
 
 export const UserProfileMappings: MappingProperty = {
   properties: {
@@ -29,4 +29,4 @@ export const UserProfileMappings: MappingProperty = {
       type: 'date',
     },
   },
-};
+}

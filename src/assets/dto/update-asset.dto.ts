@@ -1,11 +1,11 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { ValidateNested, IsUrl, IsDateString, IsOptional } from 'class-validator';
-import { Type } from 'class-transformer';
-import { AuthenticationDto } from './authentication.dto';
-import { ProofDto } from './proof.dto';
-import { PublicKeyDto } from './publicKey.dto';
-import { ServiceDto } from './service.dto';
-import { serviceExample } from './service.example';
+import { ApiProperty } from '@nestjs/swagger'
+import { ValidateNested, IsUrl, IsDateString, IsOptional } from 'class-validator'
+import { Type } from 'class-transformer'
+import { AuthenticationDto } from './authentication.dto'
+import { ProofDto } from './proof.dto'
+import { PublicKeyDto } from './publicKey.dto'
+import { ServiceDto } from './service.dto'
+import { serviceExample } from './service.example'
 
 export class UpdateAssetDto {
   @ApiProperty({
@@ -17,7 +17,7 @@ export class UpdateAssetDto {
   @IsUrl({
     require_tld: false,
   })
-  ['@context']: string;
+  ['@context']: string
 
   @ApiProperty({
     example: '2019-02-08T08:13:49Z',
@@ -26,7 +26,7 @@ export class UpdateAssetDto {
   })
   @IsOptional()
   @IsDateString()
-  updated: string;
+  updated: string
 
   @ApiProperty({
     description: 'Authentication used in the asset',
@@ -35,7 +35,7 @@ export class UpdateAssetDto {
   @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => AuthenticationDto)
-  authentication: AuthenticationDto[];
+  authentication: AuthenticationDto[]
 
   @ApiProperty({
     type: ProofDto,
@@ -43,7 +43,7 @@ export class UpdateAssetDto {
   })
   @IsOptional()
   @ValidateNested()
-  proof: ProofDto;
+  proof: ProofDto
 
   @ApiProperty({
     type: [PublicKeyDto],
@@ -52,7 +52,7 @@ export class UpdateAssetDto {
   @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => PublicKeyDto)
-  publicKey: PublicKeyDto[];
+  publicKey: PublicKeyDto[]
 
   @ApiProperty({
     example: serviceExample,
@@ -63,5 +63,5 @@ export class UpdateAssetDto {
   @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => ServiceDto)
-  service: ServiceDto[];
+  service: ServiceDto[]
 }

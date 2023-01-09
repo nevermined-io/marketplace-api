@@ -1,4 +1,4 @@
-import { AuthRoles } from '../type';
+import { AuthRoles } from '../type'
 
 export interface AuthUser {
   userId: string;

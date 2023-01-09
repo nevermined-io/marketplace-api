@@ -1,12 +1,12 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, ValidateNested, IsUrl, IsDateString, IsOptional } from 'class-validator';
-import { Type } from 'class-transformer';
-import { AuthenticationDto } from './authentication.dto';
-import { ProofDto } from './proof.dto';
-import { PublicKeyDto } from './publicKey.dto';
-import { ServiceDto } from './service.dto';
-import { serviceExample } from './service.example';
-import { NvmConfigDto } from './nvmConfig.dto';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsString, ValidateNested, IsUrl, IsDateString, IsOptional } from 'class-validator'
+import { Type } from 'class-transformer'
+import { AuthenticationDto } from './authentication.dto'
+import { ProofDto } from './proof.dto'
+import { PublicKeyDto } from './publicKey.dto'
+import { ServiceDto } from './service.dto'
+import { serviceExample } from './service.example'
+import { NvmConfigDto } from './nvmConfig.dto'
 
 export class CreateAssetDto {
   @ApiProperty({
@@ -17,7 +17,7 @@ export class CreateAssetDto {
   @IsUrl({
     require_tld: false,
   })
-  ['@context']: string;
+  ['@context']: string
 
   @ApiProperty({
     description: 'Nevermined config section',
@@ -25,14 +25,14 @@ export class CreateAssetDto {
     type: NvmConfigDto,
   })
   @IsOptional()
-  _nvm: NvmConfigDto;
+  _nvm: NvmConfigDto
 
   @ApiProperty({
     example: 'did:nv:0c184915b07b44c888d468be85a9b28253e80070e5294b1aaed81c2f0264e429',
     description: 'ID of the asset',
   })
   @IsString()
-  id: string;
+  id: string
 
   @ApiProperty({
     example: '2019-02-08T08:13:49Z',
@@ -40,7 +40,7 @@ export class CreateAssetDto {
     required: false,
   })
   @IsDateString()
-  created: string;
+  created: string
 
   @ApiProperty({
     example: '2019-02-08T08:13:49Z',
@@ -49,7 +49,7 @@ export class CreateAssetDto {
   })
   @IsOptional()
   @IsDateString()
-  updated: string;
+  updated: string
 
   @ApiProperty({
     description: 'Authentication used in the asset',
@@ -57,14 +57,14 @@ export class CreateAssetDto {
   })
   @ValidateNested({ each: true })
   @Type(() => AuthenticationDto)
-  authentication: AuthenticationDto[];
+  authentication: AuthenticationDto[]
 
   @ApiProperty({
     type: ProofDto,
     description: 'Proof data',
   })
   @ValidateNested()
-  proof: ProofDto;
+  proof: ProofDto
 
   @ApiProperty({
     type: [PublicKeyDto],
@@ -72,7 +72,7 @@ export class CreateAssetDto {
   })
   @ValidateNested({ each: true })
   @Type(() => PublicKeyDto)
-  publicKey: PublicKeyDto[];
+  publicKey: PublicKeyDto[]
 
   @ApiProperty({
     example: serviceExample,
@@ -82,5 +82,5 @@ export class CreateAssetDto {
   })
   @ValidateNested({ each: true })
   @Type(() => ServiceDto)
-  service: ServiceDto[];
+  service: ServiceDto[]
 }

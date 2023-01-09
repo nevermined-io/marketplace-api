@@ -12,30 +12,30 @@ import {
   Req,
   NotFoundException,
   ForbiddenException,
-} from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
-import { GetAssetDto } from './dto/get-asset-dto';
-import { CreateAssetDto } from './dto/create-asset.dto';
-import { AssetService } from './asset.service';
-import { DDOStatusService } from './ddo-status.service';
-import { SearchQueryDto } from '../common/helpers/search-query.dto';
-import { SearchResponse } from '../common/helpers/search-response.dto';
-import { checkOwnership } from '../common/helpers/utils';
-import { QueryBodyDDOdto } from './dto/query-body-ddo.dto';
-import { UpdateAssetDto } from './dto/update-asset.dto';
-import { AttributesDto } from './dto/attributes.dto';
-import { GetDDOStatusDto } from './dto/get-ddo-status.dto';
-import { CreateServiceDto } from './dto/create-service.dto';
-import { GetServiceDto } from './dto/get-service.dto';
-import { ServiceDDOService } from './ddo-service.service';
-import { Public } from '../common/decorators/auth.decorator';
-import { AuthRoles } from '../common/type';
-import { Roles } from '../common/decorators/roles.decorators';
-import { Asset } from './asset.entity';
-import { NvmConfigDto } from './dto/nvmConfig.dto';
-import { Request } from 'express';
-import { User } from '../common/decorators/user.decorator';
-import { AuthUser } from '../common/helpers/request.interface';
+} from '@nestjs/common'
+import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger'
+import { GetAssetDto } from './dto/get-asset-dto'
+import { CreateAssetDto } from './dto/create-asset.dto'
+import { AssetService } from './asset.service'
+import { DDOStatusService } from './ddo-status.service'
+import { SearchQueryDto } from '../common/helpers/search-query.dto'
+import { SearchResponse } from '../common/helpers/search-response.dto'
+import { checkOwnership } from '../common/helpers/utils'
+import { QueryBodyDDOdto } from './dto/query-body-ddo.dto'
+import { UpdateAssetDto } from './dto/update-asset.dto'
+import { AttributesDto } from './dto/attributes.dto'
+import { GetDDOStatusDto } from './dto/get-ddo-status.dto'
+import { CreateServiceDto } from './dto/create-service.dto'
+import { GetServiceDto } from './dto/get-service.dto'
+import { ServiceDDOService } from './ddo-service.service'
+import { Public } from '../common/decorators/auth.decorator'
+import { AuthRoles } from '../common/type'
+import { Roles } from '../common/decorators/roles.decorators'
+import { Asset } from './asset.entity'
+import { NvmConfigDto } from './dto/nvmConfig.dto'
+import { Request } from 'express'
+import { User } from '../common/decorators/user.decorator'
+import { AuthUser } from '../common/helpers/request.interface'
 
 @ApiTags('Asset')
 @Controller()
@@ -77,24 +77,24 @@ export class AssetController {
     @User() user: AuthUser,
     @Body() createAssetDto: CreateAssetDto
   ): Promise<GetAssetDto> {
-    const { userId, roles } = user;
-    const hostname = req.headers['x-forwarded-host'] || req.headers['host'];
-    const url = `${req.protocol}://${hostname}${req.url}`;
+    const { userId, roles } = user
+    const hostname = req.headers['x-forwarded-host'] || req.headers['host']
+    const url = `${req.protocol}://${hostname}${req.url}`
 
     if (!createAssetDto._nvm) {
-      createAssetDto._nvm = new NvmConfigDto();
+      createAssetDto._nvm = new NvmConfigDto()
     }
 
     if (!createAssetDto._nvm.userId) {
-      createAssetDto._nvm.userId = userId;
+      createAssetDto._nvm.userId = userId
     }
 
-    checkOwnership(userId, createAssetDto._nvm.userId, roles);
+    checkOwnership(userId, createAssetDto._nvm.userId, roles)
 
-    const assetDto = await this.assetService.createOne(createAssetDto);
-    await this.ddosStatusService.createOne(createAssetDto, url);
+    const assetDto = await this.assetService.createOne(createAssetDto)
+    await this.ddosStatusService.createOne(createAssetDto, url)
 
-    return assetDto;
+    return assetDto
   }
 
   @Get()
@@ -114,7 +114,7 @@ export class AssetController {
   @Public()
   @UsePipes(new ValidationPipe({ transform: true }))
   getAllAssetIds(@Query() searchQueryDto: SearchQueryDto): Promise<string[]> {
-    return this.assetService.findManyIds(searchQueryDto);
+    return this.assetService.findManyIds(searchQueryDto)
   }
 
   @Get('/ddo')
@@ -134,7 +134,7 @@ export class AssetController {
   @Public()
   @UsePipes(new ValidationPipe({ transform: true }))
   getDDOAllAssets(@Query() searchQueryDto: SearchQueryDto): Promise<SearchResponse<GetAssetDto[]>> {
-    return this.listDDOs(searchQueryDto);
+    return this.listDDOs(searchQueryDto)
   }
 
   @Post('/ddo/query')
@@ -153,7 +153,7 @@ export class AssetController {
   })
   @Public()
   listDDObyQueryPost(@Body() searchQueryDto: QueryBodyDDOdto): Promise<SearchResponse<GetAssetDto[]>> {
-    return this.listDDOs(searchQueryDto);
+    return this.listDDOs(searchQueryDto)
   }
 
   @Delete('ddo')
@@ -175,7 +175,7 @@ export class AssetController {
     description: 'Forbidden',
   })
   async deleteAllDDOs() {
-    await this.assetService.deleteAll();
+    await this.assetService.deleteAll()
   }
 
   @Get('ddo/:did')
@@ -194,9 +194,9 @@ export class AssetController {
   })
   @Public()
   async getDDO(@Param('did') did: string): Promise<GetAssetDto> {
-    const assetSource = await this.assetService.findOneById(did);
+    const assetSource = await this.assetService.findOneById(did)
 
-    return GetAssetDto.fromSource(assetSource);
+    return GetAssetDto.fromSource(assetSource)
   }
 
   @Get('ddo/:did/status')
@@ -215,9 +215,9 @@ export class AssetController {
   })
   @Public()
   async getDDOStatus(@Param('did') did: string): Promise<GetDDOStatusDto> {
-    const statusSource = await this.ddosStatusService.findOneById(did);
+    const statusSource = await this.ddosStatusService.findOneById(did)
 
-    return GetDDOStatusDto.fromSource(statusSource);
+    return GetDDOStatusDto.fromSource(statusSource)
   }
 
   @Put('ddo/:did')
@@ -251,15 +251,15 @@ export class AssetController {
     @Body() updateAssetDto: UpdateAssetDto,
     @User() user: AuthUser
   ): Promise<GetAssetDto> {
-    const { userId, roles } = user;
+    const { userId, roles } = user
 
-    const asset: Asset = (await this.assetService.findOneById(did))._source;
+    const asset: Asset = (await this.assetService.findOneById(did))._source
 
-    checkOwnership(userId, asset._nvm.userId, roles);
+    checkOwnership(userId, asset._nvm.userId, roles)
 
-    const assetSource = await this.assetService.updateOneByEntryId(did, updateAssetDto);
+    const assetSource = await this.assetService.updateOneByEntryId(did, updateAssetDto)
 
-    return GetAssetDto.fromSource(assetSource);
+    return GetAssetDto.fromSource(assetSource)
   }
 
   @Delete('ddo/:did')
@@ -285,13 +285,13 @@ export class AssetController {
     description: 'Forbidden',
   })
   async deleteDDO(@Param('did') did: string, @User() user: AuthUser): Promise<void> {
-    const assetSource = await this.assetService.findOneById(did);
+    const assetSource = await this.assetService.findOneById(did)
 
     if (assetSource._source._nvm.userId !== user.userId) {
-      throw new ForbiddenException(`This account does not own asset with did ${did}`);
+      throw new ForbiddenException(`This account does not own asset with did ${did}`)
     }
 
-    await this.assetService.deleteOneByEntryId(did);
+    await this.assetService.deleteOneByEntryId(did)
   }
 
   @Get('metadata/:did')
@@ -310,15 +310,15 @@ export class AssetController {
   })
   @Public()
   async getDDOMetadata(@Param('did') did: string): Promise<AttributesDto> {
-    const assetSource = await this.assetService.findOneById(did);
+    const assetSource = await this.assetService.findOneById(did)
 
-    const metada = GetAssetDto.fromSource(assetSource).service?.find((s) => s.attributes)?.attributes;
+    const metada = GetAssetDto.fromSource(assetSource).service?.find((s) => s.attributes)?.attributes
 
     if (!metada) {
-      throw new NotFoundException(`Asset with did ${did} doesn't have metada`);
+      throw new NotFoundException(`Asset with did ${did} doesn't have metada`)
     }
 
-    return metada;
+    return metada
   }
 
   @Post('service')
@@ -340,15 +340,15 @@ export class AssetController {
     description: 'Unauthorized',
   })
   async createService(@Body() serviceDto: CreateServiceDto, @User() user: AuthUser): Promise<GetServiceDto> {
-    const { userId, roles } = user;
+    const { userId, roles } = user
 
     if (!serviceDto.userId) {
-      serviceDto.userId = userId;
+      serviceDto.userId = userId
     }
 
-    checkOwnership(userId, serviceDto.userId, roles);
+    checkOwnership(userId, serviceDto.userId, roles)
 
-    return this.serviceDDOService.createOne(serviceDto);
+    return this.serviceDDOService.createOne(serviceDto)
   }
 
   @Post('service/query')
@@ -367,13 +367,13 @@ export class AssetController {
   })
   @Public()
   async getServiceQueryPost(@Body() searchQueryDto: QueryBodyDDOdto): Promise<SearchResponse<GetServiceDto[]>> {
-    const servicesSource = await this.serviceDDOService.findMany(searchQueryDto);
+    const servicesSource = await this.serviceDDOService.findMany(searchQueryDto)
 
     return SearchResponse.fromSearchSources(
       searchQueryDto,
       servicesSource,
       servicesSource.hits.map(GetServiceDto.fromSource)
-    );
+    )
   }
 
   @Get('service/:agreementId')
@@ -392,9 +392,9 @@ export class AssetController {
   })
   @Public()
   async getService(@Param('agreementId') agreementId: string): Promise<GetServiceDto> {
-    const serviceSource = await this.serviceDDOService.findOneById(agreementId);
+    const serviceSource = await this.serviceDDOService.findOneById(agreementId)
 
-    return GetServiceDto.fromSource(serviceSource);
+    return GetServiceDto.fromSource(serviceSource)
   }
 
   @Delete('service')
@@ -412,16 +412,16 @@ export class AssetController {
     description: 'Unauthorized',
   })
   async deleteAllServices() {
-    await this.serviceDDOService.deleteAll();
+    await this.serviceDDOService.deleteAll()
   }
 
   private async listDDOs(searchQueryDto: SearchQueryDto): Promise<SearchResponse<GetAssetDto[]>> {
-    const assetsSource = await this.assetService.findMany(searchQueryDto);
+    const assetsSource = await this.assetService.findMany(searchQueryDto)
 
     return SearchResponse.fromSearchSources(
       searchQueryDto,
       assetsSource,
       assetsSource.hits.map(GetAssetDto.fromSource)
-    );
+    )
   }
 }

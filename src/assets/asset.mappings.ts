@@ -1,9 +1,9 @@
-import { MappingProperty } from '@elastic/elasticsearch/api/types';
+import { MappingProperty } from '@elastic/elasticsearch/api/types'
 
 const context = {
   type: 'text',
   copy_to: 'fulltext',
-} as MappingProperty;
+} as MappingProperty
 
 const authentication = {
   properties: {
@@ -16,15 +16,15 @@ const authentication = {
       copy_to: 'fulltext',
     },
   },
-} as MappingProperty;
+} as MappingProperty
 
 const created = {
   type: 'date',
-} as MappingProperty;
+} as MappingProperty
 
 const id = {
   type: 'keyword',
-} as MappingProperty;
+} as MappingProperty
 
 const _nvm = {
   properties: {
@@ -49,7 +49,7 @@ const _nvm = {
       },
     },
   },
-} as MappingProperty;
+} as MappingProperty
 
 const proof = {
   properties: {
@@ -69,7 +69,7 @@ const proof = {
       copy_to: 'fulltext',
     },
   },
-} as MappingProperty;
+} as MappingProperty
 
 const publicKey = {
   properties: {
@@ -94,15 +94,15 @@ const publicKey = {
       copy_to: 'fulltext',
     },
   },
-} as MappingProperty;
+} as MappingProperty
 
 const verifiableCredential = {
   type: 'object',
-} as MappingProperty;
+} as MappingProperty
 
 const updated = {
   type: 'date',
-} as MappingProperty;
+} as MappingProperty
 
 const files = {
   properties: {
@@ -138,7 +138,7 @@ const files = {
       type: 'keyword',
     },
   },
-} as MappingProperty;
+} as MappingProperty
 
 const main = {
   properties: {
@@ -183,7 +183,7 @@ const main = {
       type: 'boolean',
     },
   },
-} as MappingProperty;
+} as MappingProperty
 
 const additionalInformation = {
   properties: {
@@ -244,7 +244,7 @@ const additionalInformation = {
       },
     },
   },
-} as MappingProperty;
+} as MappingProperty
 
 const service = {
   type: 'nested',
@@ -277,7 +277,7 @@ const service = {
       type: 'keyword',
     },
   },
-} as MappingProperty;
+} as MappingProperty
 
 export const AssetMappings: MappingProperty = {
   properties: {
@@ -298,4 +298,4 @@ export const AssetMappings: MappingProperty = {
       type: 'text',
     },
   },
-};
+}

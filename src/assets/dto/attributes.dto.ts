@@ -1,9 +1,9 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { ValidateNested, IsOptional } from 'class-validator';
-import { Type } from 'class-transformer';
-import { CurationDto } from './curation.dto';
-import { MainDto } from './main.dto';
-import { ServiceAgreementTemplateDto } from './serviceAgreementTemplate.dto';
+import { ApiProperty } from '@nestjs/swagger'
+import { ValidateNested, IsOptional } from 'class-validator'
+import { Type } from 'class-transformer'
+import { CurationDto } from './curation.dto'
+import { MainDto } from './main.dto'
+import { ServiceAgreementTemplateDto } from './serviceAgreementTemplate.dto'
 
 export class AttributesDto {
   @ApiProperty({
@@ -11,7 +11,7 @@ export class AttributesDto {
     required: false,
   })
   @IsOptional()
-  additionalInformation: unknown;
+  additionalInformation: unknown
 
   @ApiProperty({
     type: CurationDto,
@@ -20,7 +20,7 @@ export class AttributesDto {
   @IsOptional()
   @ValidateNested()
   @Type(() => CurationDto)
-  curation: CurationDto;
+  curation: CurationDto
 
   @ApiProperty({
     type: MainDto,
@@ -28,7 +28,7 @@ export class AttributesDto {
   })
   @ValidateNested()
   @Type(() => MainDto)
-  main: MainDto;
+  main: MainDto
 
   @ApiProperty({
     type: ServiceAgreementTemplateDto,
@@ -38,5 +38,5 @@ export class AttributesDto {
   @IsOptional()
   @ValidateNested()
   @Type(() => ServiceAgreementTemplateDto)
-  serviceAgreementTemplate: ServiceAgreementTemplateDto;
+  serviceAgreementTemplate: ServiceAgreementTemplateDto
 }

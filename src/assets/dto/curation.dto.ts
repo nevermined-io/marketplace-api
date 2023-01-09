@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsInt, IsNumber, Max, Min, IsOptional, IsBoolean } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsString, IsInt, IsNumber, Max, Min, IsOptional, IsBoolean } from 'class-validator'
 
 export class CurationDto {
   @ApiProperty({
@@ -7,7 +7,7 @@ export class CurationDto {
     description: 'Number of votes. 0 is the default value',
   })
   @IsInt()
-  numVotes: number;
+  numVotes: number
 
   @ApiProperty({
     example: 0.93,
@@ -16,7 +16,7 @@ export class CurationDto {
   @IsNumber()
   @Max(1)
   @Min(0)
-  rating: number;
+  rating: number
 
   @ApiProperty({
     example: 'Binary Voting',
@@ -25,7 +25,7 @@ export class CurationDto {
   })
   @IsOptional()
   @IsString()
-  schema: string;
+  schema: string
 
   @ApiProperty({
     example: false,
@@ -34,5 +34,5 @@ export class CurationDto {
   })
   @IsOptional()
   @IsBoolean()
-  isListed: boolean;
+  isListed: boolean
 }

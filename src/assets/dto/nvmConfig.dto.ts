@@ -1,7 +1,7 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { IsString, IsOptional, ValidateNested } from 'class-validator';
-import { NvmConfigVersionsDto } from './nvmConfigVersions.dto';
+import { ApiProperty } from '@nestjs/swagger'
+import { Type } from 'class-transformer'
+import { IsString, IsOptional, ValidateNested } from 'class-validator'
+import { NvmConfigVersionsDto } from './nvmConfigVersions.dto'
 
 export class NvmConfigDto {
   @ApiProperty({
@@ -11,7 +11,7 @@ export class NvmConfigDto {
   })
   @IsOptional()
   @IsString()
-  userId: string;
+  userId: string
 
   @ApiProperty({
     example: '12345',
@@ -20,7 +20,7 @@ export class NvmConfigDto {
   })
   @IsOptional()
   @IsString()
-  appId: string;
+  appId: string
 
   @ApiProperty({
     example: '12345',
@@ -31,5 +31,5 @@ export class NvmConfigDto {
   @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => NvmConfigVersionsDto)
-  versions: NvmConfigVersionsDto[];
+  versions: NvmConfigVersionsDto[]
 }

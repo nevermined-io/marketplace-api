@@ -1,15 +1,15 @@
 /* eslint @typescript-eslint/no-var-requires: 0 */
 /* eslint @typescript-eslint/no-unsafe-assignment: 0 */
 /* eslint @typescript-eslint/no-unsafe-argument: 0 */
-import * as Joi from 'joi';
-import { get as loGet } from 'lodash';
-import { Logger } from '../logger/logger.service';
+import * as Joi from 'joi'
+import { get as loGet } from 'lodash'
+import { Logger } from '../logger/logger.service'
 
 export interface EnvConfig {
   [key: string]: string;
 }
 
-const configProfile = require('../../../config');
+const configProfile = require('../../../config')
 
 const DOTENV_SCHEMA = Joi.object({
   NODE_ENV: Joi.string().valid('development', 'production', 'test', 'staging').default('development'),
@@ -32,7 +32,7 @@ const DOTENV_SCHEMA = Joi.object({
   })
     .required()
     .error(new Error('The config of elasticsearch need to be set')),
-});
+})
 
 type DotenvSchemaKeys =
   | 'NODE_ENV'
@@ -43,29 +43,29 @@ type DotenvSchemaKeys =
   | 'security.enableHttpsRedirect'
   | 'elasticsearch.node'
   | 'elasticsearch.auth.username'
-  | 'elasticsearch.auth.password';
+  | 'elasticsearch.auth.password'
 
 export class ConfigService {
-  private readonly envConfig: EnvConfig;
+  private readonly envConfig: EnvConfig
 
   constructor() {
-    this.envConfig = this.validateInput(configProfile);
+    this.envConfig = this.validateInput(configProfile)
   }
 
   get<T>(path: DotenvSchemaKeys): T | undefined {
-    return loGet(this.envConfig, path) as unknown as T | undefined;
+    return loGet(this.envConfig, path) as unknown as T | undefined
   }
 
   private validateInput(envConfig: EnvConfig): EnvConfig {
     const { error, value: validatedEnvConfig } = DOTENV_SCHEMA.validate(envConfig, {
       allowUnknown: true,
       stripUnknown: true,
-    });
+    })
     if (error) {
-      Logger.error('Missing configuration please provide followed variable!\n\n', 'ConfigService');
-      Logger.error(error.message, 'ConfigService');
-      process.exit(2);
+      Logger.error('Missing configuration please provide followed variable!\n\n', 'ConfigService')
+      Logger.error(error.message, 'ConfigService')
+      process.exit(2)
     }
-    return validatedEnvConfig as EnvConfig;
+    return validatedEnvConfig as EnvConfig
   }
 }

@@ -1,6 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum } from 'class-validator';
-import { PermissionType } from '../../common/type';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsEnum } from 'class-validator'
+import { PermissionType } from '../../common/type'
 
 export class UpdatePermissionDto {
   @ApiProperty({
@@ -8,5 +8,5 @@ export class UpdatePermissionDto {
     description: 'The list of permissions owned hold by the user',
   })
   @IsEnum(PermissionType, { each: true })
-  type: PermissionType[];
+  type: PermissionType[]
 }

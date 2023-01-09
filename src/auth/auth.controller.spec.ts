@@ -1,26 +1,26 @@
-import { JwtModule } from '@nestjs/jwt';
-import { PassportModule } from '@nestjs/passport';
-import { Test, TestingModule } from '@nestjs/testing';
-import { ethers } from 'ethers';
-import { decodeJwt } from 'jose';
-import { ConfigService } from '../shared/config/config.service';
-import { ConfigModule } from '../shared/config/config.module';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
-import { JwtStrategy } from '../common/strategies/jwt.strategy';
-import { EthSignJWT, CLIENT_ASSERTION_TYPE } from '../common/guards/shared/jwt.utils';
-import { UserProfileService } from '../user-profiles/user-profile.service';
-import { UserProfile } from '../user-profiles/user-profile.entity';
-import { State, MarketplaceIndex } from '../common/type';
-import { PermissionService } from '../permissions/permission.service';
+import { JwtModule } from '@nestjs/jwt'
+import { PassportModule } from '@nestjs/passport'
+import { Test, TestingModule } from '@nestjs/testing'
+import { ethers } from 'ethers'
+import { decodeJwt } from 'jose'
+import { ConfigService } from '../shared/config/config.service'
+import { ConfigModule } from '../shared/config/config.module'
+import { AuthController } from './auth.controller'
+import { AuthService } from './auth.service'
+import { JwtStrategy } from '../common/strategies/jwt.strategy'
+import { EthSignJWT, CLIENT_ASSERTION_TYPE } from '../common/guards/shared/jwt.utils'
+import { UserProfileService } from '../user-profiles/user-profile.service'
+import { UserProfile } from '../user-profiles/user-profile.entity'
+import { State, MarketplaceIndex } from '../common/type'
+import { PermissionService } from '../permissions/permission.service'
 
 describe('AuthController', () => {
-  let authController: AuthController;
-  let wallet: ethers.Wallet;
+  let authController: AuthController
+  let wallet: ethers.Wallet
 
   beforeAll(() => {
-    wallet = ethers.Wallet.createRandom();
-  });
+    wallet = ethers.Wallet.createRandom()
+  })
 
   beforeEach(async () => {
     const moduleMock: TestingModule = await Test.createTestingModule({
@@ -40,30 +40,30 @@ describe('AuthController', () => {
           provide: UserProfileService,
           useValue: {
             findOneById: (id: string) => {
-              const userProfile = new UserProfile();
-              userProfile.userId = id;
-              userProfile.addresses = [wallet.address];
-              userProfile.state = State.Confirmed;
-              userProfile.isListed = true;
+              const userProfile = new UserProfile()
+              userProfile.userId = id
+              userProfile.addresses = [wallet.address]
+              userProfile.state = State.Confirmed
+              userProfile.isListed = true
 
               return {
                 _source: userProfile,
                 _index: MarketplaceIndex.UserProfile,
                 _id: userProfile.userId,
-              };
+              }
             },
             findOneByAddress: (address: string) => {
-              const userProfile = new UserProfile();
-              userProfile.addresses = [address];
-              userProfile.nickname = address;
-              userProfile.state = State.Confirmed;
-              userProfile.isListed = true;
+              const userProfile = new UserProfile()
+              userProfile.addresses = [address]
+              userProfile.nickname = address
+              userProfile.state = State.Confirmed
+              userProfile.isListed = true
 
               return {
                 _source: userProfile,
                 _index: MarketplaceIndex.UserProfile,
                 _id: userProfile.userId,
-              };
+              }
             },
 
             updateOneByEntryId: (userId: string, userProfileEntity: UserProfile) => ({
@@ -81,17 +81,17 @@ describe('AuthController', () => {
             findManyByUserIdAndType: () => {
               return {
                 hits: [],
-              };
+              }
             },
             checkIndex: () => true,
           },
         },
       ],
       controllers: [AuthController],
-    }).compile();
+    }).compile()
 
-    authController = moduleMock.get<AuthController>(AuthController);
-  });
+    authController = moduleMock.get<AuthController>(AuthController)
+  })
 
   it('should get an access_token', async () => {
     const clientAssertion = await new EthSignJWT({
@@ -100,15 +100,15 @@ describe('AuthController', () => {
       .setProtectedHeader({ alg: 'ES256K' })
       .setIssuedAt()
       .setExpirationTime('60m')
-      .ethSign(wallet);
-    const clientAssertionType = 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer';
+      .ethSign(wallet)
+    const clientAssertionType = 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer'
 
     const response = await authController.login({
       client_assertion_type: clientAssertionType,
       client_assertion: clientAssertion,
-    });
-    expect(response).toHaveProperty('access_token');
-  });
+    })
+    expect(response).toHaveProperty('access_token')
+  })
 
   it('should add new address to existing user profile', async () => {
     const clientAssertion = await new EthSignJWT({
@@ -117,16 +117,16 @@ describe('AuthController', () => {
       .setProtectedHeader({ alg: 'ES256K' })
       .setIssuedAt()
       .setExpirationTime('60m')
-      .ethSign(wallet);
+      .ethSign(wallet)
 
     const currentToken = await authController.login({
       client_assertion_type: CLIENT_ASSERTION_TYPE,
       client_assertion: clientAssertion,
-    });
+    })
 
-    const payload = decodeJwt(currentToken.access_token);
+    const payload = decodeJwt(currentToken.access_token)
 
-    const newWallet = ethers.Wallet.createRandom();
+    const newWallet = ethers.Wallet.createRandom()
 
     const newClientAssertion = await new EthSignJWT({
       iss: newWallet.address,
@@ -134,7 +134,7 @@ describe('AuthController', () => {
       .setProtectedHeader({ alg: 'ES256K' })
       .setIssuedAt()
       .setExpirationTime('60m')
-      .ethSign(newWallet);
+      .ethSign(newWallet)
 
     const newToken = await authController.authNewAddress(
       {
@@ -148,8 +148,8 @@ describe('AuthController', () => {
           roles: [],
         },
       }
-    );
+    )
 
-    expect(newToken).toHaveProperty('access_token');
-  });
-});
+    expect(newToken).toHaveProperty('access_token')
+  })
+})

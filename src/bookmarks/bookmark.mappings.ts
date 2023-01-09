@@ -1,4 +1,4 @@
-import { MappingProperty } from '@elastic/elasticsearch/api/types';
+import { MappingProperty } from '@elastic/elasticsearch/api/types'
 
 export const BookmarkMappings: MappingProperty = {
   properties: {
@@ -25,4 +25,4 @@ export const BookmarkMappings: MappingProperty = {
       type: 'date',
     },
   },
-};
+}

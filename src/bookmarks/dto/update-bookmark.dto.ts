@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsOptional } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsString, IsOptional } from 'class-validator'
 
 export class UpdateBookmarkDto {
   @ApiProperty({
@@ -9,7 +9,7 @@ export class UpdateBookmarkDto {
   })
   @IsOptional()
   @IsString()
-  description: string;
+  description: string
 
   @ApiProperty({
     example: 'u-12345',
@@ -18,5 +18,5 @@ export class UpdateBookmarkDto {
   })
   @IsOptional()
   @IsString()
-  userId: string;
+  userId: string
 }

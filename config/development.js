@@ -19,4 +19,4 @@ module.exports = {
       password: process.env.ELASTIC_PASSWORD,
     },
   },
-};
+}

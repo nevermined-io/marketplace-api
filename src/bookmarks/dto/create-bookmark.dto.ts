@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsOptional } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsString, IsOptional } from 'class-validator'
 
 export class CreateBookmarkDto {
   @ApiProperty({
@@ -7,7 +7,7 @@ export class CreateBookmarkDto {
     description: 'The identifier of the asset',
   })
   @IsString()
-  did: string;
+  did: string
 
   @ApiProperty({
     example: 'u-12345',
@@ -16,12 +16,12 @@ export class CreateBookmarkDto {
   })
   @IsString()
   @IsOptional()
-  userId: string;
+  userId: string
 
   @ApiProperty({
     example: 'I am interesting in this asset',
     description: 'Description given by the user',
   })
   @IsString()
-  description: string;
+  description: string
 }

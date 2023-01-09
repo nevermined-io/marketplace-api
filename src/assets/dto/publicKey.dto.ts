@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsString } from 'class-validator'
 
 export class PublicKeyDto {
     @ApiProperty({
@@ -7,19 +7,19 @@ export class PublicKeyDto {
         description: 'Id of the public key',
     })
     @IsString()
-    id: string;
+    id: string
 
     @ApiProperty({
         example: '0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e',
         description: 'Wallet address who own the public key',
     })
     @IsString()
-    owner: string;
+    owner: string
 
     @ApiProperty({
         example: 'EthereumECDSAKey',
         description: 'Type of the public key',
     })
     @IsString()
-    type: string;
+    type: string
 } 

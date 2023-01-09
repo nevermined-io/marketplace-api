@@ -1,4 +1,4 @@
-import { MappingProperty } from '@elastic/elasticsearch/api/types';
+import { MappingProperty } from '@elastic/elasticsearch/api/types'
 
 export const PermissionMappings: MappingProperty = {
   properties: {
@@ -18,4 +18,4 @@ export const PermissionMappings: MappingProperty = {
       type: 'date',
     },
   },
-};
+}

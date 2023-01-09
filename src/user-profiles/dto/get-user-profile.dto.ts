@@ -1,10 +1,10 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsEmail, IsDate, IsBoolean, IsEnum, IsOptional, ValidateNested } from 'class-validator';
-import { Type } from 'class-transformer';
-import { State } from '../../common/type';
-import { AdditionalInformation } from './additional-information.dto';
-import { SearchHit } from '@elastic/elasticsearch/api/types';
-import { UserProfile } from '../user-profile.entity';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsString, IsEmail, IsDate, IsBoolean, IsEnum, IsOptional, ValidateNested } from 'class-validator'
+import { Type } from 'class-transformer'
+import { State } from '../../common/type'
+import { AdditionalInformation } from './additional-information.dto'
+import { SearchHit } from '@elastic/elasticsearch/api/types'
+import { UserProfile } from '../user-profile.entity'
 
 export class GetUserProfileDto {
   static fromSource(userProfileSource: SearchHit<UserProfile>): GetUserProfileDto {
@@ -19,7 +19,7 @@ export class GetUserProfileDto {
       userProfileSource._source.creationDate,
       userProfileSource._source.updateDate,
       userProfileSource._source.additionalInformation
-    );
+    )
   }
 
   @ApiProperty({
@@ -27,21 +27,21 @@ export class GetUserProfileDto {
     description: 'Unique identifier of the user',
   })
   @IsString()
-  userId: string;
+  userId: string
 
   @ApiProperty({
     example: true,
     description: 'Flag identifying if the user is listed in the marketplace. Possible values: true or false',
   })
   @IsBoolean()
-  isListed: boolean;
+  isListed: boolean
 
   @ApiProperty({
     example: State.Confirmed,
     description: 'State of the user in the marketplace. Possible options: disabled, unconfirmed, confirmed',
   })
   @IsEnum(State)
-  state: State;
+  state: State
 
   @ApiProperty({
     example: ['0x37BB53e3d293494DE59fBe1FF78500423dcFd43B'],
@@ -50,14 +50,14 @@ export class GetUserProfileDto {
   @IsString({
     each: true,
   })
-  addresses: string[];
+  addresses: string[]
 
   @ApiProperty({
     example: 'john.doe',
     description: 'The nickname of the user',
   })
   @IsString()
-  nickname: string;
+  nickname: string
 
   @ApiProperty({
     example: 'John Doe',
@@ -65,7 +65,7 @@ export class GetUserProfileDto {
   })
   @IsOptional()
   @IsString()
-  name: string;
+  name: string
 
   @ApiProperty({
     example: 'john.doe@example.com',
@@ -73,21 +73,21 @@ export class GetUserProfileDto {
   })
   @IsOptional()
   @IsEmail()
-  email: string;
+  email: string
 
   @ApiProperty({
     example: '2019-01-01T19:73:24Z',
     description: 'When the user information was created',
   })
   @IsDate()
-  creationDate: Date;
+  creationDate: Date
 
   @ApiProperty({
     example: '2019-01-01T19:73:24Z',
     description: 'When was the last time the user information was updated',
   })
   @IsDate()
-  updateDate: Date;
+  updateDate: Date
 
   @ApiProperty({
     example: AdditionalInformation,
@@ -95,7 +95,7 @@ export class GetUserProfileDto {
   })
   @ValidateNested()
   @Type(() => AdditionalInformation)
-  additionalInformation: AdditionalInformation;
+  additionalInformation: AdditionalInformation
 
   constructor(
     userId: string,
@@ -109,15 +109,15 @@ export class GetUserProfileDto {
     updateDate: Date,
     additionalInformation: AdditionalInformation
   ) {
-    this.userId = userId;
-    this.isListed = isListed;
-    this.state = state;
-    this.addresses = addresses;
-    this.nickname = nickname;
-    this.name = name;
-    this.email = email;
-    this.creationDate = creationDate;
-    this.updateDate = updateDate;
-    this.additionalInformation = additionalInformation;
+    this.userId = userId
+    this.isListed = isListed
+    this.state = state
+    this.addresses = addresses
+    this.nickname = nickname
+    this.name = name
+    this.email = email
+    this.creationDate = creationDate
+    this.updateDate = updateDate
+    this.additionalInformation = additionalInformation
   }
 }

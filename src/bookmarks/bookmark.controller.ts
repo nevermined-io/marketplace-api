@@ -11,17 +11,17 @@ import {
   UsePipes,
   Req,
   ForbiddenException,
-} from '@nestjs/common';
-import { BookmarkService } from './bookmark.service';
-import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
-import { CreateBookmarkDto } from './dto/create-bookmark.dto';
-import { GetBookmarkDto } from './dto/get-bookmark.dto';
-import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
-import { SearchQueryDto } from '../common/helpers/search-query.dto';
-import { SearchResponse } from '../common/helpers/search-response.dto';
-import { checkOwnership } from '../common/helpers/utils';
-import { Public } from '../common/decorators/auth.decorator';
-import { Request } from '../common/helpers/request.interface';
+} from '@nestjs/common'
+import { BookmarkService } from './bookmark.service'
+import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger'
+import { CreateBookmarkDto } from './dto/create-bookmark.dto'
+import { GetBookmarkDto } from './dto/get-bookmark.dto'
+import { UpdateBookmarkDto } from './dto/update-bookmark.dto'
+import { SearchQueryDto } from '../common/helpers/search-query.dto'
+import { SearchResponse } from '../common/helpers/search-response.dto'
+import { checkOwnership } from '../common/helpers/utils'
+import { Public } from '../common/decorators/auth.decorator'
+import { Request } from '../common/helpers/request.interface'
 
 @ApiTags('Bookmark')
 @Controller()
@@ -54,17 +54,17 @@ export class BookmarkController {
     @Body() createBookmark: CreateBookmarkDto,
     @Req() req: Request<unknown>
   ): Promise<GetBookmarkDto> {
-    const { userId, roles } = req.user;
+    const { userId, roles } = req.user
 
     if (!createBookmark.userId) {
-      createBookmark.userId = userId;
+      createBookmark.userId = userId
     }
 
-    checkOwnership(userId, createBookmark.userId, roles);
+    checkOwnership(userId, createBookmark.userId, roles)
 
-    const bookmark = await this.bookmarkService.createOne(createBookmark);
+    const bookmark = await this.bookmarkService.createOne(createBookmark)
 
-    return bookmark;
+    return bookmark
   }
 
   @Get(':id')
@@ -83,9 +83,9 @@ export class BookmarkController {
   })
   @Public()
   async getBookmarkById(@Param('id') bookmarkId: string): Promise<GetBookmarkDto> {
-    const bookmarkSources = await this.bookmarkService.findOneById(bookmarkId);
+    const bookmarkSources = await this.bookmarkService.findOneById(bookmarkId)
 
-    return GetBookmarkDto.fromSource(bookmarkSources);
+    return GetBookmarkDto.fromSource(bookmarkSources)
   }
 
   @Get('user/:userId')
@@ -104,13 +104,13 @@ export class BookmarkController {
     @Param('userId') userId: string,
     @Query() searchQueryDto: SearchQueryDto
   ): Promise<SearchResponse<GetBookmarkDto[]>> {
-    const bookmarksSources = await this.bookmarkService.findManyByUserId(userId, searchQueryDto);
+    const bookmarksSources = await this.bookmarkService.findManyByUserId(userId, searchQueryDto)
 
     return SearchResponse.fromSearchSources(
       searchQueryDto,
       bookmarksSources,
       bookmarksSources.hits.map(GetBookmarkDto.fromSource)
-    );
+    )
   }
 
   @Put(':id')
@@ -144,14 +144,14 @@ export class BookmarkController {
     @Body() updateBookmarkDto: UpdateBookmarkDto,
     @Req() req: Request<unknown>
   ): Promise<GetBookmarkDto> {
-    const { userId, roles } = req.user;
-    const bookmark = (await this.bookmarkService.findOneById(id))._source;
+    const { userId, roles } = req.user
+    const bookmark = (await this.bookmarkService.findOneById(id))._source
 
-    checkOwnership(userId, bookmark.userId, roles);
+    checkOwnership(userId, bookmark.userId, roles)
 
-    const bookmarkSource = await this.bookmarkService.updateOneByEntryId(id, updateBookmarkDto);
+    const bookmarkSource = await this.bookmarkService.updateOneByEntryId(id, updateBookmarkDto)
 
-    return GetBookmarkDto.fromSource(bookmarkSource);
+    return GetBookmarkDto.fromSource(bookmarkSource)
   }
 
   @Delete(':id')
@@ -176,12 +176,12 @@ export class BookmarkController {
     description: 'Forbidden',
   })
   async deleteBookmarkById(@Param('id') id: string, @Req() request: Pick<Request<unknown>, 'user'>): Promise<void> {
-    const bookmarkSource = await this.bookmarkService.findOneById(id);
+    const bookmarkSource = await this.bookmarkService.findOneById(id)
 
     if (bookmarkSource._source.userId !== request.user.userId) {
-      throw new ForbiddenException('The bookmark to delete does not belong to the loged account');
+      throw new ForbiddenException('The bookmark to delete does not belong to the loged account')
     }
 
-    await this.bookmarkService.deleteOneByEntryId(id);
+    await this.bookmarkService.deleteOneByEntryId(id)
   }
 }

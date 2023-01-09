@@ -1,7 +1,7 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsOptional, ValidateNested } from 'class-validator';
-import { Type } from 'class-transformer';
-import { ContainerDto } from './container.dto';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsString, IsOptional, ValidateNested } from 'class-validator'
+import { Type } from 'class-transformer'
+import { ContainerDto } from './container.dto'
 
 export class AlgorithmDto {
   @ApiProperty({
@@ -11,7 +11,7 @@ export class AlgorithmDto {
   })
   @IsOptional()
   @IsString()
-  language: string;
+  language: string
 
   @ApiProperty({
     example: 'docker-image',
@@ -20,7 +20,7 @@ export class AlgorithmDto {
   })
   @IsOptional()
   @IsString()
-  format: string;
+  format: string
 
   @ApiProperty({
     example: '0.1',
@@ -29,7 +29,7 @@ export class AlgorithmDto {
   })
   @IsOptional()
   @IsString()
-  version: string;
+  version: string
 
   @ApiProperty({
     type: [ContainerDto],
@@ -37,5 +37,5 @@ export class AlgorithmDto {
   })
   @ValidateNested()
   @Type(() => ContainerDto)
-  container: ContainerDto;
+  container: ContainerDto
 }

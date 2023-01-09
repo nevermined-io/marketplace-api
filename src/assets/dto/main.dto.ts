@@ -1,8 +1,8 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsDateString, ValidateNested, IsOptional } from 'class-validator';
-import { Type } from 'class-transformer';
-import { FileDto } from './file.dto';
-import { AlgorithmDto } from './algorithm.dto';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsString, IsDateString, ValidateNested, IsOptional } from 'class-validator'
+import { Type } from 'class-transformer'
+import { FileDto } from './file.dto'
+import { AlgorithmDto } from './algorithm.dto'
 
 export class MainDto {
   @ApiProperty({
@@ -12,7 +12,7 @@ export class MainDto {
   })
   @IsOptional()
   @IsString()
-  author: string;
+  author: string
 
   @ApiProperty({
     example: '2021-02-01T10:55:11Z',
@@ -23,7 +23,7 @@ export class MainDto {
   })
   @IsOptional()
   @IsDateString()
-  dateCreated: string;
+  dateCreated: string
 
   @ApiProperty({
     example: '2021-02-01T10:55:11Z',
@@ -32,7 +32,7 @@ export class MainDto {
   })
   @IsOptional()
   @IsDateString()
-  datePublished: string;
+  datePublished: string
 
   @ApiProperty({
     example: '0x098213xzckasdf089723hjgdasfkjgasfv',
@@ -42,7 +42,7 @@ export class MainDto {
   @IsOptional()
   @IsString()
   @IsOptional()
-  encryptedFiles: string;
+  encryptedFiles: string
 
   @ApiProperty({
     type: [FileDto],
@@ -52,7 +52,7 @@ export class MainDto {
   @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => FileDto)
-  files: FileDto[];
+  files: FileDto[]
 
   @ApiProperty({
     example: 'CC-BY',
@@ -63,7 +63,7 @@ export class MainDto {
   })
   @IsOptional()
   @IsString()
-  license: string;
+  license: string
 
   @ApiProperty({
     example: 'UK Weather information 2011',
@@ -72,7 +72,7 @@ export class MainDto {
   })
   @IsOptional()
   @IsString()
-  name: string;
+  name: string
 
   @ApiProperty({
     example: '10',
@@ -81,7 +81,7 @@ export class MainDto {
   })
   @IsOptional()
   @IsString()
-  price: string;
+  price: string
 
   @ApiProperty({
     example: 'dataset',
@@ -91,7 +91,7 @@ export class MainDto {
   })
   @IsOptional()
   @IsString()
-  type: string;
+  type: string
 
   @ApiProperty({
     type: AlgorithmDto,
@@ -101,5 +101,5 @@ export class MainDto {
   @IsOptional()
   @ValidateNested()
   @Type(() => AlgorithmDto)
-  algorithm: AlgorithmDto;
+  algorithm: AlgorithmDto
 }

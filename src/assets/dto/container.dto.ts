@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsOptional } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsString, IsOptional } from 'class-validator'
 
 export class ContainerDto {
   @ApiProperty({
@@ -9,7 +9,7 @@ export class ContainerDto {
   })
   @IsOptional()
   @IsString()
-  entrypoint: string;
+  entrypoint: string
 
   @ApiProperty({
     example: 'node',
@@ -18,7 +18,7 @@ export class ContainerDto {
   })
   @IsOptional()
   @IsString()
-  image: string;
+  image: string
 
   @ApiProperty({
     example: '10',
@@ -27,5 +27,5 @@ export class ContainerDto {
   })
   @IsOptional()
   @IsString()
-  tag: string;
+  tag: string
 }

@@ -1,9 +1,9 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, ValidateNested, IsOptional } from 'class-validator';
-import { Type } from 'class-transformer';
-import { ConditionDependencyDto } from './conditionDependency.dto';
-import { ConditionDto } from './conditions.dto';
-import { EventDto } from './event.dto';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsString, ValidateNested, IsOptional } from 'class-validator'
+import { Type } from 'class-transformer'
+import { ConditionDependencyDto } from './conditionDependency.dto'
+import { ConditionDto } from './conditions.dto'
+import { EventDto } from './event.dto'
 
 export class ServiceAgreementTemplateDto {
   @ApiProperty({
@@ -12,7 +12,7 @@ export class ServiceAgreementTemplateDto {
   })
   @ValidateNested()
   @Type(() => ConditionDependencyDto)
-  conditionDependency: ConditionDependencyDto;
+  conditionDependency: ConditionDependencyDto
 
   @ApiProperty({
     type: [ConditionDto],
@@ -20,14 +20,14 @@ export class ServiceAgreementTemplateDto {
   })
   @ValidateNested({ each: true })
   @Type(() => ConditionDto)
-  conditions: ConditionDto[];
+  conditions: ConditionDto[]
 
   @ApiProperty({
     example: 'EscrowAccessSecretStoreTemplate',
     description: 'Contract Name',
   })
   @IsString()
-  contractName: number;
+  contractName: number
 
   @ApiProperty({
     type: [EventDto],
@@ -35,7 +35,7 @@ export class ServiceAgreementTemplateDto {
   })
   @ValidateNested({ each: true })
   @Type(() => EventDto)
-  events: EventDto[];
+  events: EventDto[]
 
   @ApiProperty({
     example: ['lockPayment.fulfill', 'access.fulfill', 'escrowPayment.fulfill'],
@@ -44,5 +44,5 @@ export class ServiceAgreementTemplateDto {
   })
   @IsOptional()
   @IsString({ each: true })
-  fulfillmentOrder: string;
+  fulfillmentOrder: string
 }

@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsDateString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsString, IsDateString } from 'class-validator'
 
 export class ProofDto {
   @ApiProperty({
@@ -7,14 +7,14 @@ export class ProofDto {
     description: 'Date of the proof',
   })
   @IsDateString()
-  created: string;
+  created: string
 
   @ApiProperty({
     example: '0xA99D43d86A0758d5632313b8fA3972B6088A21BB',
     description: 'Wallet address who created the proof signature',
   })
   @IsString()
-  creator: string;
+  creator: string
 
   @ApiProperty({
     example:
@@ -23,12 +23,12 @@ export class ProofDto {
     description: 'Value of the signature',
   })
   @IsString()
-  signatureValue: string;
+  signatureValue: string
 
   @ApiProperty({
     example: 'DDOIntegritySignature',
     description: 'Type of the proof',
   })
   @IsString()
-  type: string;
+  type: string
 }
