@@ -1,7 +1,7 @@
-import { Module } from '@nestjs/common';
-import { UserProfileController } from './user-profile.controller';
-import { UserProfileService } from './user-profile.service';
-import { ElasticModule } from '../shared/elasticsearch/elastic.module';
+import { Module } from '@nestjs/common'
+import { UserProfileController } from './user-profile.controller'
+import { UserProfileService } from './user-profile.service'
+import { ElasticModule } from '../shared/elasticsearch/elastic.module'
 
 @Module({
   imports: [ElasticModule],

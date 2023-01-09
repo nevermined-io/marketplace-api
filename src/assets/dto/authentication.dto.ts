@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsString } from 'class-validator'
 
 export class AuthenticationDto {
   @ApiProperty({
@@ -7,11 +7,11 @@ export class AuthenticationDto {
     description: 'Public key of ddo',
   })
   @IsString()
-  publicKey: string;
+  publicKey: string
 
   @ApiProperty({
     example: 'RsaSignatureAuthentication2018',
     description: 'Type of the signature',
   })
-  type: string;
+  type: string
 }

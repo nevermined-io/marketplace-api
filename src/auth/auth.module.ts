@@ -1,13 +1,13 @@
-import { Module } from '@nestjs/common';
-import { PassportModule } from '@nestjs/passport';
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
-import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy } from '../common/strategies/jwt.strategy';
-import { ConfigModule } from '../shared/config/config.module';
-import { ConfigService } from '../shared/config/config.service';
-import { UserProfileModule } from '../user-profiles/user-profile.module';
-import { PermissionModule } from '../permissions/permission.module';
+import { Module } from '@nestjs/common'
+import { PassportModule } from '@nestjs/passport'
+import { AuthService } from './auth.service'
+import { AuthController } from './auth.controller'
+import { JwtModule } from '@nestjs/jwt'
+import { JwtStrategy } from '../common/strategies/jwt.strategy'
+import { ConfigModule } from '../shared/config/config.module'
+import { ConfigService } from '../shared/config/config.service'
+import { UserProfileModule } from '../user-profiles/user-profile.module'
+import { PermissionModule } from '../permissions/permission.module'
 
 @Module({
   imports: [
@@ -22,7 +22,7 @@ import { PermissionModule } from '../permissions/permission.module';
         return {
           secret: config.get('JWT_SECRET_KEY'),
           signOptions: { expiresIn: config.get('JWT_EXPIRY_KEY') },
-        };
+        }
       },
     }),
   ],

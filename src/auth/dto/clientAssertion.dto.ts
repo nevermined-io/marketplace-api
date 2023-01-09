@@ -1,6 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { Equals, IsJWT } from 'class-validator';
-import { CLIENT_ASSERTION_TYPE } from '../../common/guards/shared/jwt.utils';
+import { ApiProperty } from '@nestjs/swagger'
+import { Equals, IsJWT } from 'class-validator'
+import { CLIENT_ASSERTION_TYPE } from '../../common/guards/shared/jwt.utils'
 
 export class ClientAssertionDto {
   @ApiProperty({
@@ -8,12 +8,12 @@ export class ClientAssertionDto {
     example: CLIENT_ASSERTION_TYPE,
   })
   @Equals(CLIENT_ASSERTION_TYPE)
-  client_assertion_type: string;
+  client_assertion_type: string
 
   @ApiProperty({
     description: 'A single JWT',
     example: 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjIyIn0.eyJpc3Mi[...omitted for brevity...]',
   })
   @IsJWT()
-  client_assertion: string;
+  client_assertion: string
 }

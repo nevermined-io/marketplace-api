@@ -1,9 +1,9 @@
-import { SearchHit } from '@elastic/elasticsearch/api/types';
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsInt, IsUrl, ValidateNested } from 'class-validator';
-import { Type } from 'class-transformer';
-import { AttributesDto } from './attributes.dto';
-import { Service } from '../ddo-service.entity';
+import { SearchHit } from '@elastic/elasticsearch/api/types'
+import { ApiProperty } from '@nestjs/swagger'
+import { IsString, IsInt, IsUrl, ValidateNested } from 'class-validator'
+import { Type } from 'class-transformer'
+import { AttributesDto } from './attributes.dto'
+import { Service } from '../ddo-service.entity'
 
 export class GetServiceDto {
   static fromSource(serviceSource: SearchHit<Service>): GetServiceDto {
@@ -15,7 +15,7 @@ export class GetServiceDto {
       serviceSource._source.serviceEndpoint,
       serviceSource._source.type,
       serviceSource._source.attributes
-    );
+    )
   }
 
   @ApiProperty({
@@ -23,28 +23,28 @@ export class GetServiceDto {
     description: 'Agreement id',
   })
   @IsString()
-  agreementId: string;
+  agreementId: string
 
   @ApiProperty({
     example: 'u-12345',
     description: 'The userId who created the service',
   })
   @IsString()
-  userId: string;
+  userId: string
 
   @ApiProperty({
     example: 0,
     description: 'index of the service',
   })
   @IsInt()
-  index: number;
+  index: number
 
   @ApiProperty({
     example: 0,
     description: 'index of the service',
   })
   @IsString()
-  templateId: string;
+  templateId: string
 
   @ApiProperty({
     example: 'http://localhost:8030/api/v1/gateway/services/consume',
@@ -53,14 +53,14 @@ export class GetServiceDto {
   @IsUrl({
     require_tld: false,
   })
-  serviceEndpoint: string;
+  serviceEndpoint: string
 
   @ApiProperty({
     example: 'access',
     description: 'Service type',
   })
   @IsString()
-  type: string;
+  type: string
 
   @ApiProperty({
     type: AttributesDto,
@@ -69,7 +69,7 @@ export class GetServiceDto {
   })
   @ValidateNested()
   @Type(() => AttributesDto)
-  attributes: AttributesDto;
+  attributes: AttributesDto
 
   constructor(
     agreementId: string,
@@ -80,12 +80,12 @@ export class GetServiceDto {
     type: string,
     attributes: AttributesDto
   ) {
-    this.agreementId = agreementId;
-    this.index = index;
-    this.userId = userId;
-    this.templateId = templateId;
-    this.serviceEndpoint = serviceEndpoint;
-    this.type = type;
-    this.attributes = attributes;
+    this.agreementId = agreementId
+    this.index = index
+    this.userId = userId
+    this.templateId = templateId
+    this.serviceEndpoint = serviceEndpoint
+    this.type = type
+    this.attributes = attributes
   }
 }

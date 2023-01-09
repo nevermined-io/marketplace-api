@@ -1,6 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsString } from 'class-validator';
-import { PermissionType } from '../../common/type';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsEnum, IsString } from 'class-validator'
+import { PermissionType } from '../../common/type'
 
 export class CreatePermissionDto {
   @ApiProperty({
@@ -8,7 +8,7 @@ export class CreatePermissionDto {
     description: 'The userId who created the bookmark',
   })
   @IsString()
-  userId: string;
+  userId: string
 
   @ApiProperty({
     example: [PermissionType.Read, PermissionType.Update, PermissionType.Delete],
@@ -17,19 +17,19 @@ export class CreatePermissionDto {
   @IsEnum(PermissionType, {
     each: true,
   })
-  type: PermissionType[];
+  type: PermissionType[]
 
   @ApiProperty({
     example: '0x610D9314EDF2ced7681BA1633C33fdb8cF365a12',
     description: 'The account providing the permissions',
   })
   @IsString()
-  issuer: string;
+  issuer: string
 
   @ApiProperty({
     example: '0x37BB53e3d293494DE59fBe1FF78500423dcFd43B',
     description: 'The public address holding the permissions',
   })
   @IsString()
-  holder: string;
+  holder: string
 }

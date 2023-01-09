@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsInt, IsUrl, IsOptional } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsString, IsInt, IsUrl, IsOptional } from 'class-validator'
 
 export class FileDto {
   @ApiProperty({
@@ -11,7 +11,7 @@ export class FileDto {
   })
   @IsOptional()
   @IsString()
-  checksum: string;
+  checksum: string
 
   @ApiProperty({
     example:
@@ -24,7 +24,7 @@ export class FileDto {
   @IsUrl({
     require_tld: false,
   })
-  url: string;
+  url: string
 
   @ApiProperty({
     example: 'md5',
@@ -33,7 +33,7 @@ export class FileDto {
   })
   @IsOptional()
   @IsString()
-  checksumType: string;
+  checksumType: string
 
   @ApiProperty({
     example: 'data.txt',
@@ -42,7 +42,7 @@ export class FileDto {
   })
   @IsOptional()
   @IsString()
-  name: string;
+  name: string
 
   @ApiProperty({
     example: 'zip',
@@ -51,7 +51,7 @@ export class FileDto {
   })
   @IsOptional()
   @IsString()
-  compression: string;
+  compression: string
 
   @ApiProperty({
     example: '4535431',
@@ -60,14 +60,14 @@ export class FileDto {
   })
   @IsOptional()
   @IsString()
-  contentLength: number;
+  contentLength: number
 
   @ApiProperty({
     example: 'text/csv',
     description: 'File format',
   })
   @IsString()
-  contentType: string;
+  contentType: string
 
   @ApiProperty({
     example: 'UTF-8',
@@ -76,14 +76,14 @@ export class FileDto {
   })
   @IsOptional()
   @IsString()
-  encoding: string;
+  encoding: string
 
   @ApiProperty({
     example: 0,
     description: 'Index of the file',
   })
   @IsInt()
-  index: number;
+  index: number
 
   @ApiProperty({
     example: 'access-log2018-02-13-15-17-29-18386C502CAEA932',
@@ -94,7 +94,7 @@ export class FileDto {
   })
   @IsOptional()
   @IsString()
-  resourceId: string;
+  resourceId: string
 
   @ApiProperty({
     example: false,
@@ -103,7 +103,7 @@ export class FileDto {
   })
   @IsOptional()
   @IsString()
-  encrypted: boolean;
+  encrypted: boolean
 
   @ApiProperty({
     example: 'gpg',
@@ -112,5 +112,5 @@ export class FileDto {
   })
   @IsOptional()
   @IsString()
-  encryptionMode: string;
+  encryptionMode: string
 }

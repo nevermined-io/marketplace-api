@@ -1,10 +1,10 @@
-import { SearchHit } from '@elastic/elasticsearch/api/types';
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, ValidateNested } from 'class-validator';
-import { Type } from 'class-transformer';
-import { InternalDto } from './internal.dto';
-import { Internal } from '../asset.interface';
-import { DDOStatus } from '../ddo-status.entity';
+import { SearchHit } from '@elastic/elasticsearch/api/types'
+import { ApiProperty } from '@nestjs/swagger'
+import { IsString, ValidateNested } from 'class-validator'
+import { Type } from 'class-transformer'
+import { InternalDto } from './internal.dto'
+import { Internal } from '../asset.interface'
+import { DDOStatus } from '../ddo-status.entity'
 
 export class GetDDOStatusDto {
   static fromSource(ddoStatusSource: SearchHit<DDOStatus>): GetDDOStatusDto {
@@ -12,7 +12,7 @@ export class GetDDOStatusDto {
       ddoStatusSource._source.did,
       ddoStatusSource._source.internal,
       ddoStatusSource._source.external
-    );
+    )
   }
 
   @ApiProperty({
@@ -20,7 +20,7 @@ export class GetDDOStatusDto {
     description: 'Id of the asset',
   })
   @IsString()
-  did: string;
+  did: string
 
   @ApiProperty({
     type: InternalDto,
@@ -28,17 +28,17 @@ export class GetDDOStatusDto {
   })
   @ValidateNested()
   @Type(() => InternalDto)
-  internal: Internal;
+  internal: Internal
 
   @ApiProperty({
     example: null,
     description: 'Data from external source',
   })
-  external: unknown;
+  external: unknown
 
   constructor(did: string, internal: Internal, external: unknown) {
-    this.did = did;
-    this.internal = internal;
-    this.external = external;
+    this.did = did
+    this.internal = internal
+    this.external = external
   }
 }

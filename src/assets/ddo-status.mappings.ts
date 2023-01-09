@@ -1,4 +1,4 @@
-import { MappingProperty } from '@elastic/elasticsearch/api/types';
+import { MappingProperty } from '@elastic/elasticsearch/api/types'
 
 export const StatusMappings: MappingProperty = {
   properties: {
@@ -23,4 +23,4 @@ export const StatusMappings: MappingProperty = {
       },
     },
   },
-};
+}

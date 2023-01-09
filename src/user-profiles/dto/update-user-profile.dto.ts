@@ -1,8 +1,8 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsEmail, IsBoolean, IsEnum, IsDate, IsOptional, ValidateNested } from 'class-validator';
-import { Type } from 'class-transformer';
-import { State } from '../../common/type';
-import { AdditionalInformation } from './additional-information.dto';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsString, IsEmail, IsBoolean, IsEnum, IsDate, IsOptional, ValidateNested } from 'class-validator'
+import { Type } from 'class-transformer'
+import { State } from '../../common/type'
+import { AdditionalInformation } from './additional-information.dto'
 
 export class UpdateUserProfileDto {
   static fromPayload(userProfile: UpdateUserProfileDto): UpdateUserProfileDto {
@@ -15,7 +15,7 @@ export class UpdateUserProfileDto {
       userProfile.email,
       new Date(),
       userProfile.additionalInformation
-    );
+    )
   }
 
   @ApiProperty({
@@ -24,7 +24,7 @@ export class UpdateUserProfileDto {
   })
   @IsOptional()
   @IsBoolean()
-  isListed: boolean;
+  isListed: boolean
 
   @ApiProperty({
     example: State.Confirmed,
@@ -32,7 +32,7 @@ export class UpdateUserProfileDto {
   })
   @IsOptional()
   @IsEnum(State)
-  state: State;
+  state: State
 
   @ApiProperty({
     example: ['0x37BB53e3d293494DE59fBe1FF78500423dcFd43B'],
@@ -42,7 +42,7 @@ export class UpdateUserProfileDto {
   @IsString({
     each: true,
   })
-  addresses: string[];
+  addresses: string[]
 
   @ApiProperty({
     example: 'john.doe',
@@ -50,7 +50,7 @@ export class UpdateUserProfileDto {
   })
   @IsOptional()
   @IsString()
-  nickname: string;
+  nickname: string
 
   @ApiProperty({
     example: 'John Doe',
@@ -58,7 +58,7 @@ export class UpdateUserProfileDto {
   })
   @IsOptional()
   @IsString()
-  name: string;
+  name: string
 
   @ApiProperty({
     example: 'john.doe@example.com',
@@ -66,7 +66,7 @@ export class UpdateUserProfileDto {
   })
   @IsOptional()
   @IsEmail()
-  email: string;
+  email: string
 
   @ApiProperty({
     example: AdditionalInformation,
@@ -75,7 +75,7 @@ export class UpdateUserProfileDto {
   @IsOptional()
   @ValidateNested()
   @Type(() => AdditionalInformation)
-  additionalInformation: AdditionalInformation;
+  additionalInformation: AdditionalInformation
 
   @ApiProperty({
     example: '2019-01-01T19:73:24Z',
@@ -83,7 +83,7 @@ export class UpdateUserProfileDto {
   })
   @IsOptional()
   @IsDate()
-  updateDate: Date;
+  updateDate: Date
 
   constructor(
     isListed: boolean,
@@ -95,13 +95,13 @@ export class UpdateUserProfileDto {
     updateDate: Date,
     additionalInformation: AdditionalInformation
   ) {
-    this.isListed = isListed;
-    this.state = state;
-    this.addresses = addresses;
-    this.nickname = nickname;
-    this.name = name;
-    this.email = email;
-    this.updateDate = updateDate;
-    this.additionalInformation = additionalInformation;
+    this.isListed = isListed
+    this.state = state
+    this.addresses = addresses
+    this.nickname = nickname
+    this.name = name
+    this.email = email
+    this.updateDate = updateDate
+    this.additionalInformation = additionalInformation
   }
 }
