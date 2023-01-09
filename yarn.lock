@@ -1104,10 +1104,10 @@
     tslib "2.4.0"
     uuid "8.3.2"
 
-"@nestjs/elasticsearch@^8.1":
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/@nestjs/elasticsearch/-/elasticsearch-8.1.0.tgz#ff22ac5534fa4cb9d92261ff979df60afdc108b4"
-  integrity sha512-Ub5p5/D006017SCbygSbStvJ3yt8xYiT5jN/Rbt42d8bkQcr5xhY0iaPfFHPFA1s2Bc6QlVBKbguo++mIhFenQ==
+"@nestjs/elasticsearch@^9.0":
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/@nestjs/elasticsearch/-/elasticsearch-9.0.0.tgz#09fefffce7160997bb8d54b79c0a68f3d5d820dc"
+  integrity sha512-+NhXg0od/luNuObrCoouO8IGJ5d8esd2LbqOyX4wqM3PtzoVgQC5uDoxHu0ZyWkp/Coj7OiT0osYN9rgctEPbg==
 
 "@nestjs/jwt@^8.0.0":
   version "8.0.1"
