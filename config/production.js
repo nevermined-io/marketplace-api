@@ -21,4 +21,4 @@ module.exports = {
     },
   },
   assetIndex: process.env.ASSET_INDEX,
-};
+}

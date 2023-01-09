@@ -1,8 +1,8 @@
-import { ApiResponse } from '@elastic/elasticsearch';
-import { SearchHitsMetadata, QueryDslQueryContainer } from '@elastic/elasticsearch/api/types';
-import { Injectable } from '@nestjs/common';
-import { ElasticsearchService } from '@nestjs/elasticsearch';
-import { SearchQueryDto } from '../../common/helpers/search-query.dto';
+import { ApiResponse } from '@elastic/elasticsearch'
+import { SearchHitsMetadata, QueryDslQueryContainer } from '@elastic/elasticsearch/api/types'
+import { Injectable } from '@nestjs/common'
+import { ElasticsearchService } from '@nestjs/elasticsearch'
+import { SearchQueryDto } from '../../common/helpers/search-query.dto'
 
 @Injectable()
 export class ElasticService {
@@ -14,7 +14,7 @@ export class ElasticService {
       id,
       body: document,
       op_type: 'create',
-    });
+    })
   }
 
   async searchByIndex(
@@ -23,7 +23,7 @@ export class ElasticService {
     searchQuery: SearchQueryDto,
     _source_includes?: string | string[]
   ): Promise<SearchHitsMetadata<unknown>> {
-    const page = searchQuery?.page ? searchQuery.page - 1 : 0;
+    const page = searchQuery?.page ? searchQuery.page - 1 : 0
 
     /* eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access */
     return (
@@ -39,7 +39,7 @@ export class ElasticService {
         },
         _source_includes,
       })
-    ).body.hits;
+    ).body.hits
   }
 
   async updateDocumentByIndexAndId(index: string, id: string, document: unknown) {
@@ -47,7 +47,7 @@ export class ElasticService {
       index,
       id,
       body: document,
-    });
+    })
   }
 
   async getDocumentByIndexAndId(index: string, id: string): Promise<unknown> {
@@ -56,14 +56,14 @@ export class ElasticService {
         index,
         id,
       })
-    ).body;
+    ).body
   }
 
   async deleteDocumentByIndexAndId(index: string, id: string): Promise<unknown> {
     return this.elasticsearchService.delete({
       index,
       id,
-    });
+    })
   }
 
   async deleteDocumentByQuery(index: string, query: QueryDslQueryContainer): Promise<unknown> {
@@ -72,23 +72,23 @@ export class ElasticService {
       body: {
         query,
       },
-    });
+    })
   }
 
   async createIndex(index: string, body: unknown): Promise<void> {
     await this.elasticsearchService.indices.create({
       index,
       body,
-    });
+    })
   }
 
   async checkExistingIndex(index: string): Promise<ApiResponse<boolean, unknown>> {
     return this.elasticsearchService.indices.exists({
       index,
-    });
+    })
   }
 
   async getInfo() {
-    return this.elasticsearchService.info();
+    return this.elasticsearchService.info()
   }
 }

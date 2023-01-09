@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsDateString, IsNumber } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsString, IsDateString, IsNumber } from 'class-validator'
 
 export class NvmConfigVersionsDto {
   @ApiProperty({
@@ -7,19 +7,19 @@ export class NvmConfigVersionsDto {
     description: 'The id of the revision',
   })
   @IsNumber()
-  id: number;
+  id: number
 
   @ApiProperty({
     example: '2020-01-01T19:13:24Z',
     description: 'The date of the revision',
   })
   @IsDateString()
-  updated: string;
+  updated: string
 
   @ApiProperty({
     example: '89328493849328493284932',
     description: 'The checksum of the revision',
   })
   @IsString()
-  checksum: string;
+  checksum: string
 }

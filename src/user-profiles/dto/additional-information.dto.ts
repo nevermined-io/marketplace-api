@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsUrl, IsOptional } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsUrl, IsOptional } from 'class-validator'
 
 export class AdditionalInformation {
   @ApiProperty({
@@ -10,7 +10,7 @@ export class AdditionalInformation {
   @IsUrl({
     require_tld: false,
   })
-  profilePicture: string;
+  profilePicture: string
 
   @ApiProperty({
     example: 'http://linkedin.com',
@@ -20,5 +20,5 @@ export class AdditionalInformation {
   @IsUrl({
     require_tld: false,
   })
-  linkedinProfile: string;
+  linkedinProfile: string
 }

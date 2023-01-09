@@ -9,18 +9,18 @@ import {
   Req,
   NotFoundException,
   BadRequestException,
-} from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
-import { UserProfileService } from './user-profile.service';
-import { CreateUserProfileDto } from './dto/create-user-profile.dto';
-import { GetUserProfileDto } from './dto/get-user-profile.dto';
-import { UpdateUserProfileDto } from './dto/update-user-profile.dto';
-import { DisableUserProfileDto } from './dto/disable-user-profile.dto';
-import { Public } from '../common/decorators/auth.decorator';
-import { Roles } from '../common/decorators/roles.decorators';
-import { AuthRoles } from '../common/type';
-import { Request } from '../common/helpers/request.interface';
-import { checkOwnership } from '../common/helpers/utils';
+} from '@nestjs/common'
+import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger'
+import { UserProfileService } from './user-profile.service'
+import { CreateUserProfileDto } from './dto/create-user-profile.dto'
+import { GetUserProfileDto } from './dto/get-user-profile.dto'
+import { UpdateUserProfileDto } from './dto/update-user-profile.dto'
+import { DisableUserProfileDto } from './dto/disable-user-profile.dto'
+import { Public } from '../common/decorators/auth.decorator'
+import { Roles } from '../common/decorators/roles.decorators'
+import { AuthRoles } from '../common/type'
+import { Request } from '../common/helpers/request.interface'
+import { checkOwnership } from '../common/helpers/utils'
 
 @ApiTags('User Profile')
 @Controller()
@@ -51,23 +51,23 @@ export class UserProfileController {
     const userProfile = (
       await Promise.all(
         createUserProfileDto.addresses.map(async (a) => {
-          const userProfileSource = await this.userProfileService.findOneByAddress(a);
-          return userProfileSource?._source;
+          const userProfileSource = await this.userProfileService.findOneByAddress(a)
+          return userProfileSource?._source
         })
       )
-    ).filter((u) => u?.addresses);
+    ).filter((u) => u?.addresses)
 
     if (userProfile?.length) {
-      const addresses: string[] = [];
+      const addresses: string[] = []
       userProfile.forEach((up) => {
-        addresses.push(...createUserProfileDto.addresses.filter((a) => up.addresses.some((aup) => aup === a)));
-      });
+        addresses.push(...createUserProfileDto.addresses.filter((a) => up.addresses.some((aup) => aup === a)))
+      })
       throw new BadRequestException(
         `User profile with theses addresses [${addresses.map((a) => a).join(',')}] already exists`
-      );
+      )
     }
 
-    return this.userProfileService.createOne(createUserProfileDto);
+    return this.userProfileService.createOne(createUserProfileDto)
   }
 
   @Get(':userId')
@@ -86,9 +86,9 @@ export class UserProfileController {
   })
   @Public()
   async getUserProfileByUserId(@Param('userId') userId: string): Promise<GetUserProfileDto> {
-    const userProfileSource = await this.userProfileService.findOneById(userId);
+    const userProfileSource = await this.userProfileService.findOneById(userId)
 
-    return GetUserProfileDto.fromSource(userProfileSource);
+    return GetUserProfileDto.fromSource(userProfileSource)
   }
 
   @Get('address/:publicAddress')
@@ -107,13 +107,13 @@ export class UserProfileController {
   })
   @Public()
   async getUserProfileByAddress(@Param('publicAddress') publicAddress: string): Promise<GetUserProfileDto> {
-    const userProfileSource = await this.userProfileService.findOneByAddress(publicAddress);
+    const userProfileSource = await this.userProfileService.findOneByAddress(publicAddress)
 
     if (!userProfileSource) {
-      throw new NotFoundException(`User profile with public address ${publicAddress} does not exist`);
+      throw new NotFoundException(`User profile with public address ${publicAddress} does not exist`)
     }
 
-    return GetUserProfileDto.fromSource(userProfileSource);
+    return GetUserProfileDto.fromSource(userProfileSource)
   }
 
   @Put(':userId')
@@ -143,16 +143,16 @@ export class UserProfileController {
     @Body() updateUserProfileDto: UpdateUserProfileDto,
     @Req() req: Request<unknown>
   ): Promise<GetUserProfileDto> {
-    const { userId, roles } = req.user;
+    const { userId, roles } = req.user
 
-    checkOwnership(userId, userIdEntity, roles);
+    checkOwnership(userId, userIdEntity, roles)
 
     const userProfileSource = await this.userProfileService.updateOneByEntryId(
       userIdEntity,
       UpdateUserProfileDto.fromPayload(updateUserProfileDto)
-    );
+    )
 
-    return GetUserProfileDto.fromSource(userProfileSource);
+    return GetUserProfileDto.fromSource(userProfileSource)
   }
 
   @Delete(':userId')
@@ -177,10 +177,10 @@ export class UserProfileController {
     @Param('userId') userIdEntity: string,
     @Req() req: Request<undefined>
   ): Promise<DisableUserProfileDto> {
-    const { userId, roles } = req.user;
+    const { userId, roles } = req.user
 
-    checkOwnership(userId, userIdEntity, roles);
+    checkOwnership(userId, userIdEntity, roles)
 
-    return this.userProfileService.disableOneByEntryId(userIdEntity);
+    return this.userProfileService.disableOneByEntryId(userIdEntity)
   }
 }

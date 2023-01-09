@@ -1,14 +1,14 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { JWTPayload } from 'jose';
-import { LoginDto } from './dto/login.dto';
-import { CLIENT_ASSERTION_TYPE, jwtEthVerify } from '../common/guards/shared/jwt.utils';
-import { UserProfileService } from '../user-profiles/user-profile.service';
-import { UserProfile } from '../user-profiles/user-profile.entity';
-import { PermissionService } from '../permissions/permission.service';
-import { ClientAssertionDto } from './dto/clientAssertion.dto';
-import { State } from '../common/type';
-import { Permission } from '../permissions/permission.entity';
+import { Injectable, UnauthorizedException } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
+import { JWTPayload } from 'jose'
+import { LoginDto } from './dto/login.dto'
+import { CLIENT_ASSERTION_TYPE, jwtEthVerify } from '../common/guards/shared/jwt.utils'
+import { UserProfileService } from '../user-profiles/user-profile.service'
+import { UserProfile } from '../user-profiles/user-profile.entity'
+import { PermissionService } from '../permissions/permission.service'
+import { ClientAssertionDto } from './dto/clientAssertion.dto'
+import { State } from '../common/type'
+import { Permission } from '../permissions/permission.entity'
 
 @Injectable()
 export class AuthService {
@@ -29,29 +29,29 @@ export class AuthService {
    **/
   async validateClaim(clientAssertionType: string, clientAssertion: string): Promise<LoginDto> {
     if (clientAssertionType !== CLIENT_ASSERTION_TYPE) {
-      throw new UnauthorizedException('Invalid "client_assertion_type"');
+      throw new UnauthorizedException('Invalid "client_assertion_type"')
     }
 
-    let payload: JWTPayload;
-    let userProfile: UserProfile;
+    let payload: JWTPayload
+    let userProfile: UserProfile
     try {
-      payload = jwtEthVerify(clientAssertion);
-      const address = payload.iss;
+      payload = jwtEthVerify(clientAssertion)
+      const address = payload.iss
 
-      const userProfileSource = await this.userProfileService.findOneByAddress(address);
+      const userProfileSource = await this.userProfileService.findOneByAddress(address)
 
       if (!userProfileSource) {
-        const userProfileEntity = new UserProfile();
-        userProfileEntity.nickname = address;
-        userProfileEntity.isListed = true;
-        userProfileEntity.addresses = [address];
-        userProfileEntity.state = State.Confirmed;
-        userProfile = await this.userProfileService.createOne(userProfileEntity);
+        const userProfileEntity = new UserProfile()
+        userProfileEntity.nickname = address
+        userProfileEntity.isListed = true
+        userProfileEntity.addresses = [address]
+        userProfileEntity.state = State.Confirmed
+        userProfile = await this.userProfileService.createOne(userProfileEntity)
       } else {
-        userProfile = userProfileSource._source;
+        userProfile = userProfileSource._source
       }
 
-      const permission = await this.getPermission(userProfile.userId, address);
+      const permission = await this.getPermission(userProfile.userId, address)
 
       return {
         access_token: this.jwtService.sign({
@@ -59,32 +59,32 @@ export class AuthService {
           sub: userProfile.userId,
           roles: permission?.type || [],
         }),
-      };
+      }
     } catch (error) {
-      throw new UnauthorizedException(`The 'client_assertion' is invalid: ${(error as Error).message}`);
+      throw new UnauthorizedException(`The 'client_assertion' is invalid: ${(error as Error).message}`)
     }
   }
 
   async validateNewAddressClaim(clientAssertionDto: ClientAssertionDto, userId: string): Promise<LoginDto> {
     if (clientAssertionDto.client_assertion_type !== CLIENT_ASSERTION_TYPE) {
-      throw new UnauthorizedException('Invalid "client_assertion_type"');
+      throw new UnauthorizedException('Invalid "client_assertion_type"')
     }
 
     try {
-      const payload = jwtEthVerify(clientAssertionDto.client_assertion);
-      const address = payload.iss;
+      const payload = jwtEthVerify(clientAssertionDto.client_assertion)
+      const address = payload.iss
 
-      const userProfile = (await this.userProfileService.findOneById(userId))?._source;
+      const userProfile = (await this.userProfileService.findOneById(userId))?._source
 
       if (userProfile.addresses.some((a) => a === address)) {
-        throw new UnauthorizedException(`The address ${address} already exists in ${userProfile.nickname} account`);
+        throw new UnauthorizedException(`The address ${address} already exists in ${userProfile.nickname} account`)
       }
 
-      userProfile.addresses.push(address);
+      userProfile.addresses.push(address)
 
-      const userProfileUpdated = (await this.userProfileService.updateOneByEntryId(userId, userProfile))?._source;
+      const userProfileUpdated = (await this.userProfileService.updateOneByEntryId(userId, userProfile))?._source
 
-      const permission = await this.getPermission(userId, address);
+      const permission = await this.getPermission(userId, address)
 
       return {
         access_token: this.jwtService.sign({
@@ -92,9 +92,9 @@ export class AuthService {
           sub: userProfileUpdated.userId,
           roles: permission?.type || [],
         }),
-      };
+      }
     } catch (error) {
-      throw new UnauthorizedException(`The 'client_assertion' is invalid: ${(error as Error).message}`);
+      throw new UnauthorizedException(`The 'client_assertion' is invalid: ${(error as Error).message}`)
     }
   }
 
@@ -106,6 +106,6 @@ export class AuthService {
       })
     ).hits
       .map((p) => p._source)
-      .find((p) => p.holder === address);
+      .find((p) => p.holder === address)
   }
 }

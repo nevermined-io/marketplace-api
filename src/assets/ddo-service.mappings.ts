@@ -1,4 +1,4 @@
-import { MappingProperty } from '@elastic/elasticsearch/api/types';
+import { MappingProperty } from '@elastic/elasticsearch/api/types'
 
 export const ServiceMappings: MappingProperty = {
   properties: {
@@ -26,4 +26,4 @@ export const ServiceMappings: MappingProperty = {
       type: 'object',
     },
   },
-};
+}

@@ -1,7 +1,7 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsInt, IsUrl, IsOptional, ValidateNested } from 'class-validator';
-import { Type } from 'class-transformer';
-import { AttributesDto } from './attributes.dto';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsString, IsInt, IsUrl, IsOptional, ValidateNested } from 'class-validator'
+import { Type } from 'class-transformer'
+import { AttributesDto } from './attributes.dto'
 
 export class ServiceDto {
   @ApiProperty({
@@ -9,7 +9,7 @@ export class ServiceDto {
     description: 'index of the service',
   })
   @IsInt()
-  index: number;
+  index: number
 
   @ApiProperty({
     example: 'http://localhost:8030/api/v1/gateway/services/consume',
@@ -18,14 +18,14 @@ export class ServiceDto {
   @IsUrl({
     require_tld: false,
   })
-  serviceEndpoint: string;
+  serviceEndpoint: string
 
   @ApiProperty({
     example: 'access',
     description: 'Service type',
   })
   @IsString()
-  type: string;
+  type: string
 
   @ApiProperty({
     example: 'SecretStore',
@@ -34,7 +34,7 @@ export class ServiceDto {
   })
   @IsOptional()
   @IsString()
-  service: string;
+  service: string
 
   @ApiProperty({
     example: 'http://localhost:8030/api/v1/gateway/services/access/initialize',
@@ -45,7 +45,7 @@ export class ServiceDto {
   @IsUrl({
     require_tld: false,
   })
-  purchaseEndpoint: string;
+  purchaseEndpoint: string
 
   @ApiProperty({
     type: AttributesDto,
@@ -55,5 +55,5 @@ export class ServiceDto {
   @IsOptional()
   @ValidateNested()
   @Type(() => AttributesDto)
-  attributes: AttributesDto;
+  attributes: AttributesDto
 }

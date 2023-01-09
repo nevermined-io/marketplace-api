@@ -1,7 +1,7 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, ValidateNested, IsNumber } from 'class-validator';
-import { Transform } from 'class-transformer';
-import { Sort } from '../../common/helpers/search-query.interface';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsOptional, ValidateNested, IsNumber } from 'class-validator'
+import { Transform } from 'class-transformer'
+import { Sort } from '../../common/helpers/search-query.interface'
 
 export class QueryBodyDDOdto {
   @ApiProperty({
@@ -12,7 +12,7 @@ export class QueryBodyDDOdto {
   })
   @IsOptional()
   @ValidateNested()
-  query?: { [jsonPath: string]: any };
+  query?: { [jsonPath: string]: any }
 
   @ApiProperty({
     example: 100,
@@ -23,7 +23,7 @@ export class QueryBodyDDOdto {
   @Transform(({ value }) => parseInt(value as string, 10))
   @IsOptional()
   @IsNumber()
-  offset = 100;
+  offset = 100
 
   @ApiProperty({
     example: 1,
@@ -34,7 +34,7 @@ export class QueryBodyDDOdto {
   @Transform(({ value }) => parseInt(value as string, 10))
   @IsOptional()
   @IsNumber()
-  page = 1;
+  page = 1
 
   @ApiProperty({
     example: { created: 'asc' },
@@ -44,5 +44,5 @@ export class QueryBodyDDOdto {
   })
   @IsOptional()
   @ValidateNested()
-  sort?: Sort;
+  sort?: Sort
 }

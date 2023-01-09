@@ -1,8 +1,8 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsInt, ValidateNested } from 'class-validator';
-import { Type } from 'class-transformer';
-import { EventDto } from './event.dto';
-import { ParameterDto } from './parameter.dto';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsString, IsInt, ValidateNested } from 'class-validator'
+import { Type } from 'class-transformer'
+import { EventDto } from './event.dto'
+import { ParameterDto } from './parameter.dto'
 
 export class ConditionDto {
   @ApiProperty({
@@ -10,21 +10,21 @@ export class ConditionDto {
     description: 'Contract name',
   })
   @IsString()
-  contractName: string;
+  contractName: string
 
   @ApiProperty({
     example: 'fulfill',
     description: 'Function name',
   })
   @IsString()
-  functionName: string;
+  functionName: string
 
   @ApiProperty({
     example: 'lockPayment',
     description: 'Function name',
   })
   @IsString()
-  name: string;
+  name: string
 
   @ApiProperty({
     type: [EventDto],
@@ -32,7 +32,7 @@ export class ConditionDto {
   })
   @ValidateNested({ each: true })
   @Type(() => EventDto)
-  events: EventDto[];
+  events: EventDto[]
 
   @ApiProperty({
     type: [ParameterDto],
@@ -40,19 +40,19 @@ export class ConditionDto {
   })
   @ValidateNested({ each: true })
   @Type(() => ParameterDto)
-  parameters: ParameterDto[];
+  parameters: ParameterDto[]
 
   @ApiProperty({
     example: 0,
     description: 'Time lock',
   })
   @IsInt()
-  timelock: number;
+  timelock: number
 
   @ApiProperty({
     example: 0,
     description: 'Time out',
   })
   @IsInt()
-  timeout: number;
+  timeout: number
 }

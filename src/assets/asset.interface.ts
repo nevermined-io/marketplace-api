@@ -1,9 +1,9 @@
-import { SourceType, Status } from '../common/type';
+import { SourceType, Status } from '../common/type'
 
 export class Handler {
-  functionName: string;
-  moduleName: string;
-  version: string;
+  functionName: string
+  moduleName: string
+  version: string
 }
 
 export interface Parameter {

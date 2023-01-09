@@ -1,7 +1,7 @@
-import { Module } from '@nestjs/common';
-import { PermissionController } from './permission.controller';
-import { PermissionService } from './permission.service';
-import { ElasticModule } from '../shared/elasticsearch/elastic.module';
+import { Module } from '@nestjs/common'
+import { PermissionController } from './permission.controller'
+import { PermissionService } from './permission.service'
+import { ElasticModule } from '../shared/elasticsearch/elastic.module'
 
 @Module({
   imports: [ElasticModule],

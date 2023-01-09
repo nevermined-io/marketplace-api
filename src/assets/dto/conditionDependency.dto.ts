@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsString, IsOptional } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsArray, IsString, IsOptional } from 'class-validator'
 
 export class ConditionDependencyDto {
   @ApiProperty({
@@ -9,7 +9,7 @@ export class ConditionDependencyDto {
   })
   @IsOptional()
   @IsArray()
-  access: string[];
+  access: string[]
 
   @ApiProperty({
     example: ['lockPayment', 'access'],
@@ -18,7 +18,7 @@ export class ConditionDependencyDto {
   })
   @IsOptional()
   @IsArray()
-  escrowPayment: string[];
+  escrowPayment: string[]
 
   @ApiProperty({
     example: [],
@@ -27,7 +27,7 @@ export class ConditionDependencyDto {
   })
   @IsOptional()
   @IsString({ each: true })
-  execCompute: string[];
+  execCompute: string[]
 
   @ApiProperty({
     example: [],
@@ -36,5 +36,5 @@ export class ConditionDependencyDto {
   })
   @IsArray()
   @IsOptional()
-  lockPayment: string[];
+  lockPayment: string[]
 }

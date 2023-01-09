@@ -1,14 +1,14 @@
-import { Post, Controller, Body, Get, Put, Delete, Param, Query, UsePipes, ValidationPipe } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
-import { PermissionService } from './permission.service';
-import { CreatePermissionDto } from './dto/create-permission.dto';
-import { GetPermissionDto } from './dto/get-permission.dto';
-import { UpdatePermissionDto } from './dto/update-permission.dto';
-import { Roles } from '../common/decorators/roles.decorators';
-import { AuthRoles, PermissionType } from '../common/type';
-import { Public } from '../common/decorators/auth.decorator';
-import { SearchQueryDto } from '../common/helpers/search-query.dto';
-import { SearchResponse } from '../common/helpers/search-response.dto';
+import { Post, Controller, Body, Get, Put, Delete, Param, Query, UsePipes, ValidationPipe } from '@nestjs/common'
+import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger'
+import { PermissionService } from './permission.service'
+import { CreatePermissionDto } from './dto/create-permission.dto'
+import { GetPermissionDto } from './dto/get-permission.dto'
+import { UpdatePermissionDto } from './dto/update-permission.dto'
+import { Roles } from '../common/decorators/roles.decorators'
+import { AuthRoles, PermissionType } from '../common/type'
+import { Public } from '../common/decorators/auth.decorator'
+import { SearchQueryDto } from '../common/helpers/search-query.dto'
+import { SearchResponse } from '../common/helpers/search-response.dto'
 
 @ApiTags('Permission')
 @Controller()
@@ -40,7 +40,7 @@ export class PermissionController {
     description: 'Unauthorized',
   })
   async createPermission(@Body() createPermissionDto: CreatePermissionDto): Promise<GetPermissionDto> {
-    return this.permissionService.createOne(createPermissionDto);
+    return this.permissionService.createOne(createPermissionDto)
   }
 
   @Get(':id')
@@ -58,9 +58,9 @@ export class PermissionController {
   })
   @Public()
   async getPermissionById(@Param('id') id: string): Promise<GetPermissionDto> {
-    const permissionSource = await this.permissionService.findOneById(id);
+    const permissionSource = await this.permissionService.findOneById(id)
 
-    return GetPermissionDto.fromSource(permissionSource);
+    return GetPermissionDto.fromSource(permissionSource)
   }
 
   @Get('user/:userId')
@@ -82,13 +82,13 @@ export class PermissionController {
     @Param('userId') userId: string,
     @Query() searchQueryDto: SearchQueryDto
   ): Promise<SearchResponse<GetPermissionDto[]>> {
-    const permissionSources = await this.permissionService.findManyByUserIdAndType(userId, undefined, searchQueryDto);
+    const permissionSources = await this.permissionService.findManyByUserIdAndType(userId, undefined, searchQueryDto)
 
     return SearchResponse.fromSearchSources(
       searchQueryDto,
       permissionSources,
       permissionSources.hits.map(GetPermissionDto.fromSource)
-    );
+    )
   }
 
   @Get('user/:userId/:type')
@@ -111,13 +111,13 @@ export class PermissionController {
     @Param('type') type: PermissionType,
     @Query() searchQueryDto: SearchQueryDto
   ): Promise<SearchResponse<GetPermissionDto[]>> {
-    const permissionSources = await this.permissionService.findManyByUserIdAndType(userId, type, searchQueryDto);
+    const permissionSources = await this.permissionService.findManyByUserIdAndType(userId, type, searchQueryDto)
 
     return SearchResponse.fromSearchSources(
       searchQueryDto,
       permissionSources,
       permissionSources.hits.map(GetPermissionDto.fromSource)
-    );
+    )
   }
 
   @Put(':id')
@@ -152,9 +152,9 @@ export class PermissionController {
     @Param('id') id: string,
     @Body() updatePermissionDto: UpdatePermissionDto
   ): Promise<GetPermissionDto> {
-    const permissionSource = await this.permissionService.updateOneByEntryId(id, updatePermissionDto);
+    const permissionSource = await this.permissionService.updateOneByEntryId(id, updatePermissionDto)
 
-    return GetPermissionDto.fromSource(permissionSource);
+    return GetPermissionDto.fromSource(permissionSource)
   }
 
   @Delete(':id')
@@ -181,6 +181,6 @@ export class PermissionController {
     description: 'Forbidden',
   })
   async deletePermissionById(@Param('id') id: string): Promise<void> {
-    await this.permissionService.deleteOneByEntryId(id);
+    await this.permissionService.deleteOneByEntryId(id)
   }
 }
