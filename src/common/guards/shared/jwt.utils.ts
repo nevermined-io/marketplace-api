@@ -53,7 +53,7 @@ export class EthSignJWT extends SignJWT {
 }
 
 export const recoverPublicKey = (protectedHeader: string, payload: string, signature: string) => {
-  const signatureInput = `${protectedHeader}.${payload}`
+  const signatureInput = payload
   const signatureDecoded = `0x${Buffer.from(signature, 'base64').toString('hex')}`
 
   const address = ethers.utils.verifyMessage(signatureInput, signatureDecoded)
@@ -81,15 +81,6 @@ export const jwtEthVerify = (jwt: string) => {
     throw new Error('ProtectedHeader: Invalid algorithm')
   }
 
-  // recover public key from signature
-  // This is the de-facto signature validation
-  let publicKey: string
-  try {
-    publicKey = recoverPublicKey(protectedHeader, payload, signature)
-  } catch (error) {
-    throw new Error(`Signature: Failed to validate signature (${(error as Error).message})`)
-  }
-
   // verify the payload
   let parsedPayload: JWTPayload
   try {
@@ -101,18 +92,41 @@ export const jwtEthVerify = (jwt: string) => {
     throw new Error('Payload: "iss" field is required')
   }
 
-  const isValidAddress = ethers.utils.isAddress(parsedPayload.iss)
+  // recover public key from signature
+  // This is the de-facto signature validation
+  let publicKey: string
+  try {
+    publicKey = recoverPublicKey(protectedHeader, parsedPayload.iss, signature)
+  } catch (error) {
+    throw new Error(`Signature: Failed to validate signature (${(error as Error).message})`)
+  }
+
+  // test
+  const address = getAddressFromPayload(parsedPayload)
+
+  const isValidAddress = ethers.utils.isAddress(address)
   if (!isValidAddress) {
     throw new Error('Payload: "iss" field must be a valid ethereum address')
   }
-  const isChecksumAddress = ethers.utils.getAddress(parsedPayload.iss) === parsedPayload.iss
+  const isChecksumAddress = ethers.utils.getAddress(address) === address
   if (!isChecksumAddress) {
     throw new Error('Payload: "iss" field must be a checksum address')
   }
 
-  if (parsedPayload.iss !== publicKey) {
+  if (address !== publicKey) {
     throw new Error('Payload: "iss" is not the signer of the payload')
   }
 
   return parsedPayload
+}
+
+const getAddressFromPayload = (parsedPayload: JWTPayload): string => {
+  // Sample payload: 'Custom message\n\n--- Tech data ---\n\nWallet address:\n0xbce71b6D50f01aa18aa9D1567Bf51AA2E6617Ee0\n\nNonce:\nRfJW4IrhmwOxPkernrhZVg=='
+  const techData = parsedPayload.iss.slice(parsedPayload.iss.indexOf('--- Tech data ---'), parsedPayload.iss.length)
+
+  if (techData?.length) {
+    return /(?:Wallet address:\s*(.*?)(?=\n|$))/.exec(techData)?.[1] || ''
+  }
+
+  return ''
 }
