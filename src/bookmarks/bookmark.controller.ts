@@ -52,7 +52,7 @@ export class BookmarkController {
   })
   async createBookmark(
     @Body() createBookmark: CreateBookmarkDto,
-    @Req() req: Request<unknown>
+    @Req() req: Request<unknown>,
   ): Promise<GetBookmarkDto> {
     const { userId, roles } = req.user
 
@@ -102,14 +102,14 @@ export class BookmarkController {
   @Public()
   async getBookmarksByUserId(
     @Param('userId') userId: string,
-    @Query() searchQueryDto: SearchQueryDto
+    @Query() searchQueryDto: SearchQueryDto,
   ): Promise<SearchResponse<GetBookmarkDto[]>> {
     const bookmarksSources = await this.bookmarkService.findManyByUserId(userId, searchQueryDto)
 
     return SearchResponse.fromSearchSources(
       searchQueryDto,
       bookmarksSources,
-      bookmarksSources.hits.map(GetBookmarkDto.fromSource)
+      bookmarksSources.hits.map(GetBookmarkDto.fromSource),
     )
   }
 
@@ -142,7 +142,7 @@ export class BookmarkController {
   async updateBookmarkById(
     @Param('id') id: string,
     @Body() updateBookmarkDto: UpdateBookmarkDto,
-    @Req() req: Request<unknown>
+    @Req() req: Request<unknown>,
   ): Promise<GetBookmarkDto> {
     const { userId, roles } = req.user
     const bookmark = (await this.bookmarkService.findOneById(id))._source
@@ -175,7 +175,10 @@ export class BookmarkController {
     status: 403,
     description: 'Forbidden',
   })
-  async deleteBookmarkById(@Param('id') id: string, @Req() request: Pick<Request<unknown>, 'user'>): Promise<void> {
+  async deleteBookmarkById(
+    @Param('id') id: string,
+    @Req() request: Pick<Request<unknown>, 'user'>,
+  ): Promise<void> {
     const bookmarkSource = await this.bookmarkService.findOneById(id)
 
     if (bookmarkSource._source.userId !== request.user.userId) {

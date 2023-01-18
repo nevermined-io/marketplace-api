@@ -1,4 +1,15 @@
-import { Post, Controller, Body, Get, Put, Delete, Param, Query, UsePipes, ValidationPipe } from '@nestjs/common'
+import {
+  Post,
+  Controller,
+  Body,
+  Get,
+  Put,
+  Delete,
+  Param,
+  Query,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger'
 import { PermissionService } from './permission.service'
 import { CreatePermissionDto } from './dto/create-permission.dto'
@@ -39,7 +50,9 @@ export class PermissionController {
     status: 401,
     description: 'Unauthorized',
   })
-  async createPermission(@Body() createPermissionDto: CreatePermissionDto): Promise<GetPermissionDto> {
+  async createPermission(
+    @Body() createPermissionDto: CreatePermissionDto,
+  ): Promise<GetPermissionDto> {
     return this.permissionService.createOne(createPermissionDto)
   }
 
@@ -80,14 +93,18 @@ export class PermissionController {
   @Public()
   async getPermissionByUserId(
     @Param('userId') userId: string,
-    @Query() searchQueryDto: SearchQueryDto
+    @Query() searchQueryDto: SearchQueryDto,
   ): Promise<SearchResponse<GetPermissionDto[]>> {
-    const permissionSources = await this.permissionService.findManyByUserIdAndType(userId, undefined, searchQueryDto)
+    const permissionSources = await this.permissionService.findManyByUserIdAndType(
+      userId,
+      undefined,
+      searchQueryDto,
+    )
 
     return SearchResponse.fromSearchSources(
       searchQueryDto,
       permissionSources,
-      permissionSources.hits.map(GetPermissionDto.fromSource)
+      permissionSources.hits.map(GetPermissionDto.fromSource),
     )
   }
 
@@ -109,14 +126,18 @@ export class PermissionController {
   async getPermissionByUserIdAndType(
     @Param('userId') userId: string,
     @Param('type') type: PermissionType,
-    @Query() searchQueryDto: SearchQueryDto
+    @Query() searchQueryDto: SearchQueryDto,
   ): Promise<SearchResponse<GetPermissionDto[]>> {
-    const permissionSources = await this.permissionService.findManyByUserIdAndType(userId, type, searchQueryDto)
+    const permissionSources = await this.permissionService.findManyByUserIdAndType(
+      userId,
+      type,
+      searchQueryDto,
+    )
 
     return SearchResponse.fromSearchSources(
       searchQueryDto,
       permissionSources,
-      permissionSources.hits.map(GetPermissionDto.fromSource)
+      permissionSources.hits.map(GetPermissionDto.fromSource),
     )
   }
 
@@ -150,9 +171,12 @@ export class PermissionController {
   })
   async updatePermissionById(
     @Param('id') id: string,
-    @Body() updatePermissionDto: UpdatePermissionDto
+    @Body() updatePermissionDto: UpdatePermissionDto,
   ): Promise<GetPermissionDto> {
-    const permissionSource = await this.permissionService.updateOneByEntryId(id, updatePermissionDto)
+    const permissionSource = await this.permissionService.updateOneByEntryId(
+      id,
+      updatePermissionDto,
+    )
 
     return GetPermissionDto.fromSource(permissionSource)
   }

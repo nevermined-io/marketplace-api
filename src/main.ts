@@ -17,22 +17,27 @@ import { ServiceDDOService } from './assets/ddo-service.service'
 import { DDOStatusService } from './assets/ddo-status.service'
 
 const createIndexes = (app: NestExpressApplication) => {
-  return new Promise<void>(resolve => {
+  return new Promise<void>((resolve) => {
     let connectionTries = 0
     /* eslint @typescript-eslint/no-misused-promises: 0 */
     const tryConnectionInterval = setInterval(async () => {
       try {
         await Promise.all(
-          [PermissionService, UserProfileService, BookmarkService, AssetService, ServiceDDOService, DDOStatusService].map(
-            async (service) => {
-              const serviceInstance = app.get(service)
-              const serviceIndexExits = await serviceInstance.checkIndex()
+          [
+            PermissionService,
+            UserProfileService,
+            BookmarkService,
+            AssetService,
+            ServiceDDOService,
+            DDOStatusService,
+          ].map(async (service) => {
+            const serviceInstance = app.get(service)
+            const serviceIndexExits = await serviceInstance.checkIndex()
 
-              if (!serviceIndexExits) {
-                await serviceInstance.createIndex()
-              }
+            if (!serviceIndexExits) {
+              await serviceInstance.createIndex()
             }
-          )
+          }),
         )
         Logger.log('Marketplace API is connected to ElasticSearch')
         resolve()
@@ -51,7 +56,10 @@ const createIndexes = (app: NestExpressApplication) => {
 const bootstrap = async () => {
   const logger = new Logger(bootstrap.name)
 
-  const app = await NestFactory.create<NestExpressApplication>(ApplicationModule, { cors: true, logger })
+  const app = await NestFactory.create<NestExpressApplication>(ApplicationModule, {
+    cors: true,
+    logger,
+  })
   app.enable('trust proxy')
   app.useGlobalPipes(new ValidationPipe())
   app.useLogger(app.get(Logger))
@@ -72,7 +80,7 @@ const bootstrap = async () => {
       {
         type: 'http',
       },
-      'Authorization'
+      'Authorization',
     )
     .build()
   const document = SwaggerModule.createDocument(app, options)
