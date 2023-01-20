@@ -1,21 +1,23 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common'
+import { Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { JWTPayload } from 'jose'
 import { LoginDto } from './dto/login.dto'
-import { CLIENT_ASSERTION_TYPE, jwtEthVerify } from '../common/guards/shared/jwt.utils'
 import { UserProfileService } from '../user-profiles/user-profile.service'
 import { UserProfile } from '../user-profiles/user-profile.entity'
 import { PermissionService } from '../permissions/permission.service'
 import { ClientAssertionDto } from './dto/clientAssertion.dto'
 import { State } from '../common/type'
 import { Permission } from '../permissions/permission.entity'
+import { Strategy } from '@nevermined-io/passport-nevermined'
+import { Request } from 'express'
+import { JwtPayload } from 'jsonwebtoken'
 
 @Injectable()
 export class AuthService {
   constructor(
     private jwtService: JwtService,
     private userProfileService: UserProfileService,
-    private permissionService: PermissionService
+    private permissionService: PermissionService,
   ) {}
 
   /**
@@ -27,17 +29,11 @@ export class AuthService {
    * with recovering the public key that create the signature
    * - the hash function used. ES256K uses sha-256 while ethereum uses keccak
    **/
-  async validateClaim(clientAssertionType: string, clientAssertion: string): Promise<LoginDto> {
-    if (clientAssertionType !== CLIENT_ASSERTION_TYPE) {
-      throw new UnauthorizedException('Invalid "client_assertion_type"')
-    }
-
-    let payload: JWTPayload
+  async validateClaim(payload: JWTPayload): Promise<LoginDto> {
     let userProfile: UserProfile
-    try {
-      payload = jwtEthVerify(clientAssertion)
-      const address = payload.iss
 
+    try {
+      const address = payload.iss
       const userProfileSource = await this.userProfileService.findOneByAddress(address)
 
       if (!userProfileSource) {
@@ -61,28 +57,44 @@ export class AuthService {
         }),
       }
     } catch (error) {
-      throw new UnauthorizedException(`The 'client_assertion' is invalid: ${(error as Error).message}`)
+      throw new InternalServerErrorException(
+        `Could not validate the claim: ${(error as Error).message}`,
+      )
     }
   }
 
-  async validateNewAddressClaim(clientAssertionDto: ClientAssertionDto, userId: string): Promise<LoginDto> {
-    if (clientAssertionDto.client_assertion_type !== CLIENT_ASSERTION_TYPE) {
-      throw new UnauthorizedException('Invalid "client_assertion_type"')
+  async validateNewAddressClaim(
+    clientAssertionDto: ClientAssertionDto,
+    userId: string,
+  ): Promise<LoginDto> {
+    let payload: JwtPayload
+    const strategy = new Strategy((result: JWTPayload) => {
+      payload = result
+    }, undefined)
+
+    try {
+      strategy.authenticate({ body: clientAssertionDto } as Request)
+    } catch (error) {
+      throw new UnauthorizedException(
+        `The 'client_assertion' is invalid: ${(error as Error).message}`,
+      )
     }
 
     try {
-      const payload = jwtEthVerify(clientAssertionDto.client_assertion)
       const address = payload.iss
-
       const userProfile = (await this.userProfileService.findOneById(userId))?._source
 
       if (userProfile.addresses.some((a) => a === address)) {
-        throw new UnauthorizedException(`The address ${address} already exists in ${userProfile.nickname} account`)
+        throw new UnauthorizedException(
+          `The address ${address} already exists in ${userProfile.nickname} account`,
+        )
       }
 
       userProfile.addresses.push(address)
 
-      const userProfileUpdated = (await this.userProfileService.updateOneByEntryId(userId, userProfile))?._source
+      const userProfileUpdated = (
+        await this.userProfileService.updateOneByEntryId(userId, userProfile)
+      )?._source
 
       const permission = await this.getPermission(userId, address)
 
@@ -94,7 +106,9 @@ export class AuthService {
         }),
       }
     } catch (error) {
-      throw new UnauthorizedException(`The 'client_assertion' is invalid: ${(error as Error).message}`)
+      throw new UnauthorizedException(
+        `The 'client_assertion' is invalid: ${(error as Error).message}`,
+      )
     }
   }
 

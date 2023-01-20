@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Req, UseGuards } from '@nestjs/common'
+import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger'
 import { Public } from '../common/decorators/auth.decorator'
 import { AuthService } from './auth.service'
@@ -26,34 +26,10 @@ export class AuthController {
     status: 401,
     description: 'Unauthorized access',
   })
-  @Public()
-  login(@Body() clientAssertion: ClientAssertionDto): Promise<LoginDto> {
-    return this.authService.validateClaim(
-      clientAssertion.client_assertion_type,
-      clientAssertion.client_assertion,
-    )
-  }
-
-  @Post('login2')
-  @ApiOperation({
-    description: 'Login using a JWT claim for client authentication',
-    summary: 'Public',
-  })
-  @ApiResponse({
-    status: 201,
-    description: 'The access_token',
-    type: LoginDto,
-  })
-  @ApiResponse({
-    status: 401,
-    description: 'Unauthorized access',
-  })
-  @Public()
   @UseGuards(NeverminedGuard)
-  async login2(@Req() req, @Body() _clientAssertion: ClientAssertionDto): Promise<LoginDto> {
-    console.log(req.headers)
-    console.log('calling login2', req.user)
-    return req.user
+  @Public()
+  async login(@Req() req): Promise<LoginDto> {
+    return this.authService.validateClaim(req.user)
   }
 
   @Post('address')
