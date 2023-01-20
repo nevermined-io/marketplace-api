@@ -135,7 +135,6 @@ describe('AuthService', () => {
 
     const newWallet = ethers.Wallet.createRandom()
 
-    // TODO: Replace with the one from SDK
     const newClientAssertion = await new EthSignJWT({
       iss: newWallet.address,
     })
