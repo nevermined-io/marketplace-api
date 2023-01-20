@@ -1,6 +1,7 @@
 import { JwtModule } from '@nestjs/jwt'
 import { PassportModule } from '@nestjs/passport'
 import { Test, TestingModule } from '@nestjs/testing'
+import { decodeJwt } from 'jose'
 import { AuthController } from './auth.controller'
 import { AuthService } from './auth.service'
 import { JwtStrategy } from '../common/strategies/jwt.strategy'
@@ -12,7 +13,7 @@ import { ConfigService } from '../shared/config/config.service'
 import { UserProfileService } from '../user-profiles/user-profile.service'
 import { UserProfile } from '../user-profiles/user-profile.entity'
 import { PermissionService } from '../permissions/permission.service'
-import { jwtEthVerify, JWTPayload } from '@nevermined-io/passport-nevermined'
+import { JWTPayload } from '@nevermined-io/passport-nevermined'
 import { EthSignJWT } from '@nevermined-io/nevermined-sdk-js'
 import { CLIENT_ASSERTION_TYPE } from '../common/guards/shared/jwt.utils'
 
@@ -100,7 +101,7 @@ describe('AuthService', () => {
     const result = await authService.validateClaim(jwtPayload)
     expect(result).toHaveProperty('access_token')
 
-    const payload = jwtEthVerify(result.access_token)
+    const payload = decodeJwt(result.access_token)
     expect(payload.iss).toEqual(wallet.address)
     expect(payload.sub).toEqual(userProfile.userId)
   })
@@ -130,7 +131,7 @@ describe('AuthService', () => {
   it('should add wallet address to existing user profile', async () => {
     const currentToken = await authService.validateClaim(jwtPayload)
 
-    const payload = jwtEthVerify(currentToken.access_token)
+    const payload = decodeJwt(currentToken.access_token)
 
     const newWallet = ethers.Wallet.createRandom()
 
@@ -150,7 +151,7 @@ describe('AuthService', () => {
       payload.sub,
     )
 
-    const newPayload = jwtEthVerify(newToken.access_token)
+    const newPayload = decodeJwt(newToken.access_token)
 
     expect(newPayload.iss).toEqual(newWallet.address)
     expect(newPayload.sub).toEqual(userProfile.userId)
@@ -167,7 +168,7 @@ describe('AuthService', () => {
 
     const result = await authService.validateClaim(jwtPayload)
 
-    const payload = jwtEthVerify(result.access_token)
+    const payload = decodeJwt(result.access_token)
 
     await expect(
       authService.validateNewAddressClaim(
