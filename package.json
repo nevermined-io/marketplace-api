@@ -48,7 +48,6 @@
     "dotenv": "^16.0.3",
     "ethers": "^5.6.3",
     "joi": "^17.6.0",
-    "jose": "^4.6.0",
     "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
@@ -99,7 +98,8 @@
     "ts-node-dev": "^2.0.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-to-eslint-config": "^2.12.3",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "jose": "^4.6.0"
   },
   "lint-staged": {
     "src/**/*.{js,json}": [
