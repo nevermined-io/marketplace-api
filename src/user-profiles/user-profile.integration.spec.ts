@@ -7,7 +7,6 @@ import { INestApplication } from '@nestjs/common'
 import { JwtModule } from '@nestjs/jwt'
 import { PassportModule } from '@nestjs/passport'
 import { Reflector } from '@nestjs/core'
-import { decodeJwt } from 'jose'
 import { JwtStrategy } from '../common/strategies/jwt.strategy'
 import { JwtAuthGuard } from '../common/guards/auth/jwt-auth.guard'
 import { createWallet } from '../common/helpers/create-wallet.mock'
@@ -21,6 +20,7 @@ import { UserProfileService } from './user-profile.service'
 import { CreateUserProfileDto } from './dto/create-user-profile.dto'
 import { UpdateUserProfileDto } from './dto/update-user-profile.dto'
 import { PermissionService } from '../permissions/permission.service'
+import { jwtEthVerify } from '@nevermined-io/passport-nevermined'
 
 describe('User Profile', () => {
   let app: INestApplication
@@ -53,7 +53,9 @@ describe('User Profile', () => {
       _id: userProfile.userId,
     }),
     findOneByAddress: (address: string) => {
-      const source = [userProfile, userProfileTwo].find((u) => u.addresses.some((a) => a === address))
+      const source = [userProfile, userProfileTwo].find((u) =>
+        u.addresses.some((a) => a === address),
+      )
 
       if (source) {
         return {
@@ -117,7 +119,7 @@ describe('User Profile', () => {
     await app.init()
 
     token = await createWallet(authService)
-    userIdAuth = decodeJwt(token.access_token).sub
+    userIdAuth = jwtEthVerify(token.access_token).sub
   })
 
   it('POST', async () => {
@@ -149,7 +151,9 @@ describe('User Profile', () => {
 
   it('GET by address', async () => {
     jest.spyOn(userProfileServiceMock, 'findOneByAddress').mockImplementation((address: string) => {
-      const source = [userProfile, userProfileTwo].find((u) => u.addresses.some((a) => a === address))
+      const source = [userProfile, userProfileTwo].find((u) =>
+        u.addresses.some((a) => a === address),
+      )
 
       if (source) {
         return {
@@ -161,7 +165,9 @@ describe('User Profile', () => {
 
       return undefined as any
     })
-    const response = await request(app.getHttpServer()).get(`/address/${userProfileTwo.addresses[0]}`)
+    const response = await request(app.getHttpServer()).get(
+      `/address/${userProfileTwo.addresses[0]}`,
+    )
 
     expect(response.statusCode).toBe(200)
     expect(response.body).toStrictEqual({
