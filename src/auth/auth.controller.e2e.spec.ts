@@ -1,34 +1,32 @@
-import { INestApplication } from '@nestjs/common'
-import request from 'supertest'
 import { JwtModule } from '@nestjs/jwt'
 import { PassportModule } from '@nestjs/passport'
 import { Test, TestingModule } from '@nestjs/testing'
-import { Reflector } from '@nestjs/core'
+import { ethers } from 'ethers'
+import { ConfigService } from '../shared/config/config.service'
+import { ConfigModule } from '../shared/config/config.module'
 import { AuthController } from './auth.controller'
 import { AuthService } from './auth.service'
 import { JwtStrategy } from '../common/strategies/jwt.strategy'
-import { CLIENT_ASSERTION_TYPE, EthSignJWT } from '../common/guards/shared/jwt.utils'
-import { ethers } from 'ethers'
-import { ConfigModule } from '../shared/config/config.module'
-import { ConfigService } from '../shared/config/config.service'
 import { UserProfileService } from '../user-profiles/user-profile.service'
 import { UserProfile } from '../user-profiles/user-profile.entity'
 import { State, MarketplaceIndex } from '../common/type'
-import { JwtAuthGuard } from '../common/guards/auth/jwt-auth.guard'
 import { PermissionService } from '../permissions/permission.service'
+import { NeverminedStrategy } from './nvm.strategy'
+import { INestApplication } from '@nestjs/common'
+import { EthSignJWT } from '@nevermined-io/nevermined-sdk-js'
+import request from 'supertest'
+import { ApplicationModule } from '../app.module'
 
 describe('AuthController', () => {
   let app: INestApplication
   let wallet: ethers.Wallet
-  let authService: AuthService
 
-  beforeAll(() => {
+  beforeAll(async () => {
     wallet = ethers.Wallet.createRandom()
-  })
 
-  beforeEach(async () => {
     const moduleMock: TestingModule = await Test.createTestingModule({
       imports: [
+        ApplicationModule,
         ConfigModule,
         PassportModule,
         JwtModule.register({
@@ -40,22 +38,10 @@ describe('AuthController', () => {
         AuthService,
         JwtStrategy,
         ConfigService,
+        NeverminedStrategy,
         {
           provide: UserProfileService,
           useValue: {
-            findOneByAddress: (address: string) => {
-              const userProfile = new UserProfile()
-              userProfile.addresses = [address]
-              userProfile.nickname = address
-              userProfile.state = State.Confirmed
-              userProfile.isListed = true
-
-              return {
-                _source: userProfile,
-                _index: MarketplaceIndex.UserProfile,
-                _id: userProfile.userId,
-              }
-            },
             findOneById: (id: string) => {
               const userProfile = new UserProfile()
               userProfile.userId = id
@@ -69,11 +55,26 @@ describe('AuthController', () => {
                 _id: userProfile.userId,
               }
             },
+            findOneByAddress: (address: string) => {
+              const userProfile = new UserProfile()
+              userProfile.addresses = [address]
+              userProfile.nickname = address
+              userProfile.state = State.Confirmed
+              userProfile.isListed = true
+
+              return {
+                _source: userProfile,
+                _index: MarketplaceIndex.UserProfile,
+                _id: userProfile.userId,
+              }
+            },
+
             updateOneByEntryId: (userId: string, userProfileEntity: UserProfile) => ({
               _source: userProfileEntity,
               _index: MarketplaceIndex.UserProfile,
               _id: userId,
             }),
+
             checkIndex: () => true,
           },
         },
@@ -92,13 +93,11 @@ describe('AuthController', () => {
       controllers: [AuthController],
     }).compile()
 
-    authService = moduleMock.get<AuthService>(AuthService)
     app = moduleMock.createNestApplication()
-    app.useGlobalGuards(new JwtAuthGuard(new Reflector()))
     await app.init()
   })
 
-  it('/POST login', async () => {
+  it('should get an access_token', async () => {
     const clientAssertion = await new EthSignJWT({
       iss: wallet.address,
     })
@@ -106,16 +105,21 @@ describe('AuthController', () => {
       .setIssuedAt()
       .setExpirationTime('60m')
       .ethSign(wallet)
+    const clientAssertionType = 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer'
 
+    // how to construct a request object
     const response = await request(app.getHttpServer())
       .post('/login')
-      .send(`client_assertion_type=${CLIENT_ASSERTION_TYPE}&client_assertion=${clientAssertion}`)
+      .send({
+        client_assertion_type: clientAssertionType,
+        client_assertion: clientAssertion,
+      })
+      .expect(201)
 
-    expect(response.statusCode).toBe(201)
     expect(response.body).toHaveProperty('access_token')
   })
 
-  it('POST address', async () => {
+  it('should add new address to existing user profile', async () => {
     const clientAssertion = await new EthSignJWT({
       iss: wallet.address,
     })
@@ -123,8 +127,16 @@ describe('AuthController', () => {
       .setIssuedAt()
       .setExpirationTime('60m')
       .ethSign(wallet)
+    const clientAssertionType = 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer'
 
-    const currentToken = await authService.validateClaim(CLIENT_ASSERTION_TYPE, clientAssertion)
+    // how to construct a request object
+    const response = await request(app.getHttpServer())
+      .post('/login')
+      .send({
+        client_assertion_type: clientAssertionType,
+        client_assertion: clientAssertion,
+      })
+      .expect(201)
 
     const newWallet = ethers.Wallet.createRandom()
 
@@ -136,15 +148,19 @@ describe('AuthController', () => {
       .setExpirationTime('60m')
       .ethSign(newWallet)
 
-    const response = await request(app.getHttpServer())
+    const newTokenResponse = await request(app.getHttpServer())
       .post('/address')
-      .set('Authorization', `Bearer ${currentToken.access_token}`)
+      .set('Authorization', `Bearer ${response.body.access_token}`)
       .send({
-        client_assertion_type: CLIENT_ASSERTION_TYPE,
+        client_assertion_type: clientAssertionType,
         client_assertion: newClientAssertion,
       })
+      .expect(201)
 
-    expect(response.statusCode).toBe(201)
-    expect(response.body).toHaveProperty('access_token')
-  }, 15000)
+    expect(newTokenResponse.body).toHaveProperty('access_token')
+  })
+
+  afterAll(async () => {
+    await app.close()
+  })
 })

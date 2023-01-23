@@ -1,12 +1,10 @@
 import { ValidationPipe } from '@nestjs/common'
-import { NestFactory, Reflector } from '@nestjs/core'
+import { NestFactory } from '@nestjs/core'
 import { NestExpressApplication } from '@nestjs/platform-express'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { readFileSync } from 'fs'
 import path from 'path'
 import { ApplicationModule } from './app.module'
-import { JwtAuthGuard } from './common/guards/auth/jwt-auth.guard'
-import { RolesGuard } from './common/guards/auth/roles.guards'
 import { ConfigService } from './shared/config/config.service'
 import { Logger } from './shared/logger/logger.service'
 import { BookmarkService } from './bookmarks/bookmark.service'
@@ -17,22 +15,27 @@ import { ServiceDDOService } from './assets/ddo-service.service'
 import { DDOStatusService } from './assets/ddo-status.service'
 
 const createIndexes = (app: NestExpressApplication) => {
-  return new Promise<void>(resolve => {
+  return new Promise<void>((resolve) => {
     let connectionTries = 0
     /* eslint @typescript-eslint/no-misused-promises: 0 */
     const tryConnectionInterval = setInterval(async () => {
       try {
         await Promise.all(
-          [PermissionService, UserProfileService, BookmarkService, AssetService, ServiceDDOService, DDOStatusService].map(
-            async (service) => {
-              const serviceInstance = app.get(service)
-              const serviceIndexExits = await serviceInstance.checkIndex()
+          [
+            PermissionService,
+            UserProfileService,
+            BookmarkService,
+            AssetService,
+            ServiceDDOService,
+            DDOStatusService,
+          ].map(async (service) => {
+            const serviceInstance = app.get(service)
+            const serviceIndexExits = await serviceInstance.checkIndex()
 
-              if (!serviceIndexExits) {
-                await serviceInstance.createIndex()
-              }
+            if (!serviceIndexExits) {
+              await serviceInstance.createIndex()
             }
-          )
+          }),
         )
         Logger.log('Marketplace API is connected to ElasticSearch')
         resolve()
@@ -51,11 +54,13 @@ const createIndexes = (app: NestExpressApplication) => {
 const bootstrap = async () => {
   const logger = new Logger(bootstrap.name)
 
-  const app = await NestFactory.create<NestExpressApplication>(ApplicationModule, { cors: true, logger })
+  const app = await NestFactory.create<NestExpressApplication>(ApplicationModule, {
+    cors: true,
+    logger,
+  })
   app.enable('trust proxy')
   app.useGlobalPipes(new ValidationPipe())
   app.useLogger(app.get(Logger))
-  app.useGlobalGuards(new JwtAuthGuard(new Reflector()), new RolesGuard(new Reflector()))
 
   const PORT = app.get<ConfigService>(ConfigService).get<number>('server.port')
 
@@ -72,7 +77,7 @@ const bootstrap = async () => {
       {
         type: 'http',
       },
-      'Authorization'
+      'Authorization',
     )
     .build()
   const document = SwaggerModule.createDocument(app, options)
