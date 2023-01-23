@@ -64,7 +64,7 @@
     "typescript": "^4.9.4"
   },
   "devDependencies": {
-    "@faker-js/faker": "^6.0.0-beta.0",
+    "@faker-js/faker": "^7.6.0",
     "@nestjs/cli": "^9.1.8",
     "@nestjs/testing": "^8.4.0",
     "@nevermined-io/nevermined-sdk-js": "1.0.0-rc14",
