@@ -47,23 +47,27 @@ export class UserProfileController {
     status: 401,
     description: 'Unauthorized',
   })
-  async createUserProfile(@Body() createUserProfileDto: CreateUserProfileDto): Promise<GetUserProfileDto> {
+  async createUserProfile(
+    @Body() createUserProfileDto: CreateUserProfileDto,
+  ): Promise<GetUserProfileDto> {
     const userProfile = (
       await Promise.all(
         createUserProfileDto.addresses.map(async (a) => {
           const userProfileSource = await this.userProfileService.findOneByAddress(a)
           return userProfileSource?._source
-        })
+        }),
       )
     ).filter((u) => u?.addresses)
 
     if (userProfile?.length) {
       const addresses: string[] = []
       userProfile.forEach((up) => {
-        addresses.push(...createUserProfileDto.addresses.filter((a) => up.addresses.some((aup) => aup === a)))
+        addresses.push(
+          ...createUserProfileDto.addresses.filter((a) => up.addresses.some((aup) => aup === a)),
+        )
       })
       throw new BadRequestException(
-        `User profile with theses addresses [${addresses.map((a) => a).join(',')}] already exists`
+        `User profile with theses addresses [${addresses.map((a) => a).join(',')}] already exists`,
       )
     }
 
@@ -106,11 +110,15 @@ export class UserProfileController {
     description: 'Not found',
   })
   @Public()
-  async getUserProfileByAddress(@Param('publicAddress') publicAddress: string): Promise<GetUserProfileDto> {
+  async getUserProfileByAddress(
+    @Param('publicAddress') publicAddress: string,
+  ): Promise<GetUserProfileDto> {
     const userProfileSource = await this.userProfileService.findOneByAddress(publicAddress)
 
     if (!userProfileSource) {
-      throw new NotFoundException(`User profile with public address ${publicAddress} does not exist`)
+      throw new NotFoundException(
+        `User profile with public address ${publicAddress} does not exist`,
+      )
     }
 
     return GetUserProfileDto.fromSource(userProfileSource)
@@ -141,7 +149,7 @@ export class UserProfileController {
   async updateUserProfileByUserId(
     @Param('userId') userIdEntity: string,
     @Body() updateUserProfileDto: UpdateUserProfileDto,
-    @Req() req: Request<unknown>
+    @Req() req: Request<unknown>,
   ): Promise<GetUserProfileDto> {
     const { userId, roles } = req.user
 
@@ -149,7 +157,7 @@ export class UserProfileController {
 
     const userProfileSource = await this.userProfileService.updateOneByEntryId(
       userIdEntity,
-      UpdateUserProfileDto.fromPayload(updateUserProfileDto)
+      UpdateUserProfileDto.fromPayload(updateUserProfileDto),
     )
 
     return GetUserProfileDto.fromSource(userProfileSource)
@@ -175,7 +183,7 @@ export class UserProfileController {
   })
   async disableUserProfileByUserId(
     @Param('userId') userIdEntity: string,
-    @Req() req: Request<undefined>
+    @Req() req: Request<undefined>,
   ): Promise<DisableUserProfileDto> {
     const { userId, roles } = req.user
 

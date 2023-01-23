@@ -43,7 +43,7 @@ export class AssetController {
   constructor(
     private readonly assetService: AssetService,
     private readonly ddosStatusService: DDOStatusService,
-    private readonly serviceDDOService: ServiceDDOService
+    private readonly serviceDDOService: ServiceDDOService,
   ) {}
 
   @Post('/ddo')
@@ -75,7 +75,7 @@ export class AssetController {
   async createAsset(
     @Req() req: Request,
     @User() user: AuthUser,
-    @Body() createAssetDto: CreateAssetDto
+    @Body() createAssetDto: CreateAssetDto,
   ): Promise<GetAssetDto> {
     const { userId, roles } = user
     const hostname = req.headers['x-forwarded-host'] || req.headers['host']
@@ -152,7 +152,9 @@ export class AssetController {
     description: 'Bad Request',
   })
   @Public()
-  listDDObyQueryPost(@Body() searchQueryDto: QueryBodyDDOdto): Promise<SearchResponse<GetAssetDto[]>> {
+  listDDObyQueryPost(
+    @Body() searchQueryDto: QueryBodyDDOdto,
+  ): Promise<SearchResponse<GetAssetDto[]>> {
     return this.listDDOs(searchQueryDto)
   }
 
@@ -249,7 +251,7 @@ export class AssetController {
   async updateDDO(
     @Param('did') did: string,
     @Body() updateAssetDto: UpdateAssetDto,
-    @User() user: AuthUser
+    @User() user: AuthUser,
   ): Promise<GetAssetDto> {
     const { userId, roles } = user
 
@@ -312,7 +314,9 @@ export class AssetController {
   async getDDOMetadata(@Param('did') did: string): Promise<AttributesDto> {
     const assetSource = await this.assetService.findOneById(did)
 
-    const metada = GetAssetDto.fromSource(assetSource).service?.find((s) => s.attributes)?.attributes
+    const metada = GetAssetDto.fromSource(assetSource).service?.find(
+      (s) => s.attributes,
+    )?.attributes
 
     if (!metada) {
       throw new NotFoundException(`Asset with did ${did} doesn't have metada`)
@@ -339,7 +343,10 @@ export class AssetController {
     status: 401,
     description: 'Unauthorized',
   })
-  async createService(@Body() serviceDto: CreateServiceDto, @User() user: AuthUser): Promise<GetServiceDto> {
+  async createService(
+    @Body() serviceDto: CreateServiceDto,
+    @User() user: AuthUser,
+  ): Promise<GetServiceDto> {
     const { userId, roles } = user
 
     if (!serviceDto.userId) {
@@ -366,13 +373,15 @@ export class AssetController {
     description: 'Bad Request',
   })
   @Public()
-  async getServiceQueryPost(@Body() searchQueryDto: QueryBodyDDOdto): Promise<SearchResponse<GetServiceDto[]>> {
+  async getServiceQueryPost(
+    @Body() searchQueryDto: QueryBodyDDOdto,
+  ): Promise<SearchResponse<GetServiceDto[]>> {
     const servicesSource = await this.serviceDDOService.findMany(searchQueryDto)
 
     return SearchResponse.fromSearchSources(
       searchQueryDto,
       servicesSource,
-      servicesSource.hits.map(GetServiceDto.fromSource)
+      servicesSource.hits.map(GetServiceDto.fromSource),
     )
   }
 
@@ -421,7 +430,7 @@ export class AssetController {
     return SearchResponse.fromSearchSources(
       searchQueryDto,
       assetsSource,
-      assetsSource.hits.map(GetAssetDto.fromSource)
+      assetsSource.hits.map(GetAssetDto.fromSource),
     )
   }
 }

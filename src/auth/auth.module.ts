@@ -8,6 +8,7 @@ import { ConfigModule } from '../shared/config/config.module'
 import { ConfigService } from '../shared/config/config.service'
 import { UserProfileModule } from '../user-profiles/user-profile.module'
 import { PermissionModule } from '../permissions/permission.module'
+import { NeverminedStrategy } from './nvm.strategy'
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { PermissionModule } from '../permissions/permission.module'
       },
     }),
   ],
-  providers: [AuthService, JwtStrategy, ConfigService],
+  providers: [AuthService, JwtStrategy, ConfigService, NeverminedStrategy],
   controllers: [AuthController],
 })
 export class AuthModule {}
