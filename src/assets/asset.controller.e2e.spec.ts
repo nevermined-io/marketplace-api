@@ -1,4 +1,4 @@
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import { Test, TestingModule } from '@nestjs/testing'
 import { Request } from 'express'
 import { AssetController } from './asset.controller'

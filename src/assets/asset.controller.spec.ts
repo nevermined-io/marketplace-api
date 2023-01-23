@@ -311,7 +311,7 @@ describe('Asset', () => {
 
     await assetController.deleteDDO(asset.id, {
       userId: asset._nvm.userId,
-      address: faker.datatype.hexadecimal(18),
+      address: faker.datatype.hexadecimal({length: 18}),
       roles: [],
     })
 
