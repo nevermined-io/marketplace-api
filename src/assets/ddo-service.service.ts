@@ -24,19 +24,27 @@ export class ServiceDDOService {
   async createOne(createServiceDto: CreateServiceDto): Promise<Service> {
     const service = { ...new Service(), ...createServiceDto }
 
-    await this.elasticService.addDocumentToIndex(MarketplaceIndex.Service, service.agreementId, service)
+    await this.elasticService.addDocumentToIndex(
+      MarketplaceIndex.Service,
+      service.agreementId,
+      service,
+    )
 
     return service
   }
 
   async findOneById(id: string): Promise<SearchHit<Service>> {
-    return this.elasticService.getDocumentByIndexAndId(MarketplaceIndex.Service, id) as Promise<SearchHit<Service>>
+    return this.elasticService.getDocumentByIndexAndId(MarketplaceIndex.Service, id) as Promise<
+      SearchHit<Service>
+    >
   }
 
   async findMany(searchQueryDto: SearchQueryDto): Promise<SearchHitsMetadata<Service>> {
-    return this.elasticService.searchByIndex(MarketplaceIndex.Service, searchQueryDto.query, searchQueryDto) as Promise<
-      SearchHitsMetadata<Service>
-    >
+    return this.elasticService.searchByIndex(
+      MarketplaceIndex.Service,
+      searchQueryDto.query,
+      searchQueryDto,
+    ) as Promise<SearchHitsMetadata<Service>>
   }
 
   async deleteAll(): Promise<void> {

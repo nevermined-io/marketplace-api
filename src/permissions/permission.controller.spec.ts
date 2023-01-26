@@ -44,7 +44,9 @@ describe('UserProfileController', () => {
   })
 
   it('It should create a permission', async () => {
-    jest.spyOn(permissionService, 'createOne').mockImplementation((createPermissionDto) => createPermissionDto as any)
+    jest
+      .spyOn(permissionService, 'createOne')
+      .mockImplementation((createPermissionDto) => createPermissionDto as any)
 
     expect(await permissionController.createPermission(permission)).toStrictEqual(permission)
   })
@@ -53,7 +55,7 @@ describe('UserProfileController', () => {
     jest.spyOn(permissionService, 'findOneById').mockResolvedValue(permisionSource)
 
     expect(await permissionController.getPermissionById(permission.id)).toStrictEqual(
-      GetPermissionDto.fromSource(permisionSource)
+      GetPermissionDto.fromSource(permisionSource),
     )
   })
 
@@ -71,7 +73,9 @@ describe('UserProfileController', () => {
       offset: 100,
     }
 
-    expect(await permissionController.getPermissionByUserId(permission.userId, searchQueryDto)).toStrictEqual(
+    expect(
+      await permissionController.getPermissionByUserId(permission.userId, searchQueryDto),
+    ).toStrictEqual(
       SearchResponse.fromSearchSources(
         searchQueryDto,
         {
@@ -81,8 +85,8 @@ describe('UserProfileController', () => {
             relation: 'eq',
           },
         },
-        [permisionSource].map(GetPermissionDto.fromSource)
-      )
+        [permisionSource].map(GetPermissionDto.fromSource),
+      ),
     )
   })
 
@@ -101,7 +105,11 @@ describe('UserProfileController', () => {
     }
 
     expect(
-      await permissionController.getPermissionByUserIdAndType(permission.userId, PermissionType.Read, searchQueryDto)
+      await permissionController.getPermissionByUserIdAndType(
+        permission.userId,
+        PermissionType.Read,
+        searchQueryDto,
+      ),
     ).toStrictEqual(
       SearchResponse.fromSearchSources(
         searchQueryDto,
@@ -112,8 +120,8 @@ describe('UserProfileController', () => {
             relation: 'eq',
           },
         },
-        [permisionSource].map(GetPermissionDto.fromSource)
-      )
+        [permisionSource].map(GetPermissionDto.fromSource),
+      ),
     )
   })
 
@@ -127,13 +135,13 @@ describe('UserProfileController', () => {
     expect(
       await permissionController.updatePermissionById(permission.id, {
         type: newPermission.type,
-      })
+      }),
     ).toStrictEqual(
       GetPermissionDto.fromSource({
         _source: newPermission,
         _index: MarketplaceIndex.Permission,
         _id: newPermission.id,
-      })
+      }),
     )
   })
 

@@ -114,14 +114,20 @@ describe('Permission', () => {
       .send(permission)
 
     expect(response.statusCode).toBe(201)
-    expect(response.body).toStrictEqual({ ...permission, issuanceDate: permission.issuanceDate.toISOString() })
+    expect(response.body).toStrictEqual({
+      ...permission,
+      issuanceDate: permission.issuanceDate.toISOString(),
+    })
   })
 
   it('/GET by id', async () => {
     const response = await request(app.getHttpServer()).get(`/${permission.id}`)
 
     expect(response.statusCode).toBe(200)
-    expect(response.body).toStrictEqual({ ...permission, issuanceDate: permission.issuanceDate.toISOString() })
+    expect(response.body).toStrictEqual({
+      ...permission,
+      issuanceDate: permission.issuanceDate.toISOString(),
+    })
   })
 
   it('/GET by userId', async () => {
@@ -161,7 +167,9 @@ describe('Permission', () => {
     }
 
     jest.spyOn(permissionService, 'findManyByUserIdAndType').mockResolvedValue(permisionHits)
-    const response = await request(app.getHttpServer()).get(`/user/${permission.userId}/${PermissionType.Read}`)
+    const response = await request(app.getHttpServer()).get(
+      `/user/${permission.userId}/${PermissionType.Read}`,
+    )
 
     expect(response.statusCode).toBe(200)
     expect(response.body).toStrictEqual({
@@ -181,7 +189,10 @@ describe('Permission', () => {
       })
 
     expect(response.statusCode).toBe(200)
-    expect(response.body).toStrictEqual({ ...newPermission, issuanceDate: newPermission.issuanceDate.toISOString() })
+    expect(response.body).toStrictEqual({
+      ...newPermission,
+      issuanceDate: newPermission.issuanceDate.toISOString(),
+    })
   })
 
   it('/DELETE by id', async () => {

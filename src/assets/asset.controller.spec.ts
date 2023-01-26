@@ -98,8 +98,8 @@ describe('Asset', () => {
           userId: asset._nvm.userId,
           address: undefined,
         },
-        asset
-      )
+        asset,
+      ),
     ).toStrictEqual(asset)
   })
 
@@ -124,7 +124,11 @@ describe('Asset', () => {
     jest.spyOn(assetService, 'findMany').mockResolvedValue(hits)
 
     expect(await assetController.getDDOAllAssets({ page: 1, offset: 100 })).toStrictEqual(
-      SearchResponse.fromSearchSources({ page: 1, offset: 100 }, hits, hits.hits.map(GetAssetDto.fromSource))
+      SearchResponse.fromSearchSources(
+        { page: 1, offset: 100 },
+        hits,
+        hits.hits.map(GetAssetDto.fromSource),
+      ),
     )
   })
 
@@ -158,7 +162,9 @@ describe('Asset', () => {
       }
     }
 
-    jest.spyOn(assetService, 'findMany').mockImplementation((querystring: SearchQueryDto) => hits(querystring) as any)
+    jest
+      .spyOn(assetService, 'findMany')
+      .mockImplementation((querystring: SearchQueryDto) => hits(querystring) as any)
 
     expect(await assetController.listDDObyQueryPost(query as SearchQueryDto)).toStrictEqual(
       SearchResponse.fromSearchSources(
@@ -175,8 +181,8 @@ describe('Asset', () => {
             _index: MarketplaceIndex.Asset,
             _id: asset.id,
           },
-        ].map((a) => GetAssetDto.fromSource(a))
-      )
+        ].map((a) => GetAssetDto.fromSource(a)),
+      ),
     )
   })
 
@@ -210,7 +216,9 @@ describe('Asset', () => {
       }
     }
 
-    jest.spyOn(assetService, 'findMany').mockImplementation((querystring: SearchQueryDto) => hits(querystring) as any)
+    jest
+      .spyOn(assetService, 'findMany')
+      .mockImplementation((querystring: SearchQueryDto) => hits(querystring) as any)
 
     expect(
       await assetController.listDDObyQueryPost({
@@ -219,7 +227,7 @@ describe('Asset', () => {
         },
         offset: 100,
         page: 0,
-      })
+      }),
     ).toStrictEqual(
       SearchResponse.fromSearchSources(
         query as SearchQueryDto,
@@ -235,8 +243,8 @@ describe('Asset', () => {
             _index: MarketplaceIndex.Asset,
             _id: asset.id,
           },
-        ].map((a) => GetAssetDto.fromSource(a))
-      )
+        ].map((a) => GetAssetDto.fromSource(a)),
+      ),
     )
   })
 
@@ -261,7 +269,7 @@ describe('Asset', () => {
         _source: asset,
         _index: MarketplaceIndex.Asset,
         _id: asset.id,
-      })
+      }),
     )
   })
 
@@ -288,13 +296,13 @@ describe('Asset', () => {
         roles: [],
         userId: asset._nvm.userId,
         address: undefined,
-      })
+      }),
     ).toStrictEqual(
       GetAssetDto.fromSource({
         _source: updateAsset,
         _index: MarketplaceIndex.Asset,
         _id: updateAsset.id,
-      })
+      }),
     )
   })
 
@@ -311,7 +319,7 @@ describe('Asset', () => {
 
     await assetController.deleteDDO(asset.id, {
       userId: asset._nvm.userId,
-      address: faker.datatype.hexadecimal({length: 18}),
+      address: faker.datatype.hexadecimal({ length: 18 }),
       roles: [],
     })
 
@@ -340,7 +348,7 @@ describe('Asset', () => {
         _source: assetWithAttribute,
         _index: MarketplaceIndex.Asset,
         _id: assetWithAttribute.id,
-      }).service[0].attributes
+      }).service[0].attributes,
     )
   })
 
@@ -352,7 +360,7 @@ describe('Asset', () => {
     })
 
     await expect(assetController.getDDOMetadata(asset.id)).rejects.toEqual(
-      new NotFoundException(`Asset with did ${asset.id} doesn't have metada`)
+      new NotFoundException(`Asset with did ${asset.id} doesn't have metada`),
     )
   })
 
@@ -368,7 +376,7 @@ describe('Asset', () => {
         _source: ddoStatus,
         _index: MarketplaceIndex.DDOStatus,
         _id: ddoStatus.did,
-      })
+      }),
     )
   })
 
@@ -380,7 +388,7 @@ describe('Asset', () => {
         roles: [],
         userId: asset._nvm.userId,
         address: undefined,
-      })
+      }),
     ).toStrictEqual(service)
   })
 
@@ -396,7 +404,7 @@ describe('Asset', () => {
         _source: service,
         _index: MarketplaceIndex.Service,
         _id: service.agreementId,
-      })
+      }),
     )
   })
 
@@ -417,7 +425,11 @@ describe('Asset', () => {
     jest.spyOn(serviceDDOService, 'findMany').mockResolvedValue(serviceHits)
 
     expect(await assetController.getServiceQueryPost(query)).toStrictEqual(
-      SearchResponse.fromSearchSources(query, serviceHits, serviceHits.hits.map(GetServiceDto.fromSource))
+      SearchResponse.fromSearchSources(
+        query,
+        serviceHits,
+        serviceHits.hits.map(GetServiceDto.fromSource),
+      ),
     )
   })
 

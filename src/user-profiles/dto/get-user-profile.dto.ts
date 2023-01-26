@@ -1,5 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsString, IsEmail, IsDate, IsBoolean, IsEnum, IsOptional, ValidateNested } from 'class-validator'
+import {
+  IsString,
+  IsEmail,
+  IsDate,
+  IsBoolean,
+  IsEnum,
+  IsOptional,
+  ValidateNested,
+} from 'class-validator'
 import { Type } from 'class-transformer'
 import { State } from '../../common/type'
 import { AdditionalInformation } from './additional-information.dto'
@@ -18,7 +26,7 @@ export class GetUserProfileDto {
       userProfileSource._source.email,
       userProfileSource._source.creationDate,
       userProfileSource._source.updateDate,
-      userProfileSource._source.additionalInformation
+      userProfileSource._source.additionalInformation,
     )
   }
 
@@ -31,21 +39,24 @@ export class GetUserProfileDto {
 
   @ApiProperty({
     example: true,
-    description: 'Flag identifying if the user is listed in the marketplace. Possible values: true or false',
+    description:
+      'Flag identifying if the user is listed in the marketplace. Possible values: true or false',
   })
   @IsBoolean()
   isListed: boolean
 
   @ApiProperty({
     example: State.Confirmed,
-    description: 'State of the user in the marketplace. Possible options: disabled, unconfirmed, confirmed',
+    description:
+      'State of the user in the marketplace. Possible options: disabled, unconfirmed, confirmed',
   })
   @IsEnum(State)
   state: State
 
   @ApiProperty({
     example: ['0x37BB53e3d293494DE59fBe1FF78500423dcFd43B'],
-    description: 'The list of the addressed owned by the user. Addresses cannot be shared between different users',
+    description:
+      'The list of the addressed owned by the user. Addresses cannot be shared between different users',
   })
   @IsString({
     each: true,
@@ -107,7 +118,7 @@ export class GetUserProfileDto {
     email: string,
     creationDate: Date,
     updateDate: Date,
-    additionalInformation: AdditionalInformation
+    additionalInformation: AdditionalInformation,
   ) {
     this.userId = userId
     this.isListed = isListed

@@ -32,7 +32,12 @@ export class AssetService {
 
   async findManyIds(searchQueryDto: SearchQueryDto): Promise<string[]> {
     return (
-      await this.elasticService.searchByIndex(MarketplaceIndex.Asset, searchQueryDto.query, searchQueryDto, 'id')
+      await this.elasticService.searchByIndex(
+        MarketplaceIndex.Asset,
+        searchQueryDto.query,
+        searchQueryDto,
+        'id',
+      )
     ).hits.map((asset) => (asset._source as Asset).id)
   }
 
@@ -42,20 +47,27 @@ export class AssetService {
       searchQueryDto.query || {
         match_all: {},
       },
-      searchQueryDto
+      searchQueryDto,
     ) as Promise<SearchHitsMetadata<Asset>>
   }
 
   async findOneById(id: string): Promise<SearchHit<Asset>> {
-    return this.elasticService.getDocumentByIndexAndId(MarketplaceIndex.Asset, id) as Promise<SearchHit<Asset>>
+    return this.elasticService.getDocumentByIndexAndId(MarketplaceIndex.Asset, id) as Promise<
+      SearchHit<Asset>
+    >
   }
 
-  async updateOneByEntryId(entryId: string, updateAssetDto: UpdateAssetDto): Promise<SearchHit<Asset>> {
+  async updateOneByEntryId(
+    entryId: string,
+    updateAssetDto: UpdateAssetDto,
+  ): Promise<SearchHit<Asset>> {
     await this.elasticService.updateDocumentByIndexAndId(MarketplaceIndex.Asset, entryId, {
       doc: updateAssetDto,
     })
 
-    return this.elasticService.getDocumentByIndexAndId(MarketplaceIndex.Asset, entryId) as Promise<SearchHit<Asset>>
+    return this.elasticService.getDocumentByIndexAndId(MarketplaceIndex.Asset, entryId) as Promise<
+      SearchHit<Asset>
+    >
   }
 
   async deleteAll(): Promise<void> {

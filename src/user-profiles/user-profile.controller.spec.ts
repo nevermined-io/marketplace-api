@@ -81,8 +81,8 @@ describe('UserProfileController', () => {
 
     await expect(userProfileController.createUserProfile(userProfile)).rejects.toEqual(
       new NotFoundException(
-        `User profile with theses addresses [${userProfileSource._source.addresses[0]}] already exists`
-      )
+        `User profile with theses addresses [${userProfileSource._source.addresses[0]}] already exists`,
+      ),
     )
   })
 
@@ -90,7 +90,7 @@ describe('UserProfileController', () => {
     jest.spyOn(userProfileService, 'findOneById').mockResolvedValue(userProfileSource)
 
     expect(await userProfileController.getUserProfileByUserId(userProfile.userId)).toStrictEqual(
-      GetUserProfileDto.fromSource(userProfileSource)
+      GetUserProfileDto.fromSource(userProfileSource),
     )
   })
 
@@ -103,9 +103,9 @@ describe('UserProfileController', () => {
       return undefined as any
     })
 
-    expect(await userProfileController.getUserProfileByAddress(userProfile.addresses[0])).toStrictEqual(
-      GetUserProfileDto.fromSource(userProfileSource)
-    )
+    expect(
+      await userProfileController.getUserProfileByAddress(userProfile.addresses[0]),
+    ).toStrictEqual(GetUserProfileDto.fromSource(userProfileSource))
   })
 
   it('should thorw error when no user profile is found by the address given', async () => {
@@ -118,7 +118,7 @@ describe('UserProfileController', () => {
     })
 
     await expect(userProfileController.getUserProfileByAddress('12233')).rejects.toEqual(
-      new NotFoundException('User profile with public address 12233 does not exist')
+      new NotFoundException('User profile with public address 12233 does not exist'),
     )
   })
 
@@ -133,7 +133,11 @@ describe('UserProfileController', () => {
     jest.spyOn(userProfileService, 'updateOneByEntryId').mockResolvedValue(newUserProfileSource)
 
     expect(
-      await userProfileController.updateUserProfileByUserId(userProfile.userId, newUserProfile, req)
+      await userProfileController.updateUserProfileByUserId(
+        userProfile.userId,
+        newUserProfile,
+        req,
+      ),
     ).toStrictEqual(GetUserProfileDto.fromSource(newUserProfileSource))
   })
 
@@ -142,8 +146,8 @@ describe('UserProfileController', () => {
 
     jest.spyOn(userProfileService, 'disableOneByEntryId').mockResolvedValue(disabledUserProfile)
 
-    expect(await userProfileController.disableUserProfileByUserId(userProfile.userId, req)).toStrictEqual(
-      disabledUserProfile
-    )
+    expect(
+      await userProfileController.disableUserProfileByUserId(userProfile.userId, req),
+    ).toStrictEqual(disabledUserProfile)
   })
 })

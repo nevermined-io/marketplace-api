@@ -33,12 +33,18 @@ export class DDOStatusService {
     }
     ddoStatus.external = null
 
-    await this.elasticService.addDocumentToIndex(MarketplaceIndex.DDOStatus, ddoStatus.did, ddoStatus)
+    await this.elasticService.addDocumentToIndex(
+      MarketplaceIndex.DDOStatus,
+      ddoStatus.did,
+      ddoStatus,
+    )
 
     return ddoStatus
   }
 
   async findOneById(id: string): Promise<SearchHit<DDOStatus>> {
-    return this.elasticService.getDocumentByIndexAndId(MarketplaceIndex.DDOStatus, id) as Promise<SearchHit<DDOStatus>>
+    return this.elasticService.getDocumentByIndexAndId(MarketplaceIndex.DDOStatus, id) as Promise<
+      SearchHit<DDOStatus>
+    >
   }
 }
