@@ -1172,10 +1172,10 @@
     uuid "^3.4.0"
     whatwg-url "^7.1.0"
 
-"@nevermined-io/passport-nevermined@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@nevermined-io/passport-nevermined/-/passport-nevermined-0.1.0.tgz#fbda46c4699ee10e9c58e8aefaf2fbe10db3d753"
-  integrity sha512-oRUgPLIyp3UwVvy/cYpQ1WqaSbK6t4RXjR+lTFJh2oNEQEJrmsahFsK5YLq5y6v7qMM8EKKGXxaWpKc22KDB0A==
+"@nevermined-io/passport-nevermined@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@nevermined-io/passport-nevermined/-/passport-nevermined-0.1.1.tgz#8cdea7533501ec2bb23c8d689c72d5723c9a8e1b"
+  integrity sha512-2oQsKY2G//jB/wMt768OQ2MngAijIKayUBmfTHMM9MWms6ACavjOb2gD+/MmlslPBlrLzyK8sg4ln7duRuxIYQ==
   dependencies:
     ethers "^5.7.2"
     jose "^4.11.2"
