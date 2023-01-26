@@ -1,5 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsString, IsEmail, IsBoolean, IsEnum, IsDate, IsOptional, ValidateNested } from 'class-validator'
+import {
+  IsString,
+  IsEmail,
+  IsBoolean,
+  IsEnum,
+  IsDate,
+  IsOptional,
+  ValidateNested,
+} from 'class-validator'
 import { Type } from 'class-transformer'
 import { State } from '../../common/type'
 import { AdditionalInformation } from './additional-information.dto'
@@ -14,13 +22,14 @@ export class UpdateUserProfileDto {
       userProfile.name,
       userProfile.email,
       new Date(),
-      userProfile.additionalInformation
+      userProfile.additionalInformation,
     )
   }
 
   @ApiProperty({
     example: true,
-    description: 'Flag identifying if the user is listed in the marketplace. Possible values: true or false',
+    description:
+      'Flag identifying if the user is listed in the marketplace. Possible values: true or false',
   })
   @IsOptional()
   @IsBoolean()
@@ -28,7 +37,8 @@ export class UpdateUserProfileDto {
 
   @ApiProperty({
     example: State.Confirmed,
-    description: 'State of the user in the marketplace. Possible options: disabled, unconfirmed, confirmed',
+    description:
+      'State of the user in the marketplace. Possible options: disabled, unconfirmed, confirmed',
   })
   @IsOptional()
   @IsEnum(State)
@@ -36,7 +46,8 @@ export class UpdateUserProfileDto {
 
   @ApiProperty({
     example: ['0x37BB53e3d293494DE59fBe1FF78500423dcFd43B'],
-    description: 'The list of the addressed owned by the user. Addresses cannot be shared between different users',
+    description:
+      'The list of the addressed owned by the user. Addresses cannot be shared between different users',
   })
   @IsOptional()
   @IsString({
@@ -93,7 +104,7 @@ export class UpdateUserProfileDto {
     name: string,
     email: string,
     updateDate: Date,
-    additionalInformation: AdditionalInformation
+    additionalInformation: AdditionalInformation,
   ) {
     this.isListed = isListed
     this.state = state

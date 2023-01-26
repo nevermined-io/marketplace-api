@@ -15,10 +15,13 @@ jobs:
     - name: Install dependencies
       run: |
         yarn
-    - name: Compile and lint
-      run: |
-        yarn build
-        yarn lint
+
+    - name: Check lint
+      run: yarn lint
+    - name: Check formatting
+      run: yarn format:check
+    - name: Compile
+      run: yarn build
 
     - name: Running elasticsearch
       run: |

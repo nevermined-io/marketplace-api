@@ -72,7 +72,10 @@ describe('Asset', () => {
         }))
         .find((a) => a._id === id),
     updateOneByEntryId: (id: string, assetToUpdate: Asset) => {
-      const assetUpdated = { ...[asset, assetCopy].find((a) => a.id === assetToUpdate.id), ...assetToUpdate } as Asset
+      const assetUpdated = {
+        ...[asset, assetCopy].find((a) => a.id === assetToUpdate.id),
+        ...assetToUpdate,
+      } as Asset
       return {
         _source: assetUpdated,
         _index: MarketplaceIndex.Asset,

@@ -29,7 +29,8 @@ export class CurationDto {
 
   @ApiProperty({
     example: false,
-    description: "Flag unsuitable content. False by default. If it's true, the content must not be returned",
+    description:
+      "Flag unsuitable content. False by default. If it's true, the content must not be returned",
     required: false,
   })
   @IsOptional()

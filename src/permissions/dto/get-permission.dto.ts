@@ -13,7 +13,7 @@ export class GetPermissionDto {
       permisionSource._source.type,
       permisionSource._source.issuer,
       permisionSource._source.holder,
-      permisionSource._source.issuanceDate
+      permisionSource._source.issuanceDate,
     )
   }
 
@@ -58,7 +58,14 @@ export class GetPermissionDto {
   })
   issuanceDate: Date
 
-  constructor(id: string, userId: string, type: PermissionType[], issuer: string, holder: string, issuranceDate: Date) {
+  constructor(
+    id: string,
+    userId: string,
+    type: PermissionType[],
+    issuer: string,
+    holder: string,
+    issuranceDate: Date,
+  ) {
     this.id = id
     this.userId = userId
     this.type = type

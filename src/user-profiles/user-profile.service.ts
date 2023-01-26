@@ -24,7 +24,11 @@ export class UserProfileService {
   async createOne(createUserProfileDto: CreateUserProfileDto): Promise<UserProfile> {
     const userProfile = { ...new UserProfile(), ...createUserProfileDto }
 
-    await this.elasticService.addDocumentToIndex(MarketplaceIndex.UserProfile, userProfile.userId, userProfile)
+    await this.elasticService.addDocumentToIndex(
+      MarketplaceIndex.UserProfile,
+      userProfile.userId,
+      userProfile,
+    )
 
     return userProfile
   }
@@ -44,29 +48,30 @@ export class UserProfileService {
             addresses: address,
           },
         },
-        undefined
+        undefined,
       )
     ).hits?.[0] as SearchHit<UserProfile>
   }
 
   async updateOneByEntryId(
     entryId: string,
-    updateUserProfileDto: UpdateUserProfileDto
+    updateUserProfileDto: UpdateUserProfileDto,
   ): Promise<SearchHit<UserProfile>> {
     await this.elasticService.updateDocumentByIndexAndId(MarketplaceIndex.UserProfile, entryId, {
       doc: updateUserProfileDto,
     })
 
-    return this.elasticService.getDocumentByIndexAndId(MarketplaceIndex.UserProfile, entryId) as Promise<
-      SearchHit<UserProfile>
-    >
+    return this.elasticService.getDocumentByIndexAndId(
+      MarketplaceIndex.UserProfile,
+      entryId,
+    ) as Promise<SearchHit<UserProfile>>
   }
 
   async disableOneByEntryId(entryId: string): Promise<UserProfile> {
     const userProfile = (
       (await this.elasticService.getDocumentByIndexAndId(
         MarketplaceIndex.UserProfile,
-        entryId
+        entryId,
       )) as SearchHit<UserProfile>
     )?._source
 

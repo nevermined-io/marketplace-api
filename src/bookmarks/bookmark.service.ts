@@ -31,10 +31,15 @@ export class BookmarkService {
   }
 
   async findOneById(id: string): Promise<SearchHit<Bookmark>> {
-    return this.elasticService.getDocumentByIndexAndId(MarketplaceIndex.Bookmark, id) as Promise<SearchHit<Bookmark>>
+    return this.elasticService.getDocumentByIndexAndId(MarketplaceIndex.Bookmark, id) as Promise<
+      SearchHit<Bookmark>
+    >
   }
 
-  async findManyByUserId(userId: string, searchQueryDto: SearchQueryDto): Promise<SearchHitsMetadata<Bookmark>> {
+  async findManyByUserId(
+    userId: string,
+    searchQueryDto: SearchQueryDto,
+  ): Promise<SearchHitsMetadata<Bookmark>> {
     return this.elasticService.searchByIndex(
       MarketplaceIndex.Bookmark,
       {
@@ -44,18 +49,22 @@ export class BookmarkService {
           },
         },
       },
-      searchQueryDto
+      searchQueryDto,
     ) as Promise<SearchHitsMetadata<Bookmark>>
   }
 
-  async updateOneByEntryId(entryId: string, updateBookmarkDto: UpdateBookmarkDto): Promise<SearchHit<Bookmark>> {
+  async updateOneByEntryId(
+    entryId: string,
+    updateBookmarkDto: UpdateBookmarkDto,
+  ): Promise<SearchHit<Bookmark>> {
     await this.elasticService.updateDocumentByIndexAndId(MarketplaceIndex.Bookmark, entryId, {
       doc: updateBookmarkDto,
     })
 
-    return this.elasticService.getDocumentByIndexAndId(MarketplaceIndex.Bookmark, entryId) as Promise<
-      SearchHit<Bookmark>
-    >
+    return this.elasticService.getDocumentByIndexAndId(
+      MarketplaceIndex.Bookmark,
+      entryId,
+    ) as Promise<SearchHit<Bookmark>>
   }
 
   async deleteOneByEntryId(entryId: string): Promise<void> {

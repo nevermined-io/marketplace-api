@@ -46,7 +46,8 @@ export class MainDto {
 
   @ApiProperty({
     type: [FileDto],
-    description: 'Array of File objects including the encrypted file urls. Further metadata about each file is stored',
+    description:
+      'Array of File objects including the encrypted file urls. Further metadata about each file is stored',
     required: false,
   })
   @IsOptional()
@@ -76,7 +77,8 @@ export class MainDto {
 
   @ApiProperty({
     example: '10',
-    description: 'Price of the asset. It must be an integer encoded as a string, e.g. "123000000000000000000"',
+    description:
+      'Price of the asset. It must be an integer encoded as a string, e.g. "123000000000000000000"',
     required: false,
   })
   @IsOptional()

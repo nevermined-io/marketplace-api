@@ -2,9 +2,9 @@ import { ForbiddenException } from '@nestjs/common'
 import jwt, { JsonWebTokenError } from 'jsonwebtoken'
 
 export interface ITokenDecoded {
-  exp: number;
-  iat: number;
-  sub: string;
+  exp: number
+  iat: number
+  sub: string
 }
 
 export const jwtValidation = (props: { token: string; secret: string }): ITokenDecoded => {

@@ -25,7 +25,11 @@ export class PermissionService {
   async createOne(createPermissionDto: CreatePermissionDto): Promise<Permission> {
     const permission = { ...new Permission(), ...createPermissionDto }
 
-    await this.elasticService.addDocumentToIndex(MarketplaceIndex.Permission, permission.id, permission)
+    await this.elasticService.addDocumentToIndex(
+      MarketplaceIndex.Permission,
+      permission.id,
+      permission,
+    )
 
     return permission
   }
@@ -39,7 +43,7 @@ export class PermissionService {
   async findManyByUserIdAndType(
     userId: string,
     type: PermissionType,
-    searchQueryDto: SearchQueryDto
+    searchQueryDto: SearchQueryDto,
   ): Promise<SearchHitsMetadata<Permission>> {
     return this.elasticService.searchByIndex(
       MarketplaceIndex.Permission,
@@ -63,18 +67,22 @@ export class PermissionService {
             : undefined),
         },
       },
-      searchQueryDto
+      searchQueryDto,
     ) as Promise<SearchHitsMetadata<Permission>>
   }
 
-  async updateOneByEntryId(entryId: string, updatePermissionDto: UpdatePermissionDto): Promise<SearchHit<Permission>> {
+  async updateOneByEntryId(
+    entryId: string,
+    updatePermissionDto: UpdatePermissionDto,
+  ): Promise<SearchHit<Permission>> {
     await this.elasticService.updateDocumentByIndexAndId(MarketplaceIndex.Permission, entryId, {
       doc: updatePermissionDto,
     })
 
-    return this.elasticService.getDocumentByIndexAndId(MarketplaceIndex.Permission, entryId) as Promise<
-      SearchHit<Permission>
-    >
+    return this.elasticService.getDocumentByIndexAndId(
+      MarketplaceIndex.Permission,
+      entryId,
+    ) as Promise<SearchHit<Permission>>
   }
 
   async deleteOneByEntryId(entryId: string): Promise<void> {

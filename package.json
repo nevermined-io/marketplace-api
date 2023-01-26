@@ -11,6 +11,8 @@
     "database:init": "npm run migration:run && npm run seeds",
     "lint": "eslint ./",
     "lint:fix": "npm run lint -- --fix",
+    "format:check": "yarn prettier --check src",
+    "format:fix": "yarn prettier -w src",
     "setup:dev": "cp ./config/local.js.sample ./config/local.js",
     "prebuild": "rm -rf ./dist && mkdir ./dist && cp -r ./config ./dist/config && cp package.json ./dist",
     "prestart": "npm run build",

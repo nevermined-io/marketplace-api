@@ -17,7 +17,8 @@ export class FileDto {
     example:
       'https://raw.githubusercontent.com/tbertinmahieux' +
       '/MSongsDB/master/Tasks_Demos/CoverSongs/shs_dataset_test.txt',
-    description: 'Content URL. Omitted from the remote metadata. Supports http(s):// and ipfs:// URLs',
+    description:
+      'Content URL. Omitted from the remote metadata. Supports http(s):// and ipfs:// URLs',
     required: false,
   })
   @IsOptional()
@@ -28,7 +29,8 @@ export class FileDto {
 
   @ApiProperty({
     example: 'md5',
-    description: 'Format of the provided checksum. Can vary according to server (i.e Amazon vs. Azure)',
+    description:
+      'Format of the provided checksum. Can vary according to server (i.e Amazon vs. Azure)',
     required: false,
   })
   @IsOptional()
@@ -98,7 +100,8 @@ export class FileDto {
 
   @ApiProperty({
     example: false,
-    description: 'Boolean. Is the file encrypted? If is not set is assumed the file is not encrypted',
+    description:
+      'Boolean. Is the file encrypted? If is not set is assumed the file is not encrypted',
     required: false,
   })
   @IsOptional()

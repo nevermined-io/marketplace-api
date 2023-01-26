@@ -1,4 +1,4 @@
 export interface AdditionalInformation {
-  profilePicture: string;
-  linkedinProfile: string;
+  profilePicture: string
+  linkedinProfile: string
 }
