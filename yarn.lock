@@ -1148,10 +1148,10 @@
   dependencies:
     uuid "8.3.2"
 
-"@nevermined-io/nevermined-sdk-js@1.0.0-rc14":
-  version "1.0.0-rc14"
-  resolved "https://registry.yarnpkg.com/@nevermined-io/nevermined-sdk-js/-/nevermined-sdk-js-1.0.0-rc14.tgz#c18208ffc3b3eecd7d4b79a23f347c29a04dc60d"
-  integrity sha512-ieH58UZ7GOilBWaQhPq4V8uLMaD8yGdIhQHdvVdEBSpfTL1DE2Xrzzk/X9bLxTM/rAhS3up5gcVgHeH/DQ5hLQ==
+"@nevermined-io/nevermined-sdk-js@1.0.0-rc17":
+  version "1.0.0-rc17"
+  resolved "https://registry.yarnpkg.com/@nevermined-io/nevermined-sdk-js/-/nevermined-sdk-js-1.0.0-rc17.tgz#95350f0cf247fd4a59a9294c28f92d9d0b4219a0"
+  integrity sha512-AP1VHxXnbaScYFRUUYS1eYyMpJbIIRTWKZdkq6LHXBgEGoZdleYCwuPBG8iaAyM2GN133drKPVYEbJFIuZcAmQ==
   dependencies:
     "@nevermined-io/subgraphs" "0.5.0-rc1"
     assert "^2.0.0"
