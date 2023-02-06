@@ -8,7 +8,7 @@ export class SearchResponse<G> {
   static fromSearchSources<Dto>(
     searchQueryDto: SearchQueryDto,
     hits: SearchHitsMetadata<unknown>,
-    dto: Dto
+    dto: Dto,
   ): SearchResponse<Dto> {
     return {
       page: searchQueryDto.page,

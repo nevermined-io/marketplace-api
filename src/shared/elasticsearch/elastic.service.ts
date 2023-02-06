@@ -21,7 +21,7 @@ export class ElasticService {
     index: string,
     query: QueryDslQueryContainer,
     searchQuery: SearchQueryDto,
-    _source_includes?: string | string[]
+    _source_includes?: string | string[],
   ): Promise<SearchHitsMetadata<unknown>> {
     const page = searchQuery?.page ? searchQuery.page - 1 : 0
 

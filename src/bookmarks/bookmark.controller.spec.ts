@@ -67,8 +67,8 @@ describe('BookmarkController', () => {
           did: bookmark.did,
           description: bookmark.description,
         },
-        req
-      )
+        req,
+      ),
     ).toStrictEqual(bookmark)
   })
 
@@ -88,7 +88,7 @@ describe('BookmarkController', () => {
         _source: bookmark,
         _index: MarketplaceIndex.Bookmark,
         _id: faker.datatype.uuid(),
-      })
+      }),
     )
   })
 
@@ -106,8 +106,14 @@ describe('BookmarkController', () => {
 
     jest.spyOn(bookmarkService, 'findManyByUserId').mockResolvedValue(hits)
 
-    expect(await bookmarkController.getBookmarksByUserId(bookmark.userId, { page: 0, offset: 100 })).toStrictEqual(
-      SearchResponse.fromSearchSources({ page: 0, offset: 100 }, hits, hits.hits.map(GetBookmarkDto.fromSource))
+    expect(
+      await bookmarkController.getBookmarksByUserId(bookmark.userId, { page: 0, offset: 100 }),
+    ).toStrictEqual(
+      SearchResponse.fromSearchSources(
+        { page: 0, offset: 100 },
+        hits,
+        hits.hits.map(GetBookmarkDto.fromSource),
+      ),
     )
   })
 
@@ -131,14 +137,14 @@ describe('BookmarkController', () => {
           description: newBookmark.description,
           userId: newBookmark.userId,
         },
-        req
-      )
+        req,
+      ),
     ).toStrictEqual(
       GetBookmarkDto.fromSource({
         _source: newBookmark,
         _index: MarketplaceIndex.Bookmark,
         _id: faker.datatype.uuid(),
-      })
+      }),
     )
   })
 

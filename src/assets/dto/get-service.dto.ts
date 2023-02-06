@@ -14,7 +14,7 @@ export class GetServiceDto {
       serviceSource._source.templateId,
       serviceSource._source.serviceEndpoint,
       serviceSource._source.type,
-      serviceSource._source.attributes
+      serviceSource._source.attributes,
     )
   }
 
@@ -78,7 +78,7 @@ export class GetServiceDto {
     templateId: string,
     serviceEndpoint: string,
     type: string,
-    attributes: AttributesDto
+    attributes: AttributesDto,
   ) {
     this.agreementId = agreementId
     this.index = index

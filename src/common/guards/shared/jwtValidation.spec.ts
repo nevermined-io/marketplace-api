@@ -17,7 +17,7 @@ describe('JwtValidation', () => {
         iat: mockedNow.getUTCMilliseconds(),
         sub: '12345',
       },
-      'secret'
+      'secret',
     )
   })
   it('should decode the token', () => {
@@ -36,7 +36,7 @@ describe('JwtValidation', () => {
       jwtValidation({
         secret: 'secret',
         token: anotherToken,
-      })
+      }),
     ).toThrowError(new ForbiddenException('invalid signature'))
   })
 
@@ -61,7 +61,7 @@ describe('JwtValidation', () => {
         iat: mockedNow.getUTCMilliseconds(),
         sub: '12345',
       },
-      'secret'
+      'secret',
     )
 
     advanceBy(dayMilliseconds * 2)
@@ -70,7 +70,7 @@ describe('JwtValidation', () => {
       jwtValidation({
         secret: 'secret',
         token,
-      })
+      }),
     ).toThrowError(new ForbiddenException('jwt expired'))
   })
 })

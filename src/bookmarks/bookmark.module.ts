@@ -4,9 +4,9 @@ import { BookmarkService } from './bookmark.service'
 import { ElasticModule } from '../shared/elasticsearch/elastic.module'
 
 @Module({
-    imports: [ElasticModule],
-    providers: [BookmarkService],
-    controllers: [BookmarkController],
-    exports: [BookmarkService],
+  imports: [ElasticModule],
+  providers: [BookmarkService],
+  controllers: [BookmarkController],
+  exports: [BookmarkService],
 })
 export class BookmarkModule {}

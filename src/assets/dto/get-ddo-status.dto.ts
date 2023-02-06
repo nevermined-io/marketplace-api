@@ -11,7 +11,7 @@ export class GetDDOStatusDto {
     return new GetDDOStatusDto(
       ddoStatusSource._source.did,
       ddoStatusSource._source.internal,
-      ddoStatusSource._source.external
+      ddoStatusSource._source.external,
     )
   }
 

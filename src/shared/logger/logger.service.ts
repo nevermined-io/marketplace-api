@@ -41,17 +41,24 @@ class LoggerSplunk implements LoggerService {
   private static lastTimestamp?: number
   private static instance?: typeof LoggerSplunk | LoggerService = LoggerSplunk
 
-  private static printMessage(message: any, logLevel: LogLevel, context = '', isTimeDiffEnabled?: boolean) {
+  private static printMessage(
+    message: any,
+    logLevel: LogLevel,
+    context = '',
+    isTimeDiffEnabled?: boolean,
+  ) {
     let output = ''
     if (isObject(message)) {
       Object.entries(message).forEach(
         ([key, value]) =>
           (output = `${output} ${key}='${
             isObject(value) ? `${'Object:'}\n${JSON.stringify(value, null, 2)}\n` : value
-          }'`)
+          }'`),
       )
     } else {
-      output = `message='${isObject(message) ? `${'Object:'}\n${JSON.stringify(message, null, 2)}\n` : message} '`
+      output = `message='${
+        isObject(message) ? `${'Object:'}\n${JSON.stringify(message, null, 2)}\n` : message
+      } '`
     }
 
     process.stdout.write(`logLevel='${logLevel}' `)
@@ -82,7 +89,10 @@ class LoggerSplunk implements LoggerService {
     process.stdout.write(`\n`)
   }
 
-  constructor(@Optional() private readonly context?: string, @Optional() private readonly isTimestampEnabled = false) {}
+  constructor(
+    @Optional() private readonly context?: string,
+    @Optional() private readonly isTimestampEnabled = false,
+  ) {}
 
   error(message: any, trace = '', context?: string) {
     const instance = this.getInstance()
@@ -108,13 +118,17 @@ class LoggerSplunk implements LoggerService {
     this.callFunction('verbose', message, context)
   }
 
-  private callFunction<T>(name: 'log' | 'warn' | 'debug' | 'verbose', message: T, context?: string) {
+  private callFunction<T>(
+    name: 'log' | 'warn' | 'debug' | 'verbose',
+    message: T,
+    context?: string,
+  ) {
     if (!this.isLogLevelEnabled(name)) {
       return
     }
     const instance = this.getInstance()
     const func = instance && (instance as typeof LoggerSplunk)[name]
-    /* eslint-disable-next-line no-unused-expressions*/ 
+    /* eslint-disable-next-line no-unused-expressions*/
     func && func.call(instance, message, context || this.context, this.isTimestampEnabled)
   }
 
@@ -128,4 +142,4 @@ class LoggerSplunk implements LoggerService {
   }
 }
 
-export const Logger = (process.env.NODE_ENV === 'development' ? LoggerBase : LoggerSplunk)
+export const Logger = process.env.NODE_ENV === 'development' ? LoggerBase : LoggerSplunk

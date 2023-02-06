@@ -6,13 +6,15 @@ import { get as loGet } from 'lodash'
 import { Logger } from '../logger/logger.service'
 
 export interface EnvConfig {
-  [key: string]: string;
+  [key: string]: string
 }
 
 const configProfile = require('../../../config')
 
 const DOTENV_SCHEMA = Joi.object({
-  NODE_ENV: Joi.string().valid('development', 'production', 'test', 'staging').default('development'),
+  NODE_ENV: Joi.string()
+    .valid('development', 'production', 'test', 'staging')
+    .default('development'),
   JWT_SECRET_KEY: Joi.string().required().error(new Error('JWT_SECRET_KEY is required!')),
   JWT_EXPIRY_KEY: Joi.string().default('60m'),
   server: Joi.object({

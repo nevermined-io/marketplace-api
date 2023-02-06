@@ -21,7 +21,7 @@ export class GetAssetDto {
       assetSource._source.id,
       assetSource._source.proof,
       assetSource._source.publicKey,
-      assetSource._source.service
+      assetSource._source.service,
     )
   }
 
@@ -105,7 +105,7 @@ export class GetAssetDto {
     id: string,
     proof: ProofDto,
     publicKey: PublicKeyDto[],
-    service: ServiceDto[]
+    service: ServiceDto[],
   ) {
     this['@context'] = context
     this.authentication = authentication

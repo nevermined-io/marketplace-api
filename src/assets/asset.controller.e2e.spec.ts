@@ -65,7 +65,7 @@ describe('Asset Controller e2e', () => {
         userId: asset._nvm.userId,
         address: undefined,
       },
-      newAsset
+      newAsset,
     )
 
     // Test2
@@ -85,7 +85,7 @@ describe('Asset Controller e2e', () => {
         userId: asset._nvm.userId,
         address: undefined,
       },
-      newAsset
+      newAsset,
     )
 
     newAsset = { ...asset }
@@ -104,7 +104,7 @@ describe('Asset Controller e2e', () => {
         userId: asset._nvm.userId,
         address: undefined,
       },
-      newAsset
+      newAsset,
     )
 
     // Test3
@@ -124,7 +124,7 @@ describe('Asset Controller e2e', () => {
         userId: asset._nvm.userId,
         address: undefined,
       },
-      newAsset
+      newAsset,
     )
 
     // wait for elasticsearch

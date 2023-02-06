@@ -128,14 +128,20 @@ describe('Bookmark', () => {
       })
 
     expect(response.statusCode).toBe(201)
-    expect(response.body).toStrictEqual({ ...bookmark, createdAt: bookmark.createdAt.toISOString() })
+    expect(response.body).toStrictEqual({
+      ...bookmark,
+      createdAt: bookmark.createdAt.toISOString(),
+    })
   })
 
   it('/GET by id', async () => {
     const response = await request(app.getHttpServer()).get(`/${bookmark.id}`)
 
     expect(response.statusCode).toBe(200)
-    expect(response.body).toStrictEqual({ ...bookmark, createdAt: bookmark.createdAt.toISOString() })
+    expect(response.body).toStrictEqual({
+      ...bookmark,
+      createdAt: bookmark.createdAt.toISOString(),
+    })
   })
 
   it('/GET by userId', async () => {
@@ -160,7 +166,10 @@ describe('Bookmark', () => {
       })
 
     expect(response.statusCode).toBe(200)
-    expect(response.body).toStrictEqual({ ...newBookmark, createdAt: bookmark.createdAt.toISOString() })
+    expect(response.body).toStrictEqual({
+      ...newBookmark,
+      createdAt: bookmark.createdAt.toISOString(),
+    })
   })
 
   it('/DELETE by id', async () => {
