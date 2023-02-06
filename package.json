@@ -19,6 +19,9 @@
     "start": "node -r dotenv/config dist/src/main.js",
     "start:prod": "node -r dotenv/config dist/src/main.js",
     "dev": "./node_modules/.bin/ts-node-dev -r dotenv/config --respawn src/main",
+    "prepare": "husky install .husky",
+    "prettier": "prettier --config ./.prettierrc.js --write \"**/*.{js,json,md,sol,ts,yml}\"",
+    "prettier:check": "prettier --check --config ./.prettierrc.js \"**/*.{js,json,md,sol,ts,yml}\"",
     "test": "jest",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
@@ -63,9 +66,11 @@
     "swagger-ui-express": "^4.6.0",
     "ts-node": "^10.8.1",
     "tsconfig-paths": "^3.13.0",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.5"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.4.2",
+    "@commitlint/config-conventional": "^17.4.2",
     "@faker-js/faker": "^7.6.0",
     "@nestjs/cli": "^9.1.8",
     "@nestjs/testing": "^8.4.0",
@@ -88,10 +93,11 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsdoc": "^39.6.4",
     "eslint-plugin-prefer-arrow": "^1.2.3",
+    "husky": "^8.0.3",
     "jest": "^27.5.1",
     "jest-date-mock": "^1.0.8",
     "jose": "^4.6.0",
-    "lint-staged": "^12.3.5",
+    "lint-staged": "^13.1.0",
     "newman": "^5.3.2",
     "newman-reporter-htmlextra": "^1.22.11",
     "prettier": "^2.5.1",
@@ -104,14 +110,11 @@
     "uuid": "^8.3.2"
   },
   "lint-staged": {
-    "src/**/*.{js,json}": [
-      "prettier --write",
-      "git add"
+    "**/*.{js,json,md,sol,ts,yml}": [
+      "yarn run prettier"
     ],
-    "src/**/*.ts": [
-      "tslint --project tsconfig.json",
-      "prettier --write",
-      "git add"
+    "**/*.ts": [
+      "yarn run lint:fix"
     ]
   },
   "jest": {
