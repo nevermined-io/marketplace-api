@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common'
 import { MarketplaceIndex, State } from '../common/type'
-import { SearchHit } from '@elastic/elasticsearch/api/types'
 import { ElasticService } from '../shared/elasticsearch/elastic.service'
 import { UserProfile } from './user-profile.entity'
 import { CreateUserProfileDto } from './dto/create-user-profile.dto'
 import { UpdateUserProfileDto } from './dto/update-user-profile.dto'
 import { UserProfileMappings } from './user-profile.mappings'
+import { SearchHit } from '@elastic/elasticsearch/lib/api/types'
 
 @Injectable()
 export class UserProfileService {
@@ -18,7 +18,7 @@ export class UserProfileService {
   }
 
   async checkIndex(): Promise<boolean> {
-    return (await this.elasticService.checkExistingIndex(MarketplaceIndex.UserProfile)).body
+    return await this.elasticService.checkExistingIndex(MarketplaceIndex.UserProfile)
   }
 
   async createOne(createUserProfileDto: CreateUserProfileDto): Promise<UserProfile> {

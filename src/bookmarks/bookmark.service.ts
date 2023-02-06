@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { SearchHit, SearchHitsMetadata } from '@elastic/elasticsearch/api/types'
+import { SearchHit, SearchHitsMetadata } from '@elastic/elasticsearch/lib/api/types'
 import { ElasticService } from '../shared/elasticsearch/elastic.service'
 import { CreateBookmarkDto } from './dto/create-bookmark.dto'
 import { UpdateBookmarkDto } from './dto/update-bookmark.dto'
@@ -19,7 +19,7 @@ export class BookmarkService {
   }
 
   async checkIndex(): Promise<boolean> {
-    return (await this.elasticService.checkExistingIndex(MarketplaceIndex.Bookmark)).body
+    return await this.elasticService.checkExistingIndex(MarketplaceIndex.Bookmark)
   }
 
   async createOne(createBookmarkDto: CreateBookmarkDto): Promise<Bookmark> {

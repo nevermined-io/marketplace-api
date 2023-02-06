@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsString, IsDate } from 'class-validator'
-import { SearchHit } from '@elastic/elasticsearch/api/types'
+import { SearchHit } from '@elastic/elasticsearch/lib/api/types'
 import { Bookmark } from '../bookmark.entity'
 
 export class GetBookmarkDto {

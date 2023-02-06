@@ -3,7 +3,7 @@ import { ElasticService } from '../shared/elasticsearch/elastic.service'
 import { CreateServiceDto } from './dto/create-service.dto'
 import { Service } from './ddo-service.entity'
 import { MarketplaceIndex } from '../common/type'
-import { SearchHit, SearchHitsMetadata } from '@elastic/elasticsearch/api/types'
+import { SearchHit, SearchHitsMetadata } from '@elastic/elasticsearch/lib/api/types'
 import { SearchQueryDto } from '../common/helpers/search-query.dto'
 import { ServiceMappings } from './ddo-service.mappings'
 
@@ -18,7 +18,7 @@ export class ServiceDDOService {
   }
 
   async checkIndex(): Promise<boolean> {
-    return (await this.elasticService.checkExistingIndex(MarketplaceIndex.Service)).body
+    return await this.elasticService.checkExistingIndex(MarketplaceIndex.Service)
   }
 
   async createOne(createServiceDto: CreateServiceDto): Promise<Service> {
