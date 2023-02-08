@@ -8,7 +8,7 @@ import {
   IsOptional,
   ValidateNested,
 } from 'class-validator'
-import { Type } from 'class-transformer'
+import { Type, Transform } from 'class-transformer'
 import { State } from '../../common/type'
 import { AdditionalInformation } from './additional-information.dto'
 
@@ -92,6 +92,7 @@ export class UpdateUserProfileDto {
     example: '2019-01-01T19:73:24Z',
     description: 'When was the last time the user information was updated',
   })
+  @Transform(({ value }) => new Date(value))
   @IsOptional()
   @IsDate()
   updateDate: Date
