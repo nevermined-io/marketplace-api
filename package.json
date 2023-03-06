@@ -97,7 +97,7 @@
     "jest": "^27.5.1",
     "jest-date-mock": "^1.0.8",
     "jose": "^4.12.0",
-    "lint-staged": "^13.1.1",
+    "lint-staged": "^13.1.2",
     "newman": "^5.3.2",
     "newman-reporter-htmlextra": "^1.22.11",
     "prettier": "^2.5.1",
