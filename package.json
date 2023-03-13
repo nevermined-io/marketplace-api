@@ -100,7 +100,7 @@
     "lint-staged": "^13.1.2",
     "newman": "^5.3.2",
     "newman-reporter-htmlextra": "^1.22.11",
-    "prettier": "^2.5.1",
+    "prettier": "^2.8.4",
     "prettier-package-json": "^2.8.0",
     "supertest": "^6.3.3",
     "ts-jest": "^27.1.3",
