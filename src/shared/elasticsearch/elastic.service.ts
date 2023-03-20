@@ -14,7 +14,7 @@ export class ElasticService {
 
   async addDocumentToIndex(index: string, id: string, document: unknown) {
     return this.elasticsearchService.index({
-      index: this.configService.get<string>('elasticsearch.prefix') + index,
+      index: `${this.configService.get<string>('elasticsearch.prefix')}-${index}`,
       id,
       body: document,
       op_type: 'create',
@@ -32,7 +32,7 @@ export class ElasticService {
     /* eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access */
     return (
       await this.elasticsearchService.search({
-        index: this.configService.get<string>('elasticsearch.prefix') + index,
+        index: `${this.configService.get<string>('elasticsearch.prefix')}-${index}`,
         size: searchQuery?.offset,
         from: searchQuery?.offset ? searchQuery.offset * page : undefined,
         body: {
@@ -48,7 +48,7 @@ export class ElasticService {
 
   async updateDocumentByIndexAndId(index: string, id: string, document: unknown) {
     return this.elasticsearchService.update({
-      index: this.configService.get<string>('elasticsearch.prefix') + index,
+      index: `${this.configService.get<string>('elasticsearch.prefix')}-${index}`,
       id,
       body: document,
     })
@@ -57,7 +57,7 @@ export class ElasticService {
   async getDocumentByIndexAndId(index: string, id: string): Promise<unknown> {
     return (
       await this.elasticsearchService.get({
-        index: this.configService.get<string>('elasticsearch.prefix') + index,
+        index: `${this.configService.get<string>('elasticsearch.prefix')}-${index}`,
         id,
       })
     ).body
@@ -65,14 +65,14 @@ export class ElasticService {
 
   async deleteDocumentByIndexAndId(index: string, id: string): Promise<unknown> {
     return this.elasticsearchService.delete({
-      index: this.configService.get<string>('elasticsearch.prefix') + index,
+      index: `${this.configService.get<string>('elasticsearch.prefix')}-${index}`,
       id,
     })
   }
 
   async deleteDocumentByQuery(index: string, query: QueryDslQueryContainer): Promise<unknown> {
     return this.elasticsearchService.deleteByQuery({
-      index: this.configService.get<string>('elasticsearch.prefix') + index,
+      index: `${this.configService.get<string>('elasticsearch.prefix')}-${index}`,
       body: {
         query,
       },
@@ -81,15 +81,14 @@ export class ElasticService {
 
   async createIndex(index: string, body: unknown): Promise<void> {
     await this.elasticsearchService.indices.create({
-      index: this.configService.get<string>('elasticsearch.prefix') + index,
+      index: `${this.configService.get<string>('elasticsearch.prefix')}-${index}`,
       body,
     })
   }
 
   async checkExistingIndex(index: string): Promise<ApiResponse<boolean, unknown>> {
-    console.log(this.configService.get<string>('elasticsearch.prefix'))
     return this.elasticsearchService.indices.exists({
-      index: this.configService.get<string>('elasticsearch.prefix') + index,
+      index: `${this.configService.get<string>('elasticsearch.prefix')}-${index}`,
     })
   }
 
