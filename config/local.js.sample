@@ -14,7 +14,7 @@ module.exports = {
   },
   elasticsearch: {
     node: 'http://localhost:9200',
-    prefix: '',
+    prefix: 'marketplace-index-prefix',
     auth: {
       username: 'elastic',
       password: 'password',
