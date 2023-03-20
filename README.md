@@ -46,7 +46,8 @@ There are few options while it comes to database setup.
 
    ```javascript
    elasticsearch: {
-      node: ''
+      node: '',
+      prefix: '',
       auth: {
          username: 'elastic',
          password: 'password',
@@ -81,7 +82,7 @@ npm build
 
 ```
 - src
-  - greeting          # Domain model, more specifically, an aggregate, where cat is the root aggregate (example endpoint)
+  - greeting      # Domain model, more specifically, an aggregate, where cat is the root aggregate (example endpoint)
   - common        # Cross-cutting functionality, like guards, middleware or interceptors
   - shared        # Modules and services that are used shared between services (Elasticsearch service is include here for example)
 - config          # Configuration per profile
