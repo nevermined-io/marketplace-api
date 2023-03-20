@@ -15,6 +15,7 @@ module.exports = {
   },
   elasticsearch: {
     node: process.env.ELASTIC_NODE,
+    prefix: process.env.ELASTIC_PREFIX,
     auth: {
       username: process.env.ELASTIC_USERNAME,
       password: process.env.ELASTIC_PASSWORD,
