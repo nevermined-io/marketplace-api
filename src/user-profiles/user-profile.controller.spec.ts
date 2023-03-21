@@ -23,7 +23,7 @@ describe('UserProfileController', () => {
   userProfile.updateDate = faker.date.recent()
   userProfile.isListed = true
   userProfile.nickname = faker.internet.userName()
-  userProfile.name = faker.name.findName()
+  userProfile.name = faker.name.fullName()
   userProfile.email = faker.internet.email()
   userProfile.state = State.Confirmed
 
