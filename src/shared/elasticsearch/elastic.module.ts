@@ -6,6 +6,7 @@ import { ConfigModule } from '../config/config.module'
 
 @Module({
   imports: [
+    ConfigModule,
     ElasticsearchModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
