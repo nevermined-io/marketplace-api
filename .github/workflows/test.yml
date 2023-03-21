@@ -33,7 +33,7 @@ jobs:
             -d docker.elastic.co/elasticsearch/elasticsearch:8.6.2
       - name: Elasticsearch Node is reachable
         run: |
-          wget -q --waitretry=1 --retry-connrefused -T 180 -O - https://127.0.0.1:9200
+          curl -k --retry 1 --retry-connrefused --connect-timeout 180 -u elastic:password -X GET "https://localhost:9200/"
 
       - name: Run tests
         run: |
