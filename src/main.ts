@@ -88,7 +88,7 @@ const bootstrap = async () => {
   logger.log({
     message: `server version ${packageJson.version} started!`,
     port: PORT,
-    url: `http://localhost:${PORT}/api`,
+    url: `https://localhost:${PORT}/api`,
   })
 }
 
