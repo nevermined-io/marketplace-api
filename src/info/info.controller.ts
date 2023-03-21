@@ -35,7 +35,7 @@ export class InfoController {
     return {
       APIversion: packageJson.version,
       // prettier-ignore
-      elasticsearchVersion: (elsInfo.body as { version: { "number": string } }).version.number,
+      elasticsearchVersion: (elsInfo as { version: { "number": string } }).version.number,
       docs: `${pathEndpoint}api/v1/docs`,
     }
   }

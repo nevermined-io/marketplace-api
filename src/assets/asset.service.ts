@@ -5,7 +5,7 @@ import { UpdateAssetDto } from './dto/update-asset.dto'
 import { Asset } from './asset.entity'
 import { MarketplaceIndex } from '../common/type'
 import { SearchQueryDto } from '../common/helpers/search-query.dto'
-import { SearchHitsMetadata, SearchHit } from '@elastic/elasticsearch/api/types'
+import { SearchHitsMetadata, SearchHit } from '@elastic/elasticsearch/lib/api/types'
 import { AssetMappings } from './asset.mappings'
 
 @Injectable()
@@ -19,7 +19,7 @@ export class AssetService {
   }
 
   async checkIndex(): Promise<boolean> {
-    return (await this.elasticService.checkExistingIndex(MarketplaceIndex.Asset)).body
+    return await this.elasticService.checkExistingIndex(MarketplaceIndex.Asset)
   }
 
   async createOne(createAssetDto: CreateAssetDto): Promise<Asset> {

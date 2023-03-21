@@ -13,7 +13,7 @@ module.exports = {
     fileExtension: 'ts',
   },
   elasticsearch: {
-    node: 'http://localhost:9200',
+    node: 'https://localhost:9200',
     prefix: 'marketplace-index-prefix',
     auth: {
       username: 'elastic',

@@ -29,7 +29,8 @@ jobs:
             -p 9300:9300 \
             -e "discovery.type=single-node" \
             -e "bootstrap.memory_lock=true" \
-            -d docker.elastic.co/elasticsearch/elasticsearch:7.13.2
+            -e "ELASTIC_PASSWORD=password"\
+            -d docker.elastic.co/elasticsearch/elasticsearch:8.6.2
       - name: Elasticsearch Node is reachable
         run: |
           wget -q --waitretry=1 --retry-connrefused -T 180 -O - http://127.0.0.1:9200

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { MarketplaceIndex, State } from '../common/type'
-import { SearchHit } from '@elastic/elasticsearch/api/types'
+import { SearchHit } from '@elastic/elasticsearch/lib/api/types'
 import { ElasticService } from '../shared/elasticsearch/elastic.service'
 import { UserProfile } from './user-profile.entity'
 import { CreateUserProfileDto } from './dto/create-user-profile.dto'
@@ -18,7 +18,7 @@ export class UserProfileService {
   }
 
   async checkIndex(): Promise<boolean> {
-    return (await this.elasticService.checkExistingIndex(MarketplaceIndex.UserProfile)).body
+    return await this.elasticService.checkExistingIndex(MarketplaceIndex.UserProfile)
   }
 
   async createOne(createUserProfileDto: CreateUserProfileDto): Promise<UserProfile> {

@@ -1,4 +1,4 @@
-import { MappingProperty } from '@elastic/elasticsearch/api/types'
+import { MappingProperty } from '@elastic/elasticsearch/lib/api/types'
 
 export const BookmarkMappings: MappingProperty = {
   properties: {

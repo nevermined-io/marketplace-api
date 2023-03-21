@@ -11,7 +11,7 @@ import {
 import { Type } from 'class-transformer'
 import { State } from '../../common/type'
 import { AdditionalInformation } from './additional-information.dto'
-import { SearchHit } from '@elastic/elasticsearch/api/types'
+import { SearchHit } from '@elastic/elasticsearch/lib/api/types'
 import { UserProfile } from '../user-profile.entity'
 
 export class GetUserProfileDto {
