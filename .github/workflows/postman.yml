@@ -37,7 +37,6 @@ jobs:
         env:
           ELASTIC_URL: 'http://localhost:9200'
           ELASTIC_INDEX_NAME_PREFIX: 'marketplace-index-prefix'
-          ELASTIC_INDEX: 'marketplace'
           ELASTIC_USERNAME: 'elastic'
           ELASTIC_PASSWORD: 'password'
         run: |
