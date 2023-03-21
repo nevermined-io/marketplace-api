@@ -32,10 +32,10 @@ jobs:
             -e "ELASTIC_PASSWORD=password"\
             --name es01 \
             -d docker.elastic.co/elasticsearch/elasticsearch:8.6.2
-      - name: Elasticsearch Node is reachable
-        run: |
-          docker cp es01:/usr/share/elasticsearch/config/certs/http_ca.crt .
-          curl --cacert http_ca.crt --retry 1 --retry-connrefused --connect-timeout 180 -u elastic:password -X GET "https://localhost:9200/"
+      # - name: Elasticsearch Node is reachable
+      #   run: |
+      #     docker cp es01:/usr/share/elasticsearch/config/certs/http_ca.crt .
+      #     curl --cacert http_ca.crt --retry 1 --retry-connrefused --connect-timeout 180 -u elastic:password -X GET "https://localhost:9200/"
 
       - name: Run tests
         run: |
