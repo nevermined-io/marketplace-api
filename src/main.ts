@@ -13,6 +13,7 @@ import { PermissionService } from './permissions/permission.service'
 import { AssetService } from './assets/asset.service'
 import { ServiceDDOService } from './assets/ddo-service.service'
 import { DDOStatusService } from './assets/ddo-status.service'
+import otelSDK from './shared/logger/tracing'
 
 const createIndexes = (app: NestExpressApplication) => {
   return new Promise<void>((resolve) => {
@@ -52,6 +53,11 @@ const createIndexes = (app: NestExpressApplication) => {
 }
 
 const bootstrap = async () => {
+  // initialize telemetry
+  if (otelSDK) {
+    otelSDK.start()
+  }
+
   const logger = new Logger(bootstrap.name)
 
   const app = await NestFactory.create<NestExpressApplication>(ApplicationModule, {

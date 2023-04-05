@@ -17,6 +17,11 @@ const DOTENV_SCHEMA = Joi.object({
     .default('development'),
   JWT_SECRET_KEY: Joi.string().required().error(new Error('JWT_SECRET_KEY is required!')),
   JWT_EXPIRY_KEY: Joi.string().default('60m'),
+
+  // Monitoring
+  TELEMETRY_URI: Joi.string(),
+  TELEMETRY_SERVICE_NAME: Joi.string().default('marketplace-api'),
+
   server: Joi.object({
     port: Joi.number().default(3000),
   }),
@@ -48,6 +53,8 @@ type DotenvSchemaKeys =
   | 'elasticsearch.prefix'
   | 'elasticsearch.auth.username'
   | 'elasticsearch.auth.password'
+  | 'TELEMETRY_URI'
+  | 'TELEMETRY_SERVICE_NAME'
 
 export class ConfigService {
   private readonly envConfig: EnvConfig

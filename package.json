@@ -1,6 +1,6 @@
 {
   "name": "marketplace_api",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "The API allowing to manage Nevermined Marketplace common functionalities",
   "main": "main.ts",
   "scripts": {
@@ -44,6 +44,10 @@
     "@nestjs/swagger": "^5.2.0",
     "@nestjs/typeorm": "^9.0.1",
     "@nevermined-io/passport-nevermined": "^0.1.1",
+    "@opentelemetry/api": "^1.4.1",
+    "@opentelemetry/auto-instrumentations-node": "^0.36.4",
+    "@opentelemetry/exporter-trace-otlp-http": "^0.37.0",
+    "@opentelemetry/sdk-node": "^0.37.0",
     "@sideway/address": "^5.0.0",
     "@sideway/formula": "^3.0.1",
     "@sideway/pinpoint": "^2.0.0",

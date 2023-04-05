@@ -2,6 +2,8 @@ module.exports = {
   NODE_ENV: 'production',
   JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
   JWT_EXPIRY_KEY: process.env.JWT_EXPIRY_KEY,
+  TELEMETRY_URI: process.env.TELEMETRY_URI,
+  TELEMETRY_SERVICE_NAME: process.env.TELEMETRY_SERVICE_NAME || 'marketplace-api',
   API_VERSION: process.env.API_VERSION,
   server: {
     port: process.env.PORT || 3100,
