@@ -27,6 +27,7 @@ const DOTENV_SCHEMA = Joi.object({
   }),
   elasticsearch: Joi.object({
     node: Joi.string().default('http://localhost:9200'),
+    prefix: Joi.string().required().error(new Error('ELASTIC_INDEX_NAME_PREFIX is required!')),
     auth: Joi.object({
       username: Joi.string().required().error(new Error('CLUSTER_NAME is required!')),
       password: Joi.string(),
@@ -44,6 +45,7 @@ type DotenvSchemaKeys =
   | 'JWT_EXPIRY_KEY'
   | 'security.enableHttpsRedirect'
   | 'elasticsearch.node'
+  | 'elasticsearch.prefix'
   | 'elasticsearch.auth.username'
   | 'elasticsearch.auth.password'
 

@@ -33,7 +33,7 @@ describe('Permission', () => {
   userProfile.addresses = ['0x37BB53e3d293494DE59fBe1FF78500423dcFd43B']
   userProfile.isListed = true
   userProfile.nickname = faker.internet.userName()
-  userProfile.name = faker.name.findName()
+  userProfile.name = faker.name.fullName()
   userProfile.email = faker.internet.email()
   userProfile.state = State.Confirmed
 

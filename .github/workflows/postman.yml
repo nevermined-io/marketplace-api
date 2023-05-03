@@ -35,8 +35,8 @@ jobs:
 
       - name: Run POSTMAN collection
         env:
-          ELASTIC_URL: 'http://localhost:9200'
-          ELASTIC_INDEX: 'marketplace'
+          ELASTIC_NODE: 'http://localhost:9200'
+          ELASTIC_INDEX_NAME_PREFIX: 'marketplace-index-prefix'
           ELASTIC_USERNAME: 'elastic'
           ELASTIC_PASSWORD: 'password'
         run: |
