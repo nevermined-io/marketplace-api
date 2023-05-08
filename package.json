@@ -52,7 +52,7 @@
     "class-validator": "^0.13.2",
     "cli-color": "^2.0.1",
     "dotenv": "^16.0.3",
-    "ethers": "^5.6.3",
+    "ethers": "^6.3.0",
     "joi": "^17.8.3",
     "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.21",
