@@ -47,7 +47,7 @@
     "@sideway/address": "^5.0.0",
     "@sideway/formula": "^3.0.1",
     "@sideway/pinpoint": "^2.0.0",
-    "cache-manager": "^5.1.4",
+    "cache-manager": "^5.2.1",
     "class-transformer": "0.5.1",
     "class-validator": "^0.13.2",
     "cli-color": "^2.0.1",
