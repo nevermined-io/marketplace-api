@@ -1,9 +1,8 @@
 /* eslint @typescript-eslint/no-unsafe-return: 0 */
 /* eslint @typescript-eslint/no-floating-promises: 0 */
-import { NotFoundException } from '@nestjs/common'
+import { Logger, NotFoundException } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import { faker } from '@faker-js/faker'
-import { Logger } from '../shared/logger/logger.service'
 import { UserProfileController } from './user-profile.controller'
 import { UserProfileService } from './user-profile.service'
 import { ElasticService } from '../shared/elasticsearch/elastic.service'
