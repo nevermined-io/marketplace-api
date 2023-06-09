@@ -62,10 +62,10 @@ describe('Asset', () => {
           provide: ElasticService,
           useValue: {
             addDocumentToIndex: (): void => {
-              Logger.log<string>('add document to index')
+              Logger.log('add document to index')
             },
             searchByIndex: (): void => {
-              Logger.log<string>('Searching')
+              Logger.log('Searching')
             },
           },
         },
