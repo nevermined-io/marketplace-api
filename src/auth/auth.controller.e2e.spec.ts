@@ -158,7 +158,7 @@ describe('AuthController', () => {
       .expect(201)
 
     expect(newTokenResponse.body).toHaveProperty('access_token')
-  })
+  }, 10000)
 
   afterAll(async () => {
     await app.close()

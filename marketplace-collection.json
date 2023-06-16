@@ -9123,7 +9123,7 @@
     },
     {
       "key": "elsUrl",
-      "value": "https://localhost:9200",
+      "value": "http://localhost:9200",
       "type": "any"
     }
   ]

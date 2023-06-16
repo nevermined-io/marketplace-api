@@ -26,6 +26,7 @@ jobs:
             -e "bootstrap.memory_lock=true" \
             -e "ELASTIC_PASSWORD=password"\
             --name es01 \
+            -e "xpack.security.enabled=false" \
             -d docker.elastic.co/elasticsearch/elasticsearch:8.6.2
       # - name: Elasticsearch Node is reachable
       #   run: |
@@ -38,7 +39,7 @@ jobs:
 
       - name: Run POSTMAN collection
         env:
-          ELASTIC_NODE: 'https://localhost:9200'
+          ELASTIC_NODE: 'http://localhost:9200'
           ELASTIC_INDEX_NAME_PREFIX: 'marketplace-index-prefix'
           ELASTIC_USERNAME: 'elastic'
           ELASTIC_PASSWORD: 'password'
