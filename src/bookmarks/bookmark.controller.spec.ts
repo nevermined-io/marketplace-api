@@ -2,7 +2,6 @@
 /* eslint @typescript-eslint/no-floating-promises: 0 */
 import { Test } from '@nestjs/testing'
 import { faker } from '@faker-js/faker'
-import { Logger } from '../shared/logger/logger.service'
 import { BookmarkController } from './bookmark.controller'
 import { BookmarkService } from './bookmark.service'
 import { Bookmark } from './bookmark.entity'
@@ -10,6 +9,7 @@ import { ElasticService } from '../shared/elasticsearch/elastic.service'
 import { GetBookmarkDto } from './dto/get-bookmark.dto'
 import { MarketplaceIndex } from '../common/type'
 import { SearchResponse } from '../common/helpers/search-response.dto'
+import { Logger } from '@nestjs/common'
 
 describe('BookmarkController', () => {
   let bookmarkController: BookmarkController
@@ -42,10 +42,10 @@ describe('BookmarkController', () => {
           provide: ElasticService,
           useValue: {
             addDocumentToIndex: (): void => {
-              Logger.log<string>('add document to index')
+              Logger.log('add document to index')
             },
             searchByIndex: (): void => {
-              Logger.log<string>('Searching')
+              Logger.log('Searching')
             },
           },
         },

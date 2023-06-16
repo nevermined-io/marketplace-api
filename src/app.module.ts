@@ -1,7 +1,6 @@
 import { Module, MiddlewareConsumer, RequestMethod } from '@nestjs/common'
 import { routes } from './routes'
 import { ConfigModule } from './shared/config/config.module'
-import { LoggerModule } from './shared/logger/logger.module'
 import { InfoModule } from './info/info.module'
 import { BookmarkModule } from './bookmarks/bookmark.module'
 import { PermissionModule } from './permissions/permission.module'
@@ -17,7 +16,6 @@ import { RolesGuard } from './common/guards/auth/roles.guards'
   imports: [
     RouterModule.register(routes),
     AssetModule,
-    LoggerModule,
     ConfigModule,
     InfoModule,
     BookmarkModule,

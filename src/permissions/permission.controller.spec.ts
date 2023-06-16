@@ -1,7 +1,6 @@
 /* eslint @typescript-eslint/no-unsafe-return: 0 */
 /* eslint @typescript-eslint/no-floating-promises: 0 */
 import { Test } from '@nestjs/testing'
-import { Logger } from '../shared/logger/logger.service'
 import { PermissionController } from './permission.controller'
 import { PermissionService } from './permission.service'
 import { ElasticService } from '../shared/elasticsearch/elastic.service'
@@ -9,6 +8,7 @@ import { permission, newPermission } from './permission.mockup'
 import { MarketplaceIndex, PermissionType } from '../common/type'
 import { GetPermissionDto } from './dto/get-permission.dto'
 import { SearchResponse } from '../common/helpers/search-response.dto'
+import { Logger } from '@nestjs/common'
 
 describe('UserProfileController', () => {
   let permissionController: PermissionController
@@ -28,10 +28,10 @@ describe('UserProfileController', () => {
           provide: ElasticService,
           useValue: {
             addDocumentToIndex: (): void => {
-              Logger.log<string>('add document to index')
+              Logger.log('add document to index')
             },
             searchByIndex: (): void => {
-              Logger.log<string>('Searching')
+              Logger.log('Searching')
             },
           },
         },

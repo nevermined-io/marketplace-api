@@ -1,4 +1,4 @@
-import { ValidationPipe } from '@nestjs/common'
+import { Logger, ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import { NestExpressApplication } from '@nestjs/platform-express'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
@@ -6,7 +6,6 @@ import { readFileSync } from 'fs'
 import path from 'path'
 import { ApplicationModule } from './app.module'
 import { ConfigService } from './shared/config/config.service'
-import { Logger } from './shared/logger/logger.service'
 import { BookmarkService } from './bookmarks/bookmark.service'
 import { UserProfileService } from './user-profiles/user-profile.service'
 import { PermissionService } from './permissions/permission.service'
@@ -52,15 +51,15 @@ const createIndexes = (app: NestExpressApplication) => {
 }
 
 const bootstrap = async () => {
-  const logger = new Logger(bootstrap.name)
-
   const app = await NestFactory.create<NestExpressApplication>(ApplicationModule, {
     cors: true,
-    logger,
+    logger:
+      process.env.NODE_ENV !== 'production'
+        ? ['error', 'log', 'warn', 'debug']
+        : ['error', 'log', 'warn'],
   })
   app.enable('trust proxy')
   app.useGlobalPipes(new ValidationPipe())
-  app.useLogger(app.get(Logger))
 
   const PORT = app.get<ConfigService>(ConfigService).get<number>('server.port')
 
@@ -85,7 +84,7 @@ const bootstrap = async () => {
   SwaggerModule.setup('api/v1/docs', app, document)
 
   await app.listen(PORT)
-  logger.log({
+  Logger.log({
     message: `server version ${packageJson.version} started!`,
     port: PORT,
     url: `https://localhost:${PORT}/api`,

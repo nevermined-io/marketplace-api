@@ -1,9 +1,8 @@
 /* eslint @typescript-eslint/no-unsafe-return: 0 */
 /* eslint @typescript-eslint/no-floating-promises: 0 */
 import { Test } from '@nestjs/testing'
-import { NotFoundException } from '@nestjs/common'
+import { Logger, NotFoundException } from '@nestjs/common'
 import { faker } from '@faker-js/faker'
-import { Logger } from '../shared/logger/logger.service'
 import { AssetController } from './asset.controller'
 import { AssetService } from './asset.service'
 import { DDOStatusService } from './ddo-status.service'
@@ -63,10 +62,10 @@ describe('Asset', () => {
           provide: ElasticService,
           useValue: {
             addDocumentToIndex: (): void => {
-              Logger.log<string>('add document to index')
+              Logger.log('add document to index')
             },
             searchByIndex: (): void => {
-              Logger.log<string>('Searching')
+              Logger.log('Searching')
             },
           },
         },
