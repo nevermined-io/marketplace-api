@@ -14,7 +14,7 @@ import { UserProfileService } from '../user-profiles/user-profile.service'
 import { UserProfile } from '../user-profiles/user-profile.entity'
 import { PermissionService } from '../permissions/permission.service'
 import { JWTPayload } from '@nevermined-io/passport-nevermined'
-import { EthSignJWT } from '@nevermined-io/nevermined-sdk-js'
+import { EthSignJWT } from '@nevermined-io/sdk'
 import { CLIENT_ASSERTION_TYPE } from '../common/guards/shared/jwt.utils'
 
 describe('AuthService', () => {

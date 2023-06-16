@@ -16,8 +16,8 @@ describe('BookmarkController', () => {
   let bookmarkService: BookmarkService
 
   const bookmark = new Bookmark()
-  bookmark.userId = `u-${faker.datatype.uuid()}`
-  bookmark.did = `did:${faker.datatype.uuid()}`
+  bookmark.userId = `u-${faker.string.uuid()}`
+  bookmark.did = `did:${faker.string.uuid()}`
   bookmark.description = faker.lorem.sentence()
 
   const req = {
@@ -78,7 +78,7 @@ describe('BookmarkController', () => {
         return {
           _source: bookmark,
           _index: MarketplaceIndex.Bookmark,
-          _id: faker.datatype.uuid(),
+          _id: faker.string.uuid(),
         } as any
       }
     })
@@ -87,7 +87,7 @@ describe('BookmarkController', () => {
       GetBookmarkDto.fromSource({
         _source: bookmark,
         _index: MarketplaceIndex.Bookmark,
-        _id: faker.datatype.uuid(),
+        _id: faker.string.uuid(),
       }),
     )
   })
@@ -98,7 +98,7 @@ describe('BookmarkController', () => {
         {
           _source: bookmark,
           _index: MarketplaceIndex.Bookmark,
-          _id: faker.datatype.uuid(),
+          _id: faker.string.uuid(),
         },
       ],
       total: 1,
@@ -121,13 +121,13 @@ describe('BookmarkController', () => {
     jest.spyOn(bookmarkService, 'findOneById').mockResolvedValue({
       _source: bookmark,
       _index: MarketplaceIndex.Bookmark,
-      _id: faker.datatype.uuid(),
+      _id: faker.string.uuid(),
     })
 
     jest.spyOn(bookmarkService, 'updateOneByEntryId').mockResolvedValue({
       _source: newBookmark,
       _index: MarketplaceIndex.Bookmark,
-      _id: faker.datatype.uuid(),
+      _id: faker.string.uuid(),
     })
 
     expect(
@@ -143,7 +143,7 @@ describe('BookmarkController', () => {
       GetBookmarkDto.fromSource({
         _source: newBookmark,
         _index: MarketplaceIndex.Bookmark,
-        _id: faker.datatype.uuid(),
+        _id: faker.string.uuid(),
       }),
     )
   })
@@ -162,7 +162,7 @@ describe('BookmarkController', () => {
     await bookmarkController.deleteBookmarkById(bookmark.id, {
       user: {
         userId: bookmark.userId,
-        address: faker.datatype.hexadecimal({ length: 18 }),
+        address: faker.string.hexadecimal({ length: 18 }),
         roles: [],
       },
     })
