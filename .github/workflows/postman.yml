@@ -46,7 +46,7 @@ jobs:
         run: |
           yarn setup:dev
           yarn dev &
-          sleep 20
+          sleep 25
           yarn test:postman
       - name: Output the run Details
         uses: actions/upload-artifact@v2
