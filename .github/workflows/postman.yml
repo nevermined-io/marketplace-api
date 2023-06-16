@@ -11,12 +11,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '16.x'
-      - name: Install dependencies
-        run: |
-          yarn
-      - name: Compile
-        run: |
-          yarn build
       - name: Running elasticsearch
         run: |
           docker run \
@@ -28,9 +22,12 @@ jobs:
             --name es01 \
             -e "xpack.security.enabled=false" \
             -d docker.elastic.co/elasticsearch/elasticsearch:8.8.1
-      - name: Elasticsearch Node is reachable
+      - name: Install dependencies
         run: |
-          curl --retry 10 --max-time 10  --retry-delay 10 --retry-connrefused --connect-timeout 180 -u elastic:password -X GET "http://localhost:9200/"
+          yarn
+      - name: Compile
+        run: |
+          yarn build
       # - name: Elasticsearch Node is reachable
       #   run: |
       #     docker cp es01:/usr/share/elasticsearch/config/certs/http_ca.crt .
@@ -49,7 +46,7 @@ jobs:
         run: |
           yarn setup:dev
           yarn dev &
-          sleep 25
+          sleep 30
           yarn test:postman
       - name: Output the run Details
         uses: actions/upload-artifact@v2
