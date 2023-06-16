@@ -30,7 +30,7 @@ jobs:
             -d docker.elastic.co/elasticsearch/elasticsearch:8.8.1
       - name: Elasticsearch Node is reachable
         run: |
-          curl --retry 1 --retry-connrefused --connect-timeout 180 -u elastic:password -X GET "http://localhost:9200/"
+          curl --retry 10 --max-time 10  --retry-delay 10 --retry-connrefused --connect-timeout 180 -u elastic:password -X GET "http://localhost:9200/"
       # - name: Elasticsearch Node is reachable
       #   run: |
       #     docker cp es01:/usr/share/elasticsearch/config/certs/http_ca.crt .
