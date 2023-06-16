@@ -32,7 +32,7 @@ jobs:
             -e "ELASTIC_PASSWORD=password"\
             --name es01 \
             -e "xpack.security.enabled=false" \
-            -d docker.elastic.co/elasticsearch/elasticsearch:8.6.2
+            -d docker.elastic.co/elasticsearch/elasticsearch:8.8.1
       # - name: Elasticsearch Node is reachable
       #   run: |
       #     docker cp es01:/usr/share/elasticsearch/config/certs/http_ca.crt .

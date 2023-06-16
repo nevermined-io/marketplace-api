@@ -15,7 +15,7 @@
     "format:fix": "yarn prettier -w src",
     "setup:dev": "cp ./config/local.js.sample ./config/local.js",
     "prebuild": "rm -rf ./dist && mkdir ./dist && cp -r ./config ./dist/config && cp package.json ./dist",
-    "prestart": "npm run build",
+    "prestart": "yarn run build",
     "start": "node -r dotenv/config dist/src/main.js",
     "start:dev": "export PROFILE=development; node -r dotenv/config dist/src/main.js",
     "start:prod": "export PROFILE=production; node -r dotenv/config dist/src/main.js",
@@ -31,7 +31,7 @@
     "test:postman:html": "newman run marketplace-collection.json -e marketplace-env.json -r htmlextra --reporter-htmlextra-export testResults/htmlreport.html",
     "typings:generate": "./node_modules/.bin/ts-node scripts/generate-typings",
     "upgrade-interactive": "npx npm-check --update",
-    "postupgrade-interactive": "npm test"
+    "postupgrade-interactive": "yarn test"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.8.1",
@@ -41,7 +41,7 @@
     "@nestjs/jwt": "^10.0.2",
     "@nestjs/passport": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
-    "@nestjs/swagger": "^6.3.0",
+    "@nestjs/swagger": "^7.0.0",
     "@nestjs/typeorm": "^10.0.0",
     "@nevermined-io/passport-nevermined": "^0.1.1",
     "@sideway/address": "^5.0.0",
