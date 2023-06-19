@@ -183,4 +183,25 @@ describe('Asset Controller e2e', () => {
     })
     expect(results.total_results.value).toEqual(1)
   })
+
+  it('should delete by word', async () => {
+    // assetController.deleteDDO("did:nv:0167a78d-59d5-4f28-8640-dfa51cf2382f",       {
+    //   roles: [],
+    //   userId: asset._nvm.userId,
+    //   address: undefined,
+    // },)
+    assetController.deleteAllDDOs()
+    const results = await assetController.listDDObyQueryPost({
+      query: {
+        simple_query_string: { query: '' },
+      },
+      sort: {
+        created: 'desc',
+      },
+      offset: 100,
+      page: 0,
+    })
+    console.log(results.total_results.value)
+    expect(results.total_results.value).toEqual(0)
+  })
 })

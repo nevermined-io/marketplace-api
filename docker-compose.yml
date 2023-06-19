@@ -2,7 +2,7 @@ version: '3'
 
 services:
   es01:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.6.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
     container_name: es01
     environment:
       - node.name=es01
@@ -23,7 +23,7 @@ services:
     networks:
       - elastic
   es02:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.6.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
     container_name: es02
     environment:
       - node.name=es02
@@ -42,7 +42,7 @@ services:
     networks:
       - elastic
   es03:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.6.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
     container_name: es03
     environment:
       - node.name=es03
