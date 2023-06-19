@@ -16,13 +16,13 @@ describe('UserProfileController', () => {
   let userProfileService: UserProfileService
 
   const userProfile = new UserProfile()
-  userProfile.userId = faker.datatype.uuid()
+  userProfile.userId = faker.string.uuid()
   userProfile.addresses = ['0x37BB53e3d293494DE59fBe1FF78500423dcFd43B']
   userProfile.creationDate = faker.date.past()
   userProfile.updateDate = faker.date.recent()
   userProfile.isListed = true
   userProfile.nickname = faker.internet.userName()
-  userProfile.name = faker.name.fullName()
+  userProfile.name = faker.person.fullName()
   userProfile.email = faker.internet.email()
   userProfile.state = State.Confirmed
 

@@ -4,7 +4,7 @@ import { CreateAssetDto } from './dto/create-asset.dto'
 import { DDOStatus } from './ddo-status.entity'
 import { Status, SourceType } from '../common/type'
 import { MarketplaceIndex } from '../common/type'
-import { SearchHit } from '@elastic/elasticsearch/api/types'
+import { SearchHit } from '@elastic/elasticsearch/lib/api/types'
 import { StatusMappings } from './ddo-status.mappings'
 
 @Injectable()
@@ -18,7 +18,7 @@ export class DDOStatusService {
   }
 
   async checkIndex(): Promise<boolean> {
-    return (await this.elasticService.checkExistingIndex(MarketplaceIndex.DDOStatus)).body
+    return await this.elasticService.checkExistingIndex(MarketplaceIndex.DDOStatus)
   }
 
   async createOne(createAssetDto: CreateAssetDto, url: string) {

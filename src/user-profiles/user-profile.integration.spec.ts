@@ -29,17 +29,17 @@ describe('User Profile', () => {
   let token: LoginDto
   let userIdAuth: string
   const userProfile = new UserProfile()
-  userProfile.userId = faker.datatype.uuid()
+  userProfile.userId = faker.string.uuid()
   userProfile.addresses = ['0x37BB53e3d293494DE59fBe1FF78500423dcFd43B']
   userProfile.isListed = true
   userProfile.nickname = faker.internet.userName()
-  userProfile.name = faker.name.fullName()
+  userProfile.name = faker.person.fullName()
   userProfile.email = faker.internet.email()
   userProfile.state = State.Confirmed
 
   const userProfileTwo = {
     ...userProfile,
-    name: faker.name.fullName(),
+    name: faker.person.fullName(),
     nickname: faker.internet.userName(),
     email: faker.internet.email(),
     addresses: ['0x47BB53e3d293494DE59fBe1FF78500423dcFd43C'],

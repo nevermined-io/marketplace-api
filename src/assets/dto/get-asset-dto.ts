@@ -6,7 +6,7 @@ import { ProofDto } from './proof.dto'
 import { PublicKeyDto } from './publicKey.dto'
 import { serviceExample } from './service.example'
 import { ServiceDto } from './service.dto'
-import { SearchHit } from '@elastic/elasticsearch/api/types'
+import { SearchHit } from '@elastic/elasticsearch/lib/api/types'
 import { Asset } from '../asset.entity'
 import { NvmConfigDto } from './nvmConfig.dto'
 

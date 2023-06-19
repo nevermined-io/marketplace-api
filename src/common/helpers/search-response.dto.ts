@@ -1,6 +1,6 @@
 import { SearchQueryDto } from './search-query.dto'
 import { SearchResults } from './search-query.interface'
-import { SearchHitsMetadata } from '@elastic/elasticsearch/api/types'
+import { SearchHitsMetadata } from '@elastic/elasticsearch/lib/api/types'
 import { ApiProperty, getSchemaPath } from '@nestjs/swagger'
 import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface'
 

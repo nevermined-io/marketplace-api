@@ -1,5 +1,8 @@
-import { ApiResponse } from '@elastic/elasticsearch'
-import { SearchHitsMetadata, QueryDslQueryContainer } from '@elastic/elasticsearch/api/types'
+import {
+  SearchHitsMetadata,
+  QueryDslQueryContainer,
+  IndicesExistsResponse,
+} from '@elastic/elasticsearch/lib/api/types'
 import { Injectable } from '@nestjs/common'
 import { ElasticsearchService } from '@nestjs/elasticsearch'
 import { SearchQueryDto } from '../../common/helpers/search-query.dto'
@@ -43,7 +46,7 @@ export class ElasticService {
         },
         _source_includes,
       })
-    ).body.hits
+    ).hits
   }
 
   async updateDocumentByIndexAndId(index: string, id: string, document: unknown) {
@@ -55,12 +58,10 @@ export class ElasticService {
   }
 
   async getDocumentByIndexAndId(index: string, id: string): Promise<unknown> {
-    return (
-      await this.elasticsearchService.get({
-        index: `${this.configService.get<string>('elasticsearch.prefix')}-${index}`,
-        id,
-      })
-    ).body
+    return await this.elasticsearchService.get({
+      index: `${this.configService.get<string>('elasticsearch.prefix')}-${index}`,
+      id,
+    })
   }
 
   async deleteDocumentByIndexAndId(index: string, id: string): Promise<unknown> {
@@ -86,7 +87,7 @@ export class ElasticService {
     })
   }
 
-  async checkExistingIndex(index: string): Promise<ApiResponse<boolean, unknown>> {
+  async checkExistingIndex(index: string): Promise<IndicesExistsResponse> {
     return this.elasticsearchService.indices.exists({
       index: `${this.configService.get<string>('elasticsearch.prefix')}-${index}`,
     })

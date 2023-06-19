@@ -13,7 +13,7 @@ import { State, MarketplaceIndex } from '../common/type'
 import { PermissionService } from '../permissions/permission.service'
 import { NeverminedStrategy } from './nvm.strategy'
 import { INestApplication } from '@nestjs/common'
-import { EthSignJWT } from '@nevermined-io/nevermined-sdk-js'
+import { EthSignJWT } from '@nevermined-io/sdk'
 import request from 'supertest'
 import { ApplicationModule } from '../app.module'
 
@@ -158,7 +158,7 @@ describe('AuthController', () => {
       .expect(201)
 
     expect(newTokenResponse.body).toHaveProperty('access_token')
-  })
+  }, 10000)
 
   afterAll(async () => {
     await app.close()

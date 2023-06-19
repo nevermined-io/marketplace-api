@@ -14,7 +14,7 @@ const asset = new Asset()
 asset['@context'] = 'https://w3id.org/did/v1'
 asset.created = '2022-10-12T14:04:59Z'
 asset._nvm = {
-  userId: `u-${faker.datatype.uuid()}`,
+  userId: `u-${faker.string.uuid()}`,
   appId: '',
   versions: [],
 }
@@ -22,9 +22,9 @@ asset.service = [new ServiceDto()]
 asset.service[0].attributes = new AttributesDto()
 
 const service = new Service()
-service.agreementId = faker.datatype.uuid()
-service.index = faker.datatype.number()
-service.templateId = faker.datatype.uuid()
+service.agreementId = faker.string.uuid()
+service.index = faker.number.int()
+service.templateId = faker.string.uuid()
 service.type = 'metadata'
 service.attributes = new AttributesDto()
 
@@ -50,7 +50,7 @@ describe('Asset Controller e2e', () => {
   it('should store the DDOs', async () => {
     // Test1
     let newAsset = { ...asset }
-    newAsset.id = `did:nv:${faker.datatype.uuid()}`
+    newAsset.id = `did:nv:${faker.string.uuid()}`
     newAsset.service[0].attributes.main = new MainDto()
     newAsset.service[0].attributes.main.name = 'Test1'
 
@@ -70,7 +70,7 @@ describe('Asset Controller e2e', () => {
 
     // Test2
     newAsset = { ...asset }
-    newAsset.id = `did:nv:${faker.datatype.uuid()}`
+    newAsset.id = `did:nv:${faker.string.uuid()}`
     newAsset.service[0].attributes.main = new MainDto()
     newAsset.service[0].attributes.main.name = 'Test2'
 
@@ -89,7 +89,7 @@ describe('Asset Controller e2e', () => {
     )
 
     newAsset = { ...asset }
-    newAsset.id = `did:nv:${faker.datatype.uuid()}`
+    newAsset.id = `did:nv:${faker.string.uuid()}`
     newAsset.service[0].attributes.main = new MainDto()
     newAsset.service[0].attributes.main.name = 'Test2'
 
@@ -109,7 +109,7 @@ describe('Asset Controller e2e', () => {
 
     // Test3
     newAsset = { ...asset }
-    newAsset.id = `did:nv:${faker.datatype.uuid()}`
+    newAsset.id = `did:nv:${faker.string.uuid()}`
     newAsset.service[0].attributes.main = new MainDto()
     newAsset.service[0].attributes.main.name = 'Test3'
 
@@ -182,5 +182,26 @@ describe('Asset Controller e2e', () => {
       page: 0,
     })
     expect(results.total_results.value).toEqual(1)
+  })
+
+  it('should delete by word', async () => {
+    // assetController.deleteDDO("did:nv:0167a78d-59d5-4f28-8640-dfa51cf2382f",       {
+    //   roles: [],
+    //   userId: asset._nvm.userId,
+    //   address: undefined,
+    // },)
+    assetController.deleteAllDDOs()
+    const results = await assetController.listDDObyQueryPost({
+      query: {
+        simple_query_string: { query: '' },
+      },
+      sort: {
+        created: 'desc',
+      },
+      offset: 100,
+      page: 0,
+    })
+    console.log(results.total_results.value)
+    expect(results.total_results.value).toEqual(0)
   })
 })

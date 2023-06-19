@@ -3,7 +3,7 @@ import { MarketplaceIndex, PermissionType } from '../common/type'
 import { ElasticService } from '../shared/elasticsearch/elastic.service'
 import { Permission } from './permission.entity'
 import { CreatePermissionDto } from './dto/create-permission.dto'
-import { SearchHit, SearchHitsMetadata } from '@elastic/elasticsearch/api/types'
+import { SearchHit, SearchHitsMetadata } from '@elastic/elasticsearch/lib/api/types'
 import { SearchQueryDto } from '../common/helpers/search-query.dto'
 import { UpdatePermissionDto } from './dto/update-permission.dto'
 import { PermissionMappings } from './permission.mappings'
@@ -19,7 +19,7 @@ export class PermissionService {
   }
 
   async checkIndex(): Promise<boolean> {
-    return (await this.elasticService.checkExistingIndex(MarketplaceIndex.Permission)).body
+    return await this.elasticService.checkExistingIndex(MarketplaceIndex.Permission)
   }
 
   async createOne(createPermissionDto: CreatePermissionDto): Promise<Permission> {

@@ -33,12 +33,12 @@ describe('Bookmark', () => {
   userProfile.addresses = ['0x37BB53e3d293494DE59fBe1FF78500423dcFd43B']
   userProfile.isListed = true
   userProfile.nickname = faker.internet.userName()
-  userProfile.name = faker.name.fullName()
+  userProfile.name = faker.person.fullName()
   userProfile.email = faker.internet.email()
   userProfile.state = State.Confirmed
 
   bookmark.userId = userProfile.userId
-  bookmark.did = `did:${faker.datatype.uuid()}`
+  bookmark.did = `did:${faker.string.uuid()}`
   bookmark.description = faker.lorem.sentence()
 
   const newBookmark = { ...bookmark, description: faker.lorem.sentence() }
@@ -48,7 +48,7 @@ describe('Bookmark', () => {
     findOneById: () => {
       return {
         _source: bookmark,
-        _id: faker.datatype.uuid(),
+        _id: faker.string.uuid(),
       }
     },
     findManyByUserId: (userId: string) => {

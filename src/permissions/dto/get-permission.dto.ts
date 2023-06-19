@@ -1,4 +1,4 @@
-import { SearchHit } from '@elastic/elasticsearch/api/types'
+import { SearchHit } from '@elastic/elasticsearch/lib/api/types'
 import { ApiProperty } from '@nestjs/swagger'
 import { IsString } from 'class-validator'
 import { v4 as uuidv4 } from 'uuid'

@@ -28,11 +28,11 @@ describe('Asset', () => {
   let serviceDDOService: ServiceDDOService
 
   const asset = new Asset()
-  asset.id = `did:nv:${faker.datatype.uuid()}`
+  asset.id = `did:nv:${faker.string.uuid()}`
   asset['@context'] = 'https://w3id.org/did/v1'
   asset.created = new Date().toDateString()
   asset._nvm = {
-    userId: `u-${faker.datatype.uuid()}`,
+    userId: `u-${faker.string.uuid()}`,
     appId: '',
     versions: [],
   }
@@ -48,9 +48,9 @@ describe('Asset', () => {
   }
 
   const service = new Service()
-  service.agreementId = faker.datatype.uuid()
-  service.index = faker.datatype.number()
-  service.templateId = faker.datatype.uuid()
+  service.agreementId = faker.string.uuid()
+  service.index = faker.number.int()
+  service.templateId = faker.string.uuid()
   service.type = 'metadata'
   service.attributes = new AttributesDto()
 
@@ -114,7 +114,7 @@ describe('Asset', () => {
         {
           _source: asset,
           _index: MarketplaceIndex.Asset,
-          _id: faker.datatype.uuid(),
+          _id: faker.string.uuid(),
         },
       ],
       total: 1,
@@ -133,7 +133,7 @@ describe('Asset', () => {
 
   it('should get a list of assets that match with the passed query', async () => {
     const created = 'Tue Mar 29 2020'
-    const assetCopy = { ...asset, created, id: `div:nv:${faker.datatype.uuid()}` }
+    const assetCopy = { ...asset, created, id: `div:nv:${faker.string.uuid()}` }
     const query = {
       sort: {
         created: 'desc',
@@ -187,7 +187,7 @@ describe('Asset', () => {
 
   it('should get a list of assets that match with the passed body query', async () => {
     const created = 'Tue Mar 29 2020'
-    const assetCopy = { ...asset, created, id: `div:nv:${faker.datatype.uuid()}` }
+    const assetCopy = { ...asset, created, id: `div:nv:${faker.string.uuid()}` }
     const query = {
       sort: {
         created: 'desc',
@@ -318,7 +318,7 @@ describe('Asset', () => {
 
     await assetController.deleteDDO(asset.id, {
       userId: asset._nvm.userId,
-      address: faker.datatype.hexadecimal({ length: 18 }),
+      address: faker.string.hexadecimal({ length: 18 }),
       roles: [],
     })
 

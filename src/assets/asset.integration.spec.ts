@@ -35,7 +35,7 @@ describe('Asset', () => {
   userProfile.addresses = ['0x37BB53e3d293494DE59fBe1FF78500423dcFd43B']
   userProfile.isListed = true
   userProfile.nickname = faker.internet.userName()
-  userProfile.name = faker.name.fullName()
+  userProfile.name = faker.person.fullName()
   userProfile.email = faker.internet.email()
   userProfile.state = State.Confirmed
 
@@ -43,7 +43,7 @@ describe('Asset', () => {
   service.userId = userProfile.userId
 
   const created = 'Tue Mar 29 2020'
-  const assetCopy = { ...asset, created, id: `div:nv:${faker.datatype.uuid()}` }
+  const assetCopy = { ...asset, created, id: `div:nv:${faker.string.uuid()}` }
   delete assetCopy.service
 
   const assetService = {
