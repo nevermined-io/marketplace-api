@@ -3,16 +3,17 @@ LABEL maintainer="Nevermined <root@nevermined.io>"
 
 RUN apk add --no-cache autoconf automake alpine-sdk
 
-COPY package*.json ./
+COPY package.json ./
 
-RUN npm install
 
 COPY src ./src
 COPY config ./config
-COPY package*.json ./
+COPY yarn.lock ./
 COPY tsconfig* ./
 
-RUN npm run build
+RUN yarn install
 
-ENTRYPOINT ["npm", "run", "start:prod"]
+RUN yarn run build
+
+ENTRYPOINT ["yarn", "run", "start:prod"]
 
