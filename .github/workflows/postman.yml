@@ -28,10 +28,6 @@ jobs:
       - name: Compile
         run: |
           yarn build
-      # - name: Elasticsearch Node is reachable
-      #   run: |
-      #     docker cp es01:/usr/share/elasticsearch/config/certs/http_ca.crt .
-      #     curl --cacert http_ca.crt --retry 1 --retry-connrefused --connect-timeout 180 -u elastic:password -X GET "https://localhost:9200/"
 
       - name: Make Directory for results
         run: |
