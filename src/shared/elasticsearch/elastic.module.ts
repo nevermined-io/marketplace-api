@@ -11,16 +11,26 @@ import { ConfigModule } from '../config/config.module'
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
-        const username = configService.get<string>('elasticsearch.auth.username')
-        const password = configService.get<string>('elasticsearch.auth.password')
         const node = configService.get<string>('elasticsearch.node')
-
-        return {
-          node,
-          auth: {
-            username,
-            password,
-          },
+        const cloudId = configService.get<string>('elasticsearch.cloudId')
+        if (cloudId) {
+          const apiKey = configService.get<string>('elasticsearch.auth.apiKey')
+          return {
+            cloud: { id: cloudId },
+            auth: {
+              apiKey,
+            },
+          }
+        } else {
+          const username = configService.get<string>('elasticsearch.auth.username')
+          const password = configService.get<string>('elasticsearch.auth.password')
+          return {
+            node,
+            auth: {
+              username,
+              password,
+            },
+          }
         }
       },
     }),
