@@ -14,11 +14,10 @@ module.exports = {
     enableHttpsRedirect: process.env.ENABLE_HTTPS_REDIRECT,
   },
   elasticsearch: {
-    node: process.env.ELASTIC_NODE,
+    cloudId: process.env.ELASTIC_CLOUD_ID,
     prefix: process.env.ELASTIC_INDEX_NAME_PREFIX,
     auth: {
-      username: process.env.ELASTIC_USERNAME,
-      password: process.env.ELASTIC_PASSWORD,
+      apiKey: process.env.ELASTIC_API_KEY,
     },
   },
   assetIndex: process.env.ASSET_INDEX,

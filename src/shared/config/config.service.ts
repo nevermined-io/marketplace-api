@@ -28,13 +28,18 @@ const DOTENV_SCHEMA = Joi.object({
   elasticsearch: Joi.object({
     node: Joi.string().default('http://localhost:9200'),
     prefix: Joi.string().required().error(new Error('ELASTIC_INDEX_NAME_PREFIX is required!')),
+    cloudId: Joi.string(), //.required().error(new Error('API_KEY is required!')),
     auth: Joi.object({
-      username: Joi.string().required().error(new Error('CLUSTER_NAME is required!')),
+      username: Joi.string(),
       password: Joi.string(),
-    }).error(new Error('auth of elasticsearch need to be set')),
+      apiKey: Joi.string(), //.required().error(new Error('API_KEY is required!')),
+    })
+      .or('username', 'apiKey')
+      .error(new Error('auth of elasticsearch need to be set. Provide user/password or apiKey')),
   })
+    .or('node', 'cloudId')
     .required()
-    .error(new Error('The config of elasticsearch need to be set')),
+    .error(new Error('The config of elasticsearch need to be set. Provide node or cloudId.')),
 })
 
 type DotenvSchemaKeys =
@@ -46,8 +51,10 @@ type DotenvSchemaKeys =
   | 'security.enableHttpsRedirect'
   | 'elasticsearch.node'
   | 'elasticsearch.prefix'
+  | 'elasticsearch.cloudId'
   | 'elasticsearch.auth.username'
   | 'elasticsearch.auth.password'
+  | 'elasticsearch.auth.apiKey'
 
 export class ConfigService {
   private readonly envConfig: EnvConfig
