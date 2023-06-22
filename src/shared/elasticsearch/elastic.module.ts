@@ -3,6 +3,7 @@ import { ElasticsearchModule } from '@nestjs/elasticsearch'
 import { ElasticService } from './elastic.service'
 import { ConfigService } from '../config/config.service'
 import { ConfigModule } from '../config/config.module'
+import { Logger } from '@nevermined-io/sdk'
 
 @Module({
   imports: [
@@ -13,7 +14,9 @@ import { ConfigModule } from '../config/config.module'
       useFactory: (configService: ConfigService) => {
         const node = configService.get<string>('elasticsearch.node')
         const cloudId = configService.get<string>('elasticsearch.cloudId')
-        if (cloudId) {
+        Logger.log('Connecting elasticsearch...')
+        if (cloudId && cloudId !== '') {
+          Logger.log('Connecting using cloudId and apiKey.')
           const apiKey = configService.get<string>('elasticsearch.auth.apiKey')
           return {
             cloud: { id: cloudId },
@@ -22,6 +25,7 @@ import { ConfigModule } from '../config/config.module'
             },
           }
         } else {
+          Logger.log('Connecting using user/pass')
           const username = configService.get<string>('elasticsearch.auth.username')
           const password = configService.get<string>('elasticsearch.auth.password')
           return {
