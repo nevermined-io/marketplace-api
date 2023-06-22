@@ -1,6 +1,6 @@
 {
   "name": "marketplace_api",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "The API allowing to manage Nevermined Marketplace common functionalities",
   "main": "main.ts",
   "scripts": {

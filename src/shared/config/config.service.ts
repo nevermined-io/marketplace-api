@@ -26,18 +26,17 @@ const DOTENV_SCHEMA = Joi.object({
     enableHttpsRedirect: false,
   }),
   elasticsearch: Joi.object({
-    node: Joi.string().default('http://localhost:9200'),
+    node: Joi.string(),
     prefix: Joi.string().required().error(new Error('ELASTIC_INDEX_NAME_PREFIX is required!')),
-    cloudId: Joi.string(), //.required().error(new Error('API_KEY is required!')),
+    cloudId: Joi.string(),
     auth: Joi.object({
       username: Joi.string(),
       password: Joi.string(),
-      apiKey: Joi.string(), //.required().error(new Error('API_KEY is required!')),
+      apiKey: Joi.string(),
     })
       .or('username', 'apiKey')
       .error(new Error('auth of elasticsearch need to be set. Provide user/password or apiKey')),
   })
-    .or('node', 'cloudId')
     .required()
     .error(new Error('The config of elasticsearch need to be set. Provide node or cloudId.')),
 })
