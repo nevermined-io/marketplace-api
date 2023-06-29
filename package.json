@@ -1,6 +1,6 @@
 {
   "name": "marketplace_api",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "The API allowing to manage Nevermined Marketplace common functionalities",
   "main": "main.ts",
   "scripts": {
@@ -43,7 +43,7 @@
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^7.0.0",
     "@nestjs/typeorm": "^10.0.0",
-    "@nevermined-io/passport-nevermined": "^0.1.1",
+    "@nevermined-io/passport-nevermined": "^0.2.0",
     "@sideway/address": "^5.0.0",
     "@sideway/formula": "^3.0.1",
     "@sideway/pinpoint": "^2.0.0",
@@ -58,6 +58,7 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.27",
+    "morgan": "^1.10.0",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
@@ -78,6 +79,7 @@
     "@types/jest": "^29.5.2",
     "@types/jsonwebtoken": "^9.0.1",
     "@types/lodash": "^4.14.191",
+    "@types/morgan": "^1.9.4",
     "@types/node": "^20.3.1",
     "@types/passport-jwt": "^3.0.6",
     "@types/passport-local": "^1.0.35",
