@@ -12,6 +12,7 @@ import { PermissionService } from './permissions/permission.service'
 import { AssetService } from './assets/asset.service'
 import { ServiceDDOService } from './assets/ddo-service.service'
 import { DDOStatusService } from './assets/ddo-status.service'
+import morgan from 'morgan'
 
 const createIndexes = (app: NestExpressApplication) => {
   return new Promise<void>((resolve) => {
@@ -53,11 +54,20 @@ const createIndexes = (app: NestExpressApplication) => {
 const bootstrap = async () => {
   const app = await NestFactory.create<NestExpressApplication>(ApplicationModule, {
     cors: true,
-    logger:
-      process.env.NODE_ENV !== 'production'
-        ? ['error', 'log', 'warn', 'debug']
-        : ['error', 'log', 'warn'],
+    logger: ['error', 'log', 'warn', 'debug'],
   })
+
+  // http middleware logger
+  app.use(
+    morgan('dev', {
+      stream: {
+        write: (message: string) => {
+          Logger.log(message.trim())
+        },
+      },
+    }),
+  )
+
   app.enable('trust proxy')
   app.useGlobalPipes(new ValidationPipe())
 
