@@ -36,7 +36,7 @@
   "dependencies": {
     "@elastic/elasticsearch": "^8.8.1",
     "@nestjs/common": "^10.0.0",
-    "@nestjs/core": "^10.0.0",
+    "@nestjs/core": "^10.0.4",
     "@nestjs/elasticsearch": "^10.0.0",
     "@nestjs/jwt": "^10.0.2",
     "@nestjs/passport": "^10.0.0",
@@ -87,7 +87,7 @@
     "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.55.0",
-    "eslint": "^8.40.0",
+    "eslint": "^8.44.0",
     "eslint-config-nevermined": "^0.2.0",
     "eslint-config-next": "^13.4.6",
     "eslint-config-prettier": "^8.5.0",
