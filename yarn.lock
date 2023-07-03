@@ -1381,10 +1381,10 @@
     jose "^4.11.2"
     passport-strategy "^1.0.0"
 
-"@nevermined-io/sdk@1.4.4":
-  version "1.4.4"
-  resolved "https://registry.yarnpkg.com/@nevermined-io/sdk/-/sdk-1.4.4.tgz#a30e1eec8b83ed440f83cf8465b8653580d36c2b"
-  integrity sha512-BSPz9PRT9GGRpURW51aLzCutTomH71BsOWr+MYdVQv++lJeyNht/qcbklCC4JLb0ImA3bKkQraiwDeHdg2pOsA==
+"@nevermined-io/sdk@1.5.3":
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/@nevermined-io/sdk/-/sdk-1.5.3.tgz#edd68e38b158c88692624c27a74b2f1a885ba9a0"
+  integrity sha512-eFSNrbcunOVChZSAHPueLPanpJXj6RD5EiqXcS4ru18A3oSFdWyRYjKTwhpQF5zvkbQ+Gm5n2Iun8o0G7pgu/Q==
   dependencies:
     "@nevermined-io/subgraphs" "0.5.1"
     assert "^2.0.0"
