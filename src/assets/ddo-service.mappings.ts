@@ -9,6 +9,10 @@ export const ServiceMappings: MappingProperty = {
       type: 'keyword',
       index: false,
     },
+    did: {
+      type: 'keyword',
+      index: false,
+    },    
     index: {
       type: 'integer',
     },
