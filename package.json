@@ -69,7 +69,7 @@
     "typescript": "^4.9.5"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.6.5",
+    "@commitlint/cli": "^17.6.7",
     "@commitlint/config-conventional": "^17.6.6",
     "@faker-js/faker": "^8.0.2",
     "@nestjs/cli": "^10.1.11",
