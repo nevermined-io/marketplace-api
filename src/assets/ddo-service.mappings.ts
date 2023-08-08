@@ -12,7 +12,7 @@ export const ServiceMappings: MappingProperty = {
     did: {
       type: 'keyword',
       index: false,
-    },    
+    },
     index: {
       type: 'integer',
     },
