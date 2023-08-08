@@ -10,10 +10,13 @@ import { ConfigService } from '../config/config.service'
 
 @Injectable()
 export class ElasticService {
+  private readonly refresh: boolean
   constructor(
     private readonly elasticsearchService: ElasticsearchService,
     private readonly configService: ConfigService,
-  ) {}
+  ) {
+    this.refresh = process.env.NODE_ENV === 'development'
+  }
 
   async addDocumentToIndex(index: string, id: string, document: unknown) {
     return this.elasticsearchService.index({
@@ -21,6 +24,7 @@ export class ElasticService {
       id,
       body: document,
       op_type: 'create',
+      refresh: this.refresh,
     })
   }
 
@@ -54,6 +58,7 @@ export class ElasticService {
       index: `${this.configService.get<string>('elasticsearch.prefix')}-${index}`,
       id,
       body: document,
+      refresh: this.refresh,
     })
   }
 
@@ -61,6 +66,7 @@ export class ElasticService {
     return await this.elasticsearchService.get({
       index: `${this.configService.get<string>('elasticsearch.prefix')}-${index}`,
       id,
+      refresh: this.refresh,
     })
   }
 
@@ -68,6 +74,7 @@ export class ElasticService {
     return this.elasticsearchService.delete({
       index: `${this.configService.get<string>('elasticsearch.prefix')}-${index}`,
       id,
+      refresh: this.refresh,
     })
   }
 
@@ -77,6 +84,7 @@ export class ElasticService {
       body: {
         query,
       },
+      refresh: this.refresh,
     })
   }
 
