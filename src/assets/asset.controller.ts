@@ -253,11 +253,11 @@ export class AssetController {
     @Body() updateAssetDto: UpdateAssetDto,
     @User() user: AuthUser,
   ): Promise<GetAssetDto> {
-    const { userId, roles } = user
+    const { roles, address } = user
 
     const asset: Asset = (await this.assetService.findOneById(did))._source
 
-    checkOwnership(userId, asset._nvm.userId, roles)
+    checkOwnership(address, asset.proof.creator, roles)
 
     const assetSource = await this.assetService.updateOneByEntryId(did, updateAssetDto)
 
