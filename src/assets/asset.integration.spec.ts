@@ -28,7 +28,7 @@ import { PermissionService } from '../permissions/permission.service'
 
 describe('Asset', () => {
   let app: INestApplication
-  let token: LoginDto
+  let token: LoginDto & { address: string }
   let authService: AuthService
 
   const userProfile = new UserProfile()
@@ -168,6 +168,13 @@ describe('Asset', () => {
     await app.init()
 
     token = await createWallet(authService)
+
+    asset.proof = {
+      creator: token.address,
+      created: asset.created,
+      signatureValue: faker.number.hex({ max: 10 }),
+      type: 'sha256',
+    }
   })
 
   it('/POST ddo', async () => {

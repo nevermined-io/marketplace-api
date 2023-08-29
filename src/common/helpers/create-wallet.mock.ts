@@ -10,6 +10,6 @@ export const createWallet = async (authService: AuthService) => {
     exp: Math.floor(Date.now() / 1000 + 3600),
   }
 
-  const accessToken = authService.validateClaim(jwtPayload)
-  return accessToken
+  const accessToken = await authService.validateClaim(jwtPayload)
+  return { ...accessToken, address: jwtPayload.iss }
 }
