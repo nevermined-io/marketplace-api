@@ -15,7 +15,7 @@ export class ElasticService {
     private readonly elasticsearchService: ElasticsearchService,
     private readonly configService: ConfigService,
   ) {
-    this.refresh = process.env.NODE_ENV === 'development'
+    this.refresh = true
   }
 
   async addDocumentToIndex(index: string, id: string, document: unknown) {
