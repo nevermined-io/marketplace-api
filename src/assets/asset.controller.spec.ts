@@ -27,6 +27,8 @@ describe('Asset', () => {
   let ddosStatusService: DDOStatusService
   let serviceDDOService: ServiceDDOService
 
+  const walletAddress = faker.number.hex({ max: 10 })
+
   const asset = new Asset()
   asset.id = `did:nv:${faker.string.uuid()}`
   asset['@context'] = 'https://w3id.org/did/v1'
@@ -35,6 +37,12 @@ describe('Asset', () => {
     userId: `u-${faker.string.uuid()}`,
     appId: '',
     versions: [],
+  }
+  asset.proof = {
+    creator: walletAddress,
+    created: asset.created,
+    signatureValue: faker.number.hex({ max: 10 }),
+    type: 'sha256',
   }
 
   const ddoStatus = new DDOStatus()
@@ -294,7 +302,7 @@ describe('Asset', () => {
       await assetController.updateDDO(asset.id, updateAsset, {
         roles: [],
         userId: asset._nvm.userId,
-        address: undefined,
+        address: walletAddress,
       }),
     ).toStrictEqual(
       GetAssetDto.fromSource({

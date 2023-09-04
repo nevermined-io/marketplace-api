@@ -1,6 +1,6 @@
 {
   "name": "marketplace_api",
-  "version": "0.6.5",
+  "version": "0.6.7",
   "description": "The API allowing to manage Nevermined Marketplace common functionalities",
   "main": "main.ts",
   "scripts": {
@@ -101,7 +101,7 @@
     "lint-staged": "^13.2.3",
     "newman": "^5.3.2",
     "newman-reporter-htmlextra": "^1.22.11",
-    "prettier": "^2.8.8",
+    "prettier": "^3.0.3",
     "prettier-package-json": "^2.8.0",
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.0",
