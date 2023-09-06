@@ -28,6 +28,7 @@ export class UserProfileService {
       MarketplaceIndex.UserProfile,
       userProfile.userId,
       userProfile,
+      'wait_for',
     )
 
     return userProfile
@@ -57,9 +58,14 @@ export class UserProfileService {
     entryId: string,
     updateUserProfileDto: UpdateUserProfileDto,
   ): Promise<SearchHit<UserProfile>> {
-    await this.elasticService.updateDocumentByIndexAndId(MarketplaceIndex.UserProfile, entryId, {
-      doc: updateUserProfileDto,
-    })
+    await this.elasticService.updateDocumentByIndexAndId(
+      MarketplaceIndex.UserProfile,
+      entryId,
+      {
+        doc: updateUserProfileDto,
+      },
+      'wait_for',
+    )
 
     return this.elasticService.getDocumentByIndexAndId(
       MarketplaceIndex.UserProfile,
@@ -77,9 +83,14 @@ export class UserProfileService {
 
     const disabledUserProfile = { ...userProfile, state: State.Disabled }
 
-    await this.elasticService.updateDocumentByIndexAndId(MarketplaceIndex.UserProfile, entryId, {
-      doc: disabledUserProfile,
-    })
+    await this.elasticService.updateDocumentByIndexAndId(
+      MarketplaceIndex.UserProfile,
+      entryId,
+      {
+        doc: disabledUserProfile,
+      },
+      'wait_for',
+    )
 
     return disabledUserProfile
   }
