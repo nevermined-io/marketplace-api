@@ -76,7 +76,7 @@ export class ElasticService {
     return await this.elasticsearchService.get({
       index: `${this.configService.get<string>('elasticsearch.prefix')}-${index}`,
       id,
-      refresh,
+      refresh: this.refresh || refresh,
     })
   }
 
