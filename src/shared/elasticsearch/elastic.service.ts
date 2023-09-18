@@ -10,21 +10,26 @@ import { ConfigService } from '../config/config.service'
 
 @Injectable()
 export class ElasticService {
-  private readonly refresh: boolean
+  private refresh: boolean
   constructor(
     private readonly elasticsearchService: ElasticsearchService,
     private readonly configService: ConfigService,
   ) {
-    this.refresh = true
+    this.refresh = process.env.NODE_ENV === 'development'
   }
 
-  async addDocumentToIndex(index: string, id: string, document: unknown) {
+  async addDocumentToIndex(
+    index: string,
+    id: string,
+    document: unknown,
+    refresh?: boolean | 'wait_for',
+  ) {
     return this.elasticsearchService.index({
       index: `${this.configService.get<string>('elasticsearch.prefix')}-${index}`,
       id,
       body: document,
       op_type: 'create',
-      refresh: this.refresh,
+      refresh: this.refresh || refresh,
     })
   }
 
@@ -53,38 +58,51 @@ export class ElasticService {
     ).hits
   }
 
-  async updateDocumentByIndexAndId(index: string, id: string, document: unknown) {
+  async updateDocumentByIndexAndId(
+    index: string,
+    id: string,
+    document: unknown,
+    refresh?: boolean | 'wait_for',
+  ) {
     return this.elasticsearchService.update({
       index: `${this.configService.get<string>('elasticsearch.prefix')}-${index}`,
       id,
       body: document,
-      refresh: this.refresh,
+      refresh: this.refresh || refresh,
     })
   }
 
-  async getDocumentByIndexAndId(index: string, id: string): Promise<unknown> {
+  async getDocumentByIndexAndId(index: string, id: string, refresh?: boolean): Promise<unknown> {
     return await this.elasticsearchService.get({
       index: `${this.configService.get<string>('elasticsearch.prefix')}-${index}`,
       id,
-      refresh: this.refresh,
+      refresh: this.refresh || refresh,
     })
   }
 
-  async deleteDocumentByIndexAndId(index: string, id: string): Promise<unknown> {
+  async deleteDocumentByIndexAndId(
+    index: string,
+    id: string,
+    refresh?: boolean | 'wait_for',
+  ): Promise<unknown> {
     return this.elasticsearchService.delete({
       index: `${this.configService.get<string>('elasticsearch.prefix')}-${index}`,
       id,
-      refresh: this.refresh,
+      refresh: this.refresh || refresh,
     })
   }
 
-  async deleteDocumentByQuery(index: string, query: QueryDslQueryContainer): Promise<unknown> {
+  async deleteDocumentByQuery(
+    index: string,
+    query: QueryDslQueryContainer,
+    refresh?: boolean,
+  ): Promise<unknown> {
     return this.elasticsearchService.deleteByQuery({
       index: `${this.configService.get<string>('elasticsearch.prefix')}-${index}`,
       body: {
         query,
       },
-      refresh: this.refresh,
+      refresh: this.refresh || refresh,
     })
   }
 
