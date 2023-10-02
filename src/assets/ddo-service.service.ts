@@ -28,6 +28,7 @@ export class ServiceDDOService {
       MarketplaceIndex.Service,
       service.agreementId,
       service,
+      'wait_for',
     )
 
     return service

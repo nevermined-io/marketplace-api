@@ -25,7 +25,12 @@ export class AssetService {
   async createOne(createAssetDto: CreateAssetDto): Promise<Asset> {
     const asset = { ...new Asset(), ...createAssetDto }
 
-    await this.elasticService.addDocumentToIndex(MarketplaceIndex.Asset, asset.id, asset)
+    await this.elasticService.addDocumentToIndex(
+      MarketplaceIndex.Asset,
+      asset.id,
+      asset,
+      'wait_for',
+    )
 
     return asset
   }
@@ -61,9 +66,14 @@ export class AssetService {
     entryId: string,
     updateAssetDto: UpdateAssetDto,
   ): Promise<SearchHit<Asset>> {
-    await this.elasticService.updateDocumentByIndexAndId(MarketplaceIndex.Asset, entryId, {
-      doc: updateAssetDto,
-    })
+    await this.elasticService.updateDocumentByIndexAndId(
+      MarketplaceIndex.Asset,
+      entryId,
+      {
+        doc: updateAssetDto,
+      },
+      'wait_for',
+    )
 
     return this.elasticService.getDocumentByIndexAndId(MarketplaceIndex.Asset, entryId) as Promise<
       SearchHit<Asset>
@@ -77,6 +87,10 @@ export class AssetService {
   }
 
   async deleteOneByEntryId(entryId: string): Promise<void> {
-    await this.elasticService.deleteDocumentByIndexAndId(MarketplaceIndex.Asset, entryId)
+    await this.elasticService.deleteDocumentByIndexAndId(
+      MarketplaceIndex.Asset,
+      entryId,
+      'wait_for',
+    )
   }
 }
