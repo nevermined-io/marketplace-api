@@ -29,6 +29,7 @@ export class PermissionService {
       MarketplaceIndex.Permission,
       permission.id,
       permission,
+      'wait_for',
     )
 
     return permission
@@ -75,9 +76,14 @@ export class PermissionService {
     entryId: string,
     updatePermissionDto: UpdatePermissionDto,
   ): Promise<SearchHit<Permission>> {
-    await this.elasticService.updateDocumentByIndexAndId(MarketplaceIndex.Permission, entryId, {
-      doc: updatePermissionDto,
-    })
+    await this.elasticService.updateDocumentByIndexAndId(
+      MarketplaceIndex.Permission,
+      entryId,
+      {
+        doc: updatePermissionDto,
+      },
+      'wait_for',
+    )
 
     return this.elasticService.getDocumentByIndexAndId(
       MarketplaceIndex.Permission,
@@ -86,6 +92,10 @@ export class PermissionService {
   }
 
   async deleteOneByEntryId(entryId: string): Promise<void> {
-    await this.elasticService.deleteDocumentByIndexAndId(MarketplaceIndex.Permission, entryId)
+    await this.elasticService.deleteDocumentByIndexAndId(
+      MarketplaceIndex.Permission,
+      entryId,
+      'wait_for',
+    )
   }
 }

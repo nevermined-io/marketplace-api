@@ -25,7 +25,12 @@ export class BookmarkService {
   async createOne(createBookmarkDto: CreateBookmarkDto): Promise<Bookmark> {
     const bookmark = { ...new Bookmark(), ...createBookmarkDto }
 
-    await this.elasticService.addDocumentToIndex(MarketplaceIndex.Bookmark, bookmark.id, bookmark)
+    await this.elasticService.addDocumentToIndex(
+      MarketplaceIndex.Bookmark,
+      bookmark.id,
+      bookmark,
+      'wait_for',
+    )
 
     return bookmark
   }
@@ -57,9 +62,14 @@ export class BookmarkService {
     entryId: string,
     updateBookmarkDto: UpdateBookmarkDto,
   ): Promise<SearchHit<Bookmark>> {
-    await this.elasticService.updateDocumentByIndexAndId(MarketplaceIndex.Bookmark, entryId, {
-      doc: updateBookmarkDto,
-    })
+    await this.elasticService.updateDocumentByIndexAndId(
+      MarketplaceIndex.Bookmark,
+      entryId,
+      {
+        doc: updateBookmarkDto,
+      },
+      'wait_for',
+    )
 
     return this.elasticService.getDocumentByIndexAndId(
       MarketplaceIndex.Bookmark,
