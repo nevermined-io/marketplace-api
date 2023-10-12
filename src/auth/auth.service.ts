@@ -10,6 +10,7 @@ import { Permission } from '../permissions/permission.entity'
 import { JWTPayload, Strategy } from '@nevermined-io/passport-nevermined'
 import { Request } from 'express'
 import { JwtPayload } from 'jsonwebtoken'
+import { ConfigService } from '../shared/config/config.service'
 
 @Injectable()
 export class AuthService {
@@ -17,6 +18,7 @@ export class AuthService {
     private jwtService: JwtService,
     private userProfileService: UserProfileService,
     private permissionService: PermissionService,
+    private configService: ConfigService,
   ) {}
 
   /**
@@ -67,12 +69,15 @@ export class AuthService {
     userId: string,
   ): Promise<LoginDto> {
     let payload: JwtPayload
-    const strategy = new Strategy((result: JWTPayload) => {
-      payload = result
-    }, undefined)
+    const strategy = new Strategy(
+      { web3ProviderUri: this.configService.get('WEB3_PROVIDER_URI') },
+      (result: JWTPayload) => {
+        payload = result
+      },
+    )
 
     try {
-      strategy.authenticate({ body: clientAssertionDto } as Request)
+      await strategy.authenticate({ body: clientAssertionDto } as Request)
     } catch (error) {
       throw new UnauthorizedException(
         `The 'client_assertion' is invalid: ${(error as Error).message}`,

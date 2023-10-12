@@ -2,6 +2,7 @@ module.exports = {
   NODE_ENV: 'staging',
   JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
   JWT_EXPIRY_KEY: process.env.JWT_EXPIRY_KEY,
+  WEB3_PROVIDER_URI: process.env.WEB3_PROVIDER_URI,
   server: {
     port: process.env.PORT || 3100,
   },

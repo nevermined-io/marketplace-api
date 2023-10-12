@@ -17,6 +17,7 @@ const DOTENV_SCHEMA = Joi.object({
     .default('development'),
   JWT_SECRET_KEY: Joi.string().required().error(new Error('JWT_SECRET_KEY is required!')),
   JWT_EXPIRY_KEY: Joi.string().default('60m'),
+  WEB3_PROVIDER_URI: Joi.string().required().error(new Error('WEB3_PROVIDER_URI is required!')),
   server: Joi.object({
     port: Joi.number().default(3000),
   }),
@@ -47,6 +48,7 @@ type DotenvSchemaKeys =
   | 'database.url'
   | 'JWT_SECRET_KEY'
   | 'JWT_EXPIRY_KEY'
+  | 'WEB3_PROVIDER_URI'
   | 'security.enableHttpsRedirect'
   | 'elasticsearch.node'
   | 'elasticsearch.prefix'

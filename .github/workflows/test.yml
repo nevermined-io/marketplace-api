@@ -11,6 +11,12 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '16.x'
+      - uses: nevermined-io/nvm-tools-actions@v0.14.0
+        with:
+          token: ${{ secrets.API_TOKEN_GITHUB }}
+          node: 'false'
+          marketplace: 'false'
+
       - name: Install dependencies
         run: |
           yarn
