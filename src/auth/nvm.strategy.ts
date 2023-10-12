@@ -5,7 +5,7 @@ import { ConfigService } from '../shared/config/config.service'
 
 @Injectable()
 export class NeverminedStrategy extends PassportStrategy(Strategy) {
-  constructor(private configService: ConfigService) {
+  constructor(configService: ConfigService) {
     super({
       web3ProviderUri: configService.get('WEB3_PROVIDER_URI'),
     })
