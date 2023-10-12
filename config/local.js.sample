@@ -5,6 +5,7 @@ module.exports = {
   NODE_ENV: process.env.NODE_ENV,
   JWT_SECRET_KEY: 'secret',
   JWT_EXPIRY_KEY: '60m',
+  WEB3_PROVIDER_URI: 'http://contracts.nevermined.localnet',
   server: {
     port: 3100,
   },
