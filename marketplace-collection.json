@@ -1,8 +1,9 @@
 {
   "info": {
-    "_postman_id": "4da3d21a-b484-42a5-bfcb-43047f168b2f",
+    "_postman_id": "1495dc58-526d-4cdf-8f58-75613cc8b806",
     "name": "Marketplace API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "31462344"
   },
   "item": [
     {
@@ -2002,7 +2003,7 @@
               "_postman_previewlanguage": "Text",
               "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             },
             {
               "name": "Unauthorized",
@@ -2020,7 +2021,7 @@
               "_postman_previewlanguage": "Text",
               "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             }
           ]
         },
@@ -2394,7 +2395,7 @@
               "_postman_previewlanguage": "Text",
               "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             },
             {
               "name": "Bad request",
@@ -2440,7 +2441,7 @@
               "_postman_previewlanguage": "Text",
               "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             },
             {
               "name": "Unauthorized",
@@ -2486,7 +2487,7 @@
               "_postman_previewlanguage": "Text",
               "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             }
           ]
         },
@@ -2800,7 +2801,7 @@
               "_postman_previewlanguage": "Text",
               "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             },
             {
               "name": "Not Found",
@@ -2829,7 +2830,7 @@
               "_postman_previewlanguage": "Text",
               "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             },
             {
               "name": "Unauthorized",
@@ -2853,7 +2854,7 @@
               "_postman_previewlanguage": "Text",
               "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             }
           ]
         },
@@ -3119,7 +3120,7 @@
               "_postman_previewlanguage": "Text",
               "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             }
           ]
         },
@@ -4973,7 +4974,7 @@
               "_postman_previewlanguage": "Text",
               "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             },
             {
               "name": "Unauthorized",
@@ -5009,7 +5010,7 @@
               "_postman_previewlanguage": "Text",
               "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             }
           ]
         },
@@ -5290,7 +5291,7 @@
               "_postman_previewlanguage": "Text",
               "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             }
           ]
         },
@@ -5574,7 +5575,7 @@
               "_postman_previewlanguage": "Text",
               "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             }
           ]
         },
@@ -5802,7 +5803,7 @@
               "_postman_previewlanguage": "Text",
               "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             },
             {
               "name": "Not Found",
@@ -5831,7 +5832,7 @@
               "_postman_previewlanguage": "Text",
               "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             }
           ]
         },
@@ -6263,7 +6264,7 @@
               "_postman_previewlanguage": "Text",
               "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             },
             {
               "name": "Unauthorized",
@@ -6299,7 +6300,7 @@
               "_postman_previewlanguage": "Text",
               "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             }
           ]
         },
@@ -6524,7 +6525,7 @@
               "_postman_previewlanguage": "Text",
               "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             }
           ]
         },
@@ -7055,7 +7056,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"isListed\": false,\n    \"state\": \"confirmed\",\n    \"addresses\": [\n        \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947264\"\n    ],\n    \"nickname\": \"dolor irure\",\n    \"name\": \"est tempor ut officia\",\n    \"email\": \"test@nevermined.io\",\n    \"additionalInformation\": {\n        \"profilePicture\": \"http://example.com/avatar.jpg\",\n        \"linkedinProfile\": \"http://linkedin.com\"\n    }\n}",
+              "raw": "{\n    \"isListed\": false,\n    \"state\": \"confirmed\",\n    \"addresses\": [\n        \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947264\"\n    ],\n    \"nickname\": \"dolor irure\",\n    \"name\": \"est tempor ut officia\",\n    \"email\": \"test@nevermined.io\",\n    \"additionalInformation\": {\n        \"profilePicture\": \"http://example.com/avatar.jpg\",\n        \"linkedinProfile\": \"http://linkedin.com\"\n    },\n    \"isPublisherEnabled\": false,\n    \"paymentMethodsAccepted\": \"notSelected\",\n    \"stripe\": {\n        \"accountId\" : \"\",\n        \"isAccountValidated\": false, \n        \"accountCreatedAt\": \"2022-01-08T16:02:20Z\",\n        \"accountUpdatedAt\": \"2022-01-08T16:02:20Z\",\n        \"additionalInformation\" : {}\n    }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -7148,7 +7149,7 @@
               "_postman_previewlanguage": "Text",
               "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             },
             {
               "name": "Unauthorized",
@@ -7184,7 +7185,7 @@
               "_postman_previewlanguage": "Text",
               "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             }
           ]
         },
@@ -7784,7 +7785,7 @@
               "_postman_previewlanguage": "Text",
               "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             },
             {
               "name": "Not Found",
@@ -7818,7 +7819,7 @@
               "_postman_previewlanguage": "Text",
               "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             },
             {
               "name": "Unauthorized",
@@ -7852,7 +7853,7 @@
               "_postman_previewlanguage": "Text",
               "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             }
           ]
         }
@@ -7983,8 +7984,8 @@
               },
               "status": "Created",
               "code": 201,
-              "_postman_previewlanguage": null,
-              "header": null,
+              "_postman_previewlanguage": "Text",
+              "header": [],
               "cookie": [],
               "body": "{\n  \"id\": \"pe-2e83acb9-441d-41c8-97ab-552b4b52452d\",\n  \"userId\": \"us-12345\",\n  \"type\": [\n    \"read\",\n    \"update\",\n    \"delete\"\n  ],\n  \"issuer\": \"0x610D9314EDF2ced7681BA1633C33fdb8cF365a12\",\n  \"holder\": \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\",\n  \"issuanceDate\": \"2019-01-01T19:73:24Z\"\n}"
             },
@@ -8024,8 +8025,8 @@
               },
               "status": "Bad Request",
               "code": 400,
-              "_postman_previewlanguage": null,
-              "header": null,
+              "_postman_previewlanguage": "Text",
+              "header": [],
               "cookie": [],
               "body": ""
             },
@@ -8065,8 +8066,8 @@
               },
               "status": "Forbidden",
               "code": 403,
-              "_postman_previewlanguage": null,
-              "header": null,
+              "_postman_previewlanguage": "Text",
+              "header": [],
               "cookie": [],
               "body": ""
             },
@@ -8106,8 +8107,8 @@
               },
               "status": "Unauthorized",
               "code": 401,
-              "_postman_previewlanguage": null,
-              "header": null,
+              "_postman_previewlanguage": "Text",
+              "header": [],
               "cookie": [],
               "body": ""
             }
@@ -8191,8 +8192,8 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
-              "header": null,
+              "_postman_previewlanguage": "Text",
+              "header": [],
               "cookie": [],
               "body": "{\n  \"id\": \"pe-2e83acb9-441d-41c8-97ab-552b4b52452d\",\n  \"userId\": \"us-12345\",\n  \"type\": [\n    \"read\",\n    \"update\",\n    \"delete\"\n  ],\n  \"issuer\": \"0x610D9314EDF2ced7681BA1633C33fdb8cF365a12\",\n  \"holder\": \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\",\n  \"issuanceDate\": \"2019-01-01T19:73:24Z\"\n}"
             },
@@ -8220,10 +8221,10 @@
               },
               "status": "Not Found",
               "code": 404,
-              "_postman_previewlanguage": null,
-              "header": null,
+              "_postman_previewlanguage": "Text",
+              "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             }
           ]
         },
@@ -8328,8 +8329,8 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
-              "header": null,
+              "_postman_previewlanguage": "Text",
+              "header": [],
               "cookie": [],
               "body": "{\n  \"page\": 1,\n  \"results\": [\n    {\n      \"id\": \"pe-f2b43439-61dc-4418-b6ad-87ffddf85efb\",\n      \"userId\": \"us-12345\",\n      \"type\": [\n        \"quis\",\n        \"Excepteur Ut nisi laborum aute\"\n      ],\n      \"issuer\": \"0x610D9314EDF2ced7681BA1633C33fdb8cF365a12\",\n      \"holder\": \"0x37BB53e3d293494DE59fBe1FF78500423dcFd43B\",\n      \"issuanceDate\": \"1995-04-12T00:01:48.964Z\"\n    },\n    {\n      \"id\": \"pe-f2b43439-61dc-4418-b6ad-87ffddf85efb\",\n      \"userId\": \"us-12345\",\n      \"type\": [\n        \"ut consequat ad amet sunt\",\n        \"ad adipisicing Lorem cillum\"\n      ],\n      \"issuer\": \"0x610D9314EDF2ced7681BA1633C33fdb8cF365a12\",\n      \"holder\": \"0x37BB53e3d293494DE59fBe1FF78500423dcFd43B\",\n      \"issuanceDate\": \"1995-01-27T08:43:21.521Z\"\n    }\n  ],\n  \"total_pages\": 10,\n  \"total_results\": 220\n}"
             },
@@ -8372,10 +8373,10 @@
               },
               "status": "Bad Request",
               "code": 400,
-              "_postman_previewlanguage": null,
-              "header": null,
+              "_postman_previewlanguage": "Text",
+              "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             }
           ]
         },
@@ -8680,8 +8681,8 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
-              "header": null,
+              "_postman_previewlanguage": "Text",
+              "header": [],
               "cookie": [],
               "body": "{\n  \"id\": \"pe-2e83acb9-441d-41c8-97ab-552b4b52452d\",\n  \"userId\": \"us-12345\",\n  \"type\": [\n    \"update\"\n  ],\n  \"issuer\": \"0x610D9314EDF2ced7681BA1633C33fdb8cF365a12\",\n  \"holder\": \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\",\n  \"issuanceDate\": \"2019-01-01T19:73:24Z\"\n}"
             },
@@ -8728,8 +8729,8 @@
               },
               "status": "Bad Request",
               "code": 400,
-              "_postman_previewlanguage": null,
-              "header": null,
+              "_postman_previewlanguage": "Text",
+              "header": [],
               "cookie": [],
               "body": ""
             },
@@ -8776,8 +8777,8 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
-              "header": null,
+              "_postman_previewlanguage": "Text",
+              "header": [],
               "cookie": [],
               "body": "{\n  \"id\": \"pe-2e83acb9-441d-41c8-97ab-552b4b52452d\",\n  \"userId\": \"us-12345\",\n  \"type\": [\n    \"update\"\n  ],\n  \"issuer\": \"0x610D9314EDF2ced7681BA1633C33fdb8cF365a12\",\n  \"holder\": \"0xe2DD09d719Da89e5a3D0F2549c7E24566e947260\",\n  \"issuanceDate\": \"2019-01-01T19:73:24Z\"\n}"
             },
@@ -8824,8 +8825,8 @@
               },
               "status": "Forbidden",
               "code": 403,
-              "_postman_previewlanguage": null,
-              "header": null,
+              "_postman_previewlanguage": "Text",
+              "header": [],
               "cookie": [],
               "body": ""
             },
@@ -8872,10 +8873,10 @@
               },
               "status": "Unauthorized",
               "code": 401,
-              "_postman_previewlanguage": null,
-              "header": null,
+              "_postman_previewlanguage": "Text",
+              "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             }
           ]
         },
@@ -8986,10 +8987,10 @@
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": null,
-              "header": null,
+              "_postman_previewlanguage": "Text",
+              "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             },
             {
               "name": "Not Found",
@@ -9017,10 +9018,10 @@
               },
               "status": "Not Found",
               "code": 404,
-              "_postman_previewlanguage": null,
-              "header": null,
+              "_postman_previewlanguage": "Text",
+              "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             },
             {
               "name": "Forbidden",
@@ -9048,10 +9049,10 @@
               },
               "status": "Forbidden",
               "code": 403,
-              "_postman_previewlanguage": null,
-              "header": null,
+              "_postman_previewlanguage": "Text",
+              "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             },
             {
               "name": "Unauthorized",
@@ -9079,10 +9080,10 @@
               },
               "status": "Unauthorized",
               "code": 401,
-              "_postman_previewlanguage": null,
-              "header": null,
+              "_postman_previewlanguage": "Text",
+              "header": [],
               "cookie": [],
-              "body": null
+              "body": ""
             }
           ]
         }

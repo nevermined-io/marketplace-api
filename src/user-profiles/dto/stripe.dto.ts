@@ -21,6 +21,7 @@ export class StripeDto {
     required: false,
   })
   @IsDate()
+  @IsOptional()
   accountCreatedAt: Date
 
   @ApiProperty({
@@ -28,6 +29,7 @@ export class StripeDto {
     required: false,
   })
   @IsDate()
+  @IsOptional()
   accountUpdatedAt: Date
 
   @ApiProperty({
