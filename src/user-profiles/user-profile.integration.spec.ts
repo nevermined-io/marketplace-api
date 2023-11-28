@@ -157,8 +157,6 @@ describe('User Profile', () => {
 
   it('GET by userId', async () => {
     const response = await request(app.getHttpServer()).get(`/${userProfile.userId}`)
-    console.log(userProfile)
-    console.log(response.body)
 
     expect(response.statusCode).toBe(200)
     expect(response.body).toStrictEqual({
