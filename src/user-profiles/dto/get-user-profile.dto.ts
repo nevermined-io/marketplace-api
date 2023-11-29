@@ -119,12 +119,14 @@ export class GetUserProfileDto {
       'Flag identifying if the user is enabled to publish content in the marketplace. Possible values: true or false',
   })
   @IsBoolean()
+  @IsOptional()
   isPublisherEnabled: boolean
 
   @ApiProperty({
     example: PaymentMethodsAccepted,
     description: 'Payment methods accepted by the user',
   })
+  @IsOptional()
   @IsEnum(PaymentMethodsAccepted)
   paymentMethodsAccepted: PaymentMethodsAccepted
 
@@ -133,6 +135,7 @@ export class GetUserProfileDto {
     description: 'Stripe account information',
   })
   @ValidateNested()
+  @IsOptional()
   @Type(() => StripeDto)
   stripe: Stripe
 
