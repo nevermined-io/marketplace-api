@@ -7,9 +7,10 @@ import { UserProfileController } from './user-profile.controller'
 import { UserProfileService } from './user-profile.service'
 import { ElasticService } from '../shared/elasticsearch/elastic.service'
 import { UserProfile } from './user-profile.entity'
-import { State } from '../common/type'
+import { PaymentMethodsAccepted, State } from '../common/type'
 import { MarketplaceIndex } from '../common/type'
 import { GetUserProfileDto } from './dto/get-user-profile.dto'
+import { Stripe } from './user-profile.interface'
 
 describe('UserProfileController', () => {
   let userProfileController: UserProfileController
@@ -25,6 +26,15 @@ describe('UserProfileController', () => {
   userProfile.name = faker.person.fullName()
   userProfile.email = faker.internet.email()
   userProfile.state = State.Confirmed
+  userProfile.isPublisherEnabled = false
+  userProfile.paymentMethodsAccepted = PaymentMethodsAccepted.NotSelected
+  userProfile.stripe = {
+    accountId: faker.string.uuid(),
+    isAccountValidated: false,
+    accountCreatedAt: faker.date.past().toDateString(),
+    accountUpdatedAt: faker.date.recent().toDateString(),
+    additionalInformation: {},
+  } as Stripe
 
   const req = {
     url: '/api/v1/ugc/bookmarks',

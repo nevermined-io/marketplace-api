@@ -201,7 +201,6 @@ describe('Asset Controller e2e', () => {
       offset: 100,
       page: 0,
     })
-    console.log(results.total_results.value)
     expect(results.total_results.value).toEqual(0)
   })
 })

@@ -11,7 +11,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '16.x'
-      - uses: nevermined-io/nvm-tools-actions@v0.14.0
+      - uses: nevermined-io/nvm-tools-actions@v0.15.0
         with:
           token: ${{ secrets.API_TOKEN_GITHUB }}
           node: 'false'
@@ -39,6 +39,13 @@ jobs:
             --name es01 \
             -e "xpack.security.enabled=false" \
             -d docker.elastic.co/elasticsearch/elasticsearch:8.8.1
+
+      - name: Wait for Elasticsearch
+        run: |
+          until curl --output /dev/null --silent --head --fail http://localhost:9200; do
+            echo "Waiting for Elasticsearch..."
+            sleep 5
+          done
 
       - name: Run tests
         run: |

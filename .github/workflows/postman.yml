@@ -11,7 +11,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '16.x'
-      - uses: nevermined-io/nvm-tools-actions@v0.14.0
+      - uses: nevermined-io/nvm-tools-actions@v0.15.0
         with:
           token: ${{ secrets.API_TOKEN_GITHUB }}
           node: 'false'
@@ -26,6 +26,7 @@ jobs:
             -e "bootstrap.memory_lock=true" \
             -e "ELASTIC_PASSWORD=password"\
             --name es01 \
+            -e "action.destructive_requires_name=true" \
             -e "xpack.security.enabled=false" \
             -d docker.elastic.co/elasticsearch/elasticsearch:8.8.1
       - name: Install dependencies
