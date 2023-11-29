@@ -32,3 +32,10 @@ export enum PermissionType {
   Delete = 'delete',
   Admin = 'admin',
 }
+
+export enum PaymentMethodsAccepted {
+  Crypro = 'crypto',
+  Fiat = 'fiat',
+  All = 'all',
+  NotSelected = 'notSelected',
+}

@@ -1,8 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsString, IsEmail, IsBoolean, IsEnum, IsOptional, ValidateNested } from 'class-validator'
 import { Type } from 'class-transformer'
-import { State } from '../../common/type'
+import { PaymentMethodsAccepted, State } from '../../common/type'
 import { AdditionalInformation } from './additional-information.dto'
+import { StripeDto } from './stripe.dto'
+import { Stripe } from '../user-profile.interface'
 
 export class CreateUserProfileDto {
   @ApiProperty({
@@ -65,4 +67,27 @@ export class CreateUserProfileDto {
   @ValidateNested()
   @Type(() => AdditionalInformation)
   additionalInformation: AdditionalInformation
+
+  @ApiProperty({
+    example: true,
+    description:
+      'Flag identifying if the user is enabled to publish content in the marketplace. Possible values: true or false',
+  })
+  @IsBoolean()
+  isPublisherEnabled: boolean
+
+  @ApiProperty({
+    example: PaymentMethodsAccepted,
+    description: 'Payment methods accepted by the user',
+  })
+  @IsEnum(PaymentMethodsAccepted)
+  paymentMethodsAccepted: PaymentMethodsAccepted
+
+  @ApiProperty({
+    example: StripeDto,
+    description: 'Stripe account information',
+  })
+  @ValidateNested()
+  @Type(() => StripeDto)
+  stripe: Stripe
 }

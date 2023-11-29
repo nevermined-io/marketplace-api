@@ -15,12 +15,13 @@ import { ConfigModule } from '../shared/config/config.module'
 import { AuthService } from '../auth/auth.service'
 import { LoginDto } from '../auth/dto/login.dto'
 import { UserProfile } from './user-profile.entity'
-import { MarketplaceIndex, State } from '../common/type'
+import { MarketplaceIndex, PaymentMethodsAccepted, State } from '../common/type'
 import { UserProfileModule } from './user-profile.module'
 import { UserProfileService } from './user-profile.service'
 import { CreateUserProfileDto } from './dto/create-user-profile.dto'
 import { UpdateUserProfileDto } from './dto/update-user-profile.dto'
 import { PermissionService } from '../permissions/permission.service'
+import { Stripe } from './user-profile.interface'
 
 describe('User Profile', () => {
   let app: INestApplication
@@ -36,6 +37,15 @@ describe('User Profile', () => {
   userProfile.name = faker.person.fullName()
   userProfile.email = faker.internet.email()
   userProfile.state = State.Confirmed
+  userProfile.isPublisherEnabled = false
+  userProfile.paymentMethodsAccepted = PaymentMethodsAccepted.NotSelected
+  userProfile.stripe = {
+    accountId: faker.string.uuid(),
+    isAccountValidated: false,
+    accountCreatedAt: faker.date.past().toDateString(),
+    accountUpdatedAt: faker.date.recent().toDateString(),
+    additionalInformation: {},
+  } as Stripe
 
   const userProfileTwo = {
     ...userProfile,
@@ -133,6 +143,13 @@ describe('User Profile', () => {
     expect(response.statusCode).toBe(201)
     expect(response.body).toStrictEqual({
       ...userProfile,
+      stripe: {
+        accountCreatedAt: userProfile.stripe.accountCreatedAt,
+        accountUpdatedAt: userProfile.stripe.accountUpdatedAt,
+        additionalInformation: {},
+        accountId: userProfile.stripe.accountId,
+        isAccountValidated: userProfile.stripe.isAccountValidated,
+      },
       creationDate: userProfile.creationDate.toISOString(),
       updateDate: userProfile.updateDate.toISOString(),
     })
@@ -144,6 +161,13 @@ describe('User Profile', () => {
     expect(response.statusCode).toBe(200)
     expect(response.body).toStrictEqual({
       ...userProfile,
+      stripe: {
+        accountCreatedAt: userProfile.stripe.accountCreatedAt,
+        accountUpdatedAt: userProfile.stripe.accountUpdatedAt,
+        additionalInformation: {},
+        accountId: userProfile.stripe.accountId,
+        isAccountValidated: userProfile.stripe.isAccountValidated,
+      },
       creationDate: userProfile.creationDate.toISOString(),
       updateDate: userProfile.updateDate.toISOString(),
     })
@@ -172,6 +196,13 @@ describe('User Profile', () => {
     expect(response.statusCode).toBe(200)
     expect(response.body).toStrictEqual({
       ...userProfileTwo,
+      stripe: {
+        accountCreatedAt: userProfileTwo.stripe.accountCreatedAt,
+        accountUpdatedAt: userProfileTwo.stripe.accountUpdatedAt,
+        additionalInformation: {},
+        accountId: userProfileTwo.stripe.accountId,
+        isAccountValidated: userProfileTwo.stripe.isAccountValidated,
+      },
       creationDate: userProfileTwo.creationDate.toISOString(),
       updateDate: userProfileTwo.updateDate.toISOString(),
     })
@@ -204,6 +235,13 @@ describe('User Profile', () => {
 
     expect(response.body).toStrictEqual({
       ...disbledUserProfile,
+      stripe: {
+        accountCreatedAt: disbledUserProfile.stripe.accountCreatedAt,
+        accountUpdatedAt: disbledUserProfile.stripe.accountUpdatedAt,
+        additionalInformation: {},
+        accountId: disbledUserProfile.stripe.accountId,
+        isAccountValidated: disbledUserProfile.stripe.isAccountValidated,
+      },
       creationDate: disbledUserProfile.creationDate.toISOString(),
       updateDate: disbledUserProfile.updateDate.toISOString(),
     })

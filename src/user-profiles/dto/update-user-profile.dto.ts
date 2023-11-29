@@ -9,8 +9,10 @@ import {
   ValidateNested,
 } from 'class-validator'
 import { Type, Transform } from 'class-transformer'
-import { State } from '../../common/type'
+import { PaymentMethodsAccepted, State } from '../../common/type'
 import { AdditionalInformation } from './additional-information.dto'
+import { StripeDto } from './stripe.dto'
+import { Stripe } from '../user-profile.interface'
 
 export class UpdateUserProfileDto {
   static fromPayload(userProfile: UpdateUserProfileDto): UpdateUserProfileDto {
@@ -23,6 +25,9 @@ export class UpdateUserProfileDto {
       userProfile.email,
       new Date(),
       userProfile.additionalInformation,
+      userProfile.isPublisherEnabled,
+      userProfile.paymentMethodsAccepted,
+      userProfile.stripe,
     )
   }
 
@@ -97,6 +102,32 @@ export class UpdateUserProfileDto {
   @IsDate()
   updateDate: Date
 
+  @ApiProperty({
+    example: true,
+    description:
+      'Flag identifying if the user is enabled to publish content in the marketplace. Possible values: true or false',
+  })
+  @IsOptional()
+  @IsBoolean()
+  isPublisherEnabled: boolean
+
+  @ApiProperty({
+    example: PaymentMethodsAccepted,
+    description: 'Payment methods accepted by the user',
+  })
+  @IsOptional()
+  @IsEnum(PaymentMethodsAccepted)
+  paymentMethodsAccepted: PaymentMethodsAccepted
+
+  @ApiProperty({
+    example: StripeDto,
+    description: 'Stripe account information',
+  })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => StripeDto)
+  stripe: Stripe
+
   constructor(
     isListed: boolean,
     state: State,
@@ -106,6 +137,9 @@ export class UpdateUserProfileDto {
     email: string,
     updateDate: Date,
     additionalInformation: AdditionalInformation,
+    isPublisherEnabled: boolean,
+    paymentMethodsAccepted: PaymentMethodsAccepted,
+    stripe: Stripe,
   ) {
     this.isListed = isListed
     this.state = state
@@ -115,5 +149,8 @@ export class UpdateUserProfileDto {
     this.email = email
     this.updateDate = updateDate
     this.additionalInformation = additionalInformation
+    this.isPublisherEnabled = isPublisherEnabled
+    this.paymentMethodsAccepted = paymentMethodsAccepted
+    this.stripe = stripe
   }
 }
