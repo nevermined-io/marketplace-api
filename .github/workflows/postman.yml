@@ -26,6 +26,7 @@ jobs:
             -e "bootstrap.memory_lock=true" \
             -e "ELASTIC_PASSWORD=password"\
             --name es01 \
+            -e "action.destructive_requires_name=true" \
             -e "xpack.security.enabled=false" \
             -d docker.elastic.co/elasticsearch/elasticsearch:8.8.1
       - name: Install dependencies

@@ -6,7 +6,7 @@ export interface AdditionalInformation {
 export interface Stripe {
   accountId: string
   isAccountValidated: boolean
-  accountCreatedAt: Date
-  accountUpdatedAt: Date
+  accountCreatedAt: string
+  accountUpdatedAt: string
   additionalInformation: unknown
 }

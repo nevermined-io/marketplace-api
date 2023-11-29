@@ -107,6 +107,7 @@ export class UpdateUserProfileDto {
     description:
       'Flag identifying if the user is enabled to publish content in the marketplace. Possible values: true or false',
   })
+  @IsOptional()
   @IsBoolean()
   isPublisherEnabled: boolean
 
@@ -114,6 +115,7 @@ export class UpdateUserProfileDto {
     example: PaymentMethodsAccepted,
     description: 'Payment methods accepted by the user',
   })
+  @IsOptional()
   @IsEnum(PaymentMethodsAccepted)
   paymentMethodsAccepted: PaymentMethodsAccepted
 
@@ -121,6 +123,7 @@ export class UpdateUserProfileDto {
     example: StripeDto,
     description: 'Stripe account information',
   })
+  @IsOptional()
   @ValidateNested()
   @Type(() => StripeDto)
   stripe: Stripe

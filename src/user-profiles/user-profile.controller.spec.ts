@@ -31,8 +31,8 @@ describe('UserProfileController', () => {
   userProfile.stripe = {
     accountId: faker.string.uuid(),
     isAccountValidated: false,
-    accountCreatedAt: faker.date.past(),
-    accountUpdatedAt: faker.date.recent(),
+    accountCreatedAt: faker.date.past().toDateString(),
+    accountUpdatedAt: faker.date.recent().toDateString(),
     additionalInformation: {},
   } as Stripe
 

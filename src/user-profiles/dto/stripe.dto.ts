@@ -1,4 +1,4 @@
-import { IsBoolean, IsDate, IsOptional, IsString } from 'class-validator'
+import { IsBoolean, IsDateString, IsOptional, IsString } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
 
 export class StripeDto {
@@ -20,17 +20,17 @@ export class StripeDto {
     description: 'Date of creation of the stripe account',
     required: false,
   })
-  @IsDate()
+  @IsDateString()
   @IsOptional()
-  accountCreatedAt: Date
+  accountCreatedAt: string
 
   @ApiProperty({
     description: 'Date of last update of the stripe account',
     required: false,
   })
-  @IsDate()
+  @IsDateString()
   @IsOptional()
-  accountUpdatedAt: Date
+  accountUpdatedAt: string
 
   @ApiProperty({
     description: 'Aditional information of the stripe account',
