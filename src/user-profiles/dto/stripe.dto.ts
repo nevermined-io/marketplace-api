@@ -7,6 +7,7 @@ export class StripeDto {
     required: false,
   })
   @IsString()
+  @IsOptional()
   accountId: string
 
   @ApiProperty({
@@ -14,6 +15,7 @@ export class StripeDto {
     required: false,
   })
   @IsBoolean()
+  @IsOptional()
   isAccountValidated: boolean
 
   @ApiProperty({
