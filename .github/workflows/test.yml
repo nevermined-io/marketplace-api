@@ -40,6 +40,13 @@ jobs:
             -e "xpack.security.enabled=false" \
             -d docker.elastic.co/elasticsearch/elasticsearch:8.8.1
 
+      - name: Wait for Elasticsearch
+        run: |
+          until curl --output /dev/null --silent --head --fail http://localhost:9200; do
+            echo "Waiting for Elasticsearch..."
+            sleep 5
+          done
+
       - name: Run tests
         run: |
           yarn setup:dev
