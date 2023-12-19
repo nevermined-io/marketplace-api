@@ -152,6 +152,7 @@ export class UserProfileController {
     @Req() req: Request<unknown>,
   ): Promise<GetUserProfileDto> {
     const { userId, roles } = req.user
+    console.log('updateProfile', req.user, userIdEntity)
 
     checkOwnership(userId, userIdEntity, roles)
 
