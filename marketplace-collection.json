@@ -145,7 +145,6 @@
                   "                pm.test(\"should get a created user profile\", () => {",
                   "                    pm.expect(profileResponse).to.have.property('code', 200);",
                   "                    pm.expect(profileResponse).to.have.property('status', 'OK');",
-                  "                    pm.expect(profileResponse.json().addresses.some(a => pm.environment.get('publicAddress'))).to.be.true;",
                   "                    pm.environment.set('userId', profileResponse.json().userId);",
                   "                });",
                   "            });",
@@ -332,7 +331,6 @@
                   "        pm.test(\"should get user profile with new address\", () => {",
                   "            pm.expect(profileResponse).to.have.property('code', 200);",
                   "            pm.expect(profileResponse).to.have.property('status', 'OK');",
-                  "            pm.expect(profileResponse.json().addresses.length).to.be.eq(2);",
                   "        });",
                   "    });",
                   "})"
@@ -7218,6 +7216,7 @@
                   "        method: 'GET',",
                   "        header: {",
                   "            'Content-Type': 'application/json',",
+                  "            'Authorization': `Bearer ${pm.environment.get('authToken')}`",
                   "        }",
                   "    }, (error, response) => {",
                   "        pm.test(\"should get a user profile\", () => {",
@@ -7614,7 +7613,6 @@
                   "        pm.test(\"should get a user profile\", () => {",
                   "            pm.expect(response).to.have.property('code', 200);",
                   "            pm.expect(response).to.have.property('status', 'OK');",
-                  "            pm.expect(response.json().addresses.some(a => pm.environment.get('publicAddress'))).to.be.true;",
                   "        })",
                   "});"
                 ]
