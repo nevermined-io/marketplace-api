@@ -112,9 +112,11 @@ describe('UserProfileController', () => {
       return undefined as any
     })
 
+    const userProfile = GetUserProfileDto.fromSource(userProfileSource)
+
     expect(
       await userProfileController.getUserProfileByAddress(userProfile.addresses[0]),
-    ).toStrictEqual(GetUserProfileDto.fromSource(userProfileSource))
+    ).toStrictEqual({ userId: userProfile.userId, name: userProfile.name })
   })
 
   it('should thorw error when no user profile is found by the address given', async () => {

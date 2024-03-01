@@ -156,7 +156,9 @@ describe('User Profile', () => {
   })
 
   it('GET by userId', async () => {
-    const response = await request(app.getHttpServer()).get(`/${userProfile.userId}`)
+    const response = await request(app.getHttpServer())
+      .get(`/${userIdAuth}`)
+      .set('Authorization', `Bearer ${token.access_token}`)
 
     expect(response.statusCode).toBe(200)
     expect(response.body).toStrictEqual({
@@ -195,16 +197,8 @@ describe('User Profile', () => {
 
     expect(response.statusCode).toBe(200)
     expect(response.body).toStrictEqual({
-      ...userProfileTwo,
-      stripe: {
-        accountCreatedAt: userProfileTwo.stripe.accountCreatedAt,
-        accountUpdatedAt: userProfileTwo.stripe.accountUpdatedAt,
-        additionalInformation: {},
-        accountId: userProfileTwo.stripe.accountId,
-        isAccountValidated: userProfileTwo.stripe.isAccountValidated,
-      },
-      creationDate: userProfileTwo.creationDate.toISOString(),
-      updateDate: userProfileTwo.updateDate.toISOString(),
+      userId: userProfileTwo.userId,
+      name: userProfileTwo.name,
     })
   })
 
