@@ -16,11 +16,12 @@ import { CreateUserProfileDto } from './dto/create-user-profile.dto'
 import { GetUserProfileDto } from './dto/get-user-profile.dto'
 import { UpdateUserProfileDto } from './dto/update-user-profile.dto'
 import { DisableUserProfileDto } from './dto/disable-user-profile.dto'
-import { Public } from '../common/decorators/auth.decorator'
 import { Roles } from '../common/decorators/roles.decorators'
 import { AuthRoles } from '../common/type'
 import { Request } from '../common/helpers/request.interface'
 import { checkOwnership } from '../common/helpers/utils'
+import { Public } from '../common/decorators/auth.decorator'
+import { RestrictedUserProfileDto } from './dto/get-user-profile-restricted.dto'
 
 @ApiTags('User Profile')
 @Controller()
@@ -75,9 +76,9 @@ export class UserProfileController {
   }
 
   @Get(':userId')
+  @ApiBearerAuth('Authorization')
   @ApiOperation({
     description: 'Get the metadata of a user profile ',
-    summary: 'Public',
   })
   @ApiResponse({
     status: 200,
@@ -88,8 +89,14 @@ export class UserProfileController {
     status: 404,
     description: 'Not found',
   })
-  @Public()
-  async getUserProfileByUserId(@Param('userId') userId: string): Promise<GetUserProfileDto> {
+  async getUserProfileByUserId(
+    @Param('userId') userIdEntity: string,
+    @Req() req: Request<unknown>,
+  ): Promise<GetUserProfileDto> {
+    const { userId, roles } = req.user
+
+    checkOwnership(userId, userIdEntity, roles)
+
     const userProfileSource = await this.userProfileService.findOneById(userId)
 
     return GetUserProfileDto.fromSource(userProfileSource)
@@ -112,7 +119,7 @@ export class UserProfileController {
   @Public()
   async getUserProfileByAddress(
     @Param('publicAddress') publicAddress: string,
-  ): Promise<GetUserProfileDto> {
+  ): Promise<RestrictedUserProfileDto> {
     const userProfileSource = await this.userProfileService.findOneByAddress(publicAddress)
 
     if (!userProfileSource) {
@@ -121,7 +128,9 @@ export class UserProfileController {
       )
     }
 
-    return GetUserProfileDto.fromSource(userProfileSource)
+    const userProfile = GetUserProfileDto.fromSource(userProfileSource)
+
+    return { userId: userProfile.userId, name: userProfile.name }
   }
 
   @Put(':userId')
