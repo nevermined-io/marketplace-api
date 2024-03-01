@@ -20,7 +20,7 @@ import { Roles } from '../common/decorators/roles.decorators'
 import { AuthRoles } from '../common/type'
 import { Request } from '../common/helpers/request.interface'
 import { checkOwnership } from '../common/helpers/utils'
-import { Public } from 'src/common/decorators/auth.decorator'
+import { Public } from '../common/decorators/auth.decorator'
 import { RestrictedUserProfileDto } from './dto/get-user-profile-restricted.dto'
 
 @ApiTags('User Profile')
