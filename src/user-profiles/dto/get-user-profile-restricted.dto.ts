@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsOptional, IsString } from 'class-validator'
+import { IsString } from 'class-validator'
 
 export class RestrictedUserProfileDto {
   @ApiProperty({
@@ -10,10 +10,9 @@ export class RestrictedUserProfileDto {
   userId: string
 
   @ApiProperty({
-    example: 'John Doe',
-    description: 'The name of the user',
+    example: 'john.doe',
+    description: 'The nickname of the user',
   })
-  @IsOptional()
   @IsString()
-  name: string
+  nickname: string
 }

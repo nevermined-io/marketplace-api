@@ -116,7 +116,7 @@ describe('UserProfileController', () => {
 
     expect(
       await userProfileController.getUserProfileByAddress(userProfile.addresses[0]),
-    ).toStrictEqual({ userId: userProfile.userId, name: userProfile.name })
+    ).toStrictEqual({ userId: userProfile.userId, nickname: userProfile.nickname })
   })
 
   it('should thorw error when no user profile is found by the address given', async () => {

@@ -130,7 +130,7 @@ export class UserProfileController {
 
     const userProfile = GetUserProfileDto.fromSource(userProfileSource)
 
-    return { userId: userProfile.userId, name: userProfile.name }
+    return { userId: userProfile.userId, nickname: userProfile.nickname }
   }
 
   @Put(':userId')

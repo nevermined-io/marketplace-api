@@ -314,8 +314,9 @@ export class AssetController {
   async getDDOMetadata(@Param('did') did: string): Promise<AttributesDto> {
     const assetSource = await this.assetService.findOneById(did)
 
-    const metada = GetAssetDto.fromSource(assetSource).service?.find((s) => s.attributes)
-      ?.attributes
+    const metada = GetAssetDto.fromSource(assetSource).service?.find(
+      (s) => s.attributes,
+    )?.attributes
 
     if (!metada) {
       throw new NotFoundException(`Asset with did ${did} doesn't have metada`)
