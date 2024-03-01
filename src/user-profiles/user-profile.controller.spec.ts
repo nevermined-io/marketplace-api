@@ -98,9 +98,9 @@ describe('UserProfileController', () => {
   it('should get a user profile passing user id', async () => {
     jest.spyOn(userProfileService, 'findOneById').mockResolvedValue(userProfileSource)
 
-    expect(await userProfileController.getUserProfileByUserId(userProfile.userId)).toStrictEqual(
-      GetUserProfileDto.fromSource(userProfileSource),
-    )
+    expect(
+      await userProfileController.getUserProfileByUserId(userProfile.userId, req),
+    ).toStrictEqual(GetUserProfileDto.fromSource(userProfileSource))
   })
 
   it('should get a user profile passing an address', async () => {
