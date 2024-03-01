@@ -97,7 +97,7 @@ export class UserProfileController {
 
     checkOwnership(userId, userIdEntity, roles)
 
-    const userProfileSource = await this.userProfileService.findOneById(userId)
+    const userProfileSource = await this.userProfileService.findOneById(userIdEntity)
 
     return GetUserProfileDto.fromSource(userProfileSource)
   }
