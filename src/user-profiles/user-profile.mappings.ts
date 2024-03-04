@@ -1,25 +1,5 @@
 import { MappingProperty } from '@elastic/elasticsearch/lib/api/types'
 
-const stripe: MappingProperty = {
-  properties: {
-    accountId: {
-      type: 'keyword',
-    },
-    isAccountValidated: {
-      type: 'boolean',
-    },
-    accountCreatedAt: {
-      type: 'date',
-    },
-    accountUpdatedAt: {
-      type: 'date',
-    },
-    additionalInformation: {
-      type: 'object',
-    },
-  },
-}
-
 export const UserProfileMappings: MappingProperty = {
   properties: {
     userId: {
@@ -48,12 +28,5 @@ export const UserProfileMappings: MappingProperty = {
     updateDate: {
       type: 'date',
     },
-    isPublisherEnabled: {
-      type: 'boolean',
-    },
-    paymentMethodsAccepted: {
-      type: 'keyword',
-    },
-    stripe,
   },
 }
