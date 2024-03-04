@@ -37,9 +37,9 @@ describe('User Profile', () => {
   userProfile.name = faker.person.fullName()
   userProfile.email = faker.internet.email()
   userProfile.state = State.Confirmed
-  userProfile.isPublisherEnabled = false
-  userProfile.paymentMethodsAccepted = PaymentMethodsAccepted.NotSelected
-  userProfile.stripe = {
+  userProfile.additionalInformation.isPublisherEnabled = false
+  userProfile.additionalInformation.paymentMethodsAccepted = PaymentMethodsAccepted.NotSelected
+  userProfile.additionalInformation.stripe = {
     accountId: faker.string.uuid(),
     isAccountValidated: false,
     accountCreatedAt: faker.date.past().toDateString(),
@@ -143,13 +143,6 @@ describe('User Profile', () => {
     expect(response.statusCode).toBe(201)
     expect(response.body).toStrictEqual({
       ...userProfile,
-      stripe: {
-        accountCreatedAt: userProfile.stripe.accountCreatedAt,
-        accountUpdatedAt: userProfile.stripe.accountUpdatedAt,
-        additionalInformation: {},
-        accountId: userProfile.stripe.accountId,
-        isAccountValidated: userProfile.stripe.isAccountValidated,
-      },
       creationDate: userProfile.creationDate.toISOString(),
       updateDate: userProfile.updateDate.toISOString(),
     })
@@ -163,13 +156,6 @@ describe('User Profile', () => {
     expect(response.statusCode).toBe(200)
     expect(response.body).toStrictEqual({
       ...userProfile,
-      stripe: {
-        accountCreatedAt: userProfile.stripe.accountCreatedAt,
-        accountUpdatedAt: userProfile.stripe.accountUpdatedAt,
-        additionalInformation: {},
-        accountId: userProfile.stripe.accountId,
-        isAccountValidated: userProfile.stripe.isAccountValidated,
-      },
       creationDate: userProfile.creationDate.toISOString(),
       updateDate: userProfile.updateDate.toISOString(),
     })
@@ -198,7 +184,8 @@ describe('User Profile', () => {
     expect(response.statusCode).toBe(200)
     expect(response.body).toStrictEqual({
       userId: userProfileTwo.userId,
-      name: userProfileTwo.name,
+      nickname: userProfileTwo.nickname,
+      additionalInformation: userProfileTwo.additionalInformation,
     })
   })
 
@@ -229,13 +216,6 @@ describe('User Profile', () => {
 
     expect(response.body).toStrictEqual({
       ...disbledUserProfile,
-      stripe: {
-        accountCreatedAt: disbledUserProfile.stripe.accountCreatedAt,
-        accountUpdatedAt: disbledUserProfile.stripe.accountUpdatedAt,
-        additionalInformation: {},
-        accountId: disbledUserProfile.stripe.accountId,
-        isAccountValidated: disbledUserProfile.stripe.isAccountValidated,
-      },
       creationDate: disbledUserProfile.creationDate.toISOString(),
       updateDate: disbledUserProfile.updateDate.toISOString(),
     })

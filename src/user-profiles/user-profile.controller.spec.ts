@@ -26,9 +26,9 @@ describe('UserProfileController', () => {
   userProfile.name = faker.person.fullName()
   userProfile.email = faker.internet.email()
   userProfile.state = State.Confirmed
-  userProfile.isPublisherEnabled = false
-  userProfile.paymentMethodsAccepted = PaymentMethodsAccepted.NotSelected
-  userProfile.stripe = {
+  userProfile.additionalInformation.isPublisherEnabled = false
+  userProfile.additionalInformation.paymentMethodsAccepted = PaymentMethodsAccepted.NotSelected
+  userProfile.additionalInformation.stripe = {
     accountId: faker.string.uuid(),
     isAccountValidated: false,
     accountCreatedAt: faker.date.past().toDateString(),

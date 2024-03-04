@@ -9,12 +9,10 @@ import {
   ValidateNested,
 } from 'class-validator'
 import { Type } from 'class-transformer'
-import { PaymentMethodsAccepted, State } from '../../common/type'
+import { State } from '../../common/type'
 import { AdditionalInformation } from './additional-information.dto'
 import { SearchHit } from '@elastic/elasticsearch/lib/api/types'
 import { UserProfile } from '../user-profile.entity'
-import { Stripe } from '../user-profile.interface'
-import { StripeDto } from './stripe.dto'
 
 export class GetUserProfileDto {
   static fromSource(userProfileSource: SearchHit<UserProfile>): GetUserProfileDto {
@@ -29,9 +27,6 @@ export class GetUserProfileDto {
       userProfileSource._source.creationDate,
       userProfileSource._source.updateDate,
       userProfileSource._source.additionalInformation,
-      userProfileSource._source.isPublisherEnabled,
-      userProfileSource._source.paymentMethodsAccepted,
-      userProfileSource._source.stripe,
     )
   }
 
@@ -113,32 +108,6 @@ export class GetUserProfileDto {
   @Type(() => AdditionalInformation)
   additionalInformation: AdditionalInformation
 
-  @ApiProperty({
-    example: true,
-    description:
-      'Flag identifying if the user is enabled to publish content in the marketplace. Possible values: true or false',
-  })
-  @IsBoolean()
-  @IsOptional()
-  isPublisherEnabled: boolean
-
-  @ApiProperty({
-    example: PaymentMethodsAccepted,
-    description: 'Payment methods accepted by the user',
-  })
-  @IsOptional()
-  @IsEnum(PaymentMethodsAccepted)
-  paymentMethodsAccepted: PaymentMethodsAccepted
-
-  @ApiProperty({
-    example: StripeDto,
-    description: 'Stripe account information',
-  })
-  @ValidateNested()
-  @IsOptional()
-  @Type(() => StripeDto)
-  stripe: Stripe
-
   constructor(
     userId: string,
     isListed: boolean,
@@ -150,9 +119,6 @@ export class GetUserProfileDto {
     creationDate: Date,
     updateDate: Date,
     additionalInformation: AdditionalInformation,
-    isPublisherEnabled: boolean,
-    paymentMethodsAccepted: PaymentMethodsAccepted,
-    stripe: Stripe,
   ) {
     this.userId = userId
     this.isListed = isListed
@@ -164,8 +130,5 @@ export class GetUserProfileDto {
     this.creationDate = creationDate
     this.updateDate = updateDate
     this.additionalInformation = additionalInformation
-    this.isPublisherEnabled = isPublisherEnabled
-    this.paymentMethodsAccepted = paymentMethodsAccepted
-    this.stripe = stripe
   }
 }

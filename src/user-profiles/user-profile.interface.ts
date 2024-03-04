@@ -1,6 +1,11 @@
+import { PaymentMethodsAccepted } from 'src/common/type'
+
 export interface AdditionalInformation {
   profilePicture: string
   linkedinProfile: string
+  isPublisherEnabled: boolean
+  paymentMethodsAccepted: PaymentMethodsAccepted
+  stripe: Stripe
 }
 
 export interface Stripe {
