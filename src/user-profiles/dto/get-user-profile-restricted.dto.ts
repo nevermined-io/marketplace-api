@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsString } from 'class-validator'
+import { IsString, ValidateNested } from 'class-validator'
+import { AdditionalInformation } from './additional-information.dto'
+import { Type } from 'class-transformer'
 
 export class RestrictedUserProfileDto {
   @ApiProperty({
@@ -15,4 +17,12 @@ export class RestrictedUserProfileDto {
   })
   @IsString()
   nickname: string
+
+  @ApiProperty({
+    example: AdditionalInformation,
+    description: 'List of additional key-value attributes with additional information',
+  })
+  @ValidateNested()
+  @Type(() => AdditionalInformation)
+  additionalInformation: AdditionalInformation
 }
