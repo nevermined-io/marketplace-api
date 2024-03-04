@@ -26,15 +26,19 @@ describe('UserProfileController', () => {
   userProfile.name = faker.person.fullName()
   userProfile.email = faker.internet.email()
   userProfile.state = State.Confirmed
-  userProfile.additionalInformation.isPublisherEnabled = false
-  userProfile.additionalInformation.paymentMethodsAccepted = PaymentMethodsAccepted.NotSelected
-  userProfile.additionalInformation.stripe = {
-    accountId: faker.string.uuid(),
-    isAccountValidated: false,
-    accountCreatedAt: faker.date.past().toDateString(),
-    accountUpdatedAt: faker.date.recent().toDateString(),
-    additionalInformation: {},
-  } as Stripe
+  userProfile.additionalInformation = {
+    linkedinProfile: faker.internet.url(),
+    profilePicture: faker.internet.url(),
+    isPublisherEnabled: false,
+    paymentMethodsAccepted: PaymentMethodsAccepted.NotSelected,
+    stripe: {
+      accountId: faker.string.uuid(),
+      isAccountValidated: false,
+      accountCreatedAt: faker.date.past().toDateString(),
+      accountUpdatedAt: faker.date.recent().toDateString(),
+      additionalInformation: {},
+    } as Stripe,
+  }
 
   const req = {
     url: '/api/v1/ugc/bookmarks',
