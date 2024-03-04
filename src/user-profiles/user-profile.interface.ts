@@ -1,4 +1,4 @@
-import { PaymentMethodsAccepted } from 'src/common/type'
+import { PaymentMethodsAccepted } from '../common/type'
 
 export interface AdditionalInformation {
   profilePicture: string

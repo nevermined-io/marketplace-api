@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsUrl, IsOptional, IsBoolean, IsEnum, ValidateNested } from 'class-validator'
-import { PaymentMethodsAccepted } from 'src/common/type'
+import { PaymentMethodsAccepted } from '../../common/type'
 import { Stripe } from '../user-profile.interface'
 import { Type } from 'class-transformer'
 import { StripeDto } from './stripe.dto'
