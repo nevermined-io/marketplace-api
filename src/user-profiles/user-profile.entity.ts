@@ -10,6 +10,7 @@ export class UserProfile {
   nickname: string
   name: string
   email: string
+  emailVerified: boolean
   creationDate: Date
   updateDate: Date
   additionalInformation: AdditionalInformation

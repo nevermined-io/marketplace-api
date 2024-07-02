@@ -80,6 +80,15 @@ export class UpdateUserProfileDto {
   email: string
 
   @ApiProperty({
+    example: true,
+    description: 'Flag identifying if the user email is verified. Possible values: true or false',
+    required: false,
+  })
+  @IsOptional()
+  @IsBoolean()
+  emailVerified: boolean
+
+  @ApiProperty({
     example: AdditionalInformation,
     description: 'List of additional key-value attributes with additional information',
   })
