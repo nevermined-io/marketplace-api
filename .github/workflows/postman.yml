@@ -52,7 +52,7 @@ jobs:
           sleep 30
           yarn test:postman
       - name: Output the run Details
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: RunReports
           path: testResults
