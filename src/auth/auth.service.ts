@@ -42,7 +42,7 @@ export class AuthService {
         userProfileEntity.nickname = address
         userProfileEntity.isListed = true
         userProfileEntity.addresses = [address]
-        userProfileEntity.state = State.Confirmed
+        userProfileEntity.state = State.Unconfirmed
         userProfile = await this.userProfileService.createOne(userProfileEntity)
       } else {
         userProfile = userProfileSource._source
